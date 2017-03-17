@@ -19,3 +19,6 @@ alias rmenv="conda remove --all --name "
 alias lsenv="conda info -e"
 alias wo="source activate"
 alias de="source deactivate"
+
+alias pf='pip freeze'
+alias wk=workon

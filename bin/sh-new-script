@@ -34,7 +34,7 @@ if [ -z "$V_ALL_SCRIPTS" ] ; then
 fi
 
 open_script_file() {
-	if [[ "${OSTYPE//[0-9.]/}" == 'darwin' ]]; then
+	if [[ $OSTYPE == darwin* ]]; then
 		ls -lG $1
 	else
 		ls -l --color=auto $1

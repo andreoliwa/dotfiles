@@ -1,0 +1,7 @@
+# http://docs.ansible.com/ansible/pip_module.html#pip-manages-python-library-dependencies
+
+- name: Install pip and virtualenvwrapper (python 2)
+  pip: name=pip,virtualenvwrapper state=latest
+
+- name: Install virtualenvwrapper (python 3)
+  pip: name=virtualenvwrapper state=latest executable=pip3

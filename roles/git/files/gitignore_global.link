@@ -34,3 +34,6 @@ _sandbox
 
 ### virtualenv ###
 .venv
+
+### JetBrains ###
+.idea

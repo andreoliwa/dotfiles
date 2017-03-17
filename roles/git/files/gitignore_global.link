@@ -31,3 +31,6 @@ _sandbox
 .xmark.*
 
 .konchrc
+
+### virtualenv ###
+.venv

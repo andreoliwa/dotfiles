@@ -8,3 +8,12 @@ export TERM=xterm-256color
 # in ~/Applications instead of /Applications (Mac-OSX specific)
 export CHROME_BIN="$HOME/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 export FIREFOX_BIN="$HOME/Applications/Firefox.app/Contents/MacOS/firefox-bin"
+
+if [[ "${OSTYPE//[0-9.]/}" != 'darwin' ]]; then
+    export BROWSER=chromium-browser
+
+    # https://faq.i3wm.org/question/2498/ssh-sessions-in-i3/
+    if [[ "$DESKTOP_SESSION" = "i3" ]]; then
+        export $(gnome-keyring-daemon -s)
+    fi
+fi

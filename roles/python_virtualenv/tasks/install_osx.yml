@@ -4,5 +4,3 @@
 
 - name: Install python3
   homebrew: name=python3 state=latest
-
-- include: install_pip_virtualenv.yml

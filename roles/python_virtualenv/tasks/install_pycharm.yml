@@ -1,0 +1,7 @@
+- name: Install PyCharm for Mac OSX
+  homebrew_cask: name=pycharm state=present
+  when: ansible_os_family == "Darwin"
+
+- name: Install PyCharm EAP for Mac OSX
+  homebrew_cask: name=pycharm-eap state=present
+  when: ansible_os_family == "Darwin"

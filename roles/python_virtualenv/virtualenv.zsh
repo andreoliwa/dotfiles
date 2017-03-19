@@ -1,6 +1,10 @@
 # https://github.com/zsh-users/prezto/tree/master/modules/python
 export PROJECT_HOME="$HOME/Code"
 
+# To avoid locale errors in some Python modules.
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 # http://virtualenvwrapper.readthedocs.io/en/latest/tips.html#automatically-run-workon-when-entering-a-directory
 # https://hmarr.com/2010/jan/19/making-virtualenv-play-nice-with-git/
 # https://gist.github.com/gibatronic/de66e3841b981798e6c1#file-workit-bash-L4

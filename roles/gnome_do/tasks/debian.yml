@@ -1,6 +1,0 @@
-- name: Install gnome-do and plugins with apt
-  apt: name={{item}} state=latest
-  with_items:
-    - gnome-do
-    - gnome-do-plugins
-  become: true

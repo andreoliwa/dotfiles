@@ -13,6 +13,11 @@
     creates: "{{dotfiles_user_home}}/.zshrc.bak"
   when: zshrc_stat.stat.exists
 
+- name: Change default shell to zsh
+  command: chsh -s /usr/local/bin/zsh
+  # Only run this if above task was changed
+  when: zsh_shells.changed
+
 - import_tasks: prezto.yml
   when: zsh_prezto
 

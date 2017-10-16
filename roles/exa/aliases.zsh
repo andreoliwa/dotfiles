@@ -1,4 +1,2 @@
-if [[ $OSTYPE == darwin* ]]; then
-    alias ls=exa
-fi
-
+alias ls=exa
+alias ll="exa -bghHliS"

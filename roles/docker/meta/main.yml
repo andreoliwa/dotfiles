@@ -1,5 +1,0 @@
-dependencies:
-  - { role: mongrelion.docker, become: true, become_user: root, tags: ['bootstrap'],
-      when: ansible_os_family != "Darwin" }
-  - { role: andrewrothstein.docker-compose,
-      when: ansible_os_family != "Darwin" }

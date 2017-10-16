@@ -25,3 +25,7 @@
 - name: Install Mac-App-Store-only apps with mas
   command: mas install {{item}}
   with_items: '{{osx_mas_packages}}'
+
+- name: Install Mac-App-Store-only apps with mas
+  command: mas install {{item}}
+  with_items: '{{osx_mas_packages}}'

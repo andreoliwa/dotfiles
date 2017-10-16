@@ -1,7 +1,7 @@
-export EDITOR='mvim'
+export EDITOR='nano'
 export VISUAL='mvim'
 # For ped: https://github.com/sloria/ped
-export PED_EDITOR='vim'
+export PED_EDITOR='nano'
 export TERM=xterm-256color
 
 # Used by karma: Since we use cask to install browsers, the bin files will be located

@@ -1,5 +1,4 @@
-git
-===
+# git
 
 Installs and configures git.
 
@@ -21,7 +20,7 @@ $ gpg --list-secret-keys
 ```yaml
 # In group_vars/local
 
-git_signing_key: E870EE00
+git_signing_key: 90E5B71D
 ```
 
 If you do **not** wish to sign commits with GPG, just set `git_signing_key` to a blank variable.

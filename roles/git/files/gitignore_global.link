@@ -43,3 +43,30 @@ _sandbox
 # Editors
 *.swp
 
+# Xcode
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+xcuserdata/
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+
+# Clang and OCLint
+compile_commands.json
+xcodebuild.log
+
+*.xcworkspace
+
+#Code Coverage in Xcode7
+*.gcda
+*.gcno
+/upload_dsym_results

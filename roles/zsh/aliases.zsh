@@ -20,3 +20,6 @@ alias v="vim"
 alias resize="mogrify -resize"
 
 alias grepalias='alias | grep '
+
+# EatFirst Aliases
+alias ef="cd ~/Code/EatFirst/"

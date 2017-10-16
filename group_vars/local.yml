@@ -2,117 +2,145 @@
 
 # NOTE: The below 2 variables should not need to be changed if you cloned
 #   the dotfiles repo to '~/dotfiles'
-#  Local home directory
 dotfiles_user_home: "{{ '~' | expanduser }}"
-# Where your dotfiles live. Probably don't need to change this.
 dotfiles_home: "{{dotfiles_user_home}}/dotfiles"
-
-# Python tasks need the PYENV_ROOT environment variable set with this value
 pyenv_root: "{{ dotfiles_user_home }}/.pyenv"
-
-# Root directory for projects
 project_root: "{{ dotfiles_user_home }}/Code"
 
-# Name used in commit messages
-full_name: Wagner Augusto Andreoli
-# Git
-# Github username
-git_user: andreoliwa
-# If you use github, this should be the same as the email
-#  used on Github
-git_email: andreoliwa@gmail.com
+
+full_name: Karthikeya Udupa KM
+git_user: insanoid
+git_email: karthikeyaudupa@gmail.com
 
 # GPG Key ID used to sign git commits
 # See https://github.com/pstadler/keybase-gpg-github setup instructions
-git_signing_key: 6F84DBFC
+git_signing_key: 90E5B71D
 
 # Vim
-
-# Whether to install plugins automatically. If not, just run
-# :PlugInstall while in vim.
 vim_install_plugins: no
 
 # Utilities that don't get installed by a role
 osx_homebrew_packages:
   - curl
+  - openssl
   - wget
   - tree
-  - highlight
   - terminal-notifier
-  - wifi-password
-  - htop-osx
-  - httpie
-  - diff-so-fancy
+  - wifi-password # Get WiFi password from the terminal.
+  - httpie # Inline HTTP client to use instead of CURL.
   - rename
-  - docker-clean
   - gpg
   - ctop
-  - fwknop  # for COS vpn
-  - heroku/brew/heroku
-  - tldr
-  - pgbadger
+  - tldr # Simplified manual pages.
+  - node
+  # iOS Toolchains
+  - swiftlint
+  - tailor
+  - xctool
 
 # Mac Apps to be installed with homebrew-cask
 osx_cask_packages:
+  - java
   # Browsers
-  - firefoxdeveloperedition
+  - firefox
   - google-chrome
   - opera
-  - brave
   # Network
   - filezilla
   - ngrok
-  - teamviewer
+  - nordvpn
+  - transmission
+  - vnc-viewer
+  - tunnelblick
   # Utilities
   - iterm2
-  - keepingyouawake  # maintained caffeinate wrapper
-  - flux
   - appcleaner
   - raindropio
-  - spectacle
   - the-unarchiver
-  # E-mail
-  - mia-for-gmail
-  - gmail-notifier
-  # Vagrant/Virtualbox
-  - virtualbox
+  - daisydisk
+  - alfred
+  - atom
+  - dashlane
+  - dropbox
+  - authy-desktop
+  - vysor
+  - android-file-transfer
+  - zoomus
+  # Docker
+  - docker
+#  - virtualbox # fails to instal..
   # Chat
   - slack
   - telegram
+  - skype
   # Backup/storage
   - dropbox
   # Media/Music
   - spotify
   - vlc
   - beardedspice
-  - spotifree
-  # Images
-  - imageoptim  # optimizing images
-  - licecap  # capturing gifs
   # Notetaking
-  - nvalt
   - atom
   # Fonts
   - font-ubuntu
   - font-cousine
   # Databases
-  - datagrip  # RDBMS client
-  # Stay focused
-  - selfcontrol
-
-# APT packages that don't get installed by a role
-apt_packages:
-  - curl
-  - dos2unix
-  - wget
-  - gnupg2
-  - htop
-  - lsof
-  - strace
-  - gnupg-agent
-  - shotwell
+  - postico
+  # Creative
+  - adobe-creative-cloud
+  - handbrake
+  - imageoptim
+  - sketch
+  - sketch-toolbox
+  # Apple Stuff
+  - wwdc
+  # Development
+  - tower
+  - github-desktop
+  - visual-studio-code 
+# - mactex
+  - hockey
+  - cocoarestclient
+  - weka
 
 # Mac-App-Store-only apps to be installed with mas
 # Use App IDs found with `mas search <name>`
 osx_mas_packages:
   - 585829637  # Todoist
+  - 784466108  # ExifPurge
+  - 980953143  # JustExifViewer
+  - 409183694  # Keynote
+  - 734258109  # Watchdog
+  - 476533227  # Prepo
+  - 441258766  # Magnet
+  - 747648890  # Telegram
+  - 409789998  # Twitter
+  - 880001334  # Reeder
+  - 409201541  # Pages
+  - 1091189122 # Bear
+  - 404010395  # TextWrangler
+  - 1094255754 # Outbank: Intelligent Banking
+  - 408981434  # iMovie
+  - 497799835  # Xcode - to keep it updated
+#  - 458866234  # Texpad : LaTeX editor (fails to install)
+
+# Node utilities
+npm_global_packages:
+  - webpack
+  - eslint
+  - eslint-config-airbnb
+  - eslint-plugin-react
+  - babel-eslint
+
+# Ruby tools, mostly iOS dev stuff.
+ruby_global_gems:
+  - travis
+  - CFPropertyList
+  - cocoapods
+  - fastlane
+  - fuzzy_match
+  - i18n
+  - rake
+  - xcodeproj
+  - bundler
+  - openssl

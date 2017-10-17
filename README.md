@@ -9,7 +9,7 @@ a few neat features
 - zsh configured with [prezto](https://github.com/sorin-ionescu/prezto).
 - nice fonts for the terminal and coding.
 - iterm2 profile (w/ hotkey, themes, etc.)
-- pip+virtualenv python.
+- anaconda python (Miniconda 3 distribution).
 - alternative Python configuration with pyenv, pip, virtualenv
 - a tmux.conf that's pretty neat.
 - [tmuxp](https://tmuxp.git-pull.com/en/latest/) for tmux session management

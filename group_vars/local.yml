@@ -42,6 +42,7 @@ osx_homebrew_packages:
   - wifi-password
   - htop-osx
   - httpie
+  - pgbadger
   - diff-so-fancy
   - rename
   - docker-clean
@@ -50,12 +51,11 @@ osx_homebrew_packages:
   - fwknop  # for COS vpn
   - heroku/brew/heroku
   - tldr
-  - pgbadger
 
 # Mac Apps to be installed with homebrew-cask
 osx_cask_packages:
   # Browsers
-  - firefoxdeveloperedition
+  - firefox
   - google-chrome
   - opera
   - brave
@@ -68,6 +68,7 @@ osx_cask_packages:
   - keepingyouawake  # maintained caffeinate wrapper
   - flux
   - appcleaner
+  - daisydisk
   - raindropio
   - spectacle
   - the-unarchiver
@@ -76,19 +77,24 @@ osx_cask_packages:
   - gmail-notifier
   # Vagrant/Virtualbox
   - virtualbox
+  # Docker
+  - docker
   # Chat
   - slack
   - telegram
+  - slack
+  - keybase
   # Backup/storage
   - dropbox
   # Media/Music
   - spotify
   - vlc
+  - iina
   - beardedspice
   - spotifree
   # Images
   - imageoptim  # optimizing images
-  - licecap  # capturing gifs
+  - kap  # capturing gifs
   # Notetaking
   - nvalt
   - atom
@@ -116,3 +122,11 @@ apt_packages:
 # Use App IDs found with `mas search <name>`
 osx_mas_packages:
   - 585829637  # Todoist
+
+# Node utilities
+npm_global_packages:
+  - webpack
+  - eslint
+  - eslint-config-airbnb
+  - eslint-plugin-react
+  - babel-eslint

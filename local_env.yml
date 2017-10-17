@@ -13,6 +13,7 @@
     - {role: docker, tags: [docker, system, fail]}
     - {role: vim, tags: [vim, tool, dev]}
     - {role: python_pyenv, tags: [python, dev]}
+    - {role: node, tags: [node, dev]}
     - {role: hub, tags: [hub, vcs]}
     - {role: zsh-autoenv, tags: [zsh, system]}
     - {role: rg, tags: [rg, tool]}

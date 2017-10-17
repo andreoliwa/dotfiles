@@ -10,7 +10,7 @@
     - {role: git, tags: [vcs]}
     - {role: package_manager, tags: [system]}
     - {role: zsh, tags: [system, bootstrap]}
-    - {role: docker, tags: [system]}
+    - {role: docker, tags: [system, fail]}
     - {role: vim, tags: [tool, dev]}
     - {role: python_pyenv, tags: [dev]}
     - {role: hub, tags: [vcs]}

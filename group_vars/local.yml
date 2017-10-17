@@ -32,7 +32,6 @@ git_signing_key: 6F84DBFC
 # :PlugInstall while in vim.
 vim_install_plugins: no
 
-
 # Utilities that don't get installed by a role
 osx_homebrew_packages:
   - curl
@@ -46,71 +45,74 @@ osx_homebrew_packages:
   - diff-so-fancy
   - rename
   - docker-clean
+  - gpg
+  - ctop
+  - fwknop  # for COS vpn
+  - heroku/brew/heroku
+  - tldr
   - pgbadger
 
 # Mac Apps to be installed with homebrew-cask
 osx_cask_packages:
   # Browsers
+  - firefoxdeveloperedition
   - google-chrome
   - opera
   - brave
-
   # Network
   - filezilla
   - ngrok
   - teamviewer
-
   # Utilities
   - iterm2
-  - caffeine
+  - keepingyouawake  # maintained caffeinate wrapper
   - flux
   - appcleaner
   - raindropio
   - spectacle
   - the-unarchiver
-
   # E-mail
   - mia-for-gmail
   - gmail-notifier
-
   # Vagrant/Virtualbox
   - virtualbox
-
   # Chat
   - slack
   - telegram
-
   # Backup/storage
   - dropbox
-
   # Media/Music
   - spotify
   - vlc
   - beardedspice
   - spotifree
-
   # Images
   - imageoptim  # optimizing images
   - licecap  # capturing gifs
-
   # Notetaking
   - nvalt
-  - skitch
   - atom
-
   # Fonts
   - font-ubuntu
   - font-cousine
-
   # Databases
-  - psequel  # postgres client
+  - datagrip  # RDBMS client
+  # Stay focused
+  - selfcontrol
 
 # APT packages that don't get installed by a role
 apt_packages:
   - curl
+  - dos2unix
   - wget
+  - gnupg2
   - htop
   - lsof
   - strace
   - gnupg-agent
   - shotwell
+
+# Mac-App-Store-only apps to be installed with mas
+# Use App IDs found with `mas search <name>`
+osx_mas_packages:
+  - 585829637  # Todoist

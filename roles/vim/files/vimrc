@@ -59,8 +59,7 @@ let g:ale_fixers.python = ['isort']
 let g:ale_javascript_prettier_options = ' --single-quote --trailing-comma all'
 
 " NICE TO HAVE
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline_theme='tomorrow'
@@ -138,10 +137,11 @@ let g:gist_open_browser_after_post = 1
 " COLOR
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sloria/vim-hybrid'  " hybrid with easier-to-read line numbers
+Plug 'nightsense/night-and-day'  " switch colorschemes based on time of day
 
 " LANGUAGE-SPECIFIC
-Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['python']
+Plug 'sheerun/vim-polyglot'  " syntax files for most languages
+let g:polyglot_disabled = ['python'] " Use python-syntax
 let g:jsx_ext_required = 0
 let g:markdown_fenced_languages = ['javascript', 'python', 'clojure', 'ruby']
 " --- Python ---
@@ -163,6 +163,8 @@ let g:jedi#rename_command = "<C-c>r"
 Plug 'heavenshell/vim-jsdoc'  " For making JS docstrings
 let g:jsdoc_default_mapping = 0
 map <C-c>j <Plug>(jsdoc)
+" --- CSS ---
+Plug 'gko/vim-coloresque'  " Highlight CSS colors
 
 call plug#end()
 filetype plugin indent on
@@ -186,9 +188,11 @@ set noerrorbells visualbell t_vb=
 
 """ VISUAL SETTINGS """
 if &term =~ '256color' | set t_ut= | endif
-" Favorites: hybrid-sl iceberg PaperColor
-set background=dark | silent! colorscheme hybrid-sl
-" set background=light | silent! colorscheme PaperColor
+" PaperColor in the day, hybrid-sl at night
+let g:nd_themes = [
+  \ ['6:00',  'PaperColor', 'light' ],
+  \ ['18:00', 'hybrid-sl', 'dark' ],
+  \ ]
 
 " Show trailing whitespace
 set list listchars=tab:▸\ ,trail:▫
@@ -215,8 +219,6 @@ endif
 nmap <leader>, :e $MYVIMRC<CR>
 " Reload vimrc
 noremap <silent> <leader>V :source $MYVIMRC<cr>
-" Smash escape
-inoremap jk <Esc>
 " Search and replace, using : as a separator instead of /
 noremap <leader>sr :%s:::cg<Left><Left><Left><Left>
 " Switch between files

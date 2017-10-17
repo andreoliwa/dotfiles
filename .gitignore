@@ -56,6 +56,6 @@ docs/_build/
 target/
 
 .vagrant
-*.retry
 
 remotehosts
+*.retry

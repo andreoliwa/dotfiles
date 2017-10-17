@@ -23,8 +23,9 @@ prerequisites (install these first)
 -----------------------------------
 
 - ansible >= 2.4 (on Linux, [get the latest PPA] (http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine))
-- homebrew (If on Mac OSX)
-- git (homebrew installable on Mac OSX)
+- homebrew (If on macOS)
+- git (homebrew installable on macOS)
+- Latest version of Xcode (If on macOS)
 
 install
 -------
@@ -135,6 +136,16 @@ curl -fLo ~/.vimrc https://raw.githubusercontent.com/sloria/dotfiles/master/role
 ```
 
 You will now be able to open vim and run `:PlugInstall` to install all plugins.
+
+
+troubleshooting
+---------------
+
+If you get an error about Xcode command-line tools, you may need to run
+
+```
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+```
 
 todo
 ----

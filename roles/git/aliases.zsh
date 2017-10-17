@@ -1,8 +1,8 @@
 alias g="git"
 alias gf="git flow"
 
-# Some shortcuts I used with Oh My Zsh
 alias gaa='git add --all'
+alias gba='git branch --all --verbose'
 alias gcd='git checkout develop'
 alias gci='git-checkout-issue'
 alias gcm='git checkout master'

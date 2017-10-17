@@ -1,0 +1,21 @@
+- name: Check if ccat is installed
+  stat:
+    path: /usr/local/bin/ccat
+  register: ccat_stat
+
+- name: Download ccat
+  unarchive:
+    remote_src: true
+    src: "https://github.com/jingweno/ccat/releases/download/v{{ ccat_version}}/{{ ccat_full_version }}.tar.gz"
+    dest: /tmp/
+  when: not ccat_stat.stat.exists
+
+- copy:
+    src: "/tmp/{{ ccat_full_version }}/ccat"
+    dest: /usr/local/bin/ccat
+    mode: a+x
+  become: true
+  when: not ccat_stat.stat.exists
+
+- name: Clean ccat files
+  command: rm -rf /tmp/{{ ccat_full_version }}{,.tar.gz}

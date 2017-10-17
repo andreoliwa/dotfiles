@@ -7,21 +7,21 @@
   environment:
     PYENV_ROOT: "{{ pyenv_root }}"
   roles:
-    - {role: git, tags: [vcs]}
-    - {role: package_manager, tags: [system]}
-    - {role: zsh, tags: [system, bootstrap]}
-    - {role: docker, tags: [system, fail]}
-    - {role: vim, tags: [tool, dev]}
-    - {role: python_pyenv, tags: [dev]}
-    - {role: hub, tags: [vcs]}
-    - {role: zsh-autoenv, tags: [system]}
-    - {role: rg, tags: [tool]}
-    - {role: exa, tags: [tool]}
-    - {role: ccat, tags: [tool]}
-    - {role: tmux, tags: [tool]}
-    - {role: fzf, tags: [tool]}
-    - {role: gnome_do, tags: [tool]}
+    - {role: git, tags: [git, vcs]}
+    - {role: package_manager, tags: [os, system]}
+    - {role: zsh, tags: [zsh, system, bootstrap]}
+    - {role: docker, tags: [docker, system, fail]}
+    - {role: vim, tags: [vim, tool, dev]}
+    - {role: python_pyenv, tags: [python, dev]}
+    - {role: hub, tags: [hub, vcs]}
+    - {role: zsh-autoenv, tags: [zsh, system]}
+    - {role: rg, tags: [rg, tool]}
+    - {role: exa, tags: [exa, tool]}
+    - {role: ccat, tags: [ccat, tool]}
+    - {role: tmux, tags: [tmux, tool]}
+    - {role: fzf, tags: [fzf, tool]}
+    - {role: gnome_do, tags: [gnome_do, tool]}
     - {role: defaultbrowser, tags: [tool]}
-    - {role: osx, when: ansible_os_family == "Darwin"}
-    - {role: andreoliwa, tags: [personal]}
-    - {role: eatfirst, tags: [personal]}
+    - {role: osx, tags: [os, system], when: ansible_os_family == "Darwin"}
+    - {role: andreoliwa, tags: [andreoliwa, personal]}
+    - {role: eatfirst, tags: [eatfirst, personal]}

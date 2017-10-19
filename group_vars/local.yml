@@ -30,7 +30,7 @@ git_signing_key: 6F84DBFC
 
 # Whether to install plugins automatically. If not, just run
 # :PlugInstall while in vim.
-vim_install_plugins: no
+vim_install_plugins: yes
 
 # Utilities that don't get installed by a role
 osx_homebrew_packages:
@@ -55,7 +55,7 @@ osx_homebrew_packages:
 # Mac Apps to be installed with homebrew-cask
 osx_cask_packages:
   # Browsers
-  - firefox
+  - firefox-beta
   - google-chrome
   - opera
   - brave
@@ -72,6 +72,7 @@ osx_cask_packages:
   - raindropio
   - spectacle
   - the-unarchiver
+  - authy-desktop
   # E-mail
   - mia-for-gmail
   - gmail-notifier
@@ -82,7 +83,6 @@ osx_cask_packages:
   # Chat
   - slack
   - telegram
-  - slack
   - keybase
   # Backup/storage
   - dropbox

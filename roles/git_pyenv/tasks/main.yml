@@ -19,28 +19,26 @@
     chdir: "{{ root }}/{{ dir }}"
     creates: "{{ root }}/{{ dir }}/.python-version"
 
-- name: "{{ dir }}: Check .env file"
-  stat:
-    path: "{{ dotfiles_home }}_private/{{ dir }}/.env.link"
-  register: env_link
+- name: "{{ dir }}: Check if the symlink directory exists"
+  stat: path="{{ symlink_dir }}"
+  register: symlink_dir_stat
 
-- name: "{{ dir }}: Link .env file"
+- name: "{{ dir }}: Link dotted files"
   file:
-    src: "{{ env_link.stat.path }}"
-    dest: "{{ root }}/{{ dir }}/.env"
+    src: "{{ item }}"
+    dest: "{{ root }}/{{ dir }}/{{ item | basename | splitext | first }}"
     state: link
     force: yes
-  when: env_link.stat.exists
+  with_fileglob:
+    - "{{ symlink_dir_stat.stat.path }}/.*.link"
+  when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
-- name: "{{ dir }}: Check .autoenv file"
-  stat:
-    path: "{{ dotfiles_home }}_private/{{ dir }}/.autoenv.link"
-  register: autoenv_link
-
-- name: "{{ dir }}: Link .autoenv file"
+- name: "{{ dir }}: Link regular files"
   file:
-    src: "{{ autoenv_link.stat.path }}"
-    dest: "{{ root }}/{{ dir }}/.autoenv"
+    src: "{{ item }}"
+    dest: "{{ root }}/{{ dir }}/{{ item | basename | splitext | first }}"
     state: link
     force: yes
-  when: autoenv_link.stat.exists
+  with_fileglob:
+    - "{{ symlink_dir_stat.stat.path }}/*.link"
+  when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir

@@ -20,3 +20,4 @@ alias v="vim"
 alias resize="mogrify -resize"
 
 alias grepalias='alias | grep '
+alias ducks='du -chs * | sort -rg | head'

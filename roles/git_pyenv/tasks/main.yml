@@ -42,3 +42,12 @@
   with_fileglob:
     - "{{ symlink_dir_stat.stat.path }}/*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
+
+- name: "{{ dir }}: Add VIRTUAL_ENV variable to .autoenv file (useful for pipenv --venv)"
+  when: create_env
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.autoenv"
+    state: present
+    create: yes
+    regexp: "^.+ VIRTUAL_ENV="
+    line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"

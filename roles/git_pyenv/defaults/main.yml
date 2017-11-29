@@ -27,5 +27,5 @@ version: "{{ latest_python_36 }}"
 # Versions set by the "pyenv local" command (after the repo's virtualenv)
 local: "jupyter3 ipython2 tools3 tools2"
 
-# Directory with .link files to be symlinked to the project root
+# Directory containing .link files that will become symbolic links in the project root
 symlink_dir: ""

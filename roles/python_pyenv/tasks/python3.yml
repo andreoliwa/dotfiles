@@ -34,3 +34,9 @@
     name: youtube-dl
     state: latest
     executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
+
+- name: Install pipenv
+  pip:
+    name: pipenv
+    state: latest
+    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"

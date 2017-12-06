@@ -61,8 +61,7 @@ osx_cask_packages:
   # Browsers
   - firefox-beta
   - google-chrome
-  - opera
-  - brave
+  - vivaldi
   # Network
   - filezilla
   - ngrok

@@ -71,7 +71,6 @@ osx_cask_packages:
   - keepingyouawake  # maintained caffeinate wrapper
   - flux
   - appcleaner
-  - daisydisk
   - raindropio
   - spectacle
   - the-unarchiver
@@ -86,7 +85,6 @@ osx_cask_packages:
   # Chat
   - slack
   - telegram
-  - keybase
   # Backup/storage
   - dropbox
   # Media/Music
@@ -104,10 +102,6 @@ osx_cask_packages:
   # Fonts
   - font-ubuntu
   - font-cousine
-  # Databases
-  - datagrip  # RDBMS client
-  # Stay focused
-  - selfcontrol
 
 # APT packages that don't get installed by a role
 apt_packages:

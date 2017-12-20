@@ -29,14 +29,9 @@
   args:
     creates: "~/Library/Jupyter/kernels/python3"
 
-- name: Install youtube-dl
+- name: Install modules in the Python 3 virtualenv
   pip:
-    name: youtube-dl
+    name: "{{ item }}"
     state: latest
     executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
-
-- name: Install pipenv
-  pip:
-    name: pipenv
-    state: latest
-    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
+  with_items: "{{ python3_modules }}"

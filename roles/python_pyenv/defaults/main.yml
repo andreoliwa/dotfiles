@@ -1,3 +1,12 @@
 latest_python_36: 3.6.3
 latest_python_35: 3.5.4
 latest_python_27: 2.7.14
+
+python2_modules:
+  - rename
+
+python3_modules:
+  - pipenv
+  - youtube-dl
+  - cookiecutter
+  - cookiepatcher

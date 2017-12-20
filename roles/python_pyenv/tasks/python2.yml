@@ -25,8 +25,9 @@
   args:
     creates: "~/Library/Jupyter/kernels/python2"
 
-- name: Install rename
+- name: Install modules in the Python 2 virtualenv
   pip:
-    name: rename
+    name: "{{ item }}"
     state: latest
     executable: "{{ pyenv_root }}/versions/tools2/bin/pip"
+  with_items: "{{ python2_modules }}"

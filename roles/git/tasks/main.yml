@@ -21,3 +21,32 @@
   template:
     src: "gitconfig.j2"
     dest: "{{dotfiles_user_home}}/.gitconfig"
+
+- name: "gitup : List all repos on the home directory"
+  shell: "find ~ -type d -name .git -exec dirname {} \\; > {{ dotfiles_private }}/roles/git/files/{{ ansible_hostname }}/all_home_repos.link"
+
+- name: "gitup : Symlink bookmarks"
+  file:
+    src: "{{ dotfiles_private }}/roles/git/files/{{ ansible_hostname }}/{{ item }}.link"
+    dest: "{{ dotfiles_user_home }}/.config/gitup/{{ item }}"
+    state: link
+  with_items:
+    - bookmarks
+    - manual_update
+    - all_home_repos
+
+- name: "gitup : Clean bookmarks"
+  command: "gitup --bookmark-file {{ dotfiles_user_home }}/.config/gitup/{{ item }} --clean"
+  with_items:
+    - bookmarks
+    - manual_update
+
+- name: "gitup : Update repos"
+  command: "gitup"
+  register: gitup_update_repos
+- debug: var=gitup_update_repos.stdout_lines
+
+- name: "gitup : Fetch repos with manual update"
+  command: "gitup --bookmark-file {{ dotfiles_user_home }}/.config/gitup/manual_update --fetch-only --prune"
+  register: gitup_fetch_manual_repos
+- debug: var=gitup_fetch_manual_repos.stdout_lines

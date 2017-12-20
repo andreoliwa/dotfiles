@@ -1,4 +1,7 @@
-
 - name: Install git with yum
   yum: name=git state=latest
-  become_method: sudo
+  become: true
+
+- name: "gitup : Install with yum"
+  yum: name=gitup state=latest
+  become: true

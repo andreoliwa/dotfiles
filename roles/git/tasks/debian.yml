@@ -1,3 +1,7 @@
 - name: Install git with apt
   apt: name=git state=latest
   become: true
+
+- name: "gitup : Install with apt"
+  apt: name=gitup state=latest
+  become: true

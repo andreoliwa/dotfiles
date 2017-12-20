@@ -15,7 +15,7 @@
   become: true
   register: hub_output
   when: not hub_stat.stat.exists
-- debug: var=hub_output
+- debug: var=hub_output.stdout_lines
 
 - name: Clean hub files
   command: rm -rf /tmp/{{ hub_full_version }}{,.tgz}

@@ -2,13 +2,13 @@
   homebrew: update_homebrew=yes
   when: package_update
   register: brew_update_results
-- debug: var=brew_update_results
+- debug: var=brew_update_results.stdout_lines
 
 - name: Upgrade homebrew packages
   homebrew: upgrade_all=yes
   when: package_upgrade
   register: brew_upgrade_results
-- debug: var=brew_upgrade_results
+- debug: var=brew_upgrade_results.stdout_lines
 
 - name: Install homebrew-cask-upgrade
   command: brew tap buo/cask-upgrade creates=/usr/local/Homebrew/Library/Taps/buo/homebrew-cask-upgrade
@@ -18,4 +18,4 @@
   command: brew cu --all --cleanup --no-brew-update --yes
   when: package_upgrade
   register: brew_cask_upgrade_results
-- debug: var=brew_cask_upgrade_results
+- debug: var=brew_cask_upgrade_results.stdout_lines

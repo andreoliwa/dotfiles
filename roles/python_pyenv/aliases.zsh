@@ -16,3 +16,4 @@ alias pfg='pip freeze | rg -i'
 alias pv='pyenv version'
 alias pvs='pyenv versions'
 alias ptr="pytest-run"
+alias f="flask"

@@ -1,21 +1,25 @@
-- name: "Install Python {{ latest_python_36 }}"
+- name: "Install Python {{ latest_python_3_6 }}"
   pyenv:
-    version: "{{ latest_python_36 }}"
+    version: "{{ latest_python_3_6 }}"
 
-- name: "Install Python {{ latest_python_35 }}"
+- name: "Install Python {{ latest_python_3_5 }}"
   pyenv:
-    version: "{{ latest_python_35 }}"
+    version: "{{ latest_python_3_5 }}"
+
+- name: "Install Python {{ latest_python_3_4 }}"
+  pyenv:
+    version: "{{ latest_python_3_4 }}"
 
 - name: virtualenv for Jupyter
   pyenv:
     subcommand: virtualenv
-    version: "{{ latest_python_36 }}"
+    version: "{{ latest_python_3_6 }}"
     virtualenv_name: jupyter3
 
 - name: virtualenv for Python 3 tools
   pyenv:
     subcommand: virtualenv
-    version: "{{ latest_python_36 }}"
+    version: "{{ latest_python_3_6 }}"
     virtualenv_name: tools3
 
 - name: Install jupyter

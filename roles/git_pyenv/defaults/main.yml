@@ -22,7 +22,7 @@ env: "{{ dir }}"
 update: no
 
 # Python version for the pyenv virtualenv
-version: "{{ latest_python_36 }}"
+version: "{{ latest_python_3_6 }}"
 
 # Versions set by the "pyenv local" command (after the repo's virtualenv)
 local: "jupyter3 ipython2 tools3 tools2"

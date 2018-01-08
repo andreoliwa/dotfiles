@@ -1,17 +1,17 @@
-- name: "Install Python {{ latest_python_27 }}"
+- name: "Install Python {{ latest_python_2_7 }}"
   pyenv:
-    version: "{{ latest_python_27 }}"
+    version: "{{ latest_python_2_7 }}"
 
 - name: virtualenv for IPython
   pyenv:
     subcommand: virtualenv
-    version: "{{ latest_python_27 }}"
+    version: "{{ latest_python_2_7 }}"
     virtualenv_name: ipython2
 
 - name: virtualenv for Python 2 tools
   pyenv:
     subcommand: virtualenv
-    version: "{{ latest_python_27 }}"
+    version: "{{ latest_python_2_7 }}"
     virtualenv_name: tools2
 
 - name: Install ipykernel

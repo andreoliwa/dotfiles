@@ -1,6 +1,7 @@
-latest_python_36: 3.6.3
-latest_python_35: 3.5.4
-latest_python_27: 2.7.14
+latest_python_3_6: 3.6.3
+latest_python_3_5: 3.5.4
+latest_python_3_4: 3.4.7
+latest_python_2_7: 2.7.14
 
 python2_modules:
   - rename

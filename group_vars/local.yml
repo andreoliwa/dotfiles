@@ -129,3 +129,7 @@ npm_global_packages:
   - eslint-config-airbnb
   - eslint-plugin-react
   - babel-eslint
+
+rust_binaries:
+  - {pkg: exa, bin: exa}
+  - {pkg: ripgrep, bin: rg}

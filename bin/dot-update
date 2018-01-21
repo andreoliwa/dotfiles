@@ -1,5 +1,14 @@
+#!/bin/zsh
+
 # Change dir to read the correct ansible.cfg
 cd ~/dotfiles
 
+# Always ask sudo password under Linux, it is needed for several roles
+if [[ $OSTYPE == linux* ]]; then
+  ASK_PASSWORD=--ask-become-pass
+else
+  ASK_PASSWORD=
+fi
+
 echo "Updating local dev environment..."
-ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap" $*
+ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml $ASK_PASSWORD --skip-tags "bootstrap" $*

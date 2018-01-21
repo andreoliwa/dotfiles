@@ -6,6 +6,9 @@
 {% if git_signing_key %}
         signingkey = {{ git_signing_key }}
 {% endif %}
+{% if git_signing_key_2 %}
+        signingkey = {{ git_signing_key_2 }}
+{% endif %}
 {% if ansible_os_family == 'Darwin' %}
 [credential]
         helper = osxkeychain

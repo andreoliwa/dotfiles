@@ -29,6 +29,8 @@ git_email: andreoliwa@gmail.com
 # GPG Key ID used to sign git commits
 # See https://github.com/pstadler/keybase-gpg-github setup instructions
 git_signing_key: 6F84DBFC
+# TODO: Find a way to use the same GPG credentials on multiple computers
+git_signing_key_2: 5B95C4A438B0122C
 
 # Vim
 

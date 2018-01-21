@@ -1,5 +1,15 @@
+- name: "gitup : Create host directory"
+  file:
+    state: directory
+    path: "{{ dotfiles_private }}/roles/git/files/{{ ansible_hostname }}"
+
 - name: "gitup : List all repos on the home directory"
   shell: "find ~ -type d -name .git -exec dirname {} \\; > {{ dotfiles_private }}/roles/git/files/{{ ansible_hostname }}/all_home_repos.link"
+
+- name: "gitup : Create config directory"
+  file:
+    state: directory
+    path: "{{ dotfiles_user_home }}/.config/gitup/"
 
 - name: "gitup : Symlink bookmarks"
   file:

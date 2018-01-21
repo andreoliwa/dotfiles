@@ -1,0 +1,22 @@
+# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+- name: Download Node.js 9 setup script
+  get_url:
+    url: "https://deb.nodesource.com/setup_9.x"
+    dest: "/tmp/setup_nodejs_9.sh"
+
+- name: Run Node.js 9 setup script
+  command: "bash /tmp/setup_nodejs_9.sh"
+  become: true
+
+- name: Install Node.js and build tools
+  apt: name={{ item }}
+  with_items:
+    - nodejs
+    - build-essential
+  become: true
+
+- name: Install common npm utilities
+  npm: name={{ item }} state=present global=yes
+  with_items: '{{ npm_global_packages }}'
+  become: true
+

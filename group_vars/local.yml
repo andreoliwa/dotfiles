@@ -131,5 +131,6 @@ npm_global_packages:
   - babel-eslint
 
 rust_binaries:
+  - {pkg: cargo-update, bin: cargo-install-update}
   - {pkg: exa, bin: exa}
   - {pkg: ripgrep, bin: rg}

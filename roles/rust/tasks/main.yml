@@ -31,11 +31,11 @@
   with_items:
     - "{{ rust_binaries }}"
 
-#- name: Update installed binaries
-# command: "~/.cargo/bin/cargo +nightly install-update -a"
-# register: updates_output
-# when: last_toolchain_check | success
-#- debug: var=updates_output
+- name: Update installed binaries
+  command: "~/.cargo/bin/cargo +nightly install-update -a"
+  register: updates_output
+  when: last_toolchain_check | success
+- debug: var=updates_output
 
 - name: Install components
   shell: "~/.cargo/bin/rustup component add {{ item }}"

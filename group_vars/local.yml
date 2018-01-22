@@ -46,7 +46,7 @@ osx_homebrew_packages:
   - highlight
   - terminal-notifier
   - wifi-password
-  - htop-osx
+#  - htop  # This formula either does not compile or function as expected on macOS\nversions newer than Sierra due to an upstream incompatibility.
   - httpie
   - pgbadger
   - diff-so-fancy

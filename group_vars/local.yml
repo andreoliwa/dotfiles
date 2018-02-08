@@ -64,6 +64,8 @@ osx_cask_packages:
   - firefox-beta
   - google-chrome
   - vivaldi
+  # Development
+  - visual-studio-code
   # Network
   - filezilla
   - ngrok
@@ -85,7 +87,7 @@ osx_cask_packages:
   # Docker
   - docker
   # Chat
-  - slack
+  - twist
   - telegram
   # Backup/storage
   - dropbox
@@ -95,12 +97,12 @@ osx_cask_packages:
   - iina
   - beardedspice
   - spotifree
+  - musixmatch
   # Images
   - imageoptim  # optimizing images
   - kap  # capturing gifs
   # Notetaking
   - nvalt
-  - atom
   # Fonts
   - font-ubuntu
   - font-cousine

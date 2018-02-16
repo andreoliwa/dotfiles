@@ -70,6 +70,7 @@ osx_cask_packages:
   - filezilla
   - ngrok
   - teamviewer
+  - private-internet-access
   # Utilities
   - iterm2
   - keepingyouawake  # maintained caffeinate wrapper

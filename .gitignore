@@ -59,3 +59,6 @@ target/
 
 remotehosts
 *.retry
+
+# Visual Studio
+.vscode/

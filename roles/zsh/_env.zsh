@@ -1,5 +1,5 @@
-export EDITOR='mvim'
-export VISUAL='mvim'
+export EDITOR='code'
+export VISUAL='code'
 # For ped: https://github.com/sloria/ped
 export PED_EDITOR='vim'
 export TERM=xterm-256color

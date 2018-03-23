@@ -11,3 +11,4 @@ python3_modules:
   - youtube-dl
   - cookiecutter
   - cookiepatcher
+  - organize-tool

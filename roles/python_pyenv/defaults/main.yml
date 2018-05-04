@@ -12,3 +12,4 @@ python3_modules:
   - cookiecutter
   - cookiepatcher
   - organize-tool
+  - black

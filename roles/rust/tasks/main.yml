@@ -51,3 +51,9 @@
     state: touch
     path: "~/.cargo/last_toolchain_check"
   when: last_toolchain_check | success
+
+- name: Link .ripgreprc file
+  file:
+    src: "{{dotfiles_home}}/roles/rust/files/.ripgreprc"
+    dest: "{{dotfiles_user_home}}/.ripgreprc"
+    state: link

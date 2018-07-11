@@ -90,6 +90,7 @@ osx_cask_packages:
   # Chat
   - twist
   - telegram
+  - whatsapp
   # Backup/storage
   - dropbox
   # Media/Music

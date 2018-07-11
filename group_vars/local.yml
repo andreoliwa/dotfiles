@@ -125,6 +125,16 @@ apt_packages:
 osx_mas_packages:
   - 585829637  # Todoist
 
+python3_modules:
+  - pipenv
+  - cookiecutter
+  - cookiepatcher
+  - youtube-dl
+  - black
+  - organize-tool
+  - keyring
+  - subliminal
+
 # Node utilities
 npm_global_packages:
   - webpack

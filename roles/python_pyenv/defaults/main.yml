@@ -8,8 +8,5 @@ python2_modules:
 
 python3_modules:
   - pipenv
-  - youtube-dl
   - cookiecutter
   - cookiepatcher
-  - organize-tool
-  - black

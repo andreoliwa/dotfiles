@@ -6,14 +6,15 @@
   homebrew: name={{item}} state=latest
   with_items: '{{osx_homebrew_packages}}'
 
-- name: Tap into caskroom/cask
-  homebrew_tap: tap=caskroom/cask state=present
+# TODO: Disable homebrew_tap, it appears to be broken
+# - name: Tap into caskroom/cask
+#   homebrew_tap: tap=caskroom/cask state=present
 
-- name: Tap into caskroom/fonts
-  homebrew_tap: tap=caskroom/fonts state=present
+# - name: Tap into caskroom/fonts
+#   homebrew_tap: tap=caskroom/fonts state=present
 
-- name: Tap into caskroom/versions
-  homebrew_tap: tap=caskroom/versions state=present
+# - name: Tap into caskroom/versions
+#   homebrew_tap: tap=caskroom/versions state=present
 
 - name: Install Mac apps with homebrew cask
   homebrew_cask: name={{item}} state=present

@@ -1,1 +1,13 @@
+# Info on all modules: http://xon.sh/xontribs.html
 xontribs:
+  # Pre-installed modules
+  - {install: '', load: jedi}
+  - {install: '', load: prompt_ret_code}
+  - {install: '', load: whole_word_jumping}
+
+  # Installed modules: http://xon.sh/tutorial_xontrib.html
+  - {install: xonsh-autoxsh, load: autoxsh}
+  - {install: xonsh-click-tabcomplete, load: click_tabcomplete}
+  - {install: xonsh-docker-tabcomplete, load: docker_tabcomplete}
+  - {install: xonsh-scrapy-tabcomplete, load: scrapy_tabcomplete}
+  - {install: xontrib-z, load: z}

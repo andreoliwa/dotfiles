@@ -18,17 +18,9 @@ for zsh_file in $ZSH_CONFIG_FILES:
         print(f'\n>>> Backward compatibility: Sourcing the ZSH file {zsh_file}')
         source-bash @(zsh_file)
 
-# Info on modules: http://xon.sh/xontribs.html
-# How to install and load: http://xon.sh/tutorial_xontrib.html
+# Load xontribs that were installed by this ansible role (see the "xontribs" variable)
+source ~/.xonsh_xontrib_load
 
-# Pre-installed
-xontrib load jedi
-xontrib load prompt_ret_code
-xontrib load whole_word_jumping
-
-# Installed with ansible
-xontrib load autoxsh
-xontrib load click_tabcomplete
-xontrib load docker_tabcomplete
-xontrib load scrapy_tabcomplete
-xontrib load z
+# http://xon.sh/tutorial.html#customizing-the-prompt
+# http://xon.sh/envvars.html#xonsh-gitstatus
+$PROMPT = '{env_name:{} }{BOLD_GREEN}{hostname}{BOLD_BLUE} {cwd}{branch_color}{gitstatus: {}}{NO_COLOR} {BOLD_BLUE}{ret_code_color}{ret_code}{NO_COLOR}\n{prompt_end} '

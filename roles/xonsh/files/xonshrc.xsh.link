@@ -1,0 +1,34 @@
+from pathlib import Path
+
+# http://xon.sh/osx.html
+source-bash $(/usr/libexec/path_helper -s)
+
+# http://xon.sh/tutorial.html#environment-types
+$DOTFILES = $HOME + '/dotfiles'
+$DOTFILES_PRIVATE = $HOME + '/dotfiles_private'
+
+# For now, source all ZSH configuration files, until all are converted to Xonsh syntax
+$ZSH_CONFIG_FILES = g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`
+
+for zsh_file in $ZSH_CONFIG_FILES:
+    xsh_file = Path(zsh_file).with_suffix('.xsh')
+    if xsh_file.exists():
+        source @(xsh_file)
+    else:
+        print(f'\n>>> Backward compatibility: Sourcing the ZSH file {zsh_file}')
+        source-bash @(zsh_file)
+
+# Info on modules: http://xon.sh/xontribs.html
+# How to install and load: http://xon.sh/tutorial_xontrib.html
+
+# Pre-installed
+xontrib load jedi
+xontrib load prompt_ret_code
+xontrib load whole_word_jumping
+
+# Installed with ansible
+xontrib load autoxsh
+xontrib load click_tabcomplete
+xontrib load docker_tabcomplete
+xontrib load scrapy_tabcomplete
+xontrib load z

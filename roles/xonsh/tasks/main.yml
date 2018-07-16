@@ -1,0 +1,18 @@
+# Installation and setup
+- include_tasks: "{{ ansible_os_family | lower }}.yml"
+
+- name: Link xonshrc file
+  file:
+    src: "{{ dotfiles_home }}/roles/xonsh/files/xonshrc.xsh.link"
+    dest: "{{ dotfiles_user_home }}/.xonshrc"
+    state: link
+
+- name: Install Xontribs
+  command: "xonsh --no-rc -c 'xpip install xonsh-{{ item }}'"
+  with_items: '{{ xontribs }}'
+
+- name: Link global .autoxsh file
+  file:
+    src: "{{ dotfiles_home }}/roles/xonsh/files/autoxsh.xsh.link"
+    dest: "{{ dotfiles_user_home }}/.autoxsh"
+    state: link

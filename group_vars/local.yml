@@ -12,10 +12,10 @@ dotfiles_home: "{{dotfiles_user_home}}/dotfiles"
 dotfiles_private: "{{ '~' | expanduser }}/dotfiles_private"
 
 # Python tasks need the PYENV_ROOT environment variable set with this value
-pyenv_root: "{{ dotfiles_user_home }}/.pyenv"
+pyenv_root: "~/.pyenv"
 
 # Root directory for projects
-project_root: "{{ dotfiles_user_home }}/Code"
+project_root: "~/Code"
 
 # Name used in commit messages
 full_name: Wagner Augusto Andreoli
@@ -148,3 +148,11 @@ rust_binaries:
   - {pkg: cargo-update, bin: cargo-install-update}
   - {pkg: exa, bin: exa}
   - {pkg: ripgrep, bin: rg}
+
+# http://xon.sh/tutorial_xontrib.html
+xontribs:
+  - autoxsh
+  - click-tabcomplete
+  - docker-tabcomplete
+  - scrapy-tabcomplete
+  - z

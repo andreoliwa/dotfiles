@@ -1,0 +1,4 @@
+# OSX installation and setup
+
+- name: Make sure xonsh is installed
+  homebrew: name=xonsh state=latest

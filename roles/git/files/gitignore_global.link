@@ -21,6 +21,7 @@ Icon
 .autoenv
 .autoenv.zsh
 .ropeproject
+.autoxsh
 
 ### Python ###
 .venv

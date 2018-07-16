@@ -58,5 +58,5 @@
     path: "{{ root }}/{{ dir }}/.autoxsh"
     state: present
     create: yes
-    regexp: "^.+ VIRTUAL_ENV="
+    regexp: "VIRTUAL_ENV = "
     line: "$VIRTUAL_ENV = p'{{ pyenv_root }}/versions/{{ env }}'"

@@ -1,7 +1,6 @@
 alias py="python"
 alias py3="python3"
 alias ipy="ipython"
-alias ipynb="ipython notebook"
 alias jpnb="jupyter notebook"
 alias pyserv2="python2 -m SimpleHTTPServer"
 alias pyserv="python3 -m http.server"

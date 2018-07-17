@@ -14,11 +14,15 @@ for zsh_file in $ZSH_CONFIG_FILES:
     xsh_file = Path(zsh_file).with_suffix('.xsh')
     if xsh_file.exists():
         source @(xsh_file)
+    elif '/zsh' in zsh_file:
+        # Skip files that belong to any zsh role ("zsh" or "zsh-autoenv").
+        continue
     else:
-        print(f'\n>>> Backward compatibility: Sourcing the ZSH file {zsh_file}')
+        print(f'>>> Backward compatibility: Sourcing the ZSH file {zsh_file}')
         source-bash @(zsh_file)
 
 # Load xontribs that were installed by this ansible role (see the "xontribs" variable)
+print(f'>>> Load xontribs')
 source ~/.xonsh_xontrib_load
 
 # http://xon.sh/tutorial.html#customizing-the-prompt

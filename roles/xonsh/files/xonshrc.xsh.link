@@ -8,18 +8,24 @@ $DOTFILES = $HOME + '/dotfiles'
 $DOTFILES_PRIVATE = $HOME + '/dotfiles_private'
 
 # For now, source all ZSH configuration files, until all are converted to Xonsh syntax
-$ZSH_CONFIG_FILES = g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`
+$ZSH_CONFIG_FILES = set(g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`)
+
+$XSH_CONFIG_FILES = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
 
 for zsh_file in $ZSH_CONFIG_FILES:
     xsh_file = Path(zsh_file).with_suffix('.xsh')
     if xsh_file.exists():
-        source @(xsh_file)
+        if xsh_file not in $XSH_CONFIG_FILES:
+            source @(xsh_file)
     elif '/zsh' in zsh_file:
         # Skip files that belong to any zsh role ("zsh" or "zsh-autoenv").
         continue
     else:
         print(f'>>> Backward compatibility: Sourcing the ZSH file {zsh_file}')
         source-bash @(zsh_file)
+
+for xsh_file in $XSH_CONFIG_FILES:
+    source @(xsh_file)
 
 # Load xontribs that were installed by this ansible role (see the "xontribs" variable)
 print(f'>>> Load xontribs')

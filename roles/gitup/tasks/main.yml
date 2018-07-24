@@ -1,3 +1,5 @@
+- include_tasks: "{{ ansible_os_family | lower }}.yml"
+
 - name: "gitup : Create host directory"
   file:
     state: directory

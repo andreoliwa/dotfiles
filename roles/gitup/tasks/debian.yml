@@ -1,0 +1,15 @@
+- name: "gitup : Git clone"
+  git:
+    repo: "https://github.com/earwig/git-repo-updater.git"
+    dest: "/tmp/git-repo-updater"
+    clone: yes
+
+- name: "gitup : Install with setup.py"
+  command: "python setup.py install --user"
+  args:
+    chdir: "/tmp/git-repo-updater"
+
+- name: "gitup : Remove dir"
+  file:
+    state: absent
+    path: "/tmp/git-repo-updater"

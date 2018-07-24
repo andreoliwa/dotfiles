@@ -1,7 +1,3 @@
 - name: Install git with yum
   yum: name=git state=latest
   become: true
-
-- name: "gitup : Install with yum"
-  yum: name=gitup state=latest
-  become: true

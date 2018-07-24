@@ -1,0 +1,2 @@
+- name: "gitup : Install with Homebrew"
+  homebrew: name=gitup state=latest

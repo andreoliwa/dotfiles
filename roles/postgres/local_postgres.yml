@@ -3,7 +3,8 @@ services:
   local_postgres:
     # Official PostgreSQL image
     # https://registry.hub.docker.com/u/library/postgres/
-    image: postgres:latest
+    # TODO: convert the data files to the latest version (10), then change the image back to "postgres:latest"
+    image: postgres:9.6
     container_name: local_postgres
     # Those are also the default values, left here for clarity. This will be the superuser.
     environment:

@@ -1,13 +1,13 @@
 from pathlib import Path
 
-# http://xon.sh/osx.html
-source-bash $(/usr/libexec/path_helper -s)
-
 # http://xon.sh/tutorial.html#environment-types
 $DOTFILES = $HOME + '/dotfiles'
 $DOTFILES_PRIVATE = $HOME + '/dotfiles_private'
 
-# Path http://xon.sh/envvars.html#path
+# Path
+# http://xon.sh/osx.html
+source-bash $(/usr/libexec/path_helper -s)
+# http://xon.sh/envvars.html#path
 $PATH.append(Path($DOTFILES) / 'bin')
 $PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
 
@@ -15,20 +15,15 @@ $PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
 $ZSH_CONFIG_FILES = set(g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`)
 $XSH_CONFIG_FILES = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
 
-for zsh_file in $ZSH_CONFIG_FILES:
-    xsh_file = Path(zsh_file).with_suffix('.xsh')
-    if xsh_file.exists():
-        if xsh_file not in $XSH_CONFIG_FILES:
-            source @(xsh_file)
-    elif '/zsh' in zsh_file:
-        # Skip files that belong to any zsh role ("zsh" or "zsh-autoenv").
-        continue
-    else:
-        print(f'>>> Backward compatibility: Sourcing the ZSH file {zsh_file}')
-        source-bash @(zsh_file)
-
-for xsh_file in $XSH_CONFIG_FILES:
+for xsh_file in sorted($XSH_CONFIG_FILES):
     source @(xsh_file)
+
+for zsh_file in sorted($ZSH_CONFIG_FILES):
+    xsh_file = Path(zsh_file).with_suffix('.xsh')
+    # Skip files that already have a corresponding .xsh, and files that belong to a zsh role ("zsh" or "zsh-autoenv").
+    if not xsh_file.exists() and '/zsh' not in zsh_file:
+        print(f'>>> Backward compatibility: Sourcing {zsh_file}')
+        source-bash @(zsh_file)
 
 # Load xontribs that were installed by this ansible role (see the "xontribs" variable)
 source ~/.xonsh_xontrib_load

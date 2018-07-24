@@ -9,7 +9,6 @@
   roles:
     - {role: git, tags: [git, vcs]}
     - {role: package_manager, tags: [os, system]}
-    - {role: zsh, tags: [zsh, system, bootstrap]}
     - {role: xonsh, tags: [xonsh, system, bootstrap]}
     - {role: docker, tags: [docker, system, fail]}
     - {role: vim, tags: [vim, tool, dev]}
@@ -17,7 +16,6 @@
     - {role: rust, tags: [rust]}
     - {role: node, tags: [node, dev]}
     - {role: hub, tags: [hub, vcs]}
-    - {role: zsh-autoenv, tags: [zsh, system]}
     - {role: ccat, tags: [ccat, tool]}
     - {role: tmux, tags: [tmux, tool]}
     - {role: fzf, tags: [fzf, tool]}

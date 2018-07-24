@@ -1,4 +1,16 @@
-# OSX installation and setup
-
 - name: Make sure xonsh is installed
   homebrew: name=xonsh state=latest
+
+- name: Add xonsh to /etc/shells
+  lineinfile:
+    line: /usr/local/bin/xonsh
+    dest: /etc/shells
+    state: present
+  register: add_xonsh
+  become: true
+  become_method: sudo
+
+- name: Change default shell to xonsh
+  command: chsh -s /usr/local/bin/xonsh
+  # Only run this if above task was changed
+  when: add_xonsh.changed

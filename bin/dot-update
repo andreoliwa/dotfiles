@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Change dir to read the correct ansible.cfg
 cd ~/dotfiles

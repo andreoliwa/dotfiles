@@ -7,9 +7,12 @@ source-bash $(/usr/libexec/path_helper -s)
 $DOTFILES = $HOME + '/dotfiles'
 $DOTFILES_PRIVATE = $HOME + '/dotfiles_private'
 
+# Path http://xon.sh/envvars.html#path
+$PATH.append(Path($DOTFILES) / 'bin')
+$PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
+
 # For now, source all ZSH configuration files, until all are converted to Xonsh syntax
 $ZSH_CONFIG_FILES = set(g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`)
-
 $XSH_CONFIG_FILES = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
 
 for zsh_file in $ZSH_CONFIG_FILES:
@@ -28,7 +31,6 @@ for xsh_file in $XSH_CONFIG_FILES:
     source @(xsh_file)
 
 # Load xontribs that were installed by this ansible role (see the "xontribs" variable)
-print(f'>>> Load xontribs')
 source ~/.xonsh_xontrib_load
 
 # http://xon.sh/tutorial.html#customizing-the-prompt

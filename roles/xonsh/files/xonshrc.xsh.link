@@ -1,4 +1,18 @@
+import time
 from pathlib import Path
+
+print(f'Loading {__file__}...')
+load_start = time.time()
+
+# Set this variable to true if you want to debug this .xonshrc file
+DEBUG = False
+
+# Debug variables and functions
+if DEBUG:
+    $XONSH_SHOW_TRACEBACK = True
+def debug_print(message: str):
+    if DEBUG:
+        print('\n' + message)
 
 # http://xon.sh/tutorial.html#environment-types
 $DOTFILES = $HOME + '/dotfiles'
@@ -12,17 +26,19 @@ $PATH.append(Path($DOTFILES) / 'bin')
 $PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
 
 # For now, source all ZSH configuration files, until all are converted to Xonsh syntax
-$ZSH_CONFIG_FILES = set(g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`)
-$XSH_CONFIG_FILES = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
+# http://xon.sh/tutorial.html#normal-globbing
+zsh_config_files = set(g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`)
+xsh_config_files = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
 
-for xsh_file in sorted($XSH_CONFIG_FILES):
+for xsh_file in sorted(xsh_config_files):
+    debug_print(f'$$$ Sourcing xonsh {xsh_file}')
     source @(xsh_file)
 
-for zsh_file in sorted($ZSH_CONFIG_FILES):
+for zsh_file in sorted(zsh_config_files):
     xsh_file = Path(zsh_file).with_suffix('.xsh')
     # Skip files that already have a corresponding .xsh, and files that belong to a zsh role ("zsh" or "zsh-autoenv").
     if not xsh_file.exists() and '/zsh' not in zsh_file:
-        print(f'  >> Backward compatibility: Sourcing {zsh_file}')
+        print(f'\n>>> TODO Convert this zsh file to a .xsh file: {zsh_file}')
         source-bash @(zsh_file)
 
 # Load xontribs that were installed by this ansible role (see the "xontribs" variable)
@@ -32,5 +48,9 @@ source ~/.xonsh_xontrib_load
 # http://xon.sh/envvars.html#xonsh-gitstatus
 $PROMPT = '{env_name:{} }{BOLD_GREEN}{hostname}{BOLD_BLUE} {cwd}{branch_color}{gitstatus: {}}{NO_COLOR} {BOLD_BLUE}{ret_code_color}{ret_code}{NO_COLOR}\n{prompt_end} '
 
-# TODO This should be done by the "python_pyenv" role
-source-bash $(pyenv init -)
+# Those environment variables are only needed for the globbing above; I couldn't do it with Python variables.
+del $DOTFILES
+del $DOTFILES_PRIVATE
+
+load_end = time.time()
+print(f"It took {load_end - load_start} seconds")

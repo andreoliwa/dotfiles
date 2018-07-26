@@ -1,11 +1,52 @@
 import time
 from pathlib import Path
 
-print(f'Loading {__file__}...')
-load_start = time.time()
-
 # Set this variable to true if you want to debug this .xonshrc file
 DEBUG = False
+
+def relative_to_home(full_path: str):
+    path_obj = Path(full_path)
+    return '~/{}'.format(path_obj.relative_to(path_obj.home()))
+
+class Benchmark:
+
+    stats = {}
+
+    def __init__(self, message: str, show=False):
+        self.message = message
+        self.show = show
+        self.start_time = None
+        self.end_time = None
+        self.seconds = None
+
+    def start(self):
+        self.start_time = time.time()
+
+    def end(self, show=False):
+        self.end_time = time.time()
+        self.seconds = self.end_time - self.start_time
+        self.stats[self.message] = self.seconds
+        if show or self.show:
+            self.print(self.message, self.seconds)
+    
+    @staticmethod
+    def print(message, seconds):
+        print(f"{message}: {seconds} seconds")
+
+    def __enter__(self):
+        self.start()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end()
+
+    @classmethod
+    def print_stats(cls):
+        print('\nLoading times (slowest first):')
+        for message, seconds in sorted(cls.stats.items(), key=lambda kv: kv[1], reverse=True):
+            cls.print(message, seconds)
+
+file_bench = Benchmark(f'{relative_to_home(__file__)}')
+file_bench.start()
 
 # Debug variables and functions
 if DEBUG:
@@ -18,32 +59,27 @@ def debug_print(message: str):
 $DOTFILES = $HOME + '/dotfiles'
 $DOTFILES_PRIVATE = $HOME + '/dotfiles_private'
 
-# Path
-# http://xon.sh/osx.html
-source-bash $(/usr/libexec/path_helper -s)
-# http://xon.sh/envvars.html#path
-$PATH.append(Path($DOTFILES) / 'bin')
-$PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
+with Benchmark('Set PATH'):
+    # http://xon.sh/osx.html#path-helper
+    source-bash $(/usr/libexec/path_helper -s)
+    # http://xon.sh/envvars.html#path
+    $PATH.append(Path($DOTFILES) / 'bin')
+    $PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
 
 # Source all .xsh scripts
 # http://xon.sh/tutorial.html#normal-globbing
-zsh_config_files = set(g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`)
 xsh_config_files = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
 
-for xsh_file in sorted(xsh_config_files):
-    debug_print(f'$$$ Sourcing xonsh {xsh_file}')
-    source @(xsh_file)
-
-for zsh_file in sorted(zsh_config_files):
-    xsh_file = Path(zsh_file).with_suffix('.xsh')
-    # Skip files that already have a corresponding .xsh, and files that belong to a zsh role ("zsh" or "zsh-autoenv").
-    if not xsh_file.exists() and '/zsh' not in zsh_file:
-        raise RuntimeError
-        print(f'\n>>> TODO Convert this zsh file to a .xsh file: {zsh_file}')
-        source-bash @(zsh_file)
+with Benchmark('All .xsh scripts'):
+    for xsh_file in sorted(xsh_config_files):
+        relative_path = relative_to_home(xsh_file)
+        with Benchmark(f'Script {relative_path}'):
+            debug_print(f'$$$ Sourcing xonsh script {relative_path}')
+            source @(xsh_file)
 
 # Load xontribs that were installed by this ansible role (see the "xontribs" variable)
-source ~/.xonsh_xontrib_load
+with Benchmark('Xontribs'):
+    source ~/.xonsh_xontrib_load
 
 # http://xon.sh/tutorial.html#customizing-the-prompt
 # http://xon.sh/envvars.html#xonsh-gitstatus
@@ -53,5 +89,7 @@ $PROMPT = '{env_name:{} }{BOLD_GREEN}{hostname}{BOLD_BLUE} {cwd}{branch_color}{g
 del $DOTFILES
 del $DOTFILES_PRIVATE
 
-load_end = time.time()
-print(f"It took {load_end - load_start} seconds")
+file_bench.end(not DEBUG)
+
+if DEBUG:
+    Benchmark.print_stats()

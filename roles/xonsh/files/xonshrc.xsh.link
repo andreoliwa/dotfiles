@@ -25,7 +25,7 @@ source-bash $(/usr/libexec/path_helper -s)
 $PATH.append(Path($DOTFILES) / 'bin')
 $PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
 
-# For now, source all ZSH configuration files, until all are converted to Xonsh syntax
+# Source all .xsh scripts
 # http://xon.sh/tutorial.html#normal-globbing
 zsh_config_files = set(g`$DOTFILES/**/*.zsh` + g`$DOTFILES_PRIVATE/**/*.zsh`)
 xsh_config_files = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
@@ -38,6 +38,7 @@ for zsh_file in sorted(zsh_config_files):
     xsh_file = Path(zsh_file).with_suffix('.xsh')
     # Skip files that already have a corresponding .xsh, and files that belong to a zsh role ("zsh" or "zsh-autoenv").
     if not xsh_file.exists() and '/zsh' not in zsh_file:
+        raise RuntimeError
         print(f'\n>>> TODO Convert this zsh file to a .xsh file: {zsh_file}')
         source-bash @(zsh_file)
 

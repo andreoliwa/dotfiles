@@ -6,7 +6,7 @@ dotfiles
 a few neat features
 -------------------
 
-- zsh configured with [prezto](https://github.com/sorin-ionescu/prezto).
+- xonsh instead of zsh.
 - nice fonts for the terminal and coding.
 - iterm2 profile (w/ hotkey, themes, etc.)
 - anaconda python (Miniconda 3 distribution).
@@ -87,7 +87,7 @@ special files
 
 All configuration is done in `~/dotfiles`. Each role may contain (in addition to the typical ansible directories and files) a number of special files
 
-- **role/\*.zsh**: Any files ending in `.zsh` get loaded into your environment.
+- **role/\*.xsh**: Any files ending in `.xsh` get loaded into your environment.
 - **bin/**: Anything in `bin/` will get added to your `$PATH` and be made available everywhere.
 
 notes

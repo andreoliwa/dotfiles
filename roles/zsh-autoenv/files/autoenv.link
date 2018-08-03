@@ -1,5 +1,0 @@
-# Clear all variables used in other .autoenv files
-export FLASK_APP=
-export FLASK_DEBUG=
-export VIRTUAL_ENV=
-export LDFLAGS=

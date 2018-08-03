@@ -19,7 +19,6 @@ Icon
 ## autoenv ##
 .env
 .autoenv
-.autoenv.zsh
 .ropeproject
 .autoxsh
 

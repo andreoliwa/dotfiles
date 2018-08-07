@@ -2,6 +2,7 @@ aliases['g'] = "git"
 aliases['gf'] = "git flow"
 
 aliases['gaa'] = 'git add --all'
+aliases['gb'] = 'git branch'
 aliases['gba'] = 'git branch --all --verbose'
 aliases['gcd'] = 'git checkout develop'
 aliases['gci'] = 'git-checkout-issue'

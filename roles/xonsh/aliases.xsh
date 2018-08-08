@@ -12,6 +12,7 @@ aliases['dil'] = 'doitlive'
 aliases['dilp'] = 'doitlive play'
 aliases['l'] = 'ls -1a'
 aliases['la'] = 'ls -la'
+aliases['ll'] = 'ls -ll'
 
 aliases['vi'] = "vim"
 aliases['v'] = "vim"

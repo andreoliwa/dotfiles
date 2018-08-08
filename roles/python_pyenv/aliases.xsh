@@ -16,5 +16,5 @@ aliases["getpip"] = _getpip
 aliases["pf"] = 'pip freeze'
 aliases["pfg"] = 'pip freeze | rg -i'
 aliases["pv"] = 'pyenv version'
-aliases["pvs"] = 'pyenv versions'
+aliases["pvs"] = 'pyenv versions --bare'
 aliases["f"] = "flask"

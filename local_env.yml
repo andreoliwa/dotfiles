@@ -9,7 +9,7 @@
   roles:
     - {role: git, tags: [git, vcs]}
     - {role: package_manager, tags: [os, system]}
-    - {role: xonsh, tags: [xonsh, system, bootstrap]}
+    - {role: xonsh, tags: [xonsh, system]}
     - {role: docker, tags: [docker, system, fail]}
     - {role: vim, tags: [vim, tool, dev]}
     - {role: python_pyenv, tags: [python, dev]}

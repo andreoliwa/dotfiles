@@ -9,8 +9,10 @@
   register: add_xonsh
   become: true
   become_method: sudo
+  tags: [bootstrap]
 
 - name: Change default shell to xonsh
   command: chsh -s /usr/local/bin/xonsh
+  tags: [bootstrap]
   # Only run this if above task was changed
   when: add_xonsh.changed

@@ -1,15 +1,18 @@
 dotfiles
 ========
 
-[sloria's dotfiles](https://github.com/sloria/dotfiles-old), rewritten as Ansible roles. Fully supports MacOSX. Red Hat and Debian support is good but not as complete.
+[sloria's dotfiles](https://github.com/sloria/dotfiles-old), rewritten as Ansible roles. Sets up a full local development environment with a **single command.**
+
+Fully supports macOS. Red Hat and Debian support is good but not as complete.
 
 a few neat features
 -------------------
 
-- xonsh instead of zsh.
+- zsh configured with [prezto](https://github.com/sorin-ionescu/prezto).
+- xonsh (Python shell)
 - nice fonts for the terminal and coding.
 - iterm2 profile (w/ hotkey, themes, etc.)
-- anaconda python (Miniconda 3 distribution).
+- python2, python3, pyenv (for managing Python versions), and pyenv-virtualenv (for managing virtualenvs)
 - alternative Python configuration with pyenv, pip, virtualenv
 - a tmux.conf that's pretty neat.
 - [tmuxp](https://tmuxp.git-pull.com/en/latest/) for tmux session management
@@ -36,8 +39,8 @@ install
 ```bash
 # Replace git url with your fork
 # NOTE: It is important that you clone to ~/dotfiles
-$ git clone https://github.com/YOU/dotfiles.git ~/dotfiles
-$ cd ~/dotfiles
+git clone https://github.com/YOU/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 ```
 
 - Update the following variables in `group_vars/local` (at a minimum)
@@ -45,14 +48,13 @@ $ cd ~/dotfiles
     - `git_user`: Your Github username.
     - `git_email`: Your git email address.
 - Optional, but recommended: Update `group_vars/local` with the programs you want installed by [homebrew][], [homebrew-cask][], and npm.
-    - `osx_homebrew_packages`:  Utilities that don't get installed by the roles.
-    - `osx_cask_packages`: Mac Apps you want installed with [homebrew-cask][].
-    - `npm_global_packages`: Node utilities.
+    - `mac_homebrew_packages`:  Utilities that don't get installed by the roles.
+    - `mac_cask_packages`: Mac Apps you want installed with [homebrew-cask][].
 - Edit `local_env.yml` as you see fit. Remove any roles you don't use. Edit roles that you do use.
 - Run the installation script.
 
 ```bash
-$ ./bin/dot-bootstrap
+./bin/dot-bootstrap
 ```
 
 updating your local environment
@@ -61,7 +63,13 @@ updating your local environment
 Once you have the dotfiles installed you can run the following command to rerun the ansible playbook:
 
 ```bash
-$ dot-update
+dot-update
+```
+
+You can optionally pass role names
+
+```bash
+dot-update git python
 ```
 
 updating your dotfiles repo
@@ -70,8 +78,8 @@ updating your dotfiles repo
 To keep your fork up to date with the `sloria` fork:
 
 ```
-$ git remote add sloria https://github.com/sloria/dotfiles.git
-$ git pull sloria master
+git remote add sloria https://github.com/sloria/dotfiles.git
+git pull sloria master
 ```
 
 commands
@@ -87,42 +95,39 @@ special files
 
 All configuration is done in `~/dotfiles`. Each role may contain (in addition to the typical ansible directories and files) a number of special files
 
-- **role/\*.xsh**: Any files ending in `.xsh` get loaded into your environment.
+- **role/\*.zsh**: Any files ending in `.zsh` get loaded into your environment.
+- for xonsh: **role/\*.xsh**: Any files ending in `.xsh` get loaded into your environment.
 - **bin/**: Anything in `bin/` will get added to your `$PATH` and be made available everywhere.
 
 notes
 -----
 
-**python**		
-
-The `python` topic installs [miniconda](http://conda.pydata.org/miniconda.html). The installation is entirely self-contained, and lives at `~/miniconda`.		
-
 **iterm2**
 
 To import the iterm2 profile, go to your iterm2 preferences, and enable "Load preferences from custom folder" and select the iterm2 folder in the `misc/` directory.
 
-![iterm2 profile](https://dl.dropboxusercontent.com/u/1693233/github/dotfiles-iterm2.png)
+![iterm2 profile](https://user-images.githubusercontent.com/2379650/34223487-859f2752-e58d-11e7-8024-9e6af5c1ec4e.png)
 
-**macosx keyboard settings**
+**macOS keyboard settings**
 
 There are a few keyboard customizations that must be done manually:
 
 - Turning repeat speed up to 11.
 
-![Keyboard settings](https://dl.dropboxusercontent.com/u/1693233/github/dotfiles-mac-keys.png "Key repeat settings")
+![Keyboard settings](https://user-images.githubusercontent.com/2379650/34223505-91f95072-e58d-11e7-9b36-78aec4203b0d.png "Key repeat settings")
 
 
 - Mapping Caps Lock to Ctrl.
 
-![Modifier keys](https://dl.dropboxusercontent.com/u/1693233/github/dotfiles-mod-keys.png)
+![Modifier keys](https://user-images.githubusercontent.com/2379650/34223523-a2c8e4e4-e58d-11e7-9532-d74b95d8408a.png)
 
 what if I only want your vim?
 -----------------------------
 
-First make sure you have a sane vim compiled. On MacOSX, the following will do:
+First make sure you have a sane vim compiled. On macOS, the following will do:
 
 ```
-brew install macvim --HEAD --with-override-system-vim --with-python
+brew install macvim --HEAD --with-override-system-vim
 ```
 
 The following commands will install vim-plug and download my `.vimrc`.
@@ -151,7 +156,6 @@ todo
 ----
 
 - Full Debian and Red Hat support
-- Add more options to `dot` script, e.g. for skipping tasks
 
 [homebrew]: http://brew.sh/
 [homebrew-cask]: https://github.com/caskroom/homebrew-cask

@@ -1,0 +1,184 @@
+# vi: set ft=yaml :
+
+# NOTE: The below 2 variables should not need to be changed if you cloned
+#   the dotfiles repo to '~/dotfiles'
+#  Local home directory
+dotfiles_user_home: "{{ '~' | expanduser }}"
+# Where your dotfiles live. Probably don't need to change this.
+dotfiles_home: "{{dotfiles_user_home}}/dotfiles"
+
+# Your private Ansible roles, private shell scripts, etc.
+dotfiles_private: "{{ '~' | expanduser }}/dotfiles_private"
+
+# Python tasks need the PYENV_ROOT environment variable set with this value
+pyenv_root: "~/.pyenv"
+
+# Root directory for projects
+project_root: "~/Code"
+
+# Name used in commit messages
+full_name: Wagner Augusto Andreoli
+# Git
+# Github username
+git_user: andreoliwa
+# If you use github, this should be the same as the email
+#  used on Github
+git_email: andreoliwa@gmail.com
+
+# GPG Key ID used to sign git commits
+# See https://github.com/pstadler/keybase-gpg-github setup instructions
+git_signing_key: 6F84DBFC
+# TODO: Find a way to use the same GPG credentials on multiple computers
+git_signing_key_2: 5B95C4A438B0122C
+
+# Vim
+
+# Whether to install plugins automatically. If not, just run
+# :PlugInstall while in vim.
+vim_install_plugins: no
+
+# Utilities that don't get installed by a role
+mac_homebrew_packages:
+  - curl
+  - wget
+  - highlight
+  - terminal-notifier
+  - htop-osx
+  - httpie
+  - pgbadger
+  - diff-so-fancy
+  - rename
+  - docker-clean
+  - gpg
+  - heroku/brew/heroku
+  # Top for docker containers
+  - ctop
+  # User-contributed docs for Unix commands
+  - tldr
+  # what's the wifi password?
+  - wifi-password
+  # Share tmux sessions
+  - tmate
+  # README rendering
+  - grip
+  # Prose linting
+  - ValeLint/vale/vale
+  # For repeating commands
+  - watch
+
+# Mac Apps to be installed with homebrew-cask
+mac_cask_packages:
+  # Browsers
+  - firefox-beta
+  - google-chrome
+  - vivaldi
+  # Development
+  - visual-studio-code
+  # Network
+  - filezilla
+  - ngrok
+  - teamviewer
+  - private-internet-access
+  # Utilities
+  - iterm2-nightly  # nightly has faster rendering
+  - keepingyouawake  # maintained caffeinate wrapper
+  - flux
+  - appcleaner
+  - raindropio
+  - spectacle
+  - the-unarchiver
+  - authy-desktop
+  # E-mail
+  - mia-for-gmail
+  - gmail-notifier
+  # Vagrant/Virtualbox
+  - vagrant
+  - virtualbox
+  # Docker
+  - docker
+  # Chat
+  - zulip
+  - telegram
+  - whatsapp
+  # Backup/storage
+  - dropbox
+  # Media/Music
+  - spotify
+  - vlc
+  - iina
+  - beardedspice
+  - spotifree
+  - musixmatch
+  # Images
+  - imageoptim  # optimizing images
+  - kap  # capturing gifs
+  # Notetaking
+  - nvalt  # for my commonplace book
+  - notion # slowly replacing evernote
+  # Fonts
+  - font-ubuntu
+  - font-cousine
+  # Databases
+  - tableplus  # RDBMS client
+  # Docs
+  - dash
+  # Deployments
+  - now
+  # REST client
+  - insomnia
+
+# APT packages that don't get installed by a role
+apt_packages:
+  - python3-pip
+  - curl
+  - dos2unix
+  - wget
+  - gnupg2
+  - htop
+  - lsof
+  - strace
+  - gnupg-agent
+  - shotwell
+
+# Mac-App-Store-only apps to be installed with mas
+# Use App IDs found with `mas search <name>`
+mac_mas_packages:
+  - 585829637  # Todoist
+  - 409203825  # Numbers
+
+ruby_global_gems:
+  - lunchy
+  - travis
+
+# Python versions to install with pyenv and set as global
+# Especially useful when using tox
+# NOTE: 2.7 gets installed by Homebrew
+pyenv_global_versions:
+  - 3.6.5
+  - 3.5.5
+  - 2.7.15
+
+python3_modules:
+  - pipenv
+  - cookiecutter
+  - cookiepatcher
+  - youtube-dl
+  - black
+  - organize-tool
+  - keyring
+  - subliminal
+  - awscli
+
+# Node utilities
+npm_global_packages:
+  - webpack
+  - eslint
+  - eslint-config-airbnb
+  - eslint-plugin-react
+  - babel-eslint
+  - np
+
+rust_binaries:
+  - {pkg: cargo-update, bin: cargo-install-update}
+  - {pkg: exa, bin: exa}
+  - {pkg: ripgrep, bin: rg}

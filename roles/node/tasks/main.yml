@@ -1,1 +1,10 @@
 - include_tasks: "{{ ansible_os_family | lower }}.yml"
+
+- name: Install nvm
+  script: install_nvm.sh
+  args:
+    creates: "{{dotfiles_user_home}}/.nvm"
+
+# - name: Install common npm utilities
+#   npm: name={{item}} state=present global=yes
+#   with_items: '{{npm_global_packages}}'

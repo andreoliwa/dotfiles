@@ -6,17 +6,16 @@
 - name: Download hub
   unarchive:
     remote_src: true
-    src: "https://github.com/github/hub/releases/download/v{{ hub_version }}/{{ hub_full_version }}.tgz"
+    src: "https://github.com/github/hub/releases/download/v{{ hub_linux_version }}/{{ hub_linux_full_version }}.tgz"
     dest: /tmp/
   when: not hub_stat.stat.exists
 
 - name: Install hub
-  command: "bash -x /tmp/{{ hub_full_version }}/install"
+  command: "bash -x /tmp/{{ hub_linux_full_version }}/install"
   become: true
   register: hub_output
   when: not hub_stat.stat.exists
-- debug: var=hub_output.stdout_lines
+- debug: var=hub_output
 
 - name: Clean hub files
-  command: rm -rf /tmp/{{ hub_full_version }}{,.tgz}
-
+  command: rm -rf /tmp/{{ hub_linux_full_version }}{,.tgz}

@@ -1,3 +1,4 @@
+
 - name: Install node and npm with homebrew
   homebrew: name=node state=latest
 
@@ -7,6 +8,3 @@
 - name: Install n with homebrew
   homebrew: name=n state=latest
 
-- name: Install common npm utilities
-  npm: name={{ item }} state=present global=yes
-  with_items: '{{ npm_global_packages }}'

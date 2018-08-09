@@ -22,6 +22,7 @@
         c = checkout
         ci = commit
         noff = merge --no-ff
+        plr = pull --rebase
         amend = commit --amend
         wip = commit --no-verify -am "WIP"
         br = branch
@@ -33,6 +34,9 @@
         dfc = "!dfc() { git df $1^ $1; }; dfc"
 
         please = push --force-with-lease
+        publish = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+        # publish current branch
+        publish = "!f() { git push -u ${1:-origin} $(git rev-parse --abbrev-ref HEAD); }; f"
 
         # http://gggritso.com/human-git-aliases
         unstage = reset -q HEAD --
@@ -78,6 +82,7 @@
         #
         # Setting to git 2.0 default to surpress warning message
         default = simple
+        followTags = true
 [github]
         user = {{ git_user }}
 {% if git_signing_key %}

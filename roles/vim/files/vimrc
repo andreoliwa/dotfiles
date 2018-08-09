@@ -1,3 +1,7 @@
+" Temporary workaround for python 3.7: https://github.com/vim/vim/issues/3117#issuecomment-406853295
+if has('python3') && !has('patch-8.1.201')
+  silent! python3 1
+endif
 " Spacebar is a much better leader than \ or ,
 let mapleader = "\<Space>"
 
@@ -17,8 +21,10 @@ if has('python') ||  has('python3')
   Plug 'felikz/ctrlp-py-matcher'
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 endif
-Plug 'dyng/ctrlsf.vim'  " ag-powered search with in-place editing
+" rg-powered search with in-place editing
+Plug 'dyng/ctrlsf.vim'
 let g:ctrlsf_ackprg = 'rg'
+let g:ctrlsf_auto_focus = {'at': 'start'}  " Automatically focus search results
 nmap     <C-f>f :CtrlSF ''<Left>
 nmap     <C-f>n <Plug>CtrlSFCwordPath
 nnoremap <C-f>t :CtrlSFToggle<CR>
@@ -55,18 +61,16 @@ nmap <leader>+ :let b:ale_enabled=1<cr>
 nmap <leader>' :lopen<CR>
 let g:ale_maximum_file_size = 500000  " Don't lint large files (> 500KB), it can slow things down
 let g:ale_linters = {}
-let g:ale_linters.javascript = ['eslint', 'xo']
+let g:ale_linters.javascript = ['eslint']
 let g:ale_linters.python = ['flake8']
 let g:ale_linters.html = []
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['prettier']
-let g:ale_fixers.python = ['isort']
+let g:ale_fixers.python = ['black']
 let g:ale_fixers.css = ['prettier']
-" Make prettier play nicely with xo + my custom rules
-let g:ale_javascript_prettier_options = ' --single-quote --trailing-comma es5 --no-bracket-spacing'
 
 " NICE TO HAVE
-Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/splitjoin.vim'  " Language-specific split/join with gS and gJ
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -81,10 +85,6 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 Plug 'honza/vim-snippets'
 Plug 'fcpg/vim-spotlightify'  " Highlight and show number of matches when searching
-Plug 'majutsushi/tagbar', {'on': 'Tagbar'}
-" Open tagbar
-map <leader>\ :Tagbar<CR>
-let g:tagbar_autofocus = 1
 Plug 'wellle/targets.vim'  " because cin), etc. is awesome
 Plug 'tpope/vim-dispatch' " So we can run tests asynchronously
 Plug 'janko-m/vim-test'  " For running tests
@@ -116,8 +116,7 @@ let g:scratch_persistence_file = '.scratch'
 nnoremap <silent> <leader><tab> :Scratch<cr>
 Plug 'tpope/vim-sleuth'  " Detect indent settings
 Plug 'machakann/vim-highlightedyank'  " Highlight yank
-map y <Plug>(highlightedyank)
-
+if !exists('##TextYankPost') | map y <Plug>(highlightedyank) | endif
 " GIT
 Plug 'airblade/vim-gitgutter'
 " Set gitgutter's bindings manually to avoid clashes
@@ -142,6 +141,8 @@ Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim', {'on': 'Gist'}
 let g:gist_post_private = 1
 " Browse to gist after posting it
 let g:gist_open_browser_after_post = 1
+" Use gr to replace text without blowing away clipboard
+Plug 'vim-scripts/ReplaceWithRegister'
 
 " COLOR
 Plug 'NLKNguyen/papercolor-theme'
@@ -149,8 +150,8 @@ Plug 'sloria/vim-hybrid'  " hybrid with easier-to-read line numbers
 Plug 'nightsense/night-and-day'  " switch colorschemes based on time of day
 " PaperColor in the day, hybrid-sl at night
 let g:nd_themes = [
-  \ ['6:00',  'PaperColor', 'light' ],
-  \ ['17:00', 'hybrid-sl', 'dark' ],
+  \ ['6:00',  'PaperColor', 'light'],
+  \ ['17:00', 'hybrid-sl', 'dark'],
   \ ]
 
 " LANGUAGE-SPECIFIC
@@ -164,14 +165,15 @@ Plug 'vim-python/python-syntax'  " Improved python syntax
 let g:python_highlight_all = 1
 Plug 'Vimjas/vim-python-pep8-indent'  " Proper python indenting
 
+" Use goto-fix branch until https://github.com/davidhalter/jedi-vim/pull/808 is merged
 if has('python') ||  has('python3') | Plug 'davidhalter/jedi-vim' | endif
 " Just let me type!
 let g:jedi#popup_select_first = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#smart_auto_mappings = 0  " don't autoadd 'import'
 let g:jedi#show_call_signatures = 0  " Call sigs slow things down for large projects
-let g:jedi#goto_assignments_command = "gd"
-let g:jedi#goto_command = "gD"  " goto still has problems, so giving it a 2nd-class mapping
+let g:jedi#goto_assignments_command = "gD"
+let g:jedi#goto_command = "gd"
 let g:jedi#usages_command = "gu"
 let g:jedi#rename_command = "<C-c>r"
 " --- Javascript ---
@@ -250,6 +252,7 @@ nnoremap gp `[v`]
 nnoremap <leader>Tp :set ft=python<CR>
 nnoremap <leader>Tj :set ft=javascript<CR>
 nnoremap <leader>Tm :set ft=markdown<CR>
+nnoremap <leader>Ty :set ft=yaml<CR>
 " Quickly write/quit
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
@@ -294,6 +297,7 @@ augroup configgroup
   autocmd BufRead,BufNewFile jrnl*.txt,editor*.txt set filetype=markdown
   autocmd BufRead,BufNewFile jrnl*.txt,editor*.txt,*.md,*.rst setlocal nolist formatoptions+=ntl textwidth=72 wrapmargin=0
   autocmd BufRead,BufNewFile .eslintrc set filetype=json
+  autocmd BufRead,BufNewFile .babelrc set filetype=json5
   " commit messages
   autocmd Filetype gitcommit setlocal nolist textwidth=72
 augroup END

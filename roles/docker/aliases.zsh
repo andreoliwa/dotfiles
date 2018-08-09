@@ -2,6 +2,8 @@ alias dk="docker "
 alias dklog="docker logs -f --tail 100 "
 alias dkl="docker logs -f --tail 100 "
 alias dkdf="dk system df"
+# Stop and remove a single container
+alias dkrm='docker rm -f '
 # Stop and remove all running containers
 alias dkrm!='docker rm -f $(docker ps -a -q)'
 
@@ -14,6 +16,7 @@ function dcdebug {
 }
 # Stop and recreate a container
 alias dcreup="docker-compose up -d --force-recreate --no-deps "
+alias dcre="docker-compose up -d --force-recreate --no-deps "
 alias dclog="docker-compose logs -f --tail 100 "
 alias dcl="docker-compose logs -f --tail 100 "
 

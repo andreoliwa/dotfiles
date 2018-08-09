@@ -2,11 +2,17 @@
 - import_tasks: mac.yml
   when: ansible_os_family == "Darwin"
 
-- name: Install pew
-  pip: name=pew state=latest executable=pip3
 
-- name: Install pipenv
-  pip: name=pipenv state=latest executable=pip3
+- name: Install Python versions with pyenv
+  command: pyenv install {{item}}
+  args:
+    creates: "{{ '~/.pyenv/versions/' + item | expanduser }}"
+  with_items: '{{pyenv_global_versions}}'
+
+- name: Set global Python versions with pyenv
+  copy:
+    content: "system\n{% for version in pyenv_global_versions %}{{ version }}\n{% endfor %}"
+    dest: "{{ '~/.pyenv/version' }}"
 
 - name: Check if pytest.ini file exists
   stat: path="{{dotfiles_user_home}}/pytest.ini"

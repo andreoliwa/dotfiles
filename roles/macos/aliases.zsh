@@ -1,6 +1,5 @@
 alias cask="brew cask"
 alias services="brew services"
-alias ss="open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app"
 
 function sha256() {
   shasum -a 256 $1 | head -1 | grep -o '^\S\+'
@@ -16,3 +15,5 @@ alias update!='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanu
 
 # When you need disk space
 alias cleanup!='brew cleanup --force; brew cask cleanup;'
+
+alias sleep!="pmset sleepnow"

@@ -27,7 +27,6 @@ Icon
 
 ### Python ###
 .venv
-.python-version
 docs/_build
 
 ### JetBrains ###
@@ -43,3 +42,5 @@ _sandbox
 .konchrc
 
 .scratch
+
+.python-version

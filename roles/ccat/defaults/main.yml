@@ -1,2 +1,0 @@
-ccat_version: 1.1.0
-ccat_full_version: "linux-amd64-{{ ccat_version }}"

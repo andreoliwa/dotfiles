@@ -10,6 +10,7 @@
     state: latest
     executable: pip3
   when: ansible_os_family != "Darwin"
+  ignore_errors: true
 
 - name: "Remove ~/.xonsh_xontrib_load"
   file:

@@ -54,13 +54,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # ansible.run = "always"
 
       # Common options: https://www.vagrantup.com/docs/provisioning/ansible_common.html
-      ansible.verbose = "v"
+      # ansible.verbose = "v"
       ansible.provisioning_path = "/home/vagrant/dotfiles"
       ansible.limit = "all"
       ansible.config_file = "./ansible.cfg"
       ansible.inventory_path = "hosts"
       ansible.playbook = "local_env.yml"
-      # ansible.tags = "xonsh"
+      # ansible.tags = ['boostrap']
       # ansible.ask_become_pass = true
       ansible.raw_arguments = ['--ask-become-pass']
 

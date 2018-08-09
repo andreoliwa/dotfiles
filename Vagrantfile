@@ -1,3 +1,5 @@
+# Inspired and adapted from https://github.com/geerlingguy/ansible-role-test-vms... thanks a lot!
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -30,6 +32,41 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :vmware_fusion do |v, override|
     v.vmx["memsize"] = 1024
     v.vmx["numvcpus"] = 3
+  end
+
+  # https://www.vagrantup.com/docs/synced-folders/basic_usage.html
+  # config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder ".", "/home/vagrant/dotfiles"
+  config.vm.synced_folder "~/dotfiles_private", "/home/vagrant/dotfiles_private"
+
+  config.vm.define "bionic" do |bionic|
+    bionic.vm.hostname = "bionic-vm"
+    if not TEST_MODE
+      bionic.vm.box = "ubuntu/bionic64"
+    else
+      bionic.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-bionic.box"
+    end
+    bionic.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + "2"
+
+    # Ansible Local: https://www.vagrantup.com/docs/provisioning/ansible_local.html
+    bionic.vm.provision "ansible_local" do |ansible|
+      # https://www.vagrantup.com/docs/provisioning/basic_usage.html
+      # ansible.run = "always"
+
+      # Common options: https://www.vagrantup.com/docs/provisioning/ansible_common.html
+      ansible.verbose = "v"
+      ansible.provisioning_path = "/home/vagrant/dotfiles"
+      ansible.limit = "all"
+      ansible.config_file = "./ansible.cfg"
+      ansible.inventory_path = "hosts"
+      ansible.playbook = "local_env.yml"
+      # ansible.tags = "xonsh"
+      # ansible.ask_become_pass = true
+      ansible.raw_arguments = ['--ask-become-pass']
+
+      # ansible.galaxy_roles_path = "/home/vagrant/.ansible/roles"
+      # ansible.galaxy_role_file = "galaxy_roles.yml"
+    end
   end
 
   # Ubuntu 16.04 - Xenial Xerus

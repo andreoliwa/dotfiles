@@ -22,6 +22,6 @@
     - {role: gnome_do, tags: [gnome_do, tool]}
     - {role: defaultbrowser, tags: [tool]}
     - {role: osx, tags: [os, system], when: ansible_os_family == "Darwin"}
-    # - {role: andreoliwa, tags: [andreoliwa, personal]}
-    # - {role: eatfirst, tags: [eatfirst, personal]}
+    - {role: andreoliwa, tags: [andreoliwa, personal]}
+    - {role: eatfirst, tags: [eatfirst, personal]}
     - {role: gitup, tags: [gitup, vcs]}

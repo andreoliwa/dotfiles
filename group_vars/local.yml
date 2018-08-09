@@ -112,6 +112,7 @@ osx_cask_packages:
 
 # APT packages that don't get installed by a role
 apt_packages:
+  - python3-pip
   - curl
   - dos2unix
   - wget

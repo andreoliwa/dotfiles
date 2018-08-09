@@ -36,7 +36,7 @@ git_signing_key_2: 5B95C4A438B0122C
 
 # Whether to install plugins automatically. If not, just run
 # :PlugInstall while in vim.
-vim_install_plugins: yes
+vim_install_plugins: no
 
 # Utilities that don't get installed by a role
 osx_homebrew_packages:
@@ -112,6 +112,7 @@ osx_cask_packages:
 
 # APT packages that don't get installed by a role
 apt_packages:
+  - python3-pip
   - curl
   - dos2unix
   - wget

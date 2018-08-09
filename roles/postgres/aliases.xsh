@@ -24,7 +24,8 @@ def _mydb_psql(args):
 aliases["mydb_psql"] = _mydb_psql
 
 # If the real psql client is not installed on this host, create an alias
-which psql 1>/dev/null 2>&1 || alias psql=mydb_psql
+if !(which psql 1>/dev/null 2>&1).returncode:
+    aliases["psql"] = _mydb_psql
 
 def _mydb_create(args):
     user_name = args[0]
@@ -41,3 +42,4 @@ def _mydb_create(args):
     echo
     mydb_psql
 aliases["mydb_create"] = _mydb_create
+

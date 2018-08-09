@@ -14,6 +14,7 @@
     - {role: xonsh, tags: [xonsh, system]}
     - {role: docker, tags: [docker, system, fail]}
     - {role: vim, tags: [vim, tool, dev]}
+    - {role: gantsign.visual-studio-code, tags: [dev]}
     - {role: python_pyenv, tags: [python, dev]}
     - {role: rust, tags: [rust]}
     - {role: node, tags: [node, dev]}

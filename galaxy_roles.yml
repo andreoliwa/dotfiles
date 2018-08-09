@@ -4,5 +4,4 @@
 - src: suzuki-shunsuke.pyenv
 - src: suzuki-shunsuke.pyenv-virtualenv
 - src: suzuki-shunsuke.pyenv-module
-- src: mongrelion.docker
-- src: andrewrothstein.docker-compose
+- src: geerlingguy.docker

@@ -1,0 +1,10 @@
+- name: Make sure xonsh is installed
+  homebrew: name=xonsh state=latest
+  when: ansible_os_family == "Darwin"
+
+- name: "Install xonsh with pip on system's Python 3"
+  pip:
+    name: xonsh
+    state: latest
+    executable: pip3
+  when: ansible_os_family != "Darwin"

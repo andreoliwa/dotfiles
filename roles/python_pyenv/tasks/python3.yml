@@ -1,3 +1,10 @@
+- name: "Upgrade system pip3 version"
+  pip:
+    name: pip
+    state: latest
+    executable: pip3
+  when: ansible_os_family != "Darwin"
+
 - name: "Install Python {{ latest_python_3_6 }}"
   pyenv:
     version: "{{ latest_python_3_6 }}"
@@ -5,6 +12,12 @@
 - name: "Install Python {{ latest_python_3_5 }}"
   pyenv:
     version: "{{ latest_python_3_5 }}"
+
+# https://github.com/pyenv/pyenv/wiki/Common-build-problems#error-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib
+- name: Install a different SSL version to install Python 3.4
+  apt: name=libssl1.0-dev state=latest
+  become: true
+  when: ansible_os_family == "Debian"
 
 - name: "Install Python {{ latest_python_3_4 }}"
   pyenv:

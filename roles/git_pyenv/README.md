@@ -15,7 +15,6 @@ In a playbook file:
         dir: dotfiles-andreoliwa
         update: yes
         create_env: no
-      tags: bootstrap
 ```
 
 In a task file:
@@ -27,5 +26,4 @@ In a task file:
     dir: dotfiles-andreoliwa
     update: yes
     create_env: no
-  tags: bootstrap
 ```

@@ -1,0 +1,20 @@
+- name: Change pam_shells.so to allow change of shell without password
+  lineinfile:
+    regexp: 'pam_shells.so'
+    line: "auth		sufficient	pam_shells.so"
+    dest: /etc/pam.d/chsh
+    state: present
+  become: true
+  when: ansible_os_family != "Darwin"
+
+- name: Change default shell to xonsh
+  command: "chsh -s {{ which_xonsh.stdout }}"
+
+- name: Restore pam_shells.so to disallow change of shell without password
+  lineinfile:
+    regexp: 'pam_shells.so'
+    line: "auth		required	pam_shells.so"
+    dest: /etc/pam.d/chsh
+    state: present
+  become: true
+  when: ansible_os_family != "Darwin"

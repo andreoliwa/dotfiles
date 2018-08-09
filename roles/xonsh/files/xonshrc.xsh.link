@@ -1,4 +1,5 @@
 import time
+import sys
 from pathlib import Path
 
 # Set this variable to true if you want to debug this .xonshrc file
@@ -61,7 +62,9 @@ $DOTFILES_PRIVATE = $HOME + '/dotfiles_private'
 
 with Benchmark('Set PATH'):
     # http://xon.sh/osx.html#path-helper
-    source-bash $(/usr/libexec/path_helper -s)
+    if sys.platform == 'darwin':
+        source-bash $(/usr/libexec/path_helper -s)
+
     # http://xon.sh/envvars.html#path
     $PATH.append(Path($DOTFILES) / 'bin')
     $PATH.append(Path($DOTFILES_PRIVATE) / 'bin')

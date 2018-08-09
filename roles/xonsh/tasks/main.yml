@@ -31,7 +31,3 @@
     src: "{{ dotfiles_home }}/roles/xonsh/files/autoxsh.xsh.link"
     dest: "{{ dotfiles_user_home }}/.autoxsh"
     state: link
-
-# TODO xpip install -U pip
-# TODO xpip install -U prompt_toolkit is failing with $SHELL_TYPE='ptk2'
-# the solution is to "xpip uninstall prompt_toolkit"

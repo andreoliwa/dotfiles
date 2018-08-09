@@ -3,10 +3,10 @@
 [user]
         name = {{ full_name }}
         email = {{ git_email }}
-{% if git_signing_key %}
+{% if git_signing_key and ansible_os_family == 'Darwin' %}
         signingkey = {{ git_signing_key }}
 {% endif %}
-{% if git_signing_key_2 %}
+{% if git_signing_key_2 and ansible_os_family == 'Debian' %}
         #signingkey = {{ git_signing_key_2 }}
 {% endif %}
 {% if ansible_os_family == 'Darwin' %}
@@ -23,7 +23,7 @@
         ci = commit
         noff = merge --no-ff
         amend = commit --amend
-        wip = commit -am "WIP"
+        wip = commit --no-verify -am "WIP"
         br = branch
         # diff-so-fancy
         # https://github.com/so-fancy/diff-so-fancy/#usage
@@ -44,7 +44,7 @@
 
         issues = !hub browse -- issues
         url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
-        # Copy current branch name to clipboard (MacOSX only)
+        # Copy current branch name to clipboard (macOS only)
         cb = "!git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
 
         remote-branches = "!f() { git ls-remote --heads ${1:origin} | sed 's?.*refs/heads/??'; }; f "

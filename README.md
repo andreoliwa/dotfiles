@@ -1,15 +1,16 @@
 dotfiles
 ========
 
-[sloria's dotfiles](https://github.com/sloria/dotfiles-old), rewritten as Ansible roles. Fully supports MacOSX. Red Hat and Debian support is good but not as complete.
+[sloria's dotfiles](https://github.com/sloria/dotfiles-old), rewritten as Ansible roles. Fully supports macOS. Red Hat and Debian support is good but not as complete.
 
 a few neat features
 -------------------
 
-- xonsh instead of zsh.
+- zsh configured with [prezto](https://github.com/sorin-ionescu/prezto).
+- xonsh (Python shell)
 - nice fonts for the terminal and coding.
 - iterm2 profile (w/ hotkey, themes, etc.)
-- anaconda python (Miniconda 3 distribution).
+- python2, python3, pew (for managing virtualenvs), and pipenv
 - alternative Python configuration with pyenv, pip, virtualenv
 - a tmux.conf that's pretty neat.
 - [tmuxp](https://tmuxp.git-pull.com/en/latest/) for tmux session management
@@ -45,8 +46,8 @@ $ cd ~/dotfiles
     - `git_user`: Your Github username.
     - `git_email`: Your git email address.
 - Optional, but recommended: Update `group_vars/local` with the programs you want installed by [homebrew][], [homebrew-cask][], and npm.
-    - `osx_homebrew_packages`:  Utilities that don't get installed by the roles.
-    - `osx_cask_packages`: Mac Apps you want installed with [homebrew-cask][].
+    - `mac_homebrew_packages`:  Utilities that don't get installed by the roles.
+    - `mac_cask_packages`: Mac Apps you want installed with [homebrew-cask][].
     - `npm_global_packages`: Node utilities.
 - Edit `local_env.yml` as you see fit. Remove any roles you don't use. Edit roles that you do use.
 - Run the installation script.
@@ -87,42 +88,39 @@ special files
 
 All configuration is done in `~/dotfiles`. Each role may contain (in addition to the typical ansible directories and files) a number of special files
 
-- **role/\*.xsh**: Any files ending in `.xsh` get loaded into your environment.
+- **role/\*.zsh**: Any files ending in `.zsh` get loaded into your environment.
+- for xonsh: **role/\*.xsh**: Any files ending in `.xsh` get loaded into your environment.
 - **bin/**: Anything in `bin/` will get added to your `$PATH` and be made available everywhere.
 
 notes
 -----
 
-**python**		
-
-The `python` topic installs [miniconda](http://conda.pydata.org/miniconda.html). The installation is entirely self-contained, and lives at `~/miniconda`.		
-
 **iterm2**
 
 To import the iterm2 profile, go to your iterm2 preferences, and enable "Load preferences from custom folder" and select the iterm2 folder in the `misc/` directory.
 
-![iterm2 profile](https://dl.dropboxusercontent.com/u/1693233/github/dotfiles-iterm2.png)
+![iterm2 profile](https://user-images.githubusercontent.com/2379650/34223487-859f2752-e58d-11e7-8024-9e6af5c1ec4e.png)
 
-**macosx keyboard settings**
+**macOS keyboard settings**
 
 There are a few keyboard customizations that must be done manually:
 
 - Turning repeat speed up to 11.
 
-![Keyboard settings](https://dl.dropboxusercontent.com/u/1693233/github/dotfiles-mac-keys.png "Key repeat settings")
+![Keyboard settings](https://user-images.githubusercontent.com/2379650/34223505-91f95072-e58d-11e7-9b36-78aec4203b0d.png "Key repeat settings")
 
 
 - Mapping Caps Lock to Ctrl.
 
-![Modifier keys](https://dl.dropboxusercontent.com/u/1693233/github/dotfiles-mod-keys.png)
+![Modifier keys](https://user-images.githubusercontent.com/2379650/34223523-a2c8e4e4-e58d-11e7-9532-d74b95d8408a.png)
 
 what if I only want your vim?
 -----------------------------
 
-First make sure you have a sane vim compiled. On MacOSX, the following will do:
+First make sure you have a sane vim compiled. On macOS, the following will do:
 
 ```
-brew install macvim --HEAD --with-override-system-vim --with-python
+brew install macvim --HEAD --with-override-system-vim
 ```
 
 The following commands will install vim-plug and download my `.vimrc`.

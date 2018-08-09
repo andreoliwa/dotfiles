@@ -17,7 +17,6 @@ if has('python') ||  has('python3')
   Plug 'felikz/ctrlp-py-matcher'
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 endif
-let g:ctrlp_funky_syntax_highlight = 1
 Plug 'dyng/ctrlsf.vim'  " ag-powered search with in-place editing
 let g:ctrlsf_ackprg = 'rg'
 nmap     <C-f>f :CtrlSF ''<Left>
@@ -25,7 +24,7 @@ nmap     <C-f>n <Plug>CtrlSFCwordPath
 nnoremap <C-f>t :CtrlSFToggle<CR>
 Plug 'tpope/vim-rsi'  " unix keybindings in insert mode
 Plug 'tpope/vim-repeat'  " make more actions repeatable with .
-Plug 'tpope/vim-surround'  " motions for handling surrounding characters
+Plug 'machakann/vim-sandwich' " motions for handling surrounding characters
 Plug 'tpope/vim-unimpaired'  " useful bracket maps and option toggling
 Plug 'tomtom/tcomment_vim'  " for code comments
 " Toggle comment with space-/
@@ -45,20 +44,29 @@ Plug 'w0rp/ale'  " Async linting
 nmap <silent> [s <Plug>(ale_previous_wrap)
 nmap <silent> ]s <Plug>(ale_next_wrap)
 nmap <leader>= <Plug>(ale_fix)
+let g:ale_pattern_options = {
+\   '.*\.md$': {'ale_enabled': 0},
+\   '.*\.rst$': {'ale_enabled': 0},
+\   '.*\.txt$': {'ale_enabled': 0},
+\   '.*\.tex$': {'ale_enabled': 0},
+\}
+nmap <leader>+ :let b:ale_enabled=1<cr>
 " Quickly open the loclist to see syntax errors
-nmap <leader>; :lopen<CR>
+nmap <leader>' :lopen<CR>
 let g:ale_maximum_file_size = 500000  " Don't lint large files (> 500KB), it can slow things down
 let g:ale_linters = {}
-let g:ale_linters.javascript = ['eslint']
+let g:ale_linters.javascript = ['eslint', 'xo']
 let g:ale_linters.python = ['flake8']
 let g:ale_linters.html = []
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['prettier']
 let g:ale_fixers.python = ['isort']
-" Make prettier play nicely with eslint-airbnb
-let g:ale_javascript_prettier_options = ' --single-quote --trailing-comma all'
+let g:ale_fixers.css = ['prettier']
+" Make prettier play nicely with xo + my custom rules
+let g:ale_javascript_prettier_options = ' --single-quote --trailing-comma es5 --no-bracket-spacing'
 
 " NICE TO HAVE
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -68,13 +76,11 @@ let g:airline_extensions = ['branch', 'ctrlp', 'tabline', 'ale', 'whitespace']
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jszakmeister/vim-togglecursor'  " change cursor shape when entering insert mode
 " Snippets
-" if version >= 704 && has('python') || has('python3') | Plug 'SirVer/ultisnips' | endif
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+if version >= 704 && has('python') || has('python3') | Plug 'SirVer/ultisnips' | endif
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 Plug 'honza/vim-snippets'
-
-Plug 'junegunn/vim-slash' " Better / search
-
+Plug 'fcpg/vim-spotlightify'  " Highlight and show number of matches when searching
 Plug 'majutsushi/tagbar', {'on': 'Tagbar'}
 " Open tagbar
 map <leader>\ :Tagbar<CR>
@@ -96,11 +102,13 @@ let g:user_emmet_settings = {
   \    'javascript': {'extends': 'jsx'},
   \    'javascript.jsx': {'extends': 'jsx'}
   \ }
+let g:user_emmet_leader_key = ','
 Plug 'jiangmiao/auto-pairs' " autoclose parens, quotes, etc.
 if has('mac')
   Plug 'junegunn/vim-xmark', { 'do': 'make' }  " Live markdown preview
 endif
 Plug 'mtth/scratch.vim'
+let g:scratch_no_mappings = 1
 let g:scratch_height = 20
 let g:scratch_filetype = 'markdown'
 let g:scratch_persistence_file = '.scratch'
@@ -147,9 +155,10 @@ let g:nd_themes = [
 
 " LANGUAGE-SPECIFIC
 Plug 'sheerun/vim-polyglot'  " syntax files for most languages
-let g:polyglot_disabled = ['python'] " Use python-syntax
+let g:polyglot_disabled = ['python', 'latex'] " Use python-syntax and vimtex
 let g:jsx_ext_required = 0
 let g:markdown_fenced_languages = ['javascript', 'python', 'clojure', 'ruby']
+Plug 'lervag/vimtex'
 " --- Python ---
 Plug 'vim-python/python-syntax'  " Improved python syntax
 let g:python_highlight_all = 1
@@ -166,11 +175,17 @@ let g:jedi#goto_command = "gD"  " goto still has problems, so giving it a 2nd-cl
 let g:jedi#usages_command = "gu"
 let g:jedi#rename_command = "<C-c>r"
 " --- Javascript ---
+Plug 'lfilho/cosco.vim'  " Quick insertion of commas and semicolons
+augroup cosco
+  autocmd!
+  autocmd FileType javascript,css nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
+augroup END
 Plug 'heavenshell/vim-jsdoc'  " For making JS docstrings
 let g:jsdoc_default_mapping = 0
 map <C-c>j <Plug>(jsdoc)
 " --- CSS ---
-Plug 'gko/vim-coloresque'  " Highlight CSS colors
+Plug 'chrisbra/Colorizer'  " Highlight CSS colors
+let g:colorizer_auto_filetype='css,html'
 
 call plug#end()
 filetype plugin indent on

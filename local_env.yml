@@ -4,6 +4,8 @@
 
 - name: Set up local development environment
   hosts: local
+  # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+  debugger: on_failed
   environment:
     PYENV_ROOT: "{{ pyenv_root }}"
   roles:

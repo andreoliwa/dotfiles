@@ -69,7 +69,7 @@ mac_homebrew_packages:
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
   # Browsers
-  - firefox-beta
+  - firefox
   - google-chrome
   - vivaldi
   # Development
@@ -111,7 +111,6 @@ mac_cask_packages:
   - musixmatch
   # Images
   - imageoptim  # optimizing images
-  - kap  # capturing gifs
   # Notetaking
   - nvalt  # for my commonplace book
   - notion # slowly replacing evernote

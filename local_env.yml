@@ -1,7 +1,3 @@
-- name: Collecting Facts
-  hosts: local
-  gather_facts: yes
-
 - name: Set up local development environment
   hosts: local
   # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html

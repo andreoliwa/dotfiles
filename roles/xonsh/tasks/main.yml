@@ -6,10 +6,10 @@
     dest: "{{ dotfiles_user_home }}/.xonshrc"
     state: link
 
-- name: Location of xonsh executable
+# TODO Find a better way than running the playbook again
+- name: "Location of xonsh executable (this will fail on the first time, run the playbook again and it works)"
   command: which xonsh
   register: which_xonsh
-  become: true
   tags: bootstrap
 
 - name: Add xonsh to /etc/shells

@@ -4,6 +4,7 @@
     dest: "{{ root }}/{{ dir }}"
     clone: yes
     update: "{{ update }}"
+  become: no
 
 - name: "{{ dir }}: Create virtualenv {{ env }} with Python {{ version }}"
   when: create_env
@@ -18,6 +19,8 @@
   args:
     chdir: "{{ root }}/{{ dir }}"
     creates: "{{ root }}/{{ dir }}/.python-version"
+  # TODO failing on vagrant
+  ignore_errors: true
 
 - name: "{{ dir }}: Check if the symlink directory exists"
   stat: path="{{ symlink_dir }}"

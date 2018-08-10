@@ -78,7 +78,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "local_env.yml"
 
       # TODO dot_update: Accept tags as arguments
-      ansible.tags = ['personal']
+      # ansible.tags = ['personal']
 
       # TODO See comment "Put Galaxy roles under" above
       # ansible.galaxy_roles_path = "/home/vagrant/.ansible/roles"

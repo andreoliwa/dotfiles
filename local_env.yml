@@ -20,7 +20,7 @@
     - {role: tmux, tags: ['tmux']}
     - {role: fzf, tags: ['fzf']}
     - {role: macos, tags: ['macos'], when: ansible_os_family == "Darwin"}
-    - {role: gantsign.visual-studio-code, tags: ['vscode']}
+    - {role: gantsign.visual-studio-code, tags: ['vscode'], when: ansible_os_family != "Darwin"}
     - {role: gnome_do, tags: ['gnome_do']}
     - {role: defaultbrowser, tags: ['browser']}
     - {role: andreoliwa, tags: ['andreoliwa', 'personal']}

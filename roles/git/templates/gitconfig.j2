@@ -90,9 +90,11 @@
         gpgsign = true
 {% endif %}
 
-{% if ansible_os_family == 'Debian' %}
 [gpg]
+{% if ansible_os_family == 'Debian' %}
         program = gpg2
+{% elif ansible_os_family == 'Darwin' %}
+        program = gpg
 {% endif %}
 
 [rerere]

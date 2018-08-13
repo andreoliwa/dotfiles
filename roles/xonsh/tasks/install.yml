@@ -5,6 +5,7 @@
 - name: Install xonsh with apt
   apt: name=git state=latest
   become: true
+  when: ansible_os_family != "Darwin"
 
 - name: "Update xonsh to the latest version with global pip3"
   pip:

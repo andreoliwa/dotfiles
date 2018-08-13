@@ -4,6 +4,7 @@
     dest: "{{ root }}/{{ dir }}"
     clone: yes
     update: "{{ update }}"
+    accept_hostkey: yes
   become: no
 
 - name: "{{ dir }}: Create virtualenv {{ env }} with Python {{ version }}"

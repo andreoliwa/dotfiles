@@ -125,6 +125,8 @@ mac_cask_packages:
   - now
   # REST client
   - insomnia
+  # Markdown-based presentations
+  - deckset
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -144,6 +146,7 @@ apt_packages:
 mac_mas_packages:
   - 585829637  # Todoist
   - 409203825  # Numbers
+  # - 668208984  # Giphy capture
 
 ruby_global_gems:
   - lunchy

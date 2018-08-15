@@ -1,8 +1,5 @@
 - name: Set up local development environment
   hosts: local
-  # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
-  # TODO: Make it as an option on dot_update
-  # debugger: on_failed
   environment:
     PYENV_ROOT: "{{ pyenv_root }}"
   roles:

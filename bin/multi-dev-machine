@@ -5,13 +5,18 @@ import sys
 from subprocess import run, PIPE
 from pathlib import Path
 
+def shell(command_line, **kwargs):
+    return run(command_line, shell=True, universal_newlines=True, **kwargs)
+
 def main():
     # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+    # Debugging doesn't work on a Vagrant VM; so let's set an environment variable instead of setting this directly into the playbook file.
     os.environ['ANSIBLE_ENABLE_TASK_DEBUGGER'] = 'True'
 
     parser = argparse.ArgumentParser(description="run ansible-playbook to setup a similar dev machine in multiple operating systems")
     parser.add_argument("-g", "--galaxy", action="store_true", help="install Ansible Galaxy roles")
     parser.add_argument("-b", "--bootstrap", action="store_true", help="bootstrap the dev machine")
+    parser.add_argument("-p", "--provision", metavar='VIRTUAL MACHINE', help="provision a Vagrant virtual machine with this ansible-playbook")
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
 
@@ -20,28 +25,36 @@ def main():
 
     if args.galaxy:
         print("Installing Galaxy roles...")
-        run("ansible-galaxy install -r ~/dotfiles/galaxy_roles.yml --roles-path ~/dotfiles/roles_galaxy", shell=True)
+        shell("ansible-galaxy install -r ~/dotfiles/galaxy_roles.yml --roles-path ~/dotfiles/roles_galaxy")
 
-    if args.bootstrap:
-        print("Setting up local dev environment...")
-        run("ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass $*", shell=True)
+    tags_with_comma = ','.join(args.tag)
+    tags_option = " --tags {}".format(tags_with_comma) if args.tag else ""
+    os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
+
+    if args.provision:
+        print("Provisioning the Vagrant virtual machine {}...".format(args.provision))
+        output = shell("vagrant status {}".format(args.provision), stdout=PIPE).stdout.strip()
+        up_command = " up --" if ' running ' not in output.split('\n')[2] else ""
+        shell("vagrant {}provision {}".format(up_command, args.provision))
+        notify("Vagrant provision", "provisioned")
+    elif args.bootstrap:
+        print("Setting up local dev environment...{}".format(tags_option))
+        shell("ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass{}".format(tags_option))
         notify("Bootstrap", "set up")
     else:
-        # Always ask sudo password under Linux, it is needed for several roles
-        ask_password = " --ask-become-pass" if sys.platform == 'linux' else ""
-        tags = " --tags {}".format(','.join(args.tag)) if args.tag else ""
-            
-        print("Updating local dev environment... {}".format(tags))
-        # Run all roles except for the ones tagged with 'bootstrap'
-        run('ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}'.format(ask_password, tags), shell=True)
+        # Always ask sudo password under Linux even on update; it is needed for several roles
+        ask_password_option = " --ask-become-pass" if sys.platform == 'linux' else ""
 
+        print("Updating local dev environment...{}".format(tags_option))
+        # Run all roles except for the ones tagged with 'bootstrap'
+        shell('ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}'.format(ask_password_option, tags_option))
         notify("Update", "updated")
 
 def notify(title, message):
     """If terminal-notifier is installed, use it to display a notification."""
-    terminal_notifier_path = run("command -v terminal-notifier", check=True, shell=True, stdout=PIPE).stdout.strip().decode()
+    terminal_notifier_path = shell("command -v terminal-notifier", check=True, stdout=PIPE).stdout.strip()
     if terminal_notifier_path:
-        run('terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(Path(__file__).name, title, message), shell=True)
+        shell('terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(Path(__file__).name, title, message))
 
 
 if __name__ == "__main__":

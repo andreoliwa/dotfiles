@@ -80,8 +80,8 @@ mac_cask_packages:
   - teamviewer
   - private-internet-access
   # Utilities
-  - iterm2-nightly  # nightly has faster rendering
-  - keepingyouawake  # maintained caffeinate wrapper
+  - iterm2-nightly # nightly has faster rendering
+  - keepingyouawake # maintained caffeinate wrapper
   - flux
   - appcleaner
   - raindropio
@@ -110,15 +110,15 @@ mac_cask_packages:
   - spotifree
   - musixmatch
   # Images
-  - imageoptim  # optimizing images
+  - imageoptim # optimizing images
   # Notetaking
-  - nvalt  # for my commonplace book
+  - nvalt # for my commonplace book
   - notion # slowly replacing evernote
   # Fonts
   - font-ubuntu
   - font-cousine
   # Databases
-  - tableplus  # RDBMS client
+  - tableplus # RDBMS client
   # Docs
   - dash
   # Deployments
@@ -144,8 +144,8 @@ apt_packages:
 # Mac-App-Store-only apps to be installed with mas
 # Use App IDs found with `mas search <name>`
 mac_mas_packages:
-  - 585829637  # Todoist
-  - 409203825  # Numbers
+  - 585829637 # Todoist
+  - 409203825 # Numbers
   # - 668208984  # Giphy capture
 
 ruby_global_gems:
@@ -170,6 +170,16 @@ python3_modules:
   - keyring
   - subliminal
   - awscli
+  - flake8
+  - flake8-blind-except
+  - flake8-bugbear
+  - flake8-comprehensions
+  - flake8-debugger
+  - flake8-docstrings
+  - flake8-isort
+  - flake8-mypy
+  - flake8-polyfill
+  - flake8-pytest
 
 # Node utilities
 npm_global_packages:
@@ -181,6 +191,6 @@ npm_global_packages:
   - np
 
 rust_binaries:
-  - {pkg: cargo-update, bin: cargo-install-update}
-  - {pkg: exa, bin: exa}
-  - {pkg: ripgrep, bin: rg}
+  - { pkg: cargo-update, bin: cargo-install-update }
+  - { pkg: exa, bin: exa }
+  - { pkg: ripgrep, bin: rg }

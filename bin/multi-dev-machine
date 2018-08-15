@@ -5,36 +5,46 @@ import sys
 from subprocess import run, PIPE
 from pathlib import Path
 
+
 def shell(command_line, **kwargs):
     return run(command_line, shell=True, universal_newlines=True, **kwargs)
+
 
 def main():
     # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
     # Debugging doesn't work on a Vagrant VM; so let's set an environment variable instead of setting this directly into the playbook file.
-    os.environ['ANSIBLE_ENABLE_TASK_DEBUGGER'] = 'True'
+    os.environ["ANSIBLE_ENABLE_TASK_DEBUGGER"] = "True"
 
-    parser = argparse.ArgumentParser(description="run ansible-playbook to setup a similar dev machine in multiple operating systems")
+    parser = argparse.ArgumentParser(
+        description="run ansible-playbook to setup a similar dev machine in multiple operating systems"
+    )
     parser.add_argument("-g", "--galaxy", action="store_true", help="install Ansible Galaxy roles")
     parser.add_argument("-b", "--bootstrap", action="store_true", help="bootstrap the dev machine")
-    parser.add_argument("-p", "--provision", metavar='VIRTUAL MACHINE', help="provision a Vagrant virtual machine with this ansible-playbook")
+    parser.add_argument(
+        "-p",
+        "--provision",
+        metavar="VIRTUAL MACHINE",
+        help="provision a Vagrant virtual machine with this ansible-playbook",
+    )
+    parser.add_argument("--verbose", "-v", action="count")
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
 
     # Change dir to read the correct ansible.cfg
-    os.chdir(Path('~/dotfiles').expanduser())
+    os.chdir(Path("~/dotfiles").expanduser())
 
     if args.galaxy:
         print("Installing Galaxy roles...")
         shell("ansible-galaxy install -r ~/dotfiles/galaxy_roles.yml --roles-path ~/dotfiles/roles_galaxy")
 
-    tags_with_comma = ','.join(args.tag)
+    tags_with_comma = ",".join(args.tag)
     tags_option = " --tags {}".format(tags_with_comma) if args.tag else ""
     os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
 
     if args.provision:
         print("Provisioning the Vagrant virtual machine {}...".format(args.provision))
         output = shell("vagrant status {}".format(args.provision), stdout=PIPE).stdout.strip()
-        up_command = " up --" if ' running ' not in output.split('\n')[2] else ""
+        up_command = " up --" if " running " not in output.split("\n")[2] else ""
         shell("vagrant {}provision {}".format(up_command, args.provision))
         notify("Vagrant provision", "provisioned")
     elif args.bootstrap:
@@ -43,18 +53,27 @@ def main():
         notify("Bootstrap", "set up")
     else:
         # Always ask sudo password under Linux even on update; it is needed for several roles
-        ask_password_option = " --ask-become-pass" if sys.platform == 'linux' else ""
+        ask_password_option = " --ask-become-pass" if sys.platform == "linux" else ""
 
         print("Updating local dev environment...{}".format(tags_option))
         # Run all roles except for the ones tagged with 'bootstrap'
-        shell('ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}'.format(ask_password_option, tags_option))
+        shell(
+            'ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}'.format(
+                ask_password_option, tags_option
+            )
+        )
         notify("Update", "updated")
+
 
 def notify(title, message):
     """If terminal-notifier is installed, use it to display a notification."""
     terminal_notifier_path = shell("command -v terminal-notifier", check=True, stdout=PIPE).stdout.strip()
     if terminal_notifier_path:
-        shell('terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(Path(__file__).name, title, message))
+        shell(
+            'terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(
+                Path(__file__).name, title, message
+            )
+        )
 
 
 if __name__ == "__main__":

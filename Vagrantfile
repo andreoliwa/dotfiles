@@ -51,9 +51,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/home/vagrant/dotfiles"
   config.vm.synced_folder "~/dotfiles_private", "/home/vagrant/dotfiles_private"
 
-  # TODO Put Galaxy roles under ~/dotfiles/roles_galaxy", add this to .gitignore, then add ~/dotfiles/roles_galaxy to ansible.cfg
-  # config.vm.synced_folder "~/.ansible/roles", "/home/vagrant/.ansible/roles"
-
   config.vm.define "ubuntu1804" do |ubuntu1804|
     ubuntu1804.vm.hostname = "ubuntu1804-virtual-machine"
     if not TEST_MODE

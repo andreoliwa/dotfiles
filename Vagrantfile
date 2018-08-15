@@ -66,13 +66,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             # ansible.run = "always"
 
             # Common options: https://www.vagrantup.com/docs/provisioning/ansible_common.html
-            # TODO dot_update: Accept -vvvv
-            # ansible.verbose = "vvvv"
             ansible.compatibility_mode = "2.0"
             ansible.provisioning_path = "/home/vagrant/dotfiles"
             ansible.limit = "all"
             ansible.inventory_path = "hosts"
             ansible.playbook = "local_env.yml"
+
+            verbose = ENV['MULTI_DEV_MACHINE_VERBOSE']
+            if verbose
+                ansible.verbose = verbose
+            end
 
             tags = ENV['MULTI_DEV_MACHINE_TAGS']
             if tags

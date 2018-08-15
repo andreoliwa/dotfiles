@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 def shell(command_line, **kwargs):
+    print("$ {}".format(command_line))
     return run(command_line, shell=True, universal_newlines=True, **kwargs)
 
 
@@ -26,7 +27,7 @@ def main():
         metavar="VIRTUAL MACHINE",
         help="provision a Vagrant virtual machine with this ansible-playbook",
     )
-    parser.add_argument("--verbose", "-v", action="count")
+    parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
 
@@ -37,9 +38,14 @@ def main():
         print("Installing Galaxy roles...")
         shell("ansible-galaxy install -r ~/dotfiles/galaxy_roles.yml --roles-path ~/dotfiles/roles_galaxy")
 
+    verbose_option = " -{}".format("v" * args.verbose) if args.verbose else ""
+    if verbose_option:
+        os.environ["MULTI_DEV_MACHINE_VERBOSE"] = verbose_option.strip()
+
     tags_with_comma = ",".join(args.tag)
     tags_option = " --tags {}".format(tags_with_comma) if args.tag else ""
-    os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
+    if tags_with_comma:
+        os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
 
     if args.provision:
         print("Provisioning the Vagrant virtual machine {}...".format(args.provision))
@@ -49,7 +55,11 @@ def main():
         notify("Vagrant provision", "provisioned")
     elif args.bootstrap:
         print("Setting up local dev environment...{}".format(tags_option))
-        shell("ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass{}".format(tags_option))
+        shell(
+            "ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass{}{}".format(
+                verbose_option, tags_option
+            )
+        )
         notify("Bootstrap", "set up")
     else:
         # Always ask sudo password under Linux even on update; it is needed for several roles
@@ -58,8 +68,8 @@ def main():
         print("Updating local dev environment...{}".format(tags_option))
         # Run all roles except for the ones tagged with 'bootstrap'
         shell(
-            'ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}'.format(
-                ask_password_option, tags_option
+            'ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}{}'.format(
+                verbose_option, ask_password_option, tags_option
             )
         )
         notify("Update", "updated")

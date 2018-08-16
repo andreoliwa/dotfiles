@@ -2,27 +2,16 @@
 # Update local dev environment using ansible-playbook.
 # Optionally pass role names.
 
-# Change dir to read the correct ansible.cfg
-cd ~/dotfiles
-
-# Always ask sudo password under Linux, it is needed for several roles
-if [[ $OSTYPE == linux* ]]; then
-  ASK_PASSWORD=--ask-become-pass
-else
-  ASK_PASSWORD=
-fi
-
 if [[ $# -eq 0 ]]; then
   # Run all roles except for the ones tagged with 'bootstrap'
   echo "Updating local dev environment..."
-  ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml $ASK_PASSWORD --skip-tags "bootstrap"
+  ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"
 else
   echo "Updating local dev environment... (--tags $@)"
-  ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml $ASK_PASSWORD --skip-tags "bootstrap" --tags $@
+  ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap" --tags $@
 fi
 
 # If terminal-notifier is installed, use it to display a notification
 if command -v terminal-notifier 1>/dev/null 2>&1; then
   terminal-notifier -title "dotfiles: Update complete" -message "Successfully updated dev environment."
 fi
-

@@ -1,16 +1,8 @@
 #!/usr/bin/env bash
-
-# Change dir to read the correct ansible.cfg
-cd ~/dotfiles
-
-echo "Installing Galaxy roles..."
-ansible-galaxy install -r ~/dotfiles/galaxy_roles.yml --roles-path ~/.ansible/roles
-
 echo "Setting up local dev environment..."
-ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass $*
+ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass
 
 # If terminal-notifier is installed, use it to display a notification
 if command -v terminal-notifier 1>/dev/null 2>&1; then
   terminal-notifier -title "dotfiles: Bootstrap complete" -message "Successfully set up dev environment."
 fi
-

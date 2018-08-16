@@ -2,6 +2,7 @@
 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+require "json"
 
 VAGRANTFILE_API_VERSION = "2"
 
@@ -52,118 +53,47 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.synced_folder ".", "/home/vagrant/dotfiles"
     config.vm.synced_folder "~/dotfiles_private", "/home/vagrant/dotfiles_private"
 
-    config.vm.define "ubuntu1804" do |ubuntu1804|
-        ubuntu1804.vm.hostname = "ubuntu1804-virtual-machine"
-        if not TEST_MODE
-            ubuntu1804.vm.box = "ubuntu/bionic64"
-        else
-            ubuntu1804.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-ubuntu1804.box"
-        end
-        ubuntu1804.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + "2"
+    # Prepare a dynamic list of Vagrant VMs from a JSON file
+    vm_ip = 1
+    json_string = open("Vagrantfile.jsonc").read
+    parsed_json = JSON.parse(json_string)
+    parsed_json["vms"].each do |json_vm|
+        vm_name = json_vm["name"]
+        vm_box = json_vm["box"]
+        vm_box_version = json_vm["box_version"]
+        vm_ip += 1
 
-        # Ansible Local: https://www.vagrantup.com/docs/provisioning/ansible_local.html
-        ubuntu1804.vm.provision "ansible_local" do |ansible|
-            # Common options: https://www.vagrantup.com/docs/provisioning/ansible_common.html
-            ansible.compatibility_mode = "2.0"
-            ansible.provisioning_path = "/home/vagrant/dotfiles"
-            ansible.limit = "all"
-            ansible.inventory_path = "hosts"
-            ansible.playbook = "local_env.yml"
-
-            verbose = ENV['MULTI_DEV_MACHINE_VERBOSE']
-            if verbose
-                ansible.verbose = verbose
+        config.vm.define vm_name do |machine|
+            machine.vm.hostname = vm_name + "-virtual-machine"
+            if not TEST_MODE
+                machine.vm.box = vm_box
+            else
+                machine.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-" + vm_name + ".box"
             end
-
-            tags = ENV['MULTI_DEV_MACHINE_TAGS']
-            if tags
-                ansible.tags = tags
+            if vm_box_version
+                machine.vm.box_version = vm_box_version
+            end
+            machine.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + vm_ip.to_s
+    
+            # Ansible Local: https://www.vagrantup.com/docs/provisioning/ansible_local.html
+            machine.vm.provision "ansible_local" do |ansible|
+                # Common options: https://www.vagrantup.com/docs/provisioning/ansible_common.html
+                ansible.compatibility_mode = "2.0"
+                ansible.provisioning_path = "/home/vagrant/dotfiles"
+                ansible.limit = "all"
+                ansible.inventory_path = "hosts"
+                ansible.playbook = "local_env.yml"
+    
+                verbose = ENV['MULTI_DEV_MACHINE_VERBOSE']
+                if verbose
+                    ansible.verbose = verbose
+                end
+    
+                tags = ENV['MULTI_DEV_MACHINE_TAGS']
+                if tags
+                    ansible.tags = tags
+                end
             end
         end
     end
-
-    # TODO Configure those machines in a loop with the configuration above, they are all similar
-    # # Ubuntu 16.04 - Xenial Xerus
-    # config.vm.define "ubuntu1604" do |ubuntu1604|
-    #   ubuntu1604.vm.hostname = "ubuntu1604test"
-    #   if not TEST_MODE
-    #     ubuntu1604.vm.box = "geerlingguy/ubuntu1604"
-    #   else
-    #     ubuntu1604.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-ubuntu1604.box"
-    #   end
-    #   ubuntu1604.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + "2"
-
-    #   # Ansible.
-    #   ubuntu1604.vm.provision "ansible_local" do |ansible|
-    #     ansible.verbose = true
-    #     ansible.limit = "all"
-    #     ansible.inventory_path = "hosts"
-    #     ansible.playbook = "local_env.yml"
-    #     # ansible.galaxy_role_file = "galaxy_roles.yml"
-    #   end
-    # end
-
-    # # Ubuntu 14.04 - Trusty Tahr
-    # config.vm.define "ubuntu1404" do |ubuntu1404|
-    #   ubuntu1404.vm.hostname = "ubuntu1404test"
-    #   if not TEST_MODE
-    #     ubuntu1404.vm.box = "geerlingguy/ubuntu1404"
-    #   else
-    #     ubuntu1404.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-ubuntu1404.box"
-    #   end
-    #   ubuntu1404.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + "3"
-
-    #   # Ansible.
-    #   ubuntu1404.vm.provision "ansible" do |ansible|
-    #     ansible.playbook = "playbook.yml"
-    #   end
-    # end
-
-    # # Ubuntu 12.04 - Precise Pangolin
-    # config.vm.define "ubuntu1204" do |ubuntu1204|
-    #   ubuntu1204.vm.hostname = "ubuntu1204test"
-    #   if not TEST_MODE
-    #     ubuntu1204.vm.box = "geerlingguy/ubuntu1204"
-    #   else
-    #     ubuntu1204.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-ubuntu1204.box"
-    #   end
-    #   ubuntu1204.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + "4"
-
-    #   # Ansible.
-    #   ubuntu1204.vm.provision "ansible" do |ansible|
-    #     ansible.playbook = "playbook.yml"
-    #   end
-    # end
-
-    # # CentOS 7
-    # config.vm.define "centos7" do |centos7|
-    #   centos7.vm.hostname = "centos7test"
-    #   if not TEST_MODE
-    #     centos7.vm.box = "geerlingguy/centos7"
-    #   else
-    #     centos7.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-centos7.box"
-    #   end
-    #   centos7.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + "5"
-
-    #   # Ansible.
-    #   centos7.vm.provision "ansible" do |ansible|
-    #     ansible.playbook = "playbook.yml"
-    #   end
-    # end
-
-    # # CentOS 6
-    # config.vm.define "centos6" do |centos6|
-    #   centos6.vm.hostname = "centos6test"
-    #   if not TEST_MODE
-    #     centos6.vm.box = "geerlingguy/centos6"
-    #   else
-    #     centos6.vm.box = LOCAL_BOX_DIRECTORY + PROVIDER_UNDER_TEST + "-centos6.box"
-    #   end
-    #   centos6.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + "6"
-
-    #   # Ansible.
-    #   centos6.vm.provision "ansible" do |ansible|
-    #     ansible.playbook = "playbook.yml"
-    #   end
-    # end
 end

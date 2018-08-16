@@ -22,6 +22,7 @@ def main():
     )
     parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
     parser.add_argument("--bootstrap", "-b", action="store_true", help="bootstrap the dev machine")
+    parser.add_argument("--status", "-s", action="store_true", help="display status of Vagrant VMs")
     parser.add_argument(
         "--provision",
         "-p",
@@ -43,6 +44,10 @@ def main():
 
     # Change dir to read the correct ansible.cfg
     os.chdir(Path("~/dotfiles").expanduser())
+
+    if args.status:
+        shell("vagrant status {}".format(args.virtual_machine or ""))
+        return
 
     if args.galaxy:
         print("Installing Galaxy roles...")
@@ -67,7 +72,10 @@ def main():
             up_command = ""
         else:
             output = shell("vagrant status {}".format(args.virtual_machine), stdout=PIPE).stdout.strip()
-            up_command = "up --" if " running " not in output.split("\n")[2] else ""
+            lines = output.split("\n")
+            if len(lines) < 3:
+                return
+            up_command = "up --" if " running " not in lines[2] else ""
         shell("vagrant {}provision {}".format(up_command, args.virtual_machine))
         notify("Vagrant provision", "provisioned")
     elif args.bootstrap:

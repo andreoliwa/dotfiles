@@ -1,4 +1,4 @@
-- name: "{{ dir }}: git clone {{ repo }} {{ root }}/{{ dir }} (update: {{ update }})"
+- name: "{{ dir }} : git clone {{ repo }} {{ root }}/{{ dir }} (update: {{ update }})"
   git:
     repo: "{{ repo }}"
     dest: "{{ root }}/{{ dir }}"
@@ -7,27 +7,27 @@
     accept_hostkey: yes
   become: no
 
-- name: "{{ dir }}: Create virtualenv {{ env }} with Python {{ version }}"
+- name: "{{ dir }} : Create virtualenv {{ env }} with Python {{ version }}"
   when: create_env
   pyenv:
     subcommand: virtualenv
     version: "{{ version }}"
     virtualenv_name: "{{ env }}"
 
-- name: "{{ dir }}: pyenv local {{ env }} {{ local }}"
+- name: "{{ dir }} : pyenv local {{ env }} {{ local }}"
   when: create_env
   command: "pyenv local {{ env }} {{ local }}"
   args:
     chdir: "{{ root }}/{{ dir }}"
     creates: "{{ root }}/{{ dir }}/.python-version"
-  # TODO failing on vagrant
+  # This command is failing on a vagrant VM
   ignore_errors: true
 
-- name: "{{ dir }}: Check if the symlink directory exists"
+- name: "{{ dir }} : Check if the symlink directory exists"
   stat: path="{{ symlink_dir }}"
   register: symlink_dir_stat
 
-- name: "{{ dir }}: Link dotted files"
+- name: "{{ dir }} : Link dotted files"
   file:
     src: "{{ item }}"
     dest: "{{ root }}/{{ dir }}/{{ item | basename | splitext | first }}"
@@ -37,7 +37,7 @@
     - "{{ symlink_dir_stat.stat.path }}/.*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
-- name: "{{ dir }}: Link regular files"
+- name: "{{ dir }} : Link regular files"
   file:
     src: "{{ item }}"
     dest: "{{ root }}/{{ dir }}/{{ item | basename | splitext | first }}"
@@ -47,7 +47,7 @@
     - "{{ symlink_dir_stat.stat.path }}/*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
-- name: "{{ dir }}: Add VIRTUAL_ENV variable to .autoenv file (useful for pipenv --venv)"
+- name: "{{ dir }} : Add VIRTUAL_ENV variable to .autoenv file (useful for pipenv --venv)"
   when: create_env
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoenv"
@@ -56,7 +56,7 @@
     regexp: "^.+ VIRTUAL_ENV="
     line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"
 
-- name: "{{ dir }}: Add VIRTUAL_ENV variable to .autoxsh file (useful for pipenv --venv)"
+- name: "{{ dir }} : Add VIRTUAL_ENV variable to .autoxsh file (useful for pipenv --venv)"
   when: create_env
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoxsh"

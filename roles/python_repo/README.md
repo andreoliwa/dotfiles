@@ -1,5 +1,4 @@
-git_pyenv
-=========
+# python_repo
 
 Clone a git repository with an optional pyenv virtualenv.
 
@@ -9,7 +8,7 @@ In a playbook file:
 
 ```
   roles:
-    - role: git_pyenv
+    - role: python_repo
       vars:
         repo: "https://github.com/andreoliwa/dotfiles.git"
         dir: dotfiles-andreoliwa
@@ -20,7 +19,7 @@ In a playbook file:
 In a task file:
 
 ```
-- import_role: name=git_pyenv
+- import_role: name=python_repo
   vars:
     repo: "https://github.com/andreoliwa/dotfiles.git"
     dir: dotfiles-andreoliwa

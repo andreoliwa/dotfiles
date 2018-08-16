@@ -15,8 +15,8 @@
     state: link
 
 # https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14
-- import_tasks: python3.yml
-- import_tasks: python2.yml
+- include_tasks: python3.yml
+- include_tasks: python2.yml
 
 - name: Set global pyenv path
   pyenv:
@@ -29,4 +29,4 @@
     - tools3
     - tools2
 
-- import_tasks: pycharm.yml
+- include_tasks: pycharm.yml

@@ -27,8 +27,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # https://www.vagrantup.com/docs/virtualbox/configuration.html
     config.vm.provider :virtualbox do |v|
         # https://www.vagrantup.com/docs/virtualbox/configuration.html#gui-vs-headless
-        # TODO dot_update: toggle option --gui, --no-gui
-        # v.gui = true
+        if ENV['MULTI_DEV_MACHINE_GUI']
+            v.gui = true
+        end
 
         # https://www.vagrantup.com/docs/virtualbox/configuration.html#linked-clones
         v.linked_clone = true
@@ -62,9 +63,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         # Ansible Local: https://www.vagrantup.com/docs/provisioning/ansible_local.html
         ubuntu1804.vm.provision "ansible_local" do |ansible|
-            # https://www.vagrantup.com/docs/provisioning/basic_usage.html
-            # ansible.run = "always"
-
             # Common options: https://www.vagrantup.com/docs/provisioning/ansible_common.html
             ansible.compatibility_mode = "2.0"
             ansible.provisioning_path = "/home/vagrant/dotfiles"

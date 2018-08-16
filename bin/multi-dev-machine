@@ -13,19 +13,29 @@ def shell(command_line, **kwargs):
 
 def main():
     # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
-    # Debugging doesn't work on a Vagrant VM; so let's set an environment variable instead of setting this directly into the playbook file.
+    # Debugging doesn't work on a Vagrant VM; so let's set an environment variable
+    # instead of setting this directly into the playbook file.
     os.environ["ANSIBLE_ENABLE_TASK_DEBUGGER"] = "True"
 
     parser = argparse.ArgumentParser(
         description="run ansible-playbook to setup a similar dev machine in multiple operating systems"
     )
-    parser.add_argument("-g", "--galaxy", action="store_true", help="install Ansible Galaxy roles")
-    parser.add_argument("-b", "--bootstrap", action="store_true", help="bootstrap the dev machine")
+    parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
+    parser.add_argument("--bootstrap", "-b", action="store_true", help="bootstrap the dev machine")
     parser.add_argument(
-        "-p",
         "--provision",
+        "-p",
+        dest="virtual_machine",
         metavar="VIRTUAL MACHINE",
         help="provision a Vagrant virtual machine with this ansible-playbook",
+    )
+    parser.add_argument("--reload", "-r", action="store_true", help="reload the VM")
+    parser.add_argument(
+        "--gui",
+        "--ui",
+        "-u",
+        action="store_true",
+        help="start the VM with a GUI (to change the GUI you need to --reload/-r the VM)",
     )
     parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
     parser.add_argument("tag", nargs="*", help="ansible role tag")
@@ -38,6 +48,9 @@ def main():
         print("Installing Galaxy roles...")
         shell("ansible-galaxy install -r ~/dotfiles/galaxy_roles.yml --roles-path ~/dotfiles/roles_galaxy")
 
+    if args.gui:
+        os.environ["MULTI_DEV_MACHINE_GUI"] = "True"
+
     verbose_option = " -{}".format("v" * args.verbose) if args.verbose else ""
     if verbose_option:
         os.environ["MULTI_DEV_MACHINE_VERBOSE"] = verbose_option.strip()
@@ -47,11 +60,15 @@ def main():
     if tags_with_comma:
         os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
 
-    if args.provision:
-        print("Provisioning the Vagrant virtual machine {}...".format(args.provision))
-        output = shell("vagrant status {}".format(args.provision), stdout=PIPE).stdout.strip()
-        up_command = " up --" if " running " not in output.split("\n")[2] else ""
-        shell("vagrant {}provision {}".format(up_command, args.provision))
+    if args.virtual_machine:
+        print("Provisioning the Vagrant virtual machine {}...".format(args.virtual_machine))
+        if args.reload:
+            shell("vagrant reload {}".format(args.virtual_machine))
+            up_command = ""
+        else:
+            output = shell("vagrant status {}".format(args.virtual_machine), stdout=PIPE).stdout.strip()
+            up_command = "up --" if " running " not in output.split("\n")[2] else ""
+        shell("vagrant {}provision {}".format(up_command, args.virtual_machine))
         notify("Vagrant provision", "provisioned")
     elif args.bootstrap:
         print("Setting up local dev environment...{}".format(tags_option))

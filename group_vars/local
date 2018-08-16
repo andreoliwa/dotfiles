@@ -130,6 +130,7 @@ mac_cask_packages:
 
 # APT packages that don't get installed by a role
 apt_packages:
+  - xfce4
   - python3-pip
   - curl
   - dos2unix

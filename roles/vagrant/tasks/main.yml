@@ -1,0 +1,21 @@
+- include_tasks: "{{ ansible_os_family | lower }}.yml"
+
+- name: "Update Vagrant plugins"
+  command: "vagrant plugin update"
+  # Fails in a Vagrant VM
+  ignore_errors: true
+
+- name: "List Vagrant plugins"
+  command: "vagrant plugin list"
+  register: vagrant_plugin_list
+  # Fails in a Vagrant VM
+  ignore_errors: true
+
+- name: "Install Guest Additions plugin https://github.com/dotless-de/vagrant-vbguest"
+  when: "'vagrant-vbguest' not in vagrant_plugin_list.stdout"
+  command: "vagrant plugin install vagrant-vbguest"
+  # Fails in a Vagrant VM
+  # This plugin is needed on your host machine, so you can start Fedora and CentOs VMs from the public box images.
+  # If your main computer is a Mac, then the installation works and you're good to go.
+  # If your main computer is not a Mac, then you need to investigate this issue and check if this plugin is really needed on a Linux machine.
+  ignore_errors: true

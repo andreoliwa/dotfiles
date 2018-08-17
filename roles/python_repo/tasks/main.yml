@@ -20,7 +20,7 @@
   args:
     chdir: "{{ root }}/{{ dir }}"
     creates: "{{ root }}/{{ dir }}/.python-version"
-  # This command is failing on a vagrant VM
+  # Fails in a Vagrant VM
   ignore_errors: true
 
 - name: "{{ dir }} : Check if the symlink directory exists"

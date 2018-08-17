@@ -92,7 +92,6 @@ mac_cask_packages:
   - mia-for-gmail
   - gmail-notifier
   # Vagrant/Virtualbox
-  - vagrant
   - virtualbox
   # Docker
   - docker

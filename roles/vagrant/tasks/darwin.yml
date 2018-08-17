@@ -1,0 +1,2 @@
+- name: "vagrant : Install with Homebrew Cask"
+  homebrew_cask: name=vagrant state=latest

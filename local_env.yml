@@ -4,22 +4,27 @@
     PYENV_ROOT: "{{ pyenv_root }}"
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
-    - {role: git, tags: ['git']}
-    - {role: package_manager, tags: ['package_manager', 'bootstrap']}
-    - {role: xonsh, tags: ['xonsh', 'bootstrap']}
-    - {role: python_pyenv, tags: ['python']}
-    - {role: docker, tags: ['docker']}
-    - {role: node, tags: ['node']}
-    - {role: hub, tags: ['hub']}
-    - {role: vim, tags: ['vim']}
-    - {role: rust, tags: ['rust']}
-    - {role: bat, tags: ['bat']}
-    - {role: tmux, tags: ['tmux']}
-    - {role: fzf, tags: ['fzf']}
-    - {role: macos, tags: ['macos'], when: ansible_os_family == "Darwin"}
-    - {role: gantsign.visual-studio-code, tags: ['vscode'], when: ansible_os_family != "Darwin"}
-    - {role: gnome_do, tags: ['gnome_do']}
-    - {role: defaultbrowser, tags: ['browser']}
-    - {role: andreoliwa, tags: ['andreoliwa', 'personal']}
-    - {role: eatfirst, tags: ['eatfirst', 'personal']}
-    - {role: gitup, tags: ['gitup']}
+    - { role: git, tags: ["git"] }
+    - { role: package_manager, tags: ["package_manager", "bootstrap"] }
+    - { role: vagrant, tags: ["vagrant"] }
+    - { role: xonsh, tags: ["xonsh", "bootstrap"] }
+    - { role: python_pyenv, tags: ["python"] }
+    - { role: docker, tags: ["docker"] }
+    - { role: node, tags: ["node"] }
+    - { role: hub, tags: ["hub"] }
+    - { role: vim, tags: ["vim"] }
+    - { role: rust, tags: ["rust"] }
+    - { role: bat, tags: ["bat"] }
+    - { role: tmux, tags: ["tmux"] }
+    - { role: fzf, tags: ["fzf"] }
+    - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
+    - {
+        role: gantsign.visual-studio-code,
+        tags: ["vscode"],
+        when: ansible_os_family != "Darwin",
+      }
+    - { role: gnome_do, tags: ["gnome_do"] }
+    - { role: defaultbrowser, tags: ["browser"] }
+    - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
+    - { role: eatfirst, tags: ["eatfirst", "personal"] }
+    - { role: gitup, tags: ["gitup"] }

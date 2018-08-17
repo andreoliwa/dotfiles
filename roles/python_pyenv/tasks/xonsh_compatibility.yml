@@ -1,0 +1,28 @@
+- name: List pyenv remotes
+  command: "git remote"
+  args:
+    chdir: "{{ pyenv_root }}"
+  register: pyenv_list_remotes
+
+- name: Add andreoliwa remote
+  when: "'andreoliwa' not in pyenv_list_remotes.stdout"
+  command: "git remote add andreoliwa git@github.com:andreoliwa/pyenv.git"
+  args:
+    chdir: "{{ pyenv_root }}"
+
+- name: Fetch andreoliwa remote
+  command: "git fetch andreoliwa"
+  args:
+    chdir: "{{ pyenv_root }}"
+
+- name: Get current branch
+  command: "git rev-parse --abbrev-ref HEAD"
+  args:
+    chdir: "{{ pyenv_root }}"
+  register: pyenv_current_branch
+    
+- name: Create a new local branch pointing to the remote one
+  when: "'add-xonsh-support' not in pyenv_current_branch.stdout"
+  command: "git checkout -b add-xonsh-support andreoliwa/add-xonsh-support"
+  args:
+    chdir: "{{ pyenv_root }}"

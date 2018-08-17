@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 machine.vm.box_version = vm_box_version
             end
             machine.vm.network :private_network, ip: NETWORK_PRIVATE_IP_PREFIX + vm_ip.to_s
-    
+
             # Ansible Local: https://www.vagrantup.com/docs/provisioning/ansible_local.html
             machine.vm.provision "ansible_local" do |ansible|
                 # Common options: https://www.vagrantup.com/docs/provisioning/ansible_common.html
@@ -83,12 +83,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 ansible.limit = "all"
                 ansible.inventory_path = "hosts"
                 ansible.playbook = "local_env.yml"
-    
+
                 verbose = ENV['MULTI_DEV_MACHINE_VERBOSE']
                 if verbose
                     ansible.verbose = verbose
                 end
-    
+
                 tags = ENV['MULTI_DEV_MACHINE_TAGS']
                 if tags
                     ansible.tags = tags

@@ -6,33 +6,17 @@
 - include_tasks: "{{ ansible_os_family | lower }}.yml"
   when: gitup_last_execution is success
 
-- name: "gitup : Create host directory"
-  file:
-    state: directory
-    path: "{{ dotfiles_private }}/roles/git/files/{{ ansible_hostname }}"
-
-- name: "gitup : List all repos on the home directory"
-  shell: "find ~ -type d -name .git -exec dirname {} \\; > {{ dotfiles_private }}/roles/git/files/{{ ansible_hostname }}/all_home_repos.link"
-  when: gitup_last_execution is success
-
 - name: "gitup : Create config directory"
   file:
     state: directory
-    path: "{{ dotfiles_user_home }}/.config/gitup/"
+    path: "~/.config/gitup/"
 
-- name: "gitup : Symlink bookmarks"
-  file:
-    src: "{{ dotfiles_private }}/roles/git/files/{{ ansible_hostname }}/{{ item }}.link"
-    dest: "{{ dotfiles_user_home }}/.config/gitup/{{ item }}"
-    state: link
+- name: "gitup : List all repos on the home directory"
+  shell: "find ~ -type d -name .git -exec dirname {} \\; > ~/.config/gitup/all_home_repos"
   when: gitup_last_execution is success
-  with_items:
-    - bookmarks
-    - manual_update
-    - all_home_repos
 
 - name: "gitup : Clean bookmarks"
-  command: "gitup --bookmark-file {{ dotfiles_user_home }}/.config/gitup/{{ item }} --clean"
+  command: "gitup --bookmark-file ~/.config/gitup/{{ item }} --clean"
   when: gitup_last_execution is success
   with_items:
     - bookmarks
@@ -45,7 +29,7 @@
 - debug: var=gitup_update_repos.stdout_lines
 
 - name: "gitup : Fetch repos with manual update"
-  command: "gitup --bookmark-file {{ dotfiles_user_home }}/.config/gitup/manual_update --fetch-only --prune"
+  command: "gitup --bookmark-file ~/.config/gitup/manual_update --fetch-only --prune"
   when: gitup_last_execution is success
   register: gitup_fetch_manual_repos
 - debug: var=gitup_fetch_manual_repos.stdout_lines

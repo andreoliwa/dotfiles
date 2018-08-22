@@ -63,6 +63,5 @@ remotehosts
 # Visual Studio
 .vscode/
 
-# Ignore Galaxy and private roles; they are symlinked in this directory so the Vagrant VMs can find them
+# Ignore Galaxy roles
 roles_galaxy/
-roles_private/

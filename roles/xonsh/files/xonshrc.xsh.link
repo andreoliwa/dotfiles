@@ -1,5 +1,6 @@
 import time
 import sys
+from glob import glob
 from pathlib import Path
 
 # Set this variable to true if you want to debug this .xonshrc file
@@ -29,7 +30,7 @@ class Benchmark:
         self.stats[self.message] = self.seconds
         if show or self.show:
             self.print(self.message, self.seconds)
-    
+
     @staticmethod
     def print(message, seconds):
         print(f"{message}: {seconds} seconds")
@@ -56,22 +57,23 @@ def debug_print(message: str):
     if DEBUG:
         print('\n' + message)
 
+# http://xon.sh/osx.html#path-helper
+if sys.platform == 'darwin':
+    source-bash $(/usr/libexec/path_helper -s)
+
+xsh_config_files = set()
+
 # http://xon.sh/tutorial.html#environment-types
-$DOTFILES = $HOME + '/dotfiles'
-$DOTFILES_PRIVATE = $HOME + '/dotfiles_private'
-
-with Benchmark('Set PATH'):
-    # http://xon.sh/osx.html#path-helper
-    if sys.platform == 'darwin':
-        source-bash $(/usr/libexec/path_helper -s)
-
+for dotfile_dir in glob($HOME + '/dotfiles*'):
     # http://xon.sh/envvars.html#path
-    $PATH.append(Path($DOTFILES) / 'bin')
-    $PATH.append(Path($DOTFILES_PRIVATE) / 'bin')
+    $PATH.append(Path(dotfile_dir) / 'bin')
 
-# Source all .xsh scripts
-# http://xon.sh/tutorial.html#normal-globbing
-xsh_config_files = set(g`$DOTFILES/**/*.xsh` + g`$DOTFILES_PRIVATE/**/*.xsh`)
+    # Source all .xsh scripts
+    # Note: This environment variable is only needed for the globbing; I couldn't do it with Python variables.
+    # http://xon.sh/tutorial.html#normal-globbing
+    $ONE_DIR = dotfile_dir
+    xsh_config_files.update(g`$ONE_DIR/**/*.xsh`)
+    del $ONE_DIR
 
 with Benchmark('All .xsh scripts'):
     for xsh_file in sorted(xsh_config_files):
@@ -87,10 +89,6 @@ with Benchmark('Xontribs'):
 # http://xon.sh/tutorial.html#customizing-the-prompt
 # http://xon.sh/envvars.html#xonsh-gitstatus
 $PROMPT = '{env_name:{} }{BOLD_GREEN}{hostname}{BOLD_BLUE} {cwd}{branch_color}{gitstatus: {}}{NO_COLOR} {BOLD_BLUE}{ret_code_color}{ret_code}{NO_COLOR}\n{prompt_end} '
-
-# Those environment variables are only needed for the globbing above; I couldn't do it with Python variables.
-del $DOTFILES
-del $DOTFILES_PRIVATE
 
 file_bench.end(not DEBUG)
 

@@ -50,8 +50,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     # https://www.vagrantup.com/docs/synced-folders/basic_usage.html
+    # Replace the default shared folder /vagrant
     config.vm.synced_folder ".", "/home/vagrant/dotfiles"
-    config.vm.synced_folder "~/dotfiles_private", "/home/vagrant/dotfiles_private"
+    # Configure all extra ~/dotfiles_* directories as shared folders
+    Dir[File.expand_path('~/dotfiles_*')].each do |dotfile_dir|
+        config.vm.synced_folder dotfile_dir, "/home/vagrant/" + File.basename(dotfile_dir)
+    end
 
     # Prepare a dynamic list of Vagrant VMs from a JSON file
     vm_ip = 1

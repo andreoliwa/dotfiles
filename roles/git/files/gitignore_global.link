@@ -44,3 +44,5 @@ _sandbox
 .scratch
 
 .python-version
+
+.prettierignore

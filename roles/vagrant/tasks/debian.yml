@@ -16,8 +16,6 @@
     url: "{{ vagrant_latest_zip_url.stdout }}"
     dest: /tmp/vagrant_latest.zip
 
-# sudo rm /usr/bin/vagrant
-
 - name: "vagrant : Unzip it on top of the existing vagrant executable"
   become: true
   unarchive:

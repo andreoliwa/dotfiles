@@ -21,6 +21,7 @@ a few neat features
 - Mac packages installed with [homebrew][]. Mac apps installed with [homebrew-cask][].
 - Useful git aliases
 - Optional git commit signing with GPG
+- Preview the setup on Linux machines using Vagrant's virtual machines
 
 prerequisites (install these first)
 -----------------------------------
@@ -89,6 +90,7 @@ There are three main commands in the `bin` directory for setting up and updating
 
 - `dot-bootstrap`: sets up local environment by executing all roles in `local_env.yml`.
 - `dot-update`: updates local environment by executing all roles in `local_env.yml` except for the ones tagged with "bootstrap".
+- `multi-dev-machine`: `dot-update` plus `dot-bootstrap`, install Galaxy roles and run Ansible on Vagrant VMs. Type `multi-dev-machine -h` to see all possibilities.
 
 special files
 -------------

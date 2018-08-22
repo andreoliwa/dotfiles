@@ -1,16 +1,15 @@
 - name: "Install Xontribs (xpip install)"
-  with_items: '{{ xontribs }}'
-  command: "xonsh --no-rc -c 'xpip install -U {{ item.install }}'"
+  with_items: '{{ xontribs_install }}'
+  command: "xonsh --no-rc -c 'xpip install -U {{ item }}'"
   when: ansible_os_family == "Darwin"
 
 - name: "Install Xontribs (system Python 3)"
-  with_items: '{{ xontribs }}'
+  with_items: '{{ xontribs_install }}'
   pip:
-    name: "{{ item.install }}"
+    name: "{{ item }}"
     state: latest
     executable: pip3
   when: ansible_os_family != "Darwin"
-  ignore_errors: true
 
 - name: "Remove ~/.xonsh_xontrib_load"
   file:
@@ -18,10 +17,10 @@
     path: "{{ dotfiles_user_home }}/.xonsh_xontrib_load"
 
 - name: "Load Xontribs (using ~/.xonsh_xontrib_load)"
-  with_items: '{{ xontribs }}'
+  with_items: '{{ xontribs_load }}'
   lineinfile:
     path: "{{ dotfiles_user_home }}/.xonsh_xontrib_load"
     state: present
     create: yes
-    regexp: "{{ item.load }}"
-    line: "xontrib load {{ item.load }}"
+    regexp: "{{ item }}"
+    line: "xontrib load {{ item }}"

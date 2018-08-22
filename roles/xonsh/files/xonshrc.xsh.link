@@ -82,7 +82,7 @@ with Benchmark('All .xsh scripts'):
             debug_print(f'$$$ Sourcing xonsh script {relative_path}')
             source @(xsh_file)
 
-# Load xontribs that were installed by this ansible role (see the "xontribs" variable)
+# Load xontribs that were installed by this Ansible role (see "xontribs_install" and "xontribs_load" variables)
 with Benchmark('Xontribs'):
     source ~/.xonsh_xontrib_load
 

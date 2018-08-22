@@ -2,7 +2,9 @@
 - name: Update apt cache
   apt: update_cache=yes
   when: package_update
+  become: true
 
 - name: Upgrade apt packages
   apt: upgrade=yes
   when: package_upgrade
+  become: true

@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+import argparse
+import os
+import sys
+from subprocess import run, PIPE
+from pathlib import Path
+
+
+def shell(command_line, **kwargs):
+    print("$ {}".format(command_line))
+    return run(command_line, shell=True, universal_newlines=True, **kwargs)
+
+
+def main():
+    # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+    # Debugging doesn't work on a Vagrant VM; so let's set an environment variable
+    # instead of setting this directly into the playbook file.
+    os.environ["ANSIBLE_ENABLE_TASK_DEBUGGER"] = "True"
+
+    parser = argparse.ArgumentParser(
+        description="run ansible-playbook to setup a similar dev machine in multiple operating systems"
+    )
+    parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
+    parser.add_argument("--bootstrap", "-b", action="store_true", help="bootstrap the dev machine")
+    parser.add_argument("--status", "-s", action="store_true", help="display status of Vagrant VMs")
+    parser.add_argument(
+        "--provision",
+        "-p",
+        dest="virtual_machine",
+        metavar="VIRTUAL MACHINE",
+        help="provision a Vagrant virtual machine with this ansible-playbook",
+    )
+    parser.add_argument("--reload", "-r", action="store_true", help="reload the VM")
+    parser.add_argument(
+        "--gui",
+        "--ui",
+        "-u",
+        action="store_true",
+        help="start the VM with a GUI (to change the GUI you need to --reload/-r the VM)",
+    )
+    parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
+    parser.add_argument("tag", nargs="*", help="ansible role tag")
+    args = parser.parse_args()
+
+    # Change dir to read the correct ansible.cfg
+    os.chdir(Path("~/dotfiles").expanduser())
+
+    if args.status:
+        shell("vagrant status {}".format(args.virtual_machine or ""))
+        return
+
+    if args.galaxy:
+        print("Installing Galaxy roles...")
+        shell("ansible-galaxy install -r ~/dotfiles/galaxy_roles.yml --roles-path ~/dotfiles/roles_galaxy")
+
+    if args.gui:
+        os.environ["MULTI_DEV_MACHINE_GUI"] = "True"
+
+    verbose_option = " -{}".format("v" * args.verbose) if args.verbose else ""
+    if verbose_option:
+        os.environ["MULTI_DEV_MACHINE_VERBOSE"] = verbose_option.strip()
+
+    tags_with_comma = ",".join(args.tag)
+    tags_option = " --tags {}".format(tags_with_comma) if args.tag else ""
+    if tags_with_comma:
+        os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
+
+    if args.virtual_machine:
+        print("Provisioning the Vagrant virtual machine {}...".format(args.virtual_machine))
+        if args.reload:
+            shell("vagrant reload {}".format(args.virtual_machine))
+            up_command = ""
+        else:
+            output = shell("vagrant status {}".format(args.virtual_machine), stdout=PIPE).stdout.strip()
+            lines = output.split("\n")
+            if len(lines) < 3:
+                return
+            up_command = "up --" if " running " not in lines[2] else ""
+        shell("vagrant {}provision {}".format(up_command, args.virtual_machine))
+        notify("Vagrant provision", "provisioned")
+    elif args.bootstrap:
+        print("Setting up local dev environment...{}".format(tags_option))
+        shell(
+            "ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass{}{}".format(
+                verbose_option, tags_option
+            )
+        )
+        notify("Bootstrap", "set up")
+    else:
+        # Always ask sudo password under Linux even on update; it is needed for several roles
+        ask_password_option = " --ask-become-pass" if sys.platform == "linux" else ""
+
+        print("Updating local dev environment...{}".format(tags_option))
+        # Run all roles except for the ones tagged with 'bootstrap'
+        shell(
+            'ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}{}'.format(
+                verbose_option, ask_password_option, tags_option
+            )
+        )
+        notify("Update", "updated")
+
+
+def notify(title, message):
+    """If terminal-notifier is installed, use it to display a notification."""
+    terminal_notifier_path = shell("command -v terminal-notifier", check=True, stdout=PIPE).stdout.strip()
+    if terminal_notifier_path:
+        shell(
+            'terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(
+                Path(__file__).name, title, message
+            )
+        )
+
+
+if __name__ == "__main__":
+    main()

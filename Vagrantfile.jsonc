@@ -1,0 +1,20 @@
+{
+  "vms": [
+    {
+      "url": "https://app.vagrantup.com/ubuntu/boxes/bionic64",
+      "name": "ubuntu1804",
+      "box": "ubuntu/bionic64"
+    },
+    {
+      "url": "https://app.vagrantup.com/fedora/boxes/28-cloud-base",
+      "name": "fedora28",
+      "box": "fedora/28-cloud-base",
+      "box_version": "20180425"
+    },
+    {
+      "url": "https://app.vagrantup.com/centos/boxes/7",
+      "name": "centos7",
+      "box": "centos/7"
+    }
+  ]
+}

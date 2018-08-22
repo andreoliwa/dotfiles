@@ -1,0 +1,32 @@
+- name: "vagrant : Install with apt"
+  become: true
+  apt: name=vagrant state=latest
+
+- name: "vagrant : Fetch the latest .zip URL from Vagrant's download page"
+  get_url:
+    url: https://www.vagrantup.com/downloads.html
+    dest: /tmp/vagrant_latest.html
+
+- name: "vagrant : Parse the HTML to get the .zip file name"
+  shell: "cat /tmp/vagrant_latest.html | grep -oEi 'href=\"(.+_linux_amd.+)\"' | cut -d '\"' -f 2"
+  register: vagrant_latest_zip_url
+
+- name: "vagrant : Download the latest .zip"
+  get_url:
+    url: "{{ vagrant_latest_zip_url.stdout }}"
+    dest: /tmp/vagrant_latest.zip
+
+- name: "vagrant : Unzip it on top of the existing vagrant executable"
+  become: true
+  unarchive:
+    src: /tmp/vagrant_latest.zip
+    dest: /usr/bin/
+
+- name: "vagrant : Remove temporary files"
+  file:
+    state: absent
+    path: "/tmp/vagrant_*"
+
+- name: "vagrant : Install pkg-config gem"
+  become: true
+  command: "gem install pkg-config -v '~> 1.1'"

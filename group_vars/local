@@ -69,7 +69,6 @@ mac_cask_packages:
   - appcleaner
   - daisydisk
   # Vagrant/Virtualbox
-  - vagrant
   - virtualbox
   # Docker
   # Using "edge" for compatibility with docker-sync

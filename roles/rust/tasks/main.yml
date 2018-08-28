@@ -20,7 +20,7 @@
     - stable
     - nightly
   register: toolchains_output
-  when: last_toolchain_check | success
+  when: last_toolchain_check is success
 - debug: var=toolchains_output
 
 - name: Install rust utils
@@ -34,7 +34,7 @@
 - name: Update installed binaries
   command: "~/.cargo/bin/cargo +nightly install-update -a"
   register: updates_output
-  when: last_toolchain_check | success
+  when: last_toolchain_check is success
 - debug: var=updates_output
 
 - name: Install components
@@ -50,7 +50,7 @@
   file:
     state: touch
     path: "~/.cargo/last_toolchain_check"
-  when: last_toolchain_check | success
+  when: last_toolchain_check is success
 
 - name: Link .ripgreprc file
   file:

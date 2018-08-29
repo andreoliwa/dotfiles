@@ -2,7 +2,7 @@
 import argparse
 import os
 import sys
-from subprocess import run, PIPE
+from subprocess import run, PIPE, CalledProcessError
 from pathlib import Path
 
 
@@ -102,7 +102,11 @@ def main():
 
 def notify(title, message):
     """If terminal-notifier is installed, use it to display a notification."""
-    terminal_notifier_path = shell("command -v terminal-notifier", check=True, stdout=PIPE).stdout.strip()
+    check = "which" if sys.platform == "linux" else "command -v"
+    try:
+        terminal_notifier_path = shell("{} terminal-notifier".format(check), check=True, stdout=PIPE).stdout.strip()
+    except CalledProcessError:
+        terminal_notifier_path = ""
     if terminal_notifier_path:
         shell(
             'terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(

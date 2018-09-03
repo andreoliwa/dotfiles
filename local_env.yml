@@ -9,7 +9,6 @@
     - { role: vagrant, tags: ["vagrant"] }
     - { role: xonsh, tags: ["xonsh", "bootstrap"] }
     - { role: python_pyenv, tags: ["python"] }
-    - { role: docker, tags: ["docker"] }
     - { role: node, tags: ["node"] }
     - { role: hub, tags: ["hub"] }
     - { role: vim, tags: ["vim"] }
@@ -28,3 +27,4 @@
     - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
     - { role: gitup, tags: ["gitup"] }
+    - { role: docker, tags: ["docker"] }

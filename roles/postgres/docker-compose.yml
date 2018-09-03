@@ -20,6 +20,7 @@ services:
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
 
+# https://docs.docker.com/compose/compose-file/#volume-configuration-reference
 # https://docs.docker.com/engine/admin/volumes/volumes/
 volumes:
   local_postgres_data:

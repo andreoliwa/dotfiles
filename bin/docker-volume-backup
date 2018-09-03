@@ -23,5 +23,8 @@ def main():
         )
 
 
+# TODO Command to restore:
+# docker run --rm -i -v {backup_dir}:/backup -v /var/lib/docker:/docker busybox tar xzvf /backup/{volume}.tgz -C /docker
+# TODO: Delete the destination directory before restoring?
 if __name__ == "__main__":
     main()

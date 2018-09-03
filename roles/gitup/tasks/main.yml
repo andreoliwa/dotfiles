@@ -1,10 +1,10 @@
 - name: "gitup : Check last execution"
-  shell: test ! -f /var/tmp/dotfiles.gitup_last_execution || test -n "$(find /var/tmp -name dotfiles.gitup_last_execution -cmin +30)"
-  register: gitup_last_execution
+  shell: test ! -f ~/.config/dotfiles.last_execution_gitup || test -n "$(find /var/tmp -name dotfiles.last_execution_gitup -cmin +30)"
+  register: last_execution_gitup
   ignore_errors: true
 
 - include_tasks: "{{ ansible_os_family | lower }}.yml"
-  when: gitup_last_execution is success
+  when: last_execution_gitup is success
 
 - name: "gitup : Create config directory"
   file:
@@ -13,29 +13,29 @@
 
 - name: "gitup : List all repos on the home directory"
   shell: "find ~ -type d -name .git -exec dirname {} \\; > ~/.config/gitup/all_home_repos"
-  when: gitup_last_execution is success
+  when: last_execution_gitup is success
 
 - name: "gitup : Clean bookmarks"
   command: "gitup --bookmark-file ~/.config/gitup/{{ item }} --clean"
-  when: gitup_last_execution is success
+  when: last_execution_gitup is success
   with_items:
     - bookmarks
     - manual_update
 
 - name: "gitup : Update repos"
   command: "gitup"
-  when: gitup_last_execution is success
+  when: last_execution_gitup is success
   register: gitup_update_repos
 - debug: var=gitup_update_repos.stdout_lines
 
 - name: "gitup : Fetch repos with manual update"
   command: "gitup --bookmark-file ~/.config/gitup/manual_update --fetch-only --prune"
-  when: gitup_last_execution is success
+  when: last_execution_gitup is success
   register: gitup_fetch_manual_repos
 - debug: var=gitup_fetch_manual_repos.stdout_lines
 
 - name: "gitup : Touch file to avoid executing again"
   file:
     state: touch
-    path: /var/tmp/dotfiles.gitup_last_execution
-  when: gitup_last_execution is success
+    path: ~/.config/dotfiles.last_execution_gitup
+  when: last_execution_gitup is success

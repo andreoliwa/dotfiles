@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+"""Backup and restore Docker volumes."""
+import argparse
+from pathlib import Path
+
+from dotfiles_utils import shell
+
+
+def backup(parser, args):
+    """Backup a Docker volume."""
+    backup_dir = Path(args.backup_dir)
+    if not backup_dir.is_dir():
+        parser.exit(1, "{} is not a valid directory".format(args.backup_dir))
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    for volume in args.volume_name:
+        # TODO: when piping from stdin, stdout is printed only at the end (buffered)
+        shell(
+            "docker run --rm -i -v /var/lib/docker/volumes:/volumes -v {backup_dir}:/backup busybox "
+            "tar czf /backup/{volume}.tgz /volumes/{volume}".format(backup_dir=backup_dir, volume=volume)
+        )
+
+
+def restore(parser, args):
+    """Restore a Docker volume."""
+    tgz_file = Path(args.tgz_file)
+    if not tgz_file.is_file():
+        parser.exit(1, "{} is not a valid file".format(args.tgz_file))
+    backup_dir = tgz_file.parent
+    new_volume_name = args.volume_name if args.volume_name else tgz_file.stem
+
+    busybox = "docker run --rm -i -v /var/lib/docker:/docker -v {backup_dir}:/backup busybox ".format(
+        backup_dir=backup_dir
+    )
+
+    # Delete the destination directory before restoring
+    shell(busybox + "rm -rf /docker/volumes/{new_volume_name}".format(new_volume_name=new_volume_name))
+
+    # Create the full path
+    shell(busybox + "mkdir /docker/volumes/{new_volume_name}".format(new_volume_name=new_volume_name))
+
+    # Restore the .tgz file in the new empty directory
+    shell(
+        busybox
+        + "tar xzf /backup/{tgz} -C /docker/volumes/{new_volume_name}/ --strip-components 2".format(
+            tgz=tgz_file.name, new_volume_name=new_volume_name
+        )
+    )
+
+
+def main():
+    """Main function."""
+    parser = argparse.ArgumentParser(description="backup and restore Docker volumes")
+    subparsers = parser.add_subparsers(title="commands")
+
+    parser_backup = subparsers.add_parser("backup", aliases=["b"], help="backup a Docker volume")
+    parser_backup.add_argument("backup_dir", help="directory to store the backups")
+    parser_backup.add_argument("volume_name", nargs="+", help="Docker volume name")
+    parser_backup.set_defaults(chosen_function=backup)
+
+    parser_restore = subparsers.add_parser("restore", aliases=["r"], help="restore a Docker volume")
+    parser_restore.add_argument("tgz_file", help="full path of the .tgz file created by the 'backup' command")
+    parser_restore.add_argument("volume_name", nargs="?", help="volume name (default: basename of .tgz file)")
+    parser_restore.set_defaults(chosen_function=restore)
+
+    args = parser.parse_args()
+    args.chosen_function(parser, args)
+    return
+
+
+if __name__ == "__main__":
+    main()

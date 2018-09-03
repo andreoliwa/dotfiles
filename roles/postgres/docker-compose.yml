@@ -1,11 +1,19 @@
-version: "3.3"
+version: "3.4"
+
+# https://docs.docker.com/compose/compose-file/#volume-configuration-reference
+# https://docs.docker.com/engine/admin/volumes/volumes/
+volumes:
+  data_96:
+    driver: local
+    name: postgres-96
+
 services:
-  local_postgres:
+  postgres_96:
     # Official PostgreSQL image
     # https://registry.hub.docker.com/u/library/postgres/
     # TODO: convert the data files to the latest version (10), then change the image back to "postgres:latest"
     image: postgres:9.6
-    container_name: local_postgres
+    container_name: postgres-96
     # Those are also the default values, left here for clarity. This will be the superuser.
     environment:
       - POSTGRES_USER=postgres
@@ -18,9 +26,4 @@ services:
       - "5440:5432"
     # Use a separate volume that is persisted even if the container is deleted
     volumes:
-      - local_postgres_data:/var/lib/postgresql/data
-
-# https://docs.docker.com/compose/compose-file/#volume-configuration-reference
-# https://docs.docker.com/engine/admin/volumes/volumes/
-volumes:
-  local_postgres_data:
+      - data_96:/var/lib/postgresql/data

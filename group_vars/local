@@ -177,6 +177,7 @@ python3_modules:
   - flake8-mypy
   - flake8-polyfill
   - flake8-pytest
+  - pgcli
 
 # Node utilities
 npm_global_packages:

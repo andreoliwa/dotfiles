@@ -50,6 +50,7 @@ def restore(parser, args):
 def main():
     """Main function."""
     parser = argparse.ArgumentParser(description="backup and restore Docker volumes")
+    parser.set_defaults(chosen_function=None)
     subparsers = parser.add_subparsers(title="commands")
 
     parser_backup = subparsers.add_parser("backup", aliases=["b"], help="backup a Docker volume")
@@ -63,6 +64,9 @@ def main():
     parser_restore.set_defaults(chosen_function=restore)
 
     args = parser.parse_args()
+    if not args.chosen_function:
+        parser.print_help()
+        return
     args.chosen_function(parser, args)
     return
 

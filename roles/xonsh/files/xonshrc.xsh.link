@@ -3,6 +3,9 @@ import sys
 from glob import glob
 from pathlib import Path
 
+# https://xon.sh/tutorial_hist.html#sqlite-history-backend
+$XONSH_HISTORY_BACKEND = 'sqlite'
+
 # Set this variable to true if you want to debug this .xonshrc file
 DEBUG = False
 

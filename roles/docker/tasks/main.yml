@@ -1,5 +1,5 @@
 - name: "Check last execution"
-  shell: test ! -f ~/.config/dotfiles.last_execution_docker || test -n "$(find /var/tmp -name dotfiles.last_execution_docker -cmin +30)"
+  shell: test ! -f ~/.config/dotfiles.last_execution_docker || test -n "$(find ~/.config -name dotfiles.last_execution_docker -cmin +30)"
   register: last_execution_docker
   ignore_errors: true
 
@@ -13,7 +13,7 @@
   when: last_execution_docker is success
 
 - name: "Backup each volume in {{ docker_backup_dir }}"
-  command: "docker-volume-backup {{ docker_backup_dir }} {{ item }}"
+  command: "docker-volume backup {{ docker_backup_dir }} {{ item }}"
   with_items: "{{ docker_named_volumes.stdout_lines }}"
   when: last_execution_docker is success
 

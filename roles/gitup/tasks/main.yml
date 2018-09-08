@@ -1,5 +1,5 @@
 - name: "gitup : Check last execution"
-  shell: test ! -f ~/.config/dotfiles.last_execution_gitup || test -n "$(find /var/tmp -name dotfiles.last_execution_gitup -cmin +30)"
+  shell: test ! -f ~/.config/dotfiles.last_execution_gitup || test -n "$(find ~/.config -name dotfiles.last_execution_gitup -cmin +30)"
   register: last_execution_gitup
   ignore_errors: true
 

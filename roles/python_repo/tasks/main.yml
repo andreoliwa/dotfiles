@@ -14,15 +14,6 @@
     version: "{{ version }}"
     virtualenv_name: "{{ env }}"
 
-- name: "{{ dir }} : pyenv local {{ env }} {{ local }}"
-  when: create_env
-  command: "pyenv local {{ env }} {{ local }}"
-  args:
-    chdir: "{{ root }}/{{ dir }}"
-    creates: "{{ root }}/{{ dir }}/.python-version"
-  # Fails in a Vagrant VM
-  ignore_errors: true
-
 - name: "{{ dir }} : Check if the symlink directory exists"
   stat: path="{{ symlink_dir }}"
   register: symlink_dir_stat
@@ -64,3 +55,12 @@
     create: yes
     regexp: "VIRTUAL_ENV = "
     line: "$VIRTUAL_ENV = p'{{ pyenv_root }}/versions/{{ env }}'"
+
+- name: "{{ dir }} : pyenv local {{ env }} {{ local }}"
+  when: create_env
+  command: "pyenv local {{ env }} {{ local }}"
+  args:
+    chdir: "{{ root }}/{{ dir }}"
+    creates: "{{ root }}/{{ dir }}/.python-version"
+  # Fails in a Vagrant VM
+  ignore_errors: true

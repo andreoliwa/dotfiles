@@ -1,17 +1,17 @@
 def _mydb_start():
     echo "More info about initialization: https://store.docker.com/images/postgres"
-    docker-compose -f ~/dotfiles/roles/postgres/local_postgres.yml up -d
+    docker-compose -f ~/dotfiles/roles/postgres/docker-compose.yml up -d
     docker ps
 aliases["mydb_start"] = _mydb_start
 
 def _mydb_stop():
-    docker-compose -f ~/dotfiles/roles/postgres/local_postgres.yml stop
+    docker-compose -f ~/dotfiles/roles/postgres/docker-compose.yml stop
     docker ps
 aliases["mydb_stop"] = _mydb_stop
 
 def _mydb_backup():
     mkdir -p ~/Backup
-    docker run --rm --volumes-from local_postgres -v ~/Backup:/backup busybox tar cvf "/backup/local_postgres_$(date -u +"%Y-%m-%d_%H-%M-%S").tar" /var/lib/postgresql/data
+    docker run --rm --volumes-from postgres-96 -v ~/Backup:/backup busybox tar cvf "/backup/postgres-96_$(date -u +"%Y-%m-%d_%H-%M-%S").tar" /var/lib/postgresql/data
 aliases["mydb_backup"] = _mydb_backup
 
 def _mydb_restore():
@@ -20,7 +20,7 @@ def _mydb_restore():
 aliases["mydb_restore"] = _mydb_restore
 
 def _mydb_psql(args):
-    docker exec -it local_postgres psql -U postgres @(' '.join(args))
+    docker exec -it postgres-96 psql -U postgres @(' '.join(args))
 aliases["mydb_psql"] = _mydb_psql
 
 # If the real psql client is not installed on this host, create an alias

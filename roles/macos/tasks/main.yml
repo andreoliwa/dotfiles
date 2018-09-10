@@ -22,3 +22,8 @@
 - name: Install Mac-App-Store-only apps with mas
   command: mas install {{item}}
   with_items: '{{mac_mas_packages}}'
+
+- name: Brew cleanup
+  command: brew cleanup
+  register: brew_cleanup
+- debug: var=brew_cleanup.stdout_lines

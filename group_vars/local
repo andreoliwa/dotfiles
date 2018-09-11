@@ -189,6 +189,11 @@ npm_global_packages:
   - np
 
 rust_binaries:
+  # https://github.com/nabijaczleweli/cargo-update
   - { pkg: cargo-update, bin: cargo-install-update }
+  # https://github.com/ogham/exa
   - { pkg: exa, bin: exa }
+  # https://github.com/BurntSushi/ripgrep
   - { pkg: ripgrep, bin: rg }
+  # https://github.com/jaysonsantos/csv-query-rs
+  - { pkg: csv-query-cli, bin: csv-query }

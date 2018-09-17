@@ -4,6 +4,7 @@ latest_python_3_4: 3.4.7
 latest_python_2_7: 2.7.14
 
 python2_modules:
+  - pip
   - rename
 
 python3_modules:

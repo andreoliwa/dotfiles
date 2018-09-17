@@ -158,7 +158,7 @@ pyenv_global_versions:
   - 2.7.15
 
 python3_modules:
-  - pipenv
+  - pip
   - cookiecutter
   - cookiepatcher
   - youtube-dl

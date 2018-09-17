@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.5"
 
 # https://docs.docker.com/compose/compose-file/#volume-configuration-reference
 # https://docs.docker.com/engine/admin/volumes/volumes/
@@ -6,6 +6,10 @@ volumes:
   data_96:
     driver: local
     name: postgres-96
+
+networks:
+  net_96:
+    name: postgres-96-net
 
 services:
   postgres_96:
@@ -28,3 +32,5 @@ services:
     volumes:
       - data_96:/var/lib/postgresql/data
       - ~/Personal/postgres-96:/home/postgres-96
+    networks:
+      - net_96

@@ -11,14 +11,10 @@ from dotfiles_utils import notify, shell
 
 def main():
     """Main function."""
-    # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
-    # Debugging doesn't work on a Vagrant VM; so let's set an environment variable
-    # instead of setting this directly into the playbook file.
-    os.environ["ANSIBLE_ENABLE_TASK_DEBUGGER"] = "True"
-
     parser = argparse.ArgumentParser(
         description="run ansible-playbook to setup a similar dev machine in multiple operating systems"
     )
+    parser.add_argument("--debug", "-d", action="store_true", help="debug mode")
     parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
     parser.add_argument("--bootstrap", "-b", action="store_true", help="bootstrap the dev machine")
     parser.add_argument("--status", "-s", action="store_true", help="display status of Vagrant VMs")
@@ -47,6 +43,11 @@ def main():
     if args.status:
         shell("vagrant status {}".format(args.virtual_machine or ""))
         return
+
+    # https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+    # Debugging doesn't work on a Vagrant VM; so let's set an environment variable
+    # instead of setting this directly into the playbook file.
+    os.environ["ANSIBLE_ENABLE_TASK_DEBUGGER"] = str(args.debug)
 
     if args.galaxy:
         print("Installing Galaxy roles...")

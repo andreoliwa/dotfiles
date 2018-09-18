@@ -3,19 +3,19 @@
   when: "'xonsh' in ansible_user_shell"
 
 - name: Check if pytest.ini file exists
-  stat: path="{{dotfiles_user_home}}/pytest.ini"
+  stat: path="{{ dotfiles_user_home }}/pytest.ini"
   register: pytest_stat
 
 - name: Back up pytest.ini file
   command: mv ~/pytest.ini ~/pytest.ini.bak
   args:
-    creates: "{{dotfiles_user_home}}/pytest.ini"
+    creates: "{{ dotfiles_user_home }}/pytest.ini"
   when: pytest_stat.stat.exists
 
 - name: Link pytest.ini file
   file:
-    src: "{{dotfiles_home}}/roles/python_pyenv/files/pytest.ini"
-    dest: "{{dotfiles_user_home}}/pytest.ini"
+    src: "{{ role_path }}/files/pytest.ini"
+    dest: "{{ dotfiles_user_home }}/pytest.ini"
     state: link
 
 # https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14

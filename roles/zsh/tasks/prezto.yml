@@ -5,18 +5,18 @@
 
 - name: Link zpreztorc file
   file:
-    src: "{{ dotfiles_home }}/roles/zsh/files/zpreztorc.link"
+    src: "{{ role_path }}/files/zpreztorc.link"
     dest: "{{ '~/.zpreztorc' | expanduser }}"
     state: link
 
 - name: Link zshrc file
   file:
-    src: "{{ dotfiles_home }}/roles/zsh/files/zshrc.link"
+    src: "{{ role_path }}/files/zshrc.link"
     dest: "{{ '~/.zshrc' | expanduser }}"
     state: link
 
 - name: Link custom prompt
   file:
-    src: "{{ dotfiles_home }}/roles/zsh/files/prompt_sorin_simple_setup"
+    src: "{{ role_path }}/files/prompt_sorin_simple_setup"
     dest: "{{ '~/.zprezto/modules/prompt/functions/prompt_sorin_simple_setup' | expanduser }}"
     state: link

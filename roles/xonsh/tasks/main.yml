@@ -2,7 +2,7 @@
 
 - name: Link xonshrc file
   file:
-    src: "{{ dotfiles_home }}/roles/xonsh/files/xonshrc.xsh.link"
+    src: "{{ role_path }}/files/xonshrc.xsh.link"
     dest: "{{ dotfiles_user_home }}/.xonshrc"
     state: link
 
@@ -28,6 +28,6 @@
 
 - name: Link global .autoxsh file
   file:
-    src: "{{ dotfiles_home }}/roles/xonsh/files/autoxsh.xsh.link"
+    src: "{{ role_path }}/files/autoxsh.xsh.link"
     dest: "{{ dotfiles_user_home }}/.autoxsh"
     state: link

@@ -16,7 +16,7 @@
 
 - name: Symlink all snippet files
   file:
-    src: "{{ dotfiles_home }}/roles/vim/files/{{item}}"
+    src: "{{ role_path }}/files/{{item}}"
     dest: "{{ dotfiles_user_home}}/.vim/UltiSnips/{{item}}"
     state: link
   with_items:
@@ -38,7 +38,7 @@
 
 - name: Symlink vimrc
   file:
-    src: "{{ dotfiles_home }}/roles/vim/files/vimrc"
+    src: "{{ role_path }}/files/vimrc"
     dest: "{{dotfiles_user_home}}/.vimrc"
     state: link
 

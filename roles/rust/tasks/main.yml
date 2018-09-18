@@ -54,6 +54,6 @@
 
 - name: Link .ripgreprc file
   file:
-    src: "{{dotfiles_home}}/roles/rust/files/.ripgreprc"
-    dest: "{{dotfiles_user_home}}/.ripgreprc"
+    src: "{{ role_path }}/files/.ripgreprc"
+    dest: "{{ dotfiles_user_home }}/.ripgreprc"
     state: link

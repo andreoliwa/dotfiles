@@ -1,0 +1,20 @@
+- name: "Clone tt-rss repo"
+  git:
+    repo: "https://git.tt-rss.org/fox/tt-rss.git"
+    dest: "{{ project_root }}/tt-rss"
+    clone: yes
+    update: yes
+
+- name: Symlink files needed by Docker
+  file:
+    src: "{{ item }}"
+    dest: "{{ project_root }}/tt-rss/{{ item | basename }}"
+    # It has to be a hardlink, otherwise docker-compose up can't find Dockerfile
+    state: hard
+  with_fileglob:
+    - "{{ role_path }}/files/*"
+
+- name: "Docker pull"
+  command: "docker pull php:7.2-apache"
+  register: docker_pull
+- debug: var=docker_pull.stdout_lines

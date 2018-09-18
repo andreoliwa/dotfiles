@@ -1,0 +1,15 @@
+version: "3.5"
+
+services:
+  app:
+    container_name: ttrss-app
+    build: .
+    networks:
+      - net_96
+    ports:
+      - "8002:80"
+
+networks:
+  net_96:
+    name: postgres-96-net
+    external: true

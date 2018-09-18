@@ -28,3 +28,4 @@
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
     - { role: gitup, tags: ["gitup"] }
     - { role: docker, tags: ["docker"] }
+    - { role: tt-rss, tags: ["tt-rss", "rss"] }

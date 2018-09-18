@@ -15,7 +15,7 @@
             "url": "https://app.vagrantup.com/centos/boxes/7",
             "name": "centos7",
             "box": "centos/7"
-        }
+        },
         // Both Manjaro boxes are not working with Vagrant:
         // {
         //   "url": "https://app.vagrantup.com/mloskot/boxes/manjaro-i3-17.0-minimal",
@@ -29,5 +29,10 @@
         //   "box": "marashni/manjaro64",
         //   "box_version": "0.0.1"
         // }
+        {
+            "url": "https://app.vagrantup.com/rjweyers/boxes/manjaro-i3-chromium",
+            "name": "manjaro-i3-chromium",
+            "box": "rjweyers/manjaro-i3-chromium"
+        }
     ]
 }

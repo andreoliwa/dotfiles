@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+"""Search all shell history (currently, only xonsh)."""
+# TODO Gather bash and zsh history
+
+from xonsh import environ as xonsh_environ
+
+for i in sorted(xonsh_environ):
+    print(i)
+
+# cat $XONSH_DATA_DIR/*.json | jq '.data.cmds[].inp' | sort -u

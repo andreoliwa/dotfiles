@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""Find docker.compose.yml files."""
+import argparse
+
+from dotfiles_utils import JsonConfig, existing_directory_type, shell, shell_find
+
+YML_DIRS = JsonConfig("docker-find-yml-dirs.json")
+YML_FILES = JsonConfig("docker-find-yml-files.json")
+
+
+def rescan_files(dirs):
+    """Rescan all directories and save the yml files that were found."""
+    sorted_dirs = sorted(dirs)
+    YML_DIRS.dump(sorted_dirs)
+
+    print()
+    files = set()
+    for dir in sorted_dirs:
+        print(f"Files on {dir}")
+        for file in shell_find(f"{dir} -name docker-compose.yml"):
+            print(f"  {file}")
+            files.add(str(file))
+    sorted_files = sorted(files)
+    YML_FILES.dump(sorted_files)
+
+
+def scan_command(parser, args):
+    """Scan directories and add them to the list."""
+    dirs = YML_DIRS.load_set()
+    for dir in args.dir:
+        dirs.add(str(dir))
+        print(f"Directory added: {dir}")
+    rescan_files(dirs)
+
+
+def rm_command(parser, args):
+    """Remove directories from the list."""
+    dirs = YML_DIRS.load_set()
+    for one_dir in args.dir:
+        str_dir = str(one_dir)
+        if str_dir in dirs:
+            dirs.remove(str_dir)
+            print(f"Directory removed: {one_dir}")
+        else:
+            print(f"Directory was not configured: {one_dir}")
+    rescan_files(dirs)
+
+
+def ls_command(parser, args):
+    """List registered yml files."""
+    for yml_file in sorted(YML_FILES.load_set()):
+        print(yml_file)
+
+
+def yml_command(parser, args):
+    """Run a docker-compose command on one of the yml files."""
+    found = set()
+    if ":" in args.yml_file:
+        partial_name, chosen_index = args.yml_file.split(":")
+    else:
+        partial_name, chosen_index = args.yml_file, None
+
+    for file in YML_FILES.load_set():
+        if partial_name in file:
+            found.add(file)
+    if not found:
+        print(f"No .yml file was found with the string '{partial_name}'")
+        exit(1)
+
+    sorted_found = sorted(found)
+    if len(sorted_found) > 1 and chosen_index is None:
+        print(f"Multiple .yml files were found. Run the command again with '{partial_name}:<index>':")
+        for index, file in enumerate(sorted_found):
+            print(f"- '{partial_name}:{index}' to choose '{file}'")
+        exit(2)
+
+    chosen_index = int(chosen_index) if chosen_index else 0
+    shell(f"docker-compose -f {sorted_found[chosen_index]} {' '.join(args.docker_compose_arg)}")
+
+
+def main():
+    """Main function."""
+    parser = argparse.ArgumentParser(description="find docker.compose.yml files")
+    parser.set_defaults(chosen_function=None)
+    subparsers = parser.add_subparsers(title="commands")
+
+    parser_scan = subparsers.add_parser("scan", help="scan directories and add them to the list")
+    parser_scan.add_argument("dir", nargs="+", help="directory to scan", type=existing_directory_type)
+    parser_scan.set_defaults(chosen_function=scan_command)
+
+    parser_rm = subparsers.add_parser("rm", help="remove directories from the list")
+    parser_rm.add_argument("dir", nargs="+", help="directory to remove", type=existing_directory_type)
+    parser_rm.set_defaults(chosen_function=rm_command)
+
+    parser_ls = subparsers.add_parser("ls", help="list yml files")
+    parser_ls.set_defaults(chosen_function=ls_command)
+
+    parser_yml = subparsers.add_parser("yml", help="choose one of the yml files to call docker-compose on")
+    parser_yml.add_argument("yml_file", help="partial name of the desired .yml file")
+    parser_yml.add_argument("docker_compose_arg", nargs=argparse.REMAINDER, help="docker-compose arguments")
+    parser_yml.set_defaults(chosen_function=yml_command)
+
+    args = parser.parse_args()
+    if not args.chosen_function:
+        parser.print_help()
+        return
+    args.chosen_function(parser, args)
+    return
+
+
+if __name__ == "__main__":
+    main()

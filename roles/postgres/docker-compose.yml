@@ -31,6 +31,5 @@ services:
     # Use a separate volume that is persisted even if the container is deleted
     volumes:
       - data_96:/var/lib/postgresql/data
-      - ~/Personal/postgres-96:/home/postgres-96
     networks:
       - net_96

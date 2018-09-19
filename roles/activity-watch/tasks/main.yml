@@ -1,0 +1,44 @@
+- name: Get Activity Watch PID
+  shell: "pidof aw-qt"
+  register: activity_watch_pid
+
+- name: Kill Activity Watch
+  shell: "kill {{ activity_watch_pid.stdout }}"
+  when: activity_watch_pid.stdout
+
+- name: Wait for killed process
+  wait_for:
+    path: "/proc/{{ activity_watch_pid }}/status"
+    state: absent
+  when: activity_watch_pid.stdout
+  ignore_errors: yes
+
+- name: Get list of releases (the latest release endpoint doesn't show prereleases)
+  uri:
+    url: https://api.github.com/repos/ActivityWatch/activitywatch/releases
+    return_content: true
+  register: activity_watch_releases
+
+- name: Download latest zip from GitHub
+  get_url:
+    url: "{{ activity_watch_releases.json[0].zipball_url }}"
+    dest: /tmp/activity-watch-latest.zip
+  when: "'v0.8.0b6' not in activity_watch_releases.json[0].zipball_url"
+
+# https://github.com/ActivityWatch/activitywatch/issues/222
+- name: Download special build for macOS
+  get_url:
+    url: "https://s3.amazonaws.com/activitywatch-builds/activitywatch-7bc3bbe-macos-x86_64.zip"
+    dest: /tmp/activity-watch-latest.zip
+  when: "'v0.8.0b6' in activity_watch_releases.json[0].zipball_url"
+
+- name: Unzip file
+  unarchive:
+    src: /tmp/activity-watch-latest.zip
+    dest: "~/activitywatch/"
+
+- name: "Restart Activity Watch on http://localhost:5600 if it was running before"
+  shell: "cd && nohup ~/activitywatch/aw-qt"
+  async: 45
+  poll: 0
+  when: activity_watch_pid.stdout

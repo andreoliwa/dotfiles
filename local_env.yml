@@ -29,3 +29,4 @@
     - { role: gitup, tags: ["gitup"] }
     - { role: docker, tags: ["docker"] }
     - { role: tt-rss, tags: ["tt-rss", "rss"] }
+    - { role: activity-watch, tags: ["activity-watch", "aw"] }

@@ -13,7 +13,6 @@ def rescan_files(dirs):
     sorted_dirs = sorted(dirs)
     YML_DIRS.dump(sorted_dirs)
 
-    print()
     files = set()
     for dir in sorted_dirs:
         print(f"Files on {dir}")
@@ -27,6 +26,8 @@ def rescan_files(dirs):
 def scan_command(parser, args):
     """Scan directories and add them to the list."""
     dirs = YML_DIRS.load_set()
+    if not args.dir:
+        print(f"Rescanning existing directories")
     for dir in args.dir:
         dirs.add(str(dir))
         print(f"Directory added: {dir}")
@@ -85,7 +86,7 @@ def main():
     subparsers = parser.add_subparsers(title="commands")
 
     parser_scan = subparsers.add_parser("scan", help="scan directories and add them to the list")
-    parser_scan.add_argument("dir", nargs="+", help="directory to scan", type=existing_directory_type)
+    parser_scan.add_argument("dir", nargs="*", help="directory to scan", type=existing_directory_type)
     parser_scan.set_defaults(chosen_function=scan_command)
 
     parser_rm = subparsers.add_parser("rm", help="remove directories from the list")

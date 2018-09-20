@@ -1,0 +1,10 @@
+version: "3.5"
+
+services:
+  app:
+    container_name: node-red
+    build: .
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./var:/data

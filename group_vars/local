@@ -13,6 +13,8 @@ pyenv_root: "~/.pyenv"
 # Root directory for projects
 project_root: "~/Code"
 
+backup_dir: "~/Dropbox/Backup"
+
 # Name used in commit messages
 full_name: Wagner Augusto Andreoli
 # Git
@@ -78,8 +80,8 @@ mac_cask_packages:
   - teamviewer
   - private-internet-access
   # Utilities
-  - iterm2-nightly  # nightly has faster rendering
-  - keepingyouawake  # maintained caffeinate wrapper
+  - iterm2-nightly # nightly has faster rendering
+  - keepingyouawake # maintained caffeinate wrapper
   - flux
   - appcleaner
   - raindropio
@@ -109,16 +111,16 @@ mac_cask_packages:
   - beardedspice
   - musixmatch
   # Images
-  - imageoptim  # optimizing images
+  - imageoptim # optimizing images
   # Notetaking
-  - nvalt  # for my commonplace book
+  - nvalt # for my commonplace book
   - notion # slowly replacing evernote
   # Fonts
   - font-ubuntu
   - font-cousine
   - font-hack
   # Databases
-  - tableplus  # RDBMS client
+  - tableplus # RDBMS client
   # Docs
   - dash
   # Deployments
@@ -145,8 +147,8 @@ apt_packages:
 # Mac-App-Store-only apps to be installed with mas
 # Use App IDs found with `mas search <name>`
 mac_mas_packages:
-  - 585829637  # Todoist
-  - 409203825  # Numbers
+  - 585829637 # Todoist
+  - 409203825 # Numbers
   # - 668208984  # Giphy capture
 
 ruby_global_gems:

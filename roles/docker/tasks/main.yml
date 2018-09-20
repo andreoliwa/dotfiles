@@ -1,5 +1,5 @@
 - name: "Check last execution"
-  shell: test ! -f ~/.config/dotfiles.last_execution_docker || test -n "$(find ~/.config -name dotfiles.last_execution_docker -cmin +30)"
+  shell: test ! -f ~/.config/dotfiles/last_execution_docker || test -n "$(find ~/.config/dotfiles -name last_execution_docker -cmin +30)"
   register: last_execution_docker
   ignore_errors: true
 
@@ -12,13 +12,13 @@
   register: docker_named_volumes
   when: last_execution_docker is success
 
-- name: "Backup each volume in {{ docker_backup_dir }}"
-  command: "docker-volume backup {{ docker_backup_dir }} {{ item }}"
+- name: "Backup each volume in {{ backup_dir }}/docker/volumes/"
+  command: "docker-volume backup {{ backup_dir }}/docker/volumes/ {{ item }}"
   with_items: "{{ docker_named_volumes.stdout_lines }}"
   when: last_execution_docker is success
 
 - name: "Touch file to avoid executing again"
   file:
     state: touch
-    path: ~/.config/dotfiles.last_execution_docker
+    path: ~/.config/dotfiles/last_execution_docker
   when: last_execution_docker is success

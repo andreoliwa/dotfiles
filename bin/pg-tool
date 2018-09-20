@@ -50,6 +50,9 @@ def main():
     parser_restore.add_argument("database_name", nargs="?", help="database name (default: basename of .sql file)")
     parser_restore.set_defaults(chosen_function=restore)
 
+    # TODO Subcommand create-user new-user-name or alias user new-user-name to create a new user
+    # TODO pg-tool user myuser [mypass]
+
     args = parser.parse_args()
     if not args.chosen_function:
         parser.print_help()

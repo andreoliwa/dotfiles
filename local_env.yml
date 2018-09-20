@@ -28,5 +28,6 @@
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
     - { role: gitup, tags: ["gitup"] }
     - { role: docker, tags: ["docker"] }
+    - { role: postgres, tags: ["postgres", "pg", "sql"] }
     - { role: tt-rss, tags: ["tt-rss", "rss"] }
     - { role: activity-watch, tags: ["activity-watch", "aw"] }

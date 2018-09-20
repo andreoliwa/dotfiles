@@ -4,6 +4,7 @@ import sys
 from argparse import ArgumentTypeError
 from pathlib import Path
 from subprocess import PIPE, CalledProcessError, run
+from typing import List, Optional
 
 CONFIG_DIR = Path("~/.config/dotfiles/").expanduser()
 
@@ -41,12 +42,22 @@ def notify(title, message):
         )
 
 
+def _check_type(full_path, method, msg):
+    """Check a path, raise an error if it's not valid."""
+    obj = Path(full_path)
+    if not method(obj):
+        raise ArgumentTypeError(f"{full_path} is not a valid existing {msg}")
+    return obj
+
+
 def existing_directory_type(directory):
     """Convert the string to a Path object, raising an error if it's not a directory. Use with argparse."""
-    obj = Path(directory)
-    if not obj.is_dir():
-        raise ArgumentTypeError(f"{directory} is not an existing directory")
-    return obj
+    return _check_type(directory, Path.is_dir, "directory")
+
+
+def existing_file_type(file):
+    """Convert the string to a Path object, raising an error if it's not a file. Use with argparse."""
+    return _check_type(file, Path.is_file, "file")
 
 
 class JsonConfig:
@@ -74,3 +85,46 @@ class JsonConfig:
         if isinstance(new_data, set):
             new_data = list(new_data)
         self.full_path.write_text(json.dumps(new_data))
+
+
+class DatabaseServer:
+    """A database server URI parser."""
+
+    uri: str
+    protocol: str
+    user: Optional[str]
+    password: Optional[str]
+    server: str
+    port: Optional[int]
+
+    def __init__(self, uri):
+        """Parser the server URI and extract needed parts."""
+        self.uri = uri
+        protocol_user_password, server_port = uri.split("@")
+        self.protocol, user_password = protocol_user_password.split("://")
+        if ":" in user_password:
+            self.user, self.password = user_password.split(":")
+        else:
+            self.user, self.password = None, None
+        if ":" in server_port:
+            self.server, self.port = server_port.split(":")
+            self.port = int(self.port)
+        else:
+            self.server, self.port = server_port, None
+
+
+class PostgreSQLServer(DatabaseServer):
+    """A PostgreSQL database server URI parser and more stuff."""
+
+    databases: List[str] = []
+
+    def list_databases(self):
+        """List databases."""
+        raw_stdout = shell(
+            "psql -c 'SELECT datname FROM pg_database WHERE datistemplate = false' "
+            "--tuples-only {uri}".format(uri=self.uri),
+            quiet=True,
+            stdout=PIPE,
+        ).stdout
+        self.databases = sorted(db.strip() for db in raw_stdout.strip().split())
+        return self

@@ -12,8 +12,8 @@
   register: docker_named_volumes
   when: last_execution_docker is success
 
-- name: "Backup each volume in {{ backup_dir }}/docker/volumes/"
-  command: "docker-volume backup {{ backup_dir }}/docker/volumes/ {{ item }}"
+- name: "Backup each volume in {{ backup_dir }}/docker_volumes/"
+  command: "docker-volume backup {{ backup_dir }}/docker_volumes/ {{ item }}"
   with_items: "{{ docker_named_volumes.stdout_lines }}"
   when: last_execution_docker is success
 

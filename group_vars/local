@@ -13,7 +13,7 @@ pyenv_root: "~/.pyenv"
 # Root directory for projects
 project_root: "~/Code"
 
-backup_dir: "~/Dropbox/Backup"
+backup_dir: "~/Dropbox/Backup/{{ ansible_hostname }}"
 
 # Name used in commit messages
 full_name: Wagner Augusto Andreoli

@@ -3,21 +3,24 @@ version: "3.5"
 # https://docs.docker.com/compose/compose-file/#volume-configuration-reference
 # https://docs.docker.com/engine/admin/volumes/volumes/
 volumes:
-  data_96:
+  data10:
     driver: local
-    name: postgres-96
+    name: postgres10
+  data9:
+    driver: local
+    name: postgres9
 
 networks:
-  net_96:
-    name: postgres-96-net
+  net10:
+    name: postgres10
+  net9:
+    name: postgres9
 
 services:
-  postgres_96:
-    # Official PostgreSQL image
+  postgres10:
     # https://registry.hub.docker.com/u/library/postgres/
-    # TODO: convert the data files to the latest version (10), then change the image back to "postgres:latest"
-    image: postgres:9.6
-    container_name: postgres-96
+    image: postgres:10
+    container_name: postgres10
     # Those are also the default values, left here for clarity. This will be the superuser.
     environment:
       - POSTGRES_USER=postgres
@@ -27,9 +30,30 @@ services:
       - "5432"
     # https://docs.docker.com/compose/compose-file/#/ports
     ports:
-      - "5440:5432"
+      - "7710:5432"
     # Use a separate volume that is persisted even if the container is deleted
     volumes:
-      - data_96:/var/lib/postgresql/data
+      - data10:/var/lib/postgresql/data
     networks:
-      - net_96
+      - net10
+
+  postgres9:
+    # Official PostgreSQL image
+    # https://registry.hub.docker.com/u/library/postgres/
+    image: postgres:9.6
+    container_name: postgres9
+    # Those are also the default values, left here for clarity. This will be the superuser.
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    # https://docs.docker.com/compose/compose-file/#/expose
+    expose:
+      - "5432"
+    # https://docs.docker.com/compose/compose-file/#/ports
+    ports:
+      - "7709:5432"
+    # Use a separate volume that is persisted even if the container is deleted
+    volumes:
+      - data9:/var/lib/postgresql/data
+    networks:
+      - net9

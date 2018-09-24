@@ -4,7 +4,7 @@
 	// *******************************************
 
 	define('DB_TYPE', 'pgsql');
-	define('DB_HOST', 'postgres-96');
+	define('DB_HOST', 'postgres10');
 	define('DB_USER', 'ttrss');
 	define('DB_NAME', 'ttrss');
 	define('DB_PASS', 'ttrss');

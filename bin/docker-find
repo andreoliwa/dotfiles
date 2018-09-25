@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Find docker.compose.yml files."""
 import argparse
+from subprocess import PIPE
 
 from dotfiles_utils import JsonConfig, existing_directory_type, shell, shell_find
 
@@ -56,10 +57,7 @@ def ls_command(parser, args):
 def yml_command(parser, args):
     """Run a docker-compose command on one of the yml files."""
     found = set()
-    if ":" in args.yml_file:
-        partial_name, chosen_index = args.yml_file.split(":")
-    else:
-        partial_name, chosen_index = args.yml_file, None
+    partial_name = args.yml_file
 
     for file in YML_FILES.load_set():
         if partial_name in file:
@@ -69,14 +67,15 @@ def yml_command(parser, args):
         exit(1)
 
     sorted_found = sorted(found)
-    if len(sorted_found) > 1 and chosen_index is None:
-        print(f"Multiple .yml files were found. Run the command again with '{partial_name}:<index>':")
-        for index, file in enumerate(sorted_found):
-            print(f"- '{partial_name}:{index}' to choose '{file}'")
-        exit(2)
-
-    chosen_index = int(chosen_index) if chosen_index else 0
-    shell(f"docker-compose -f {sorted_found[chosen_index]} {' '.join(args.docker_compose_arg)}")
+    if len(sorted_found) > 1:
+        choices = "\n".join(sorted_found)
+        chosen_yml = shell(f"echo '{choices}' | fzf --cycle --tac", quiet=True, stdout=PIPE).stdout.strip()
+        if not chosen_yml:
+            print("No .yml file was chosen")
+            exit(2)
+    else:
+        chosen_yml = sorted_found[0]
+    shell(f"docker-compose -f {chosen_yml} {' '.join(args.docker_compose_arg)}")
 
 
 def main():

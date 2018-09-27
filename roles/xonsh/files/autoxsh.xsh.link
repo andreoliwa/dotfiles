@@ -1,5 +1,12 @@
 # Clear all variables used in other .autoxsh files
 $FLASK_APP = ''
+del $FLASK_APP
+
 $FLASK_DEBUG = ''
+del $FLASK_DEBUG
+
 $VIRTUAL_ENV = ''
+del $VIRTUAL_ENV
+
 $LDFLAGS = ''
+del $LDFLAGS

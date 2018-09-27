@@ -16,7 +16,7 @@ project_root: "~/Code"
 backup_dir: "~/Dropbox/Backup/{{ ansible_hostname }}"
 
 # Name used in commit messages
-full_name: Wagner Augusto Andreoli
+full_name: Augusto Wagner Andreoli
 # Git
 # Github username
 git_user: andreoliwa

@@ -7,12 +7,19 @@
     accept_hostkey: yes
   become: no
 
-- name: "{{ dir }} : Create virtualenv {{ env }} with Python {{ version }}"
-  when: create_env
+- name: "{{ dir }} : Create virtualenv {{ env }} with Python {{ python_version }}"
+  when: "python_version != ''"
   pyenv:
     subcommand: virtualenv
-    version: "{{ version }}"
+    version: "{{ python_version }}"
     virtualenv_name: "{{ env }}"
+
+- name: "{{ dir }} : Update pip on virtualenv {{ env }}"
+  when: "python_version != ''"
+  pip:
+    name: pip
+    state: latest
+    executable: "{{ pyenv_root }}/versions/{{ env }}/bin/pip"
 
 - name: "{{ dir }} : Check if the symlink directory exists"
   stat: path="{{ symlink_dir }}"
@@ -38,8 +45,8 @@
     - "{{ symlink_dir_stat.stat.path }}/*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
-- name: "{{ dir }} : Add VIRTUAL_ENV variable to .autoenv file (useful for pipenv --venv)"
-  when: create_env
+- name: "{{ dir }} : Add VIRTUAL_ENV variable to .autoenv file (useful for poetry/pipenv)"
+  when: "python_version != ''"
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoenv"
     state: present
@@ -47,8 +54,8 @@
     regexp: "^.+ VIRTUAL_ENV="
     line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"
 
-- name: "{{ dir }} : Add VIRTUAL_ENV variable to .autoxsh file (useful for pipenv --venv)"
-  when: create_env
+- name: "{{ dir }} : Add VIRTUAL_ENV variable to .autoxsh file (useful for poetry/pipenv)"
+  when: "python_version != ''"
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoxsh"
     state: present
@@ -56,11 +63,12 @@
     regexp: "VIRTUAL_ENV = "
     line: "$VIRTUAL_ENV = p'{{ pyenv_root }}/versions/{{ env }}'"
 
-- name: "{{ dir }} : pyenv local {{ env }} {{ local }}"
-  when: create_env
-  command: "pyenv local {{ env }} {{ local }}"
+# TODO pyenv local doesn't work yet with xonsh, it has to be run manually with bash if .python-version does not exist
+- name: "{{ dir }} : Run if this fails: bash -c 'cd {{ root }}/{{ dir }} && pyenv local {{ env }} {{ local }}'"
+  when: "python_version != ''"
+  shell: "pyenv local {{ env }} {{ local }}"
   args:
     chdir: "{{ root }}/{{ dir }}"
     creates: "{{ root }}/{{ dir }}/.python-version"
-  # Fails in a Vagrant VM
+    executable: /usr/local/bin/bash
   ignore_errors: true

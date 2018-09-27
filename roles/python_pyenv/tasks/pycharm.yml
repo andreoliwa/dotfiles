@@ -1,3 +1,3 @@
-- name: Install PyCharm for Mac OSX
+- name: Install PyCharm for macOS
   homebrew_cask: name=pycharm state=present
   when: ansible_os_family == "Darwin"

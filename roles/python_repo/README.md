@@ -13,7 +13,6 @@ In a playbook file:
         repo: "https://github.com/andreoliwa/dotfiles.git"
         dir: dotfiles-andreoliwa
         update: yes
-        create_env: no
 ```
 
 In a task file:
@@ -21,8 +20,8 @@ In a task file:
 ```
 - import_role: name=python_repo
   vars:
-    repo: "https://github.com/andreoliwa/dotfiles.git"
-    dir: dotfiles-andreoliwa
+    repo: "https://github.com/some-user/some-python-repo.git"
+    dir: some-dir
     update: yes
-    create_env: no
+    python_version: 3.7
 ```

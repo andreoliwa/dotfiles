@@ -26,8 +26,8 @@
   pyenv:
     subcommand: global
     versions:
-    - "{{ latest_python_3_6 }}"
-    - "{{ latest_python_2_7 }}"
+    - "{{ latest_python_3_7.stdout }}"
+    - "{{ latest_python_2_7.stdout }}"
     - jupyter3
     - ipython2
     - tools3

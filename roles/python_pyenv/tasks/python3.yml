@@ -1,17 +1,33 @@
-- name: "Upgrade system pip3 version"
+- name: "Upgrade system pip3 version on Linux"
   pip:
     name: pip
     state: latest
     executable: pip3
   when: ansible_os_family != "Darwin"
 
-- name: "Install Python {{ latest_python_3_6 }}"
-  pyenv:
-    version: "{{ latest_python_3_6 }}"
+- name: "Get latest Python 3.7"
+  shell: "pyenv install --list | grep -i ' 3.7' | grep -v dev | tr -d ' ' | tail -n 1"
+  register: latest_python_3_7
 
-- name: "Install Python {{ latest_python_3_5 }}"
+- name: "Install Python {{ latest_python_3_7.stdout }}"
   pyenv:
-    version: "{{ latest_python_3_5 }}"
+    version: "{{ latest_python_3_7.stdout }}"
+
+- name: "Get latest Python 3.6"
+  shell: "pyenv install --list | grep -i ' 3.6' | grep -v dev | tr -d ' ' | tail -n 1"
+  register: latest_python_3_6
+
+- name: "Install Python {{ latest_python_3_6.stdout }}"
+  pyenv:
+    version: "{{ latest_python_3_6.stdout }}"
+
+- name: "Get latest Python 3.5"
+  shell: "pyenv install --list | grep -i ' 3.5' | grep -v dev | tr -d ' ' | tail -n 1"
+  register: latest_python_3_5
+
+- name: "Install Python {{ latest_python_3_5.stdout }}"
+  pyenv:
+    version: "{{ latest_python_3_5.stdout }}"
 
 # https://github.com/pyenv/pyenv/wiki/Common-build-problems#error-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib
 - name: Install a different SSL version to install Python 3.4
@@ -19,34 +35,50 @@
   become: true
   when: ansible_os_family == "Debian"
 
-- name: "Install Python {{ latest_python_3_4 }}"
-  pyenv:
-    version: "{{ latest_python_3_4 }}"
+- name: "Get latest Python 3.4"
+  shell: "pyenv install --list | grep -i ' 3.4' | grep -v dev | tr -d ' ' | tail -n 1"
+  register: latest_python_3_4
 
-- name: virtualenv for Jupyter
+- name: "Install Python {{ latest_python_3_4.stdout }}"
+  pyenv:
+    version: "{{ latest_python_3_4.stdout }}"
+
+- name: "jupyter3 : Create virtualenv"
   pyenv:
     subcommand: virtualenv
-    version: "{{ latest_python_3_6 }}"
+    version: "{{ latest_python_3_7.stdout }}"
     virtualenv_name: jupyter3
 
-- name: virtualenv for Python 3 tools
-  pyenv:
-    subcommand: virtualenv
-    version: "{{ latest_python_3_6 }}"
-    virtualenv_name: tools3
+- name: "jupyter3 : Update pip"
+  pip:
+    name: pip
+    state: latest
+    executable: "{{ pyenv_root }}/versions/jupyter3/bin/pip"
 
-- name: Install jupyter
+- name: "jupyter3 : Install"
   pip:
     name: jupyter
     state: latest
     executable: "{{ pyenv_root }}/versions/jupyter3/bin/pip"
 
-- name: Run ipykernel module
+- name: "jupyter3 : Install ipykernel"
   command: "{{ pyenv_root }}/versions/jupyter3/bin/python -m ipykernel install --user"
   args:
     creates: "~/Library/Jupyter/kernels/python3"
 
-- name: Install modules in the Python 3 virtualenv
+- name: "tools3 : Create virtualenv"
+  pyenv:
+    subcommand: virtualenv
+    version: "{{ latest_python_3_7.stdout }}"
+    virtualenv_name: tools3
+
+- name: "tools3 : Update pip"
+  pip:
+    name: pip
+    state: latest
+    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
+
+- name: "tools3 : Install modules"
   pip:
     name: "{{ item }}"
     state: latest

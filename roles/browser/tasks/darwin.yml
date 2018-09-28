@@ -1,0 +1,55 @@
+- name: Git clone defaultbrowser repo
+  git:
+    repo: "https://github.com/kerma/defaultbrowser"
+    dest: "{{ project_root }}/defaultbrowser"
+    clone: yes
+
+- name: Build defaultbrowser
+  command: "xcodebuild -project defaultbrowser.xcodeproj -alltargets -configuration Release"
+  args:
+    chdir: "{{ project_root }}/defaultbrowser"
+    creates: "{{ project_root }}/defaultbrowser/build/Release/defaultbrowser"
+
+- name: Symlink defaultbrowser
+  file:
+    src: "{{ project_root }}/defaultbrowser/build/Release/defaultbrowser"
+    dest: /usr/local/bin/defaultbrowser
+    state: link
+
+# https://developer.github.com/v3/repos/releases/#get-the-latest-release
+- name: "Browserosaurus: Get the latest release"
+  uri:
+    url: https://api.github.com/repos/will-stone/browserosaurus/releases/latest
+    return_content: true
+  register: browserosaurus_latest_release
+
+- name: "Browserosaurus: Download latest .dmg from GitHub"
+  get_url:
+    url: "{{ browserosaurus_latest_release.json.assets[0].browser_download_url }}"
+    dest: /tmp/browserosaurus_latest_release.dmg
+
+- name: "Browserosaurus: Kill the app"
+  command: "pkill Browserosaurus"
+  register: browserosaurus_pkill
+  ignore_errors: yes
+
+- name: "Browserosaurus: Mount the volume"
+  command: "hdiutil attach /tmp/browserosaurus_latest_release.dmg"
+  become: true
+  args:
+    creates: /Volumes/Browserosaurus
+  register: browserosaurus_attach
+
+- name: "Browserosaurus: Copy the app to /Applications"
+  command: "cp -rf /Volumes/Browserosaurus/Browserosaurus.app /Applications"
+  become: true
+  when: browserosaurus_attach is success
+
+- name: "Browserosaurus: Mount the volume"
+  command: "hdiutil unmount /Volumes/Browserosaurus"
+  become: true
+  when: browserosaurus_attach is success
+
+- name: "Browserosaurus: Reopen the app"
+  command: "open /Applications/Browserosaurus.app"
+  when: browserosaurus_pkill is success

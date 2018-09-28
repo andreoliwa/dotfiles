@@ -23,7 +23,7 @@
         when: ansible_os_family != "Darwin",
       }
     - { role: gnome_do, tags: ["gnome_do"] }
-    - { role: defaultbrowser, tags: ["browser"] }
+    - { role: browser, tags: ["browser"] }
     - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
     - { role: gitup, tags: ["gitup"] }

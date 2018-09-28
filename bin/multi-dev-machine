@@ -34,6 +34,7 @@ def main():
         help="start the VM with a GUI (to change the GUI you need to --reload/-r the VM)",
     )
     parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
+    parser.add_argument("--sudo", action="store_true", help="ask become password (required for some roles)")
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
 
@@ -88,7 +89,7 @@ def main():
         notify("Bootstrap", "set up")
     else:
         # Always ask sudo password under Linux even on update; it is needed for several roles
-        ask_password_option = " --ask-become-pass" if sys.platform == "linux" else ""
+        ask_password_option = " --ask-become-pass" if sys.platform == "linux" or args.sudo else ""
 
         print("Updating local dev environment...{}".format(tags_option))
         # Run all roles except for the ones tagged with 'bootstrap'

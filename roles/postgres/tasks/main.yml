@@ -1,5 +1,8 @@
 - name: "Start the PostgreSQL Docker container"
   command: "docker-compose -f {{ role_path }}/docker-compose.yml up -d"
 
-- name: "Backup all local PostgreSQL databases to .sql files in {{ backup_dir }}"
-  command: "pg-tool postgresql://postgres:postgres@localhost:5440 backup {{ backup_dir }}"
+- name: "Backup all local PostgreSQL 9 databases to .sql files in {{ backup_dir }}"
+  command: "pg-tool postgresql://postgres:postgres@localhost:7709 backup {{ backup_dir }}"
+
+- name: "Backup all local PostgreSQL 10 databases to .sql files in {{ backup_dir }}"
+  command: "pg-tool postgresql://postgres:postgres@localhost:7710 backup {{ backup_dir }}"

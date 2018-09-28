@@ -10,7 +10,7 @@ def backup(parser, args):
     """Backup PostgreSQL databases."""
     pg = PostgreSQLServer(args.server_uri).list_databases()
     for database in pg.databases:
-        sql_file: Path = Path(args.backup_dir) / f"{pg.protocol}_{pg.server}" / f"{database}.sql"
+        sql_file: Path = Path(args.backup_dir) / f"{pg.protocol}_{pg.server}_{pg.port}" / f"{database}.sql"
         sql_file.parent.mkdir(parents=True, exist_ok=True)
         shell(f"pg_dump --clean --create --if-exists --file={sql_file} {args.server_uri}/{database}")
 

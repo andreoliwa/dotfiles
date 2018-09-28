@@ -12,9 +12,6 @@ dir: "{{ repo.split('/')[-1].split('.')[0] }}"
 # Default: project root defined in group_vars/local
 root: "{{ project_root }}"
 
-# If a virtualenv will be created or not
-create_env: yes
-
 # By default, the virtualenv name is the same as the directory name
 env: "{{ dir }}"
 
@@ -22,10 +19,17 @@ env: "{{ dir }}"
 update: no
 
 # Python version for the pyenv virtualenv
-version: "{{ latest_python_3_6 }}"
+# If the version is not informed, a virtualenv will not be created
+python_version: ""
 
 # Versions set by the "pyenv local" command (after the repo's virtualenv)
 local: "jupyter3 ipython2 tools3 tools2"
 
 # Directory containing .link files that will become symbolic links in the project root
 symlink_dir: ""
+
+# Command to use to install modules in this virtualenv. E.g.:
+# - poetry install
+# - pipenv install --dev --pre
+# - pip install -r requirements.txt
+install_command: ""

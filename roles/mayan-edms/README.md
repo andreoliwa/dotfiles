@@ -1,7 +1,8 @@
 # Mayan EDMS
 
-Docs: https://mayan.readthedocs.io/en/stable/
-GitLab: https://gitlab.com/mayan-edms/mayan-edms
+-   GitLab: https://gitlab.com/mayan-edms/mayan-edms
+-   Docs: https://mayan.readthedocs.io/en/stable/
+-   PDF: https://media.readthedocs.org/pdf/mayan/latest/mayan.pdf
 
 # Setup
 

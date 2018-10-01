@@ -1,0 +1,24 @@
+- name: "Get installed versions of Python"
+  pyenv:
+    subcommand: versions
+  register: pyenv_versions
+
+- name: "Get installed version of Python 2.7 {{ PYENV_ROOT }} / {{ pyenv_root }}"
+  shell: "echo {{ pyenv_versions }} | grep -i '^2.7' | grep -v '/' | tail -n 1"
+  register: latest_python_2_7
+
+- name: "Get installed version of Python 3.7"
+  shell: "echo {{ pyenv_versions }} | grep -i '^3.7' | grep -v '/' | tail -n 1"
+  register: latest_python_3_7
+
+- name: "Get installed version of Python 3.6"
+  shell: "echo {{ pyenv_versions }} | grep -i '^3.6' | grep -v '/' | tail -n 1"
+  register: latest_python_3_6
+
+- name: "Get installed version of Python 3.5"
+  shell: "echo {{ pyenv_versions }} | grep -i '^3.5' | grep -v '/' | tail -n 1"
+  register: latest_python_3_5
+
+- name: "Get installed version of Python 3.4"
+  shell: "echo {{ pyenv_versions }} | grep -i '^3.4' | grep -v '/' | tail -n 1"
+  register: latest_python_3_4

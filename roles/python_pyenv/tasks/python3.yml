@@ -43,42 +43,42 @@
   pyenv:
     version: "{{ latest_python_3_4.stdout }}"
 
-- name: "jupyter3 : Create virtualenv"
+- name: "jupyter3: Create virtualenv"
   pyenv:
     subcommand: virtualenv
     version: "{{ latest_python_3_7.stdout }}"
     virtualenv_name: jupyter3
 
-- name: "jupyter3 : Update pip"
+- name: "jupyter3: Update pip"
   pip:
     name: pip
     state: latest
     executable: "{{ pyenv_root }}/versions/jupyter3/bin/pip"
 
-- name: "jupyter3 : Install"
+- name: "jupyter3: Install"
   pip:
     name: jupyter
     state: latest
     executable: "{{ pyenv_root }}/versions/jupyter3/bin/pip"
 
-- name: "jupyter3 : Install ipykernel"
+- name: "jupyter3: Install ipykernel"
   command: "{{ pyenv_root }}/versions/jupyter3/bin/python -m ipykernel install --user"
   args:
     creates: "~/Library/Jupyter/kernels/python3"
 
-- name: "tools3 : Create virtualenv"
+- name: "tools3: Create virtualenv"
   pyenv:
     subcommand: virtualenv
     version: "{{ latest_python_3_7.stdout }}"
     virtualenv_name: tools3
 
-- name: "tools3 : Update pip"
+- name: "tools3: Update pip"
   pip:
     name: pip
     state: latest
     executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
 
-- name: "tools3 : Install modules"
+- name: "tools3: Install modules"
   pip:
     name: "{{ item }}"
     state: latest

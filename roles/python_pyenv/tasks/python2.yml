@@ -6,42 +6,42 @@
   pyenv:
     version: "{{ latest_python_2_7.stdout }}"
 
-- name: "ipython2 : Create virtualenv"
+- name: "ipython2: Create virtualenv"
   pyenv:
     subcommand: virtualenv
     version: "{{ latest_python_2_7.stdout }}"
     virtualenv_name: ipython2
 
-- name: "ipython2 : Update pip"
+- name: "ipython2: Update pip"
   pip:
     name: pip
     state: latest
     executable: "{{ pyenv_root }}/versions/ipython2/bin/pip"
 
-- name: "tools2 : Create virtualenv"
+- name: "tools2: Create virtualenv"
   pyenv:
     subcommand: virtualenv
     version: "{{ latest_python_2_7.stdout }}"
     virtualenv_name: tools2
 
-- name: "tools2 : Update pip"
+- name: "tools2: Update pip"
   pip:
     name: pip
     state: latest
     executable: "{{ pyenv_root }}/versions/tools2/bin/pip"
 
-- name: "tools2 : Install ipykernel"
+- name: "tools2: Install ipykernel"
   pip:
     name: ipykernel
     state: latest
     executable: "{{ pyenv_root }}/versions/tools2/bin/pip"
 
-- name: "tools2 : Run ipykernel module"
+- name: "tools2: Run ipykernel module"
   command: "{{ pyenv_root }}/versions/tools2/bin/python -m ipykernel install --user"
   args:
     creates: "~/Library/Jupyter/kernels/python2"
 
-- name: "tools2 : Install modules"
+- name: "tools2: Install modules"
   pip:
     name: "{{ item }}"
     state: latest

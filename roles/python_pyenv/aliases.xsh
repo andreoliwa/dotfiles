@@ -9,7 +9,11 @@ def _getpip():
 aliases["getpip"] = _getpip
 
 aliases["pf"] = 'pip freeze'
-aliases["pfg"] = 'pip freeze | rg -i'
+
+def _pfg(args):
+    pip freeze | rg @(' '.join(args))
+aliases["pfg"] = _pfg
+
 aliases["pv"] = 'pyenv version'
 aliases["pvs"] = 'pyenv versions --bare'
 aliases["f"] = "flask"

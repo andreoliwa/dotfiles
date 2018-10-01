@@ -166,6 +166,7 @@ pyenv_global_versions:
 python3_modules:
   - pip
   - poetry
+  - pipenv
   - cookiecutter
   - cookiepatcher
   - youtube-dl

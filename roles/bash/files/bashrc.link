@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+JAVA_VMS_LOCATION="/Library/Java/JavaVirtualMachines"
+LATEST_JAVA_8="$(ls -1 -t $JAVA_VMS_LOCATION | grep jdk1.8 | sort | head -n 1)"
+if [ -z "$LATEST_JAVA_8" ]; then
+    echo "Java 8 not found"
+else
+    export PENTAHO_JAVA_HOME="${JAVA_VMS_LOCATION}/${LATEST_JAVA_8}/Contents/Home"
+fi
+
+echo "PENTAHO_JAVA_HOME=$PENTAHO_JAVA_HOME"
+
+alias ll='ls -l'
+
+eval "$(pyenv init - --no-rehash)"
+
+# Slow start with Python Powerline:
+# https://powerline.readthedocs.io/en/latest/usage/shell-prompts.html
+# powerline-daemon -q
+# POWERLINE_BASH_CONTINUATION=1
+# POWERLINE_BASH_SELECT=1
+# source $(pyenv root)/versions/tools3/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+
+# Quick start with Bash Powerline
+source ~/.bash-powerline.sh

@@ -1,0 +1,24 @@
+- name: "Link .bashrc file"
+  file:
+    src: "{{ role_path }}/files/bashrc.link"
+    dest: ~/.bashrc
+    state: link
+
+- name: "bash-powerline: Get latest"
+  get_url:
+    url: "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh"
+    dest: ~/.bash-powerline.sh
+
+- name: "bash-powerline: Add to .bashrc"
+  lineinfile:
+    path: ~/.bashrc
+    state: present
+    line: "source ~/.bash-powerline.sh"
+
+# https://powerline.readthedocs.io/en/latest/installation.html#pip-installation
+- name: "powerline: Install with pip"
+  pip:
+    name: powerline-status
+    state: latest
+    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
+  when: tmux_install_tmuxp

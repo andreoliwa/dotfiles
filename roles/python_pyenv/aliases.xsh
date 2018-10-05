@@ -17,3 +17,10 @@ aliases["pfg"] = _pfg
 aliases["pv"] = 'pyenv version'
 aliases["pvs"] = 'pyenv versions --bare'
 aliases["f"] = "flask"
+
+def _ve():
+    echo PYENV_VERSION: $PYENV_VERSION
+    echo VIRTUAL_ENV: $VIRTUAL_ENV
+    echo pyenv version:
+    pyenv version
+aliases["ve"] = _ve

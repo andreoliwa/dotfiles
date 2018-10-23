@@ -167,6 +167,8 @@ python3_modules:
   - pip
   - poetry
   - pipenv
+  - click
+  - requests-html
   - cookiecutter
   - cookiepatcher
   - youtube-dl

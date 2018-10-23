@@ -20,5 +20,8 @@ eval "$(pyenv init - --no-rehash)"
 # POWERLINE_BASH_SELECT=1
 # source $(pyenv root)/versions/tools3/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
 
+# Load environment variables if they exist
+test -f ~/.dotfiles.env && source ~/.dotfiles.env
+
 # Quick start with Bash Powerline
 source ~/.bash-powerline.sh

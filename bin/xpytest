@@ -1,0 +1,42 @@
+#!/bin/sh
+"exec" "$HOME/.pyenv/versions/tools3/bin/python" "$0" "$@"
+"""Extra commands for py.test."""
+import os
+import re
+
+import click
+from requests_html import HTMLSession
+
+from dotfiles_utils import shell
+
+TEST_REGEX = re.compile(r"___ (test[^ ]+) ___")
+
+
+@click.group()
+def extra():
+    """Extra commands for py.test."""
+    pass
+
+
+@extra.command()
+@click.option("-f", "--result-file", type=click.File())
+@click.option("-j", "--jenkins-url")
+@click.pass_context
+def results(ctx, result_file, jenkins_url):
+    """Parse a file with the output of failed tests, then re-run only those failed tests."""
+    if result_file:
+        contents = result_file.read()
+        all_tests = TEST_REGEX.findall(contents)
+    elif jenkins_url:
+        r = HTMLSession().get(jenkins_url, auth=(os.environ["JENKINS_USERNAME"], os.environ["JENKINS_PASSWORD"]))
+        all_tests = list(r.html.search("__ {} __"))
+    else:
+        click.echo(ctx.get_help())
+        return
+
+    expression = " or ".join(all_tests)
+    shell(f"pytest -vv -k '{expression}'")
+
+
+if __name__ == "__main__":
+    extra()

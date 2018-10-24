@@ -6,8 +6,11 @@ services:
     build: .
     ports:
       - "1880:1880"
+    environment:
+      - FLOWS=/config/node-red-flows.json
     volumes:
       - ./var/data:/data
+      - ./var/config:/config
       - ~/Downloads:/mnt/downloads
       - ~/Dropbox/Inbox:/mnt/inbox
       - ~/Personal/transmission-openvpn/completed:/mnt/completed

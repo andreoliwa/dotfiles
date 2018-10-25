@@ -26,14 +26,14 @@ def results(ctx, result_file, jenkins_url):
     """Parse a file with the output of failed tests, then re-run only those failed tests."""
     if result_file:
         contents = result_file.read()
-        all_tests = TEST_REGEX.findall(contents)
     elif jenkins_url:
         r = HTMLSession().get(jenkins_url, auth=(os.environ["JENKINS_USERNAME"], os.environ["JENKINS_PASSWORD"]))
-        all_tests = list(r.html.search("__ {} __"))
+        contents = r.html.html
     else:
         click.echo(ctx.get_help())
         return
 
+    all_tests = TEST_REGEX.findall(contents)
     expression = " or ".join(all_tests)
     shell(f"pytest -vv -k '{expression}'")
 

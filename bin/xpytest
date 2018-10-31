@@ -9,7 +9,7 @@ from requests_html import HTMLSession
 
 from dotfiles_utils import shell
 
-TEST_REGEX = re.compile(r"___ (test[^ ]+) ___")
+TEST_REGEX = re.compile(r"___ .*(test[^ ]+) ___")
 
 
 @click.group()

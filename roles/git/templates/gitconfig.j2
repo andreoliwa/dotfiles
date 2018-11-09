@@ -7,7 +7,7 @@
         signingkey = {{ git_signing_key }}
 {% endif %}
 {% if git_signing_key_2 and ansible_os_family == 'Debian' %}
-        #signingkey = {{ git_signing_key_2 }}
+        signingkey = {{ git_signing_key_2 }}
 {% endif %}
 {% if ansible_os_family == 'Darwin' %}
 [credential]

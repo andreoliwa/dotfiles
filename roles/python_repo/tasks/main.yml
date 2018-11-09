@@ -14,6 +14,8 @@
     version: "{{ python_version }}"
     virtualenv_name: "{{ env }}"
 
+# TODO  localhost failed | msg: python-clitoolkit already exists but version differs
+
 - name: "{{ dir }}: Update pip on virtualenv {{ env }}"
   when: python_version != ''
   pip:
@@ -79,4 +81,5 @@
   # TODO pyenv commands are not working with the Ansible shell
   # shell: "pyenv activate {{ env }} && {{ install_command }}"
   args:
+    executable: /bin/bash
     chdir: "{{ root }}/{{ dir }}"

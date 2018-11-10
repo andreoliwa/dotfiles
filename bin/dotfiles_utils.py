@@ -9,11 +9,19 @@ from typing import List, Optional
 CONFIG_DIR = Path("~/.config/dotfiles/").expanduser()
 
 
-def shell(command_line, quiet=False, **kwargs):
+def shell(command_line, quiet=False, return_lines=False, **kwargs):
     """Print and run a shell command."""
     if not quiet:
         print("$ {}".format(command_line))
-    return run(command_line, shell=True, universal_newlines=True, **kwargs)
+    if return_lines:
+        kwargs.setdefault("stdout", PIPE)
+
+    completed_process = run(command_line, shell=True, universal_newlines=True, **kwargs)
+    if not return_lines:
+        return completed_process
+
+    stdout = completed_process.stdout.strip().strip("\n")
+    return stdout.split("\n") if stdout else []
 
 
 def shell_find(command_line, **kwargs):
@@ -22,9 +30,7 @@ def shell_find(command_line, **kwargs):
         command_line = f"find {command_line}"
     kwargs.setdefault("quiet", True)
     kwargs.setdefault("check", True)
-    kwargs.setdefault("stdout", PIPE)
-    stdout = shell(command_line, **kwargs).stdout.strip().strip("\n")
-    return stdout.split("\n") if stdout else []
+    return shell(command_line, return_lines=True, **kwargs)
 
 
 def notify(title, message):

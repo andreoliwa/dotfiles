@@ -1,5 +1,5 @@
 - name: "gitup : Check last execution"
-  shell: test ! -f ~/.config/dotfiles/last_execution_gitup || test -n "$(find ~/.config/dotfiles -name last_execution_gitup -cmin +30)"
+  shell: test ! -f ~/.config/gitup/last_execution || test -n "$(find ~/.config/gitup -name last_execution -cmin +30)"
   register: last_execution_gitup
   ignore_errors: true
 
@@ -37,5 +37,5 @@
 - name: "gitup : Touch file to avoid executing again"
   file:
     state: touch
-    path: ~/.config/dotfiles/last_execution_gitup
+    path: ~/.config/gitup/last_execution
   when: last_execution_gitup is success

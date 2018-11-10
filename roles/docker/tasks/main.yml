@@ -6,6 +6,8 @@
 - name: "Stop all containers"
   shell: "docker ps -q | xargs docker stop"
   when: last_execution_docker is success
+  # No containers might be running
+  ignore_errors: true
 
 - name: "List all volumes related to a Docker Compose project"
   command: "docker volume ls --filter label=com.docker.compose.project -q"

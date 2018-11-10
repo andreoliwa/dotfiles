@@ -26,10 +26,10 @@
       }
     - { role: gnome_do, tags: ["gnome_do"] }
     - { role: browser, tags: ["browser"] }
+    - { role: gitup, tags: ["gitup"] }
     - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
-    - { role: gitup, tags: ["gitup"] }
     - { role: docker, tags: ["docker"] }
     - { role: postgres, tags: ["postgres", "pg", "sql"] }
     - { role: tt-rss, tags: ["tt-rss", "rss"] }
-    - { role: activity-watch, tags: ["activity-watch", "aw"] }
+    - { role: activity-watch, tags: ["activity-watch", "aw"], when: ansible_os_family == "Darwin" }

@@ -1,5 +1,5 @@
 def _mydb_psql(args):
-    # TODO Create a command: pg-tool sql
+    # TODO Create a command: xpostgres sql
     docker exec -it postgres10 psql -U postgres @(' '.join(args))
 aliases["mydb_psql"] = _mydb_psql
 
@@ -8,7 +8,7 @@ if !(which psql 1>/dev/null 2>&1).returncode:
     aliases["psql"] = _mydb_psql
 
 def _mydb_create(args):
-    # TODO Create a command: pg-tool user
+    # TODO Create a command: xpostgres user
     user_name = args[0]
     if not user_name:
         echo 'Provide a username. E.g.: mydb_create my_user'

@@ -51,7 +51,7 @@ def main():
     parser_restore.set_defaults(chosen_function=restore)
 
     # TODO Subcommand create-user new-user-name or alias user new-user-name to create a new user
-    # TODO pg-tool user myuser [mypass]
+    # TODO xpostgres user myuser [mypass]
 
     args = parser.parse_args()
     if not args.chosen_function:

@@ -17,4 +17,3 @@
 - name: "Docker pull"
   command: "docker pull php:7.2-apache"
   register: docker_pull
-- debug: var=docker_pull.stdout_lines

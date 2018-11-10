@@ -187,6 +187,7 @@ python3_modules:
   - flake8-mypy
   - flake8-polyfill
   - flake8-pytest
+  - pylint
   - pgcli
 
 # Node utilities

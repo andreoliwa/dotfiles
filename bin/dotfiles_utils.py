@@ -4,7 +4,9 @@ import sys
 from argparse import ArgumentTypeError
 from pathlib import Path
 from subprocess import PIPE, CalledProcessError, run
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
+
+JsonDict = Dict[str, Any]
 
 CONFIG_DIR = Path("~/.config/dotfiles/").expanduser()
 
@@ -118,19 +120,79 @@ class DatabaseServer:
         else:
             self.server, self.port = server_port, None
 
+    @property
+    def uri_without_port(self):
+        """Return the URI without the port."""
+        parts = self.uri.split(":")
+        if len(parts) != 4:
+            # Return the unmodified URI if we don't have port.
+            return self.uri
+        return ":".join(parts[:-1])
+
 
 class PostgreSQLServer(DatabaseServer):
     """A PostgreSQL database server URI parser and more stuff."""
 
     databases: List[str] = []
+    inside_docker = False
+    psql: str = ""
+    pg_dump: str = ""
 
-    def list_databases(self):
+    def __init__(self, *args, **kwargs):
+        """Determine which psql executable exists on this machine."""
+        super().__init__(*args, **kwargs)
+
+        self.psql = shell("which psql", quiet=True, capture_output=True).stdout
+        if not self.psql:
+            self.psql = "psql_docker"
+            self.inside_docker = True
+
+        self.pg_dump = shell("which pg_dump", quiet=True, capture_output=True).stdout
+        if not self.pg_dump:
+            self.pg_dump = "pg_dump_docker"
+            self.inside_docker = True
+
+    @property
+    def docker_uri(self):
+        """Return a URI without port if we are inside Docker."""
+        return self.uri_without_port if self.inside_docker else self.uri
+
+    def list_databases(self) -> "PostgreSQLServer":
         """List databases."""
-        raw_stdout = shell(
-            "psql -c 'SELECT datname FROM pg_database WHERE datistemplate = false' "
-            "--tuples-only {uri}".format(uri=self.uri),
+        process = shell(
+            f"{self.psql} -c 'SELECT datname FROM pg_database WHERE datistemplate = false' "
+            f"--tuples-only {self.docker_uri}",
             quiet=True,
-            stdout=PIPE,
-        ).stdout
-        self.databases = sorted(db.strip() for db in raw_stdout.strip().split())
+            capture_output=True,
+        )
+        if process.returncode:
+            print(f"Error while listing databases.\nstdout={process.stdout}\nstderr={process.stderr}")
+            exit(10)
+
+        self.databases = sorted(db.strip() for db in process.stdout.strip().split())
         return self
+
+
+class DockerContainer:
+    """A helper for Docker containers."""
+
+    def __init__(self, container_name: str) -> None:
+        self.container_name = container_name
+        self.inspect_json: JsonDict = {}
+
+    def inspect(self) -> "Docker":
+        """Inspect a Docker container and save its JSON info."""
+        if not self.inspect_json:
+            raw_info = shell(f"docker inspect {self.container_name}", quiet=True, capture_output=True).stdout
+            self.inspect_json = json.loads(raw_info)
+        return self
+
+    def replace_mount_dir(self, path: Path) -> Path:
+        """Replace a mounted dir on a file/dir path inside a Docker container."""
+        self.inspect()
+        for mount in self.inspect_json[0]["Mounts"]:
+            source = mount["Source"]
+            if str(path).startswith(source):
+                new_path = str(path).replace(source, mount["Destination"])
+                return Path(new_path)
+        return path

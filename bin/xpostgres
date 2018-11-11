@@ -3,16 +3,22 @@
 import argparse
 from pathlib import Path
 
-from dotfiles_utils import PostgreSQLServer, existing_directory_type, existing_file_type, shell
+from dotfiles_utils import PostgreSQLServer, DockerContainer, existing_directory_type, existing_file_type, shell
+
+DOCKER_CONTAINER_NAME = "postgres10"
 
 
 def backup(parser, args):
     """Backup PostgreSQL databases."""
     pg = PostgreSQLServer(args.server_uri).list_databases()
+    container = DockerContainer(DOCKER_CONTAINER_NAME)
     for database in pg.databases:
         sql_file: Path = Path(args.backup_dir) / f"{pg.protocol}_{pg.server}_{pg.port}" / f"{database}.sql"
         sql_file.parent.mkdir(parents=True, exist_ok=True)
-        shell(f"pg_dump --clean --create --if-exists --file={sql_file} {args.server_uri}/{database}")
+
+        if pg.inside_docker:
+            sql_file = container.replace_mount_dir(sql_file)
+        shell(f"{pg.pg_dump} --clean --create --if-exists --file={sql_file} {pg.docker_uri}/{database}")
 
 
 def restore(parser, args):
@@ -29,7 +35,7 @@ def restore(parser, args):
         print(f"TODO: Parse the .sql file and replace DATABASE/OWNER {args.sql_file.stem!r} by {new_database!r}")
         exit(2)
 
-    shell(f"psql {args.server_uri} < {args.sql_file}")
+    shell(f"{pg.psql} {args.server_uri} < {args.sql_file}")
 
 
 def main():

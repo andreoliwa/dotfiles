@@ -1,0 +1,4 @@
+#!/bin/sh
+# Run pg_dump from inside the Docker container
+# TODO Create a command: xpostgres pg_dump
+docker exec -i postgres10 pg_dump "$@"

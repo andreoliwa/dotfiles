@@ -1,12 +1,3 @@
-def _mydb_psql(args):
-    # TODO Create a command: xpostgres sql
-    docker exec -it postgres10 psql -U postgres @(' '.join(args))
-aliases["mydb_psql"] = _mydb_psql
-
-# If the real psql client is not installed on this host, create an alias
-if !(which psql 1>/dev/null 2>&1).returncode:
-    aliases["psql"] = _mydb_psql
-
 def _mydb_create(args):
     # TODO Create a command: xpostgres user
     user_name = args[0]
@@ -21,6 +12,5 @@ def _mydb_create(args):
     print(f"CREATE DATABASE {user_name};")
     print(f"GRANT ALL PRIVILEGES ON DATABASE {user_name} TO {user_name};")
     echo
-    mydb_psql
+    psql_docker
 aliases["mydb_create"] = _mydb_create
-

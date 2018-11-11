@@ -1,10 +1,5 @@
 - name: "Start the PostgreSQL Docker container"
   command: "docker-compose -f {{ role_path }}/docker-compose.yml up -d"
 
-- name: "Backup all local PostgreSQL 9 databases to .sql files in {{ backup_dir }}"
-  command: "xpostgres postgresql://postgres:postgres@localhost:7709 backup {{ backup_dir }}"
-  # TODO Ubuntu: /bin/sh: 1: psql: not found
-
-- name: "Backup all local PostgreSQL 10 databases to .sql files in {{ backup_dir }}"
+- name: "Backup all local PostgreSQL 10 databases to .sql files (xpostgres postgresql://postgres:postgres@localhost:7710 backup {{ backup_dir }})"
   command: "xpostgres postgresql://postgres:postgres@localhost:7710 backup {{ backup_dir }}"
-  # TODO Ubuntu: /bin/sh: 1: psql: not found

@@ -1,0 +1,29 @@
+# https://brave-browser.readthedocs.io/en/latest/installing-brave.html#linux
+- name: "Brave: curl brave-core.asc"
+  get_url:
+    url: "https://brave-browser-apt-release.s3.brave.com/brave-core.asc"
+    dest: /tmp/brave-core.asc
+
+- name: "Brave: apt-key add"
+  command: "apt-key add /tmp/brave-core.asc"
+  become: true
+
+- name: "Brave: Get release name"
+  command: "lsb_release -sc"
+  register: release_name
+
+- name: "Brave: Add to apt sources"
+  shell: 'echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ {{ release_name.stdout }} main" | sudo tee -a /etc/apt/sources.list.d/brave-browser-release-{{ release_name.stdout }}.list'
+
+- name: "Brave: Update apt cache"
+  apt: update_cache=yes
+  become: true
+
+- name: "Brave: Install with apt"
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - brave-browser
+    - brave-keyring
+  become: true

@@ -9,7 +9,11 @@ from requests_html import HTMLSession
 
 from dotfiles_utils import shell
 
-TEST_REGEX = re.compile(r"___ .*(test[^ ]+) ___")
+# Possible formats for tests:
+# ___ test_name ___
+# ___ Error on setup of test_name ___
+# ___ test_name[Parameter] ___
+TEST_REGEX = re.compile(r"___ .*(test[^\[\] ]+)[\[\]A-Za-z]* ___")
 
 
 @click.group()

@@ -2,6 +2,18 @@
 # Fuzzy branch picker
 # Requires fzf
 # https://github.com/junegunn/fzf/wiki/Examples
-branches=$(git branch -vv) &&
-branch=$(echo "$branches" | fzf-tmux +m) &&
-git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+
+# Include remote branches and remove "HEAD -> master" from the list
+branches=$(git branch -vv --all | grep -v ' -> ')
+
+branch=$(echo "$branches" | fzf-tmux +m)
+
+# Strip the "remotes/<name>" from the chosen branch, so we checkout the local branch that points to that remote
+remotes=$(git remote)
+for remote in $remotes
+do
+    search="remotes/$remote/"
+    branch=${branch/$search/}
+done
+
+git checkout $(echo "$branch" | cut -c 3- | awk '{print $1}' | sed "s/.* //")

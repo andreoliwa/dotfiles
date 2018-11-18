@@ -69,7 +69,8 @@
 - name: "tools3: Create virtualenv"
   pyenv:
     subcommand: virtualenv
-    version: "{{ latest_python_3_7.stdout }}"
+    # mypy doesn't seem to work on VSCode on Python 3.7
+    version: "{{ latest_python_3_6.stdout }}"
     virtualenv_name: tools3
 
 - name: "tools3: Update pip"

@@ -4,6 +4,7 @@ import sys
 from argparse import ArgumentTypeError
 from pathlib import Path
 from subprocess import PIPE, CalledProcessError, run
+from time import sleep
 from typing import Any, Dict, List, Optional
 
 JsonDict = Dict[str, Any]
@@ -66,6 +67,20 @@ def existing_directory_type(directory):
 def existing_file_type(file):
     """Convert the string to a Path object, raising an error if it's not a file. Use with argparse."""
     return _check_type(file, Path.is_file, "file")
+
+
+def wait_for_process(process_name: str) -> None:
+    """Wait for a process to finish.
+
+    https://stackoverflow.com/questions/1058047/wait-for-any-process-to-finish
+    """
+    pid = shell(f"pidof {process_name}", quiet=True, stdout=PIPE).stdout.strip()
+    if not pid:
+        return
+
+    pid_path = Path(f"/proc/{pid}")
+    while pid_path.exists():
+        sleep(0.5)
 
 
 class JsonConfig:
@@ -177,10 +192,11 @@ class DockerContainer:
     """A helper for Docker containers."""
 
     def __init__(self, container_name: str) -> None:
+        """Init instance."""
         self.container_name = container_name
-        self.inspect_json: JsonDict = {}
+        self.inspect_json: List[JsonDict] = []
 
-    def inspect(self) -> "Docker":
+    def inspect(self) -> "DockerContainer":
         """Inspect a Docker container and save its JSON info."""
         if not self.inspect_json:
             raw_info = shell(f"docker inspect {self.container_name}", quiet=True, capture_output=True).stdout

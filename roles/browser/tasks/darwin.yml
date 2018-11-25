@@ -1,21 +1,3 @@
-- name: Git clone defaultbrowser repo
-  git:
-    repo: "https://github.com/kerma/defaultbrowser"
-    dest: "{{ project_root }}/defaultbrowser"
-    clone: yes
-
-- name: Build defaultbrowser
-  command: "xcodebuild -project defaultbrowser.xcodeproj -alltargets -configuration Release"
-  args:
-    chdir: "{{ project_root }}/defaultbrowser"
-    creates: "{{ project_root }}/defaultbrowser/build/Release/defaultbrowser"
-
-- name: Symlink defaultbrowser
-  file:
-    src: "{{ project_root }}/defaultbrowser/build/Release/defaultbrowser"
-    dest: /usr/local/bin/defaultbrowser
-    state: link
-
 # https://developer.github.com/v3/repos/releases/#get-the-latest-release
 - name: "Browserosaurus: Get the latest release"
   uri:

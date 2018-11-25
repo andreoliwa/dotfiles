@@ -9,8 +9,8 @@
   become: true
 
 - name: Install Node.js and build tools
-  apt: name={{ item }}
-  with_items:
+  apt:
+    name:
     - nodejs
     - build-essential
   become: true
@@ -19,4 +19,3 @@
   npm: name={{ item }} state=present global=yes
   with_items: '{{ npm_global_packages }}'
   become: true
-

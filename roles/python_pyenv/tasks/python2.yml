@@ -43,7 +43,6 @@
 
 - name: "tools2: Install modules"
   pip:
-    name: "{{ item }}"
+    name: "{{ python2_modules }}"
     state: latest
     executable: "{{ pyenv_root }}/versions/tools2/bin/pip"
-  with_items: "{{ python2_modules }}"

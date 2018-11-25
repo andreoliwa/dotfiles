@@ -21,9 +21,8 @@
 
 - name: "Brave: Install with apt"
   apt:
-    name: "{{ item }}"
-    state: latest
-  with_items:
+    name:
     - brave-browser
     - brave-keyring
+    state: latest
   become: true

@@ -81,7 +81,6 @@
 
 - name: "tools3: Install modules"
   pip:
-    name: "{{ item }}"
+    name: "{{ python3_modules }}"
     state: latest
     executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
-  with_items: "{{ python3_modules }}"

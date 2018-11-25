@@ -1,7 +1,6 @@
 - name: Install dependencies
   apt:
-    name: "{{ item }}"
-  with_items:
+    name:
     - libssl-dev
     - cmake
   become: true

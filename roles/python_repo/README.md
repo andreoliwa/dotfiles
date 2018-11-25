@@ -18,7 +18,7 @@ In a playbook file:
 In a task file:
 
 ```
-- import_role: name=python_repo
+- include_role: name=python_repo
   vars:
     repo: "https://github.com/some-user/some-python-repo.git"
     dir: some-dir

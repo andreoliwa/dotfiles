@@ -37,7 +37,7 @@ def results(ctx, result_file, jenkins_url):
         click.echo(ctx.get_help())
         return
 
-    all_tests = TEST_REGEX.findall(contents)
+    all_tests = set(TEST_REGEX.findall(contents))
     expression = " or ".join(all_tests)
     shell(f"pytest -vv -k '{expression}'")
 

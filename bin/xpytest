@@ -25,8 +25,9 @@ def extra():
 @extra.command()
 @click.option("-f", "--result-file", type=click.File())
 @click.option("-j", "--jenkins-url")
+@click.option("-s", "dont_capture", flag_value='-s', help="Don't capture output")
 @click.pass_context
-def results(ctx, result_file, jenkins_url):
+def results(ctx, result_file, jenkins_url, dont_capture):
     """Parse a file with the output of failed tests, then re-run only those failed tests."""
     if result_file:
         contents = result_file.read()
@@ -39,7 +40,9 @@ def results(ctx, result_file, jenkins_url):
 
     all_tests = set(TEST_REGEX.findall(contents))
     expression = " or ".join(all_tests)
-    shell(f"pytest -vv -k '{expression}'")
+    if not dont_capture:
+        dont_capture = ""
+    shell(f"pytest -vv {dont_capture} -k '{expression}'")
 
 
 if __name__ == "__main__":

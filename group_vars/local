@@ -165,7 +165,7 @@ pyenv_global_versions:
 
 python3_modules:
   - pip
-  - poetry==0.12.7
+  - poetry
   - pipenv
   - click
   - requests-html

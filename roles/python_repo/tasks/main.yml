@@ -65,6 +65,24 @@
     regexp: "VIRTUAL_ENV = "
     line: "$VIRTUAL_ENV = p'{{ pyenv_root }}/versions/{{ env }}'"
 
+- name: "{{ dir }}: Add PYTHONWARNINGS variable to .autoenv file (useful for poetry/pipenv)"
+  when: python_version != ''
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.autoenv"
+    state: present
+    create: yes
+    regexp: "^.+ PYTHONWARNINGS="
+    line: "export PYTHONWARNINGS=default"
+
+- name: "{{ dir }}: Add PYTHONWARNINGS variable to .autoxsh file (useful for poetry/pipenv)"
+  when: python_version != ''
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.autoxsh"
+    state: present
+    create: yes
+    regexp: "PYTHONWARNINGS = "
+    line: "$PYTHONWARNINGS = 'default'"
+
 - name: "{{ dir }}: Run if this fails: bash -c 'cd {{ root }}/{{ dir }} && pyenv local {{ env }} {{ local }}'"
   when: python_version != ''
 # TODO pyenv local doesn't work yet with xonsh, it has to be run manually with bash if .python-version does not exist
@@ -81,7 +99,7 @@
 
   shell: "source ~/.pyenv/versions/{{ env }}/bin/activate && {{ install_command }}"
 #   TODO pyenv commands are not working with the Ansible shell
-#   localhost failed | msg: non-zero return code | stderr: 
+#   localhost failed | msg: non-zero return code | stderr:
 # Failed to activate virtualenv.
 # Perhaps pyenv-virtualenv has not been loaded into your shell properly.
 # Please restart current shell and try again.

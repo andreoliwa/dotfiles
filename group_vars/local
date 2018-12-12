@@ -198,6 +198,7 @@ npm_global_packages:
   - eslint-plugin-react
   - babel-eslint
   - np
+  - commitizen
 
 rust_binaries:
   # https://github.com/nabijaczleweli/cargo-update

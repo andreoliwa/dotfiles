@@ -189,6 +189,7 @@ python3_modules:
   - flake8-pytest
   - pylint
   - pgcli
+  - howdoi # https://github.com/gleitz/howdoi
 
 # Node utilities
 npm_global_packages:

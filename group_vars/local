@@ -80,6 +80,7 @@ mac_cask_packages:
   - teamviewer
   - private-internet-access
   # Utilities
+  - toggl
   - iterm2-nightly # nightly has faster rendering
   - keepingyouawake # maintained caffeinate wrapper
   - flux
@@ -147,9 +148,9 @@ apt_packages:
 # Mac-App-Store-only apps to be installed with mas
 # Use App IDs found with `mas search <name>`
 mac_mas_packages:
-  - 585829637 # Todoist
-  - 409203825 # Numbers
-  # - 668208984  # Giphy capture
+  - 585829637 # Todoist https://itunes.apple.com/us/app/id585829637
+  - 409203825 # Numbers https://itunes.apple.com/us/app/id409203825
+  - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
 
 ruby_global_gems:
   - lunchy

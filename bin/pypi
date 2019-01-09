@@ -1,0 +1,105 @@
+#!/bin/sh
+"exec" "$HOME/.pyenv/versions/tools3/bin/python" "$0" "$@"
+"""The full process to upload to PyPI (bump version, changelog, package, upload)."""
+import os
+from pathlib import Path
+from shutil import rmtree
+
+import click
+
+from dotfiles_utils import shell
+
+
+def prompt(message: str) -> None:
+    """Display a prompt with a message."""
+    input(f"{message}\nPress ENTER to continue or Ctrl-C to abort")
+
+
+class Commands:
+    """Commands executed by this helper script."""
+
+    BUMP_VERSION = "bumpversion minor"
+    BUMP_VERSION_DRY_RUN = f"{BUMP_VERSION} --dry-run --verbose"
+
+    CHANGELOG = "conventional-changelog -i CHANGELOG.md -p jquery"
+
+    BUILD_SETUP_PY = "python setup.py sdist bdist_wheel --universal"
+    BUILD_POETRY = "poetry build"
+
+    GIT_ADD = "git add ."
+    GIT_COMMIT = "git commit -m'{}'"
+    GIT_PUSH = "git push"
+    GIT_TAG = "git tag v{}"
+    TWINE_UPLOAD = "twine upload dist/*"
+    GITHUB_RELEASE = "conventional-github-releaser -p jquery -v"
+
+
+@click.group()
+def pypi():
+    """All PyPI commands."""
+    pass
+
+
+@pypi.command()
+def full():
+    """The full process to upload to PyPI (bump version, changelog, package, upload)."""
+    bump = shell(Commands.BUMP_VERSION_DRY_RUN)
+    if bump.returncode != 0:
+        exit(bump.returncode)
+
+    chosen_lines = shell(
+        f'{Commands.BUMP_VERSION_DRY_RUN} 2>&1 | rg -e "would.+bump" -e "new version" | rg -o "\'(.+)\'"',
+        return_lines=True,
+    )
+    new_version = chosen_lines[0].strip("'")
+    commit_message = chosen_lines[1].strip("'")
+    print(f"New version: {new_version}\nCommit message: {commit_message}")
+    prompt("Were all versions correctly bumped?")
+
+    shell(Commands.BUMP_VERSION)
+    shell(f"{Commands.CHANGELOG} -s")
+
+    try:
+        dist_dir = (Path(os.curdir) / "dist").resolve()
+        print(f"Removing previous builds on {dist_dir}")
+        rmtree(str(dist_dir))
+    except OSError:
+        pass
+
+    shell(Commands.BUILD_POETRY)
+    shell("ls -l dist")
+    prompt("Was a dist/ directory created with a .tar.gz and a wheel?")
+
+    shell("git diff")
+    shell("clear")
+    prompt("Is the git diff correct?")
+
+    prompt(
+        "Last confirmation (point of no return):"
+        + "Changes will be committed, files will be uploaded to PyPI, a GitHub release will be created"
+    )
+
+    print("Add files, commit and push")
+    for command in (Commands.GIT_ADD, Commands.GIT_COMMIT.format(commit_message), Commands.GIT_PUSH):
+        shell(command)
+
+    print("Create the tag but don't push it yet (conventional-github-releaser will do that)")
+    shell(Commands.GIT_TAG.format(new_version))
+
+    print("Upload the files to PyPI via Twine")
+    shell(Commands.TWINE_UPLOAD)
+
+    print("Create a GitHub release")
+    shell(Commands.GITHUB_RELEASE)
+
+    print(f"The new version {new_version} was uploaded to PyPI")
+
+
+@pypi.command()
+def changelog():
+    """Preview the changelog."""
+    shell(f"{Commands.CHANGELOG} -u | less")
+
+
+if __name__ == "__main__":
+    pypi()

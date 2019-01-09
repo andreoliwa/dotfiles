@@ -18,19 +18,27 @@ def prompt(message: str) -> None:
 class Commands:
     """Commands executed by this helper script."""
 
+    # https://github.com/peritus/bumpversion
     BUMP_VERSION = "bumpversion minor"
     BUMP_VERSION_DRY_RUN = f"{BUMP_VERSION} --dry-run --verbose"
 
+    # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
     CHANGELOG = "conventional-changelog -i CHANGELOG.md -p jquery"
 
     BUILD_SETUP_PY = "python setup.py sdist bdist_wheel --universal"
+
+    # https://poetry.eustace.io/
     BUILD_POETRY = "poetry build"
 
     GIT_ADD = "git add ."
     GIT_COMMIT = "git commit -m'{}'"
     GIT_PUSH = "git push"
     GIT_TAG = "git tag v{}"
+
+    # https://github.com/pypa/twine
     TWINE_UPLOAD = "twine upload dist/*"
+
+    # https://www.npmjs.com/package/conventional-github-releaser
     GITHUB_RELEASE = "conventional-github-releaser -p jquery -v"
 
 

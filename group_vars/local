@@ -71,9 +71,9 @@ mac_homebrew_packages:
   # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
   # Browsers
-  - brave-browser
-  - google-chrome
-  - vivaldi
+  - brave-browser # https://brave.com/
+  - vivaldi # https://vivaldi.com/
+  - cliqz # https://cliqz.com/
   # Development
   - visual-studio-code
   # Network

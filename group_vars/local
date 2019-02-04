@@ -83,7 +83,7 @@ mac_cask_packages:
   - private-internet-access
   # Utilities
   - toggl
-  - iterm2-nightly # nightly has faster rendering
+  - iterm2
   - keepingyouawake # maintained caffeinate wrapper
   - flux
   - appcleaner

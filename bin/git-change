@@ -6,7 +6,7 @@
 # Include remote branches and remove "HEAD -> master" from the list
 branches=$(git branch -vv --all | grep -v ' -> ')
 
-branch=$(echo "$branches" | fzf-tmux +m)
+branch=$(echo "$branches" | sort | fzf-tmux +m)
 
 # Strip the "remotes/<name>" from the chosen branch, so we checkout the local branch that points to that remote
 remotes=$(git remote)

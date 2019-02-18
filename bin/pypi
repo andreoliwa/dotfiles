@@ -19,11 +19,11 @@ class Commands:
     """Commands executed by this helper script."""
 
     # https://github.com/peritus/bumpversion
-    BUMP_VERSION = "bumpversion minor"
+    BUMP_VERSION = "bumpversion {part}"
     BUMP_VERSION_DRY_RUN = f"{BUMP_VERSION} --dry-run --verbose"
 
     # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
-    CHANGELOG = "conventional-changelog -i CHANGELOG.md -p jquery"
+    CHANGELOG = "conventional-changelog -i CHANGELOG.md -p angular"
 
     BUILD_SETUP_PY = "python setup.py sdist bdist_wheel --universal"
 
@@ -36,10 +36,12 @@ class Commands:
     GIT_TAG = "git tag v{}"
 
     # https://github.com/pypa/twine
+    # I tried using "poetry publish -u $TWINE_USERNAME -p $TWINE_PASSWORD"; the command didn't fail, but nothing was uploaded
+    # I also tried setting $TWINE_USERNAME and $TWINE_PASSWORD on the environment, but then "twine upload" didn't work for some reason.
     TWINE_UPLOAD = "twine upload dist/*"
 
     # https://www.npmjs.com/package/conventional-github-releaser
-    GITHUB_RELEASE = "conventional-github-releaser -p jquery -v"
+    GITHUB_RELEASE = "conventional-github-releaser -p angular -v"
 
 
 @click.group()
@@ -49,14 +51,16 @@ def pypi():
 
 
 @pypi.command()
-def full():
+@click.option("--part", default="minor", type=click.Choice(["major", "minor", "patch"]))
+def full(part):
     """The full process to upload to PyPI (bump version, changelog, package, upload)."""
-    bump = shell(Commands.BUMP_VERSION_DRY_RUN)
+    bump_dry_run_cmd = Commands.BUMP_VERSION_DRY_RUN.format(part=part)
+    bump = shell(bump_dry_run_cmd)
     if bump.returncode != 0:
         exit(bump.returncode)
 
     chosen_lines = shell(
-        f'{Commands.BUMP_VERSION_DRY_RUN} 2>&1 | rg -e "would.+bump" -e "new version" | rg -o "\'(.+)\'"',
+        f'{bump_dry_run_cmd} 2>&1 | rg -e "would.+bump" -e "new version" | rg -o "\'(.+)\'"',
         return_lines=True,
     )
     new_version = chosen_lines[0].strip("'")
@@ -64,7 +68,7 @@ def full():
     print(f"New version: {new_version}\nCommit message: {commit_message}")
     prompt("Were all versions correctly bumped?")
 
-    shell(Commands.BUMP_VERSION)
+    shell(Commands.BUMP_VERSION.format(part=part))
     shell(f"{Commands.CHANGELOG} -s")
 
     try:

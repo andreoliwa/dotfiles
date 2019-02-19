@@ -166,7 +166,6 @@ pyenv_global_versions:
 
 python3_modules:
   - pip # https://pypi.org/project/pip/
-  - poetry # https://pypi.org/project/poetry/
   - pipenv # https://pypi.org/project/pipenv/
   - click # https://pypi.org/project/click/
   - requests-html # https://pypi.org/project/requests-html/

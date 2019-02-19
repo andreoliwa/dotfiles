@@ -43,6 +43,17 @@
   pyenv:
     version: "{{ latest_python_3_4.stdout }}"
 
+- name: "Download Poetry install script (https://pypi.org/project/poetry/)"
+  get_url:
+    url: "https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py"
+    dest: /tmp/get-poetry.py
+
+- name: Install Poetry globally
+  command: "python /tmp/get-poetry.py"
+
+- name: Update Poetry
+  command: "poetry self:update"
+
 - name: "jupyter3: Create virtualenv"
   pyenv:
     subcommand: virtualenv

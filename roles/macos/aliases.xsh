@@ -3,7 +3,7 @@ aliases["services"] = "brew services"
 aliases["ss"] = "open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app"
 
 def _sha256(args):
-  shasum -a 256 @(args[0]) | head -1 | grep -o '^\S\+'
+    shasum -a 256 @(args[0]) | head -1 | grep -o '^\\S\\+'
 aliases["sha256"] = _sha256
 
 # Display a notification with a given message

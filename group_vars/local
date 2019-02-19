@@ -124,8 +124,6 @@ mac_cask_packages:
   - font-hack
   # Databases
   - tableplus # RDBMS client
-  # Docs
-  - dash
   # Deployments
   - now
   # REST client

@@ -1,5 +1,22 @@
-- name: "Start the PostgreSQL Docker container"
+- name: "Start the PostgreSQL Docker container ({{ role_path }})"
   command: "docker-compose -f {{ role_path }}/docker-compose.yml up -d"
 
+# I had to create a symlink because psql was not working:
+# https://stackoverflow.com/questions/42356309/mac-psql-readline-library-not-loaded
+# $ psql
+# dyld: Library not loaded: /usr/local/opt/readline/lib/libreadline.7.dylib
+#   Referenced from: /usr/local/bin/psql
+#   Reason: image not found
+# Aborted
+# I ran:
+# ln -s /usr/local/opt/readline/lib/libreadline.8.dylib /usr/local/opt/readline/lib/libreadline.7.dylib
 - name: "Backup all local PostgreSQL 10 databases to .sql files (xpostgres postgresql://postgres:postgres@localhost:7710 backup {{ backup_dir }})"
   command: "xpostgres postgresql://postgres:postgres@localhost:7710 backup {{ backup_dir }}"
+# TODO: it's failing for some reason:
+#   localhost failed | msg: non-zero return code | stdout: Error while listing databases.
+# stdout=
+# stderr=psql: could not connect to server: No such file or directory
+# 	Is the server running locally and accepting
+# 	connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
+# /bin/sh: line 1: -c: command not found
+  ignore_errors: yes

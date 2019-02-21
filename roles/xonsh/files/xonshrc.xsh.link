@@ -3,11 +3,24 @@ import sys
 from glob import glob
 from pathlib import Path
 
-# https://xon.sh/tutorial_hist.html#sqlite-history-backend
-$XONSH_HISTORY_BACKEND = 'sqlite'
-
 # Set this variable to true if you want to debug this .xonshrc file
 DEBUG = False
+
+# https://xon.sh/envvars.html#shell-type
+# $SHELL_TYPE = "readline"
+$SHELL_TYPE = "prompt_toolkit2"
+
+# https://xon.sh/tutorial_hist.html#sqlite-history-backend
+# https://xon.sh/envvars.html#xonsh-history-backend
+$XONSH_HISTORY_BACKEND = 'sqlite'
+
+# https://xon.sh/envvars.html#xonsh-history-match-anywhere
+$XONSH_HISTORY_MATCH_ANYWHERE = True
+
+# Set an environment variable to suppress a warning message:
+# Skipping application of 'll' alias from 'bash' since it shares a name with an existing xonsh alias.
+# Use "--overwrite-alias" option to apply it anyway.You may prevent this message with "--suppress-skip-message" or "$FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True".
+$FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True
 
 def relative_to_home(full_path: str):
     path_obj = Path(full_path)
@@ -50,7 +63,7 @@ class Benchmark:
         for message, seconds in sorted(cls.stats.items(), key=lambda kv: kv[1], reverse=True):
             cls.print(message, seconds)
 
-file_bench = Benchmark(f'{relative_to_home(__file__)}')
+file_bench = Benchmark('.xonshrc')
 file_bench.start()
 
 # Debug variables and functions
@@ -83,7 +96,17 @@ with Benchmark('All .xsh scripts'):
         relative_path = relative_to_home(xsh_file)
         with Benchmark(f'Script {relative_path}'):
             debug_print(f'$$$ Sourcing xonsh script {relative_path}')
-            source @(xsh_file)
+
+            # Using "source @(xsh_file)" instead of "evalx" was leading to this error most of the times:
+            # Exception in thread Thread-21:
+            # Traceback (most recent call last):
+            #   File "/usr/local/opt/python/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py", line 917, in _bootstrap_inner
+            #     self.run()
+            #   File "/usr/local/Cellar/xonsh/0.8.7/libexec/lib/python3.7/site-packages/xonsh/__amalgam__.py", line 13364, in run
+            #     io.open(self.c2pwrite, "wb", -1), encoding=enc, errors=err
+            # OSError: [Errno 9] Bad file descriptor
+            # It happened ramdonly with certain script files, maybe the ones which had aliases with functions
+            evalx(f"source {xsh_file}")
 
 # Load xontribs that were installed by this Ansible role (see "xontribs_install" and "xontribs_load" variables)
 with Benchmark('Xontribs'):

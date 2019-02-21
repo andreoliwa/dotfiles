@@ -166,28 +166,15 @@ pyenv_global_versions:
 
 python3_modules:
   - pip # https://pypi.org/project/pip/
-  - pipenv # https://pypi.org/project/pipenv/
   - click # https://pypi.org/project/click/
   - requests-html # https://pypi.org/project/requests-html/
   - cookiecutter # https://pypi.org/project/cookiecutter/
   - cookiepatcher # https://pypi.org/project/cookiepatcher/
   - youtube-dl # https://pypi.org/project/youtube_dl/
-  - black # https://pypi.org/project/black/
   - organize-tool # https://pypi.org/project/organize-tool/
   - keyring # https://pypi.org/project/keyring/
   - subliminal # https://pypi.org/project/subliminal/
   - awscli # https://pypi.org/project/awscli/
-  - flake8 # https://pypi.org/project/flake8/
-  - flake8-blind-except # https://pypi.org/project/flake8-blind-except/
-  - flake8-bugbear # https://pypi.org/project/flake8-bugbear/
-  - flake8-comprehensions # https://pypi.org/project/flake8-comprehensions/
-  - flake8-debugger # https://pypi.org/project/flake8-debugger/
-  - flake8-docstrings # https://pypi.org/project/flake8-docstrings/
-  - flake8-isort # https://pypi.org/project/flake8-isort/
-  - flake8-mypy # https://pypi.org/project/flake8-mypy/
-  - flake8-polyfill # https://pypi.org/project/flake8polyfill/
-  - flake8-pytest # https://pypi.org/project/pytest-flake8/
-  - pylint # https://pypi.org/project/pylint/
   - pgcli # https://pypi.org/project/pgcli/
   - howdoi # https://pypi.org/project/howdoi/
   - bumpversion # https://pypi.org/project/bumpversion/

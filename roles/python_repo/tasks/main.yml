@@ -14,7 +14,7 @@
     version: "{{ python_version }}"
     virtualenv_name: "{{ env }}"
 
-# TODO  localhost failed | msg: python-clitoolkit already exists but version differs
+# TODO  localhost failed | msg: python-clit already exists but version differs
 
 - name: "{{ dir }}: Update pip on virtualenv {{ env }}"
   when: python_version != ''
@@ -94,19 +94,20 @@
     creates: "{{ root }}/{{ dir }}/.python-version"
   ignore_errors: true
 
-- name: "{{ dir }}: Install modules on the virtualenv {{ env }} with '{{ install_command }}'? {{ run_install_command }}"
-  when: run_install_command == 'yes' and python_version != '' and install_command != ''
+# TODO The installation doesn't seem to be working properly
+# - name: "{{ dir }}: Install modules on the virtualenv {{ env }} with '{{ install_command }}'? {{ run_install_command }}"
+#   when: run_install_command == 'yes' and python_version != '' and install_command != ''
 
-  shell: "source ~/.pyenv/versions/{{ env }}/bin/activate && {{ install_command }}"
-#   TODO pyenv commands are not working with the Ansible shell
-#   localhost failed | msg: non-zero return code | stderr:
-# Failed to activate virtualenv.
-# Perhaps pyenv-virtualenv has not been loaded into your shell properly.
-# Please restart current shell and try again.
-#   shell: "pyenv activate {{ env }} && {{ install_command }}"
+#   shell: "source ~/.pyenv/versions/{{ env }}/bin/activate && {{ install_command }}"
+# #   TODO pyenv commands are not working with the Ansible shell
+# #   localhost failed | msg: non-zero return code | stderr:
+# # Failed to activate virtualenv.
+# # Perhaps pyenv-virtualenv has not been loaded into your shell properly.
+# # Please restart current shell and try again.
+# #   shell: "pyenv activate {{ env }} && {{ install_command }}"
 
-  # Installation might fail, that's acceptable
-  ignore_errors: true
-  args:
-    executable: /bin/bash
-    chdir: "{{ root }}/{{ dir }}"
+#   # Installation might fail, that's acceptable
+#   ignore_errors: true
+#   args:
+#     executable: /bin/bash
+#     chdir: "{{ root }}/{{ dir }}"

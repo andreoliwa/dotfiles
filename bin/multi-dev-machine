@@ -4,9 +4,37 @@ import argparse
 import os
 import sys
 from pathlib import Path
-from subprocess import PIPE
+from subprocess import PIPE, CalledProcessError, run
 
-from dotfiles_utils import notify, shell
+
+def shell(command_line, quiet=False, return_lines=False, **kwargs):
+    """Print and run a shell command."""
+    if not quiet:
+        print("$ {}".format(command_line))
+    if return_lines:
+        kwargs.setdefault("stdout", PIPE)
+
+    completed_process = run(command_line, shell=True, universal_newlines=True, **kwargs)
+    if not return_lines:
+        return completed_process
+
+    stdout = completed_process.stdout.strip().strip("\n")
+    return stdout.split("\n") if stdout else []
+
+
+def notify(title, message):
+    """If terminal-notifier is installed, use it to display a notification."""
+    check = "which" if sys.platform == "linux" else "command -v"
+    try:
+        terminal_notifier_path = shell("{} terminal-notifier".format(check), check=True, stdout=PIPE).stdout.strip()
+    except CalledProcessError:
+        terminal_notifier_path = ""
+    if terminal_notifier_path:
+        shell(
+            'terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(
+                Path(__file__).name, title, message
+            )
+        )
 
 
 def main():

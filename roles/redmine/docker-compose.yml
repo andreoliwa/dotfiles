@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  redmine:
+    container_name: redmine
+    image: redmine:4
+    restart: always
+    ports:
+      - 8003:3000
+    networks:
+      - net10
+    environment:
+      REDMINE_DB_POSTGRES: postgres10
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: redmine
+    volumes:
+      - ~/Personal/redmine:/usr/src/redmine/files
+
+networks:
+  net10:
+    name: postgres10
+    external: true

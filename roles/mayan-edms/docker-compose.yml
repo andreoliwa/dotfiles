@@ -21,7 +21,7 @@ services:
     image: healthcheck/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: mayan
-      RABBITMQ_DEFAULT_PASS: mayan
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
       RABBITMQ_DEFAULT_VHOST: mayan
     networks:
       - mayan
@@ -51,8 +51,8 @@ services:
       MAYAN_DATABASE_ENGINE: django.db.backends.postgresql
       MAYAN_DATABASE_HOST: postgres10
       MAYAN_DATABASE_NAME: mayan
-      MAYAN_DATABASE_PASSWORD: mayan
       MAYAN_DATABASE_USER: mayan
+      MAYAN_DATABASE_PASSWORD: ${MAYAN_DATABASE_PASSWORD}
       MAYAN_APT_INSTALLS: "tesseract-ocr-deu tesseract-ocr-por tesseract-ocr-ita"
       MAYAN_DOCUMENTS_LANGUAGE: deu
     ports:

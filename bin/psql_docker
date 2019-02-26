@@ -1,4 +1,4 @@
 #!/bin/sh
 # Run psql (PostgreSQL database client) from inside the Docker container
 # TODO Create a command: xpostgres psql
-docker exec -i postgres10 psql -U postgres "$@"
+docker exec -it postgres10 psql -U postgres "$@"

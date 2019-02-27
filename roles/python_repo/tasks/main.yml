@@ -47,7 +47,7 @@
     - "{{ symlink_dir_stat.stat.path }}/*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
-- name: "{{ dir }}: Add VIRTUAL_ENV variable to .autoenv file (useful for poetry/pipenv)"
+- name: "{{ dir }}: Add VIRTUAL_ENV variable to .autoenv"
   when: python_version != ''
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoenv"
@@ -56,16 +56,7 @@
     regexp: "^.+ VIRTUAL_ENV="
     line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"
 
-- name: "{{ dir }}: Add VIRTUAL_ENV variable to .autoxsh file (useful for poetry/pipenv)"
-  when: python_version != ''
-  lineinfile:
-    path: "{{ root }}/{{ dir }}/.autoxsh"
-    state: present
-    create: yes
-    regexp: "VIRTUAL_ENV = "
-    line: "$VIRTUAL_ENV = p'{{ pyenv_root }}/versions/{{ env }}'"
-
-- name: "{{ dir }}: Add PYTHONWARNINGS variable to .autoenv file (useful for poetry/pipenv)"
+- name: "{{ dir }}: Add PYTHONWARNINGS variable to .autoenv"
   when: python_version != ''
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoenv"
@@ -74,14 +65,14 @@
     regexp: "^.+ PYTHONWARNINGS="
     line: "export PYTHONWARNINGS="
 
-- name: "{{ dir }}: Add PYTHONWARNINGS variable to .autoxsh file (useful for poetry/pipenv)"
+- name: "{{ dir }}: Source bash's .autoenv by default on .autoxsh"
   when: python_version != ''
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoxsh"
     state: present
     create: yes
-    regexp: "PYTHONWARNINGS = "
-    line: "$PYTHONWARNINGS = ''"
+    regexp: "source.+autoenv"
+    line: "source-bash ./.autoenv"
 
 - name: "{{ dir }}: Run if this fails: bash -c 'cd {{ root }}/{{ dir }} && pyenv local {{ env }} {{ local }}'"
   when: python_version != ''

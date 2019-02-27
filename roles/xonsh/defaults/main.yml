@@ -5,10 +5,10 @@ xontribs_install:
 
 xontribs_load:
   # Pre-installed modules
-  - jedi
-  - prompt_ret_code
-  - whole_word_jumping
+  - jedi  # https://xon.sh/xontribs.html#jedi
+  - prompt_ret_code  # https://xon.sh/xontribs.html#prompt-ret-code
+  - whole_word_jumping  # https://xon.sh/xontribs.html#whole-word-jumping
 
   # Installed modules: http://xon.sh/tutorial_xontrib.html
-  - autoxsh
-  - z
+  - autoxsh  # https://xon.sh/xontribs.html#autoxsh
+  - z  # https://xon.sh/xontribs.html#z

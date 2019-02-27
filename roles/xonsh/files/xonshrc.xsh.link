@@ -1,10 +1,15 @@
-import time
 import sys
+import time
+from collections import defaultdict
 from glob import glob
 from pathlib import Path
 
 # Set this variable to true if you want to debug this .xonshrc file
 DEBUG = False
+
+# Cache files
+cached_roles = Path("~/dotfiles/.cache/roles").expanduser()
+cached_scripts = Path("~/dotfiles/.cache/scripts").expanduser()
 
 # https://xon.sh/envvars.html#shell-type
 # $SHELL_TYPE = "readline"
@@ -77,27 +82,73 @@ def debug_print(message: str):
 if sys.platform == 'darwin':
     source-bash $(/usr/libexec/path_helper -s)
 
-xsh_config_files = set()
-
 # http://xon.sh/tutorial.html#environment-types
-for dotfile_dir in glob($HOME + '/dotfiles*'):
+shell_files = set()
+for dotfile_role_dir in glob($HOME + '/dotfiles*/roles'):
     # http://xon.sh/envvars.html#path
-    $PATH.append(Path(dotfile_dir) / 'bin')
+    $PATH.append(Path(dotfile_role_dir) / 'bin')
 
     # Source all .xsh scripts
     # Note: This environment variable is only needed for the globbing; I couldn't do it with Python variables.
     # http://xon.sh/tutorial.html#normal-globbing
-    $ONE_DIR = dotfile_dir
-    xsh_config_files.update(g`$ONE_DIR/**/*.xsh`)
-    del $ONE_DIR
+    $ROLE_DIR = dotfile_role_dir
+    shell_files.update(g`$ROLE_DIR/**/*.*sh`)
+    del $ROLE_DIR
 
-with Benchmark('All .xsh scripts'):
-    for xsh_file in sorted(xsh_config_files):
-        relative_path = relative_to_home(xsh_file)
+# Parse the roles that are active in the Ansible playbook
+with Benchmark('Parsing roles'):
+    roles = set()
+    if cached_roles.exists():
+        roles.update(cached_roles.read_text().split("\n"))
+    else:
+        playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
+        if playbook_path.exists():
+            import yaml
+            playbook_yml = yaml.load(playbook_path.read_text())
+            roles = {item["role"] for item in playbook_yml[0]["roles"]}
+        cached_roles.parent.mkdir(parents=True, exist_ok=True)
+        cached_roles.write_text("\n".join(sorted(roles)))
+
+with Benchmark('Choosing shell scripts'):
+    chosen_scripts = set()
+    if cached_scripts.exists():
+        chosen_scripts.update(cached_scripts.read_text().split("\n"))
+    else:
+        import re
+        role_regex = re.compile(r"roles/(?P<role>.+)/")
+
+        mapping = defaultdict(set)
+        for shell_file in sorted(shell_files):
+            shell_path = Path(shell_file)
+            key = str(shell_path.parent / shell_path.stem)
+
+            # Only source scripts that belong to roles defined in the playbook.
+            match = role_regex.search(key)
+            role_from_shell_file = match.groupdict().get("role")
+            if role_from_shell_file in roles:
+                mapping[key].add(shell_path.suffix)
+
+        for parent_stem in sorted(mapping):
+            script_partial_path = Path(parent_stem)
+            suffixes = mapping[parent_stem]
+            if ".xsh" in suffixes:
+                # Try a xonsh script first.
+                chosen_suffix = ".xsh"
+            else:
+                # Or sort the other suffixes and get the first one.
+                chosen_suffix = list(sorted(suffixes)).pop()
+            script_path = script_partial_path.with_suffix(chosen_suffix)
+            chosen_scripts.add(str(script_path))
+        cached_scripts.parent.mkdir(parents=True, exist_ok=True)
+        cached_scripts.write_text("\n".join(sorted(chosen_scripts)))
+
+with Benchmark('Sourcing shell scripts'):
+    for chosen_script in sorted(chosen_scripts):
+        relative_path = relative_to_home(chosen_script)
         with Benchmark(f'Script {relative_path}'):
-            debug_print(f'$$$ Sourcing xonsh script {relative_path}')
+            debug_print(f'>>> Sourcing shell script {relative_path}')
 
-            # Using "source @(xsh_file)" instead of "evalx" was leading to this error most of the times:
+            # Using "source @(chosen_script)" instead of "evalx" was leading to this error most of the times:
             # Exception in thread Thread-21:
             # Traceback (most recent call last):
             #   File "/usr/local/opt/python/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py", line 917, in _bootstrap_inner
@@ -106,7 +157,9 @@ with Benchmark('All .xsh scripts'):
             #     io.open(self.c2pwrite, "wb", -1), encoding=enc, errors=err
             # OSError: [Errno 9] Bad file descriptor
             # It happened ramdonly with certain script files, maybe the ones which had aliases with functions
-            evalx(f"source {xsh_file}")
+            # if chosen_script.endswith(".xsh"):
+            source_command = "source" if chosen_script.endswith(".xsh") else "source-bash"
+            evalx(f"{source_command} {chosen_script}")
 
 # Load xontribs that were installed by this Ansible role (see "xontribs_install" and "xontribs_load" variables)
 with Benchmark('Xontribs'):

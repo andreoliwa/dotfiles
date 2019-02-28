@@ -7,9 +7,6 @@ from pathlib import Path
 DOTFILES_CACHE_DIR = Path("~/dotfiles/.cache/").expanduser()
 DOTFILES_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-# Set this variable to true if you want to debug this .xonshrc file
-DEBUG = False
-
 # https://xon.sh/envvars.html#shell-type
 # $SHELL_TYPE = "readline"
 $SHELL_TYPE = "prompt_toolkit2"
@@ -68,119 +65,137 @@ class Benchmark:
         for message, seconds in sorted(cls.stats.items(), key=lambda kv: kv[1], reverse=True):
             cls.print(message, seconds)
 
-file_bench = Benchmark('.xonshrc')
-file_bench.start()
 
-# Debug variables and functions
-if DEBUG:
-    $XONSH_SHOW_TRACEBACK = True
-def debug_print(message: str):
-    if DEBUG:
-        print('\n' + message)
+def _find_shell_files():
+    shell_files = set()
+    # http://xon.sh/tutorial.html#environment-types
+    for dotfile_role_dir in glob($HOME + '/dotfiles*/roles'):
+        # http://xon.sh/envvars.html#path
+        $PATH.append(Path(dotfile_role_dir).parent / 'bin')
 
-# http://xon.sh/osx.html#path-helper
-if sys.platform == 'darwin':
-    source-bash $(/usr/libexec/path_helper -s)
+        # Source all .xsh scripts
+        # Note: This environment variable is only needed for the globbing; I couldn't do it with Python variables.
+        # http://xon.sh/tutorial.html#normal-globbing
+        $ROLE_DIR = dotfile_role_dir
+        shell_files.update(g`$ROLE_DIR/**/*.*sh`)
+    return shell_files
 
-# http://xon.sh/tutorial.html#environment-types
-shell_files = set()
-for dotfile_role_dir in glob($HOME + '/dotfiles*/roles'):
-    # http://xon.sh/envvars.html#path
-    $PATH.append(Path(dotfile_role_dir).parent / 'bin')
 
-    # Source all .xsh scripts
-    # Note: This environment variable is only needed for the globbing; I couldn't do it with Python variables.
-    # http://xon.sh/tutorial.html#normal-globbing
-    $ROLE_DIR = dotfile_role_dir
-    shell_files.update(g`$ROLE_DIR/**/*.*sh`)
-
-# Parse the roles that are active in the Ansible playbook
-with Benchmark('Parsing roles'):
+def _parse_roles():
+    """Parse the roles that are active in the Ansible playbook."""
     roles = set()
-    cache_roles = DOTFILES_CACHE_DIR / "roles"
-    if cache_roles.exists():
-        roles.update(cache_roles.read_text().split("\n"))
-    else:
-        playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
-        if playbook_path.exists():
-            import yaml
-            playbook_yml = yaml.load(playbook_path.read_text())
-            roles = {item["role"] for item in playbook_yml[0]["roles"]}
-        cache_roles.write_text("\n".join(sorted(roles)))
 
-with Benchmark('Choosing shell scripts'):
-    chosen_scripts = set()
-    not_loaded = set()
+    with Benchmark('Parsing roles'):
+        cache_roles = DOTFILES_CACHE_DIR / "roles"
+        if cache_roles.exists():
+            roles.update(cache_roles.read_text().split("\n"))
+        else:
+            playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
+            if playbook_path.exists():
+                import yaml
+                playbook_yml = yaml.load(playbook_path.read_text())
+                roles = {item["role"] for item in playbook_yml[0]["roles"]}
+            cache_roles.write_text("\n".join(sorted(roles)))
+    return roles
 
-    cache_scripts = DOTFILES_CACHE_DIR / "scripts"
-    if cache_scripts.exists():
-        chosen_scripts.update(cache_scripts.read_text().split("\n"))
-    else:
-        import re
-        role_regex = re.compile(r"roles/(?P<role>.+)/")
 
-        mapping = defaultdict(set)
-        for shell_file in sorted(shell_files):
-            shell_path = Path(shell_file)
-            key = str(shell_path.parent / shell_path.stem)
+def _choose_shell_scripts():
+    with Benchmark('Choosing shell scripts'):
+        chosen_scripts = set()
+        not_loaded = set()
 
-            # Only source scripts that belong to roles defined in the playbook.
-            match = role_regex.search(key)
-            role_from_shell_file = match.groupdict().get("role")
-            if role_from_shell_file in roles:
-                mapping[key].add(shell_path.suffix)
-            else:
-                not_loaded.add(shell_file)
-        if not_loaded:
-            Path(DOTFILES_CACHE_DIR / "not_loaded").write_text("\n".join(sorted(not_loaded)))
+        cache_scripts = DOTFILES_CACHE_DIR / "scripts"
+        if cache_scripts.exists():
+            chosen_scripts.update(cache_scripts.read_text().split("\n"))
+        else:
+            import re
+            role_regex = re.compile(r"roles/(?P<role>.+)/")
 
-        for parent_stem in sorted(mapping):
-            script_partial_path = Path(parent_stem)
-            suffixes = mapping[parent_stem]
-            if ".xsh" in suffixes:
-                # Try a xonsh script first.
-                chosen_suffix = ".xsh"
-            else:
-                # Or sort the other suffixes and get the first one.
-                chosen_suffix = list(sorted(suffixes)).pop()
-            script_path = script_partial_path.with_suffix(chosen_suffix)
-            chosen_scripts.add(str(script_path))
-        cache_scripts.write_text("\n".join(sorted(chosen_scripts)))
+            mapping = defaultdict(set)
+            for shell_file in sorted(shell_files):
+                shell_path = Path(shell_file)
+                key = str(shell_path.parent / shell_path.stem)
 
-with Benchmark('Sourcing shell scripts'):
-    for chosen_script in sorted(chosen_scripts):
-        if not Path(chosen_script).exists():
-            continue
+                # Only source scripts that belong to roles defined in the playbook.
+                match = role_regex.search(key)
+                role_from_shell_file = match.groupdict().get("role")
+                if role_from_shell_file in roles:
+                    mapping[key].add(shell_path.suffix)
+                else:
+                    not_loaded.add(shell_file)
+            if not_loaded:
+                Path(DOTFILES_CACHE_DIR / "not_loaded").write_text("\n".join(sorted(not_loaded)))
 
-        relative_path = relative_to_home(chosen_script)
-        with Benchmark(f'Script {relative_path}'):
-            debug_print(f'>>> Sourcing shell script {relative_path}')
+            for parent_stem in sorted(mapping):
+                script_partial_path = Path(parent_stem)
+                suffixes = mapping[parent_stem]
+                if ".xsh" in suffixes:
+                    # Try a xonsh script first.
+                    chosen_suffix = ".xsh"
+                else:
+                    # Or sort the other suffixes and get the first one.
+                    chosen_suffix = list(sorted(suffixes)).pop()
+                script_path = script_partial_path.with_suffix(chosen_suffix)
+                chosen_scripts.add(str(script_path))
+            cache_scripts.write_text("\n".join(sorted(chosen_scripts)))
+    return chosen_scripts
 
-            # Using "source @(chosen_script)" instead of "evalx" was leading to this error most of the times:
-            # Exception in thread Thread-21:
-            # Traceback (most recent call last):
-            #   File "/usr/local/opt/python/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py", line 917, in _bootstrap_inner
-            #     self.run()
-            #   File "/usr/local/Cellar/xonsh/0.8.7/libexec/lib/python3.7/site-packages/xonsh/__amalgam__.py", line 13364, in run
-            #     io.open(self.c2pwrite, "wb", -1), encoding=enc, errors=err
-            # OSError: [Errno 9] Bad file descriptor
-            # It happened ramdonly with certain script files, maybe the ones which had aliases with functions
-            # if chosen_script.endswith(".xsh"):
-            source_command = "source" if chosen_script.endswith(".xsh") else "source-bash"
-            evalx(f"{source_command} {chosen_script}")
 
-# Load xontribs that were installed by this Ansible role (see "xontribs_install" and "xontribs_load" variables)
-with Benchmark('Xontribs'):
-    source ~/.xonsh_xontrib_load
+def _main(debug):
+    file_bench = Benchmark('.xonshrc')
+    file_bench.start()
 
-# Load environment variables if they exist
-test -f ~/.dotfiles.env && source-bash ~/.dotfiles.env
+    if debug:
+        $XONSH_SHOW_TRACEBACK = True
+    def debug_print(message: str):
+        if debug:
+            print('\n' + message)
 
-# http://xon.sh/tutorial.html#customizing-the-prompt
-# http://xon.sh/envvars.html#xonsh-gitstatus
-$PROMPT = '{env_name:{} }{BOLD_GREEN}{hostname}{BOLD_BLUE} {cwd}{branch_color}{gitstatus: {}}{NO_COLOR} {BOLD_BLUE}{ret_code_color}{ret_code}{NO_COLOR}\n{prompt_end} '
+    # http://xon.sh/osx.html#path-helper
+    if sys.platform == 'darwin':
+        source-bash $(/usr/libexec/path_helper -s)
 
-file_bench.end(not DEBUG)
+    shell_files = _find_shell_files()
+    roles = _parse_roles()
+    chosen_scripts = _choose_shell_scripts()
 
-if DEBUG:
-    Benchmark.print_stats()
+    with Benchmark('Sourcing shell scripts'):
+        for chosen_script in sorted(chosen_scripts):
+            if not Path(chosen_script).exists():
+                continue
+
+            relative_path = relative_to_home(chosen_script)
+            with Benchmark(f'Script {relative_path}'):
+                debug_print(f'>>> Sourcing shell script {relative_path}')
+
+                # Using "source @(chosen_script)" instead of "evalx" was leading to this error most of the times:
+                # Exception in thread Thread-21:
+                # Traceback (most recent call last):
+                #   File "/usr/local/opt/python/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py", line 917, in _bootstrap_inner
+                #     self.run()
+                #   File "/usr/local/Cellar/xonsh/0.8.7/libexec/lib/python3.7/site-packages/xonsh/__amalgam__.py", line 13364, in run
+                #     io.open(self.c2pwrite, "wb", -1), encoding=enc, errors=err
+                # OSError: [Errno 9] Bad file descriptor
+                # It happened ramdonly with certain script files, maybe the ones which had aliases with functions
+                # if chosen_script.endswith(".xsh"):
+                source_command = "source" if chosen_script.endswith(".xsh") else "source-bash"
+                evalx(f"{source_command} {chosen_script}")
+
+    # Load xontribs that were installed by this Ansible role (see "xontribs_install" and "xontribs_load" variables)
+    with Benchmark('Xontribs'):
+        source ~/.xonsh_xontrib_load
+
+    # Load environment variables if they exist
+    test -f ~/.dotfiles.env && source-bash ~/.dotfiles.env
+
+    # http://xon.sh/tutorial.html#customizing-the-prompt
+    # http://xon.sh/envvars.html#xonsh-gitstatus
+    $PROMPT = '{env_name:{} }{BOLD_GREEN}{hostname}{BOLD_BLUE} {cwd}{branch_color}{gitstatus: {}}{NO_COLOR} {BOLD_BLUE}{ret_code_color}{ret_code}{NO_COLOR}\n{prompt_end} '
+
+    file_bench.end(not debug)
+
+    if debug:
+        Benchmark.print_stats()
+
+# Send True if you want to debug this .xonshrc file
+_main(False)

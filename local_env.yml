@@ -4,6 +4,7 @@
     PYENV_ROOT: "{{ pyenv_root }}"
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
+    - { role: ansible, tags: ["ansible"] }
     - { role: git, tags: ["git"] }
     - { role: package_manager, tags: ["package_manager", "bootstrap"] }
     - { role: vagrant, tags: ["vagrant"], when: ansible_os_family == "Darwin" }
@@ -31,5 +32,11 @@
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
     - { role: docker, tags: ["docker"] }
     - { role: postgres, tags: ["postgres", "pg", "sql"] }
+    - { role: redmine, tags: ["redmine"] }
+    - { role: mayan-edms, tags: ["mayan"] }
     - { role: tt-rss, tags: ["tt-rss", "rss"] }
-    - { role: activity-watch, tags: ["activity-watch", "aw"], when: ansible_os_family == "Darwin" }
+    - {
+        role: activity-watch,
+        tags: ["activity-watch", "aw"],
+        when: ansible_os_family == "Darwin",
+      }

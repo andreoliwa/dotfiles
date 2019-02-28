@@ -4,12 +4,11 @@ from collections import defaultdict
 from glob import glob
 from pathlib import Path
 
+DOTFILES_CACHE_DIR = Path("~/dotfiles/.cache/").expanduser()
+DOTFILES_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
 # Set this variable to true if you want to debug this .xonshrc file
 DEBUG = False
-
-# Cache files
-cached_roles = Path("~/dotfiles/.cache/roles").expanduser()
-cached_scripts = Path("~/dotfiles/.cache/scripts").expanduser()
 
 # https://xon.sh/envvars.html#shell-type
 # $SHELL_TYPE = "readline"
@@ -24,7 +23,8 @@ $XONSH_HISTORY_MATCH_ANYWHERE = True
 
 # Set an environment variable to suppress a warning message:
 # Skipping application of 'll' alias from 'bash' since it shares a name with an existing xonsh alias.
-# Use "--overwrite-alias" option to apply it anyway.You may prevent this message with "--suppress-skip-message" or "$FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True".
+# Use "--overwrite-alias" option to apply it anyway.
+# You may prevent this message with "--suppress-skip-message" or:
 $FOREIGN_ALIASES_SUPPRESS_SKIP_MESSAGE = True
 
 def relative_to_home(full_path: str):
@@ -86,33 +86,35 @@ if sys.platform == 'darwin':
 shell_files = set()
 for dotfile_role_dir in glob($HOME + '/dotfiles*/roles'):
     # http://xon.sh/envvars.html#path
-    $PATH.append(Path(dotfile_role_dir) / 'bin')
+    $PATH.append(Path(dotfile_role_dir).parent / 'bin')
 
     # Source all .xsh scripts
     # Note: This environment variable is only needed for the globbing; I couldn't do it with Python variables.
     # http://xon.sh/tutorial.html#normal-globbing
     $ROLE_DIR = dotfile_role_dir
     shell_files.update(g`$ROLE_DIR/**/*.*sh`)
-    del $ROLE_DIR
 
 # Parse the roles that are active in the Ansible playbook
 with Benchmark('Parsing roles'):
     roles = set()
-    if cached_roles.exists():
-        roles.update(cached_roles.read_text().split("\n"))
+    cache_roles = DOTFILES_CACHE_DIR / "roles"
+    if cache_roles.exists():
+        roles.update(cache_roles.read_text().split("\n"))
     else:
         playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
         if playbook_path.exists():
             import yaml
             playbook_yml = yaml.load(playbook_path.read_text())
             roles = {item["role"] for item in playbook_yml[0]["roles"]}
-        cached_roles.parent.mkdir(parents=True, exist_ok=True)
-        cached_roles.write_text("\n".join(sorted(roles)))
+        cache_roles.write_text("\n".join(sorted(roles)))
 
 with Benchmark('Choosing shell scripts'):
     chosen_scripts = set()
-    if cached_scripts.exists():
-        chosen_scripts.update(cached_scripts.read_text().split("\n"))
+    not_loaded = set()
+
+    cache_scripts = DOTFILES_CACHE_DIR / "scripts"
+    if cache_scripts.exists():
+        chosen_scripts.update(cache_scripts.read_text().split("\n"))
     else:
         import re
         role_regex = re.compile(r"roles/(?P<role>.+)/")
@@ -127,6 +129,10 @@ with Benchmark('Choosing shell scripts'):
             role_from_shell_file = match.groupdict().get("role")
             if role_from_shell_file in roles:
                 mapping[key].add(shell_path.suffix)
+            else:
+                not_loaded.add(shell_file)
+        if not_loaded:
+            Path(DOTFILES_CACHE_DIR / "not_loaded").write_text("\n".join(sorted(not_loaded)))
 
         for parent_stem in sorted(mapping):
             script_partial_path = Path(parent_stem)
@@ -139,11 +145,13 @@ with Benchmark('Choosing shell scripts'):
                 chosen_suffix = list(sorted(suffixes)).pop()
             script_path = script_partial_path.with_suffix(chosen_suffix)
             chosen_scripts.add(str(script_path))
-        cached_scripts.parent.mkdir(parents=True, exist_ok=True)
-        cached_scripts.write_text("\n".join(sorted(chosen_scripts)))
+        cache_scripts.write_text("\n".join(sorted(chosen_scripts)))
 
 with Benchmark('Sourcing shell scripts'):
     for chosen_script in sorted(chosen_scripts):
+        if not Path(chosen_script).exists():
+            continue
+
         relative_path = relative_to_home(chosen_script)
         with Benchmark(f'Script {relative_path}'):
             debug_print(f'>>> Sourcing shell script {relative_path}')

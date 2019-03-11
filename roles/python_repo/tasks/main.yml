@@ -72,7 +72,7 @@
     state: present
     create: yes
     regexp: "source.+autoenv"
-    line: "source-bash ./.autoenv"
+    line: "source-bash --interactive False ./.autoenv"
 
 - name: "{{ dir }}: Run if this fails: bash -c 'cd {{ root }}/{{ dir }} && pyenv local {{ env }} {{ local }}'"
   when: python_version != ''

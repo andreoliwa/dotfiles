@@ -179,9 +179,11 @@ def _main(debug):
                 #     io.open(self.c2pwrite, "wb", -1), encoding=enc, errors=err
                 # OSError: [Errno 9] Bad file descriptor
                 # It happened ramdonly with certain script files, maybe the ones which had aliases with functions
-                # EDIT: Using --interactive False seems to reduce or eliminate the problem completely.
+                # EDIT: Using --interactive False almost eliminates the problem completely.
                 # Suggestion taken from another issue:
                 # https://github.com/xonsh/xonsh/issues/2790#issuecomment-416283371
+                # Commented here:
+                # https://github.com/xonsh/xonsh/issues/2496#issuecomment-471779854
                 source_command = "source" if chosen_script.endswith(".xsh") else "source-bash --interactive False"
                 evalx(f"{source_command} {chosen_script}")
 

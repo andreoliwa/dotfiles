@@ -112,6 +112,8 @@ def _choose_shell_scripts():
             role_regex = re.compile(r"roles/(?P<role>.+)/")
 
             mapping = defaultdict(set)
+            shell_files = _find_shell_files()
+            roles = _parse_roles()
             for shell_file in sorted(shell_files):
                 shell_path = Path(shell_file)
                 key = str(shell_path.parent / shell_path.stem)
@@ -153,7 +155,7 @@ def _main(debug):
 
     # http://xon.sh/osx.html#path-helper
     if sys.platform == 'darwin':
-        source-bash $(/usr/libexec/path_helper -s)
+        source-bash --interactive False $(/usr/libexec/path_helper -s)
 
     shell_files = _find_shell_files()
     roles = _parse_roles()
@@ -177,8 +179,10 @@ def _main(debug):
                 #     io.open(self.c2pwrite, "wb", -1), encoding=enc, errors=err
                 # OSError: [Errno 9] Bad file descriptor
                 # It happened ramdonly with certain script files, maybe the ones which had aliases with functions
-                # if chosen_script.endswith(".xsh"):
-                source_command = "source" if chosen_script.endswith(".xsh") else "source-bash"
+                # EDIT: Using --interactive False seems to reduce or eliminate the problem completely.
+                # Suggestion taken from another issue:
+                # https://github.com/xonsh/xonsh/issues/2790#issuecomment-416283371
+                source_command = "source" if chosen_script.endswith(".xsh") else "source-bash --interactive False"
                 evalx(f"{source_command} {chosen_script}")
 
     # Load xontribs that were installed by this Ansible role (see "xontribs_install" and "xontribs_load" variables)
@@ -186,7 +190,7 @@ def _main(debug):
         source ~/.xonsh_xontrib_load
 
     # Load environment variables if they exist
-    test -f ~/.dotfiles.env && source-bash ~/.dotfiles.env
+    test -f ~/.dotfiles.env && source-bash --interactive False ~/.dotfiles.env
 
     # http://xon.sh/tutorial.html#customizing-the-prompt
     # http://xon.sh/envvars.html#xonsh-gitstatus

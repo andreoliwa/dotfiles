@@ -6,8 +6,8 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 
 ## a few neat features
 
+-   [xonsh](https://xon.sh) (Python-powered shell)
 -   zsh configured with [prezto](https://github.com/sorin-ionescu/prezto).
--   xonsh (Python shell)
 -   nice fonts for the terminal and coding.
 -   iterm2 profile (w/ hotkey, themes, etc.)
 -   python2, python3, pyenv (for managing Python versions), and pyenv-virtualenv (for managing virtualenvs)

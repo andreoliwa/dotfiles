@@ -26,3 +26,8 @@ alias resize="mogrify -resize"
 alias timezsh="time zsh -i -c echo"
 
 alias ducks='du -chs * | sort -rg | head'
+
+# Shortcuts to trim spaces on strings
+alias ltrim="sed -e 's/^ *//'"
+alias rtrim="sed -e 's/ *$//'"
+alias trim="sed -e 's/^ *//' -e 's/ *$//'"

@@ -65,8 +65,8 @@ mac_homebrew_packages:
   - ValeLint/vale/vale
   # For repeating commands
   - watch
-  # https://github.com/jaysonsantos/csv-query-rs
-  - jaysonsantos/tools/csv-query
+  - jaysonsantos/tools/csv-query # https://github.com/jaysonsantos/csv-query-rs
+  - fd # https://github.com/sharkdp/fd
 
   # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

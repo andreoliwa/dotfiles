@@ -3,10 +3,7 @@
 # TODO: Fedora
 
 - name: Install tmuxp
-  pip:
-    name: tmuxp
-    state: latest
-    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
+  shell: "pipx install tmuxp || true"
   when: tmux_install_tmuxp
 
 - name: Install tpm

@@ -22,15 +22,14 @@
 - include_tasks: python3.yml
 - include_tasks: python2.yml
 
+- name: "pipx: Upgrade all packages"
+  command: "pipx upgrade-all"
+
 - name: Set global pyenv path
   pyenv:
     subcommand: global
     versions:
     - "{{ latest_python_3_7.stdout }}"
     - "{{ latest_python_2_7.stdout }}"
-    - jupyter3
-    - ipython2
-    - tools3
-    - tools2
 
 - include_tasks: pycharm.yml

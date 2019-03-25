@@ -165,9 +165,6 @@ pyenv_global_versions:
   - 2.7.15
 
 python3_modules:
-  - pip # https://pypi.org/project/pip/
-  - click # https://pypi.org/project/click/
-  - requests-html # https://pypi.org/project/requests-html/
   - cookiecutter # https://pypi.org/project/cookiecutter/
   - cookiepatcher # https://pypi.org/project/cookiepatcher/
   - youtube-dl # https://pypi.org/project/youtube_dl/
@@ -179,6 +176,7 @@ python3_modules:
   - howdoi # https://pypi.org/project/howdoi/
   - bumpversion # https://pypi.org/project/bumpversion/
   - twine # https://pypi.org/project/twine/
+  - "-e --spec {{ project_root }}/python-clit/ clit" # https://github.com/andreoliwa/python-clit
 
 # Node utilities
 npm_global_packages:

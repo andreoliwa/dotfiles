@@ -10,7 +10,7 @@
     - { role: vagrant, tags: ["vagrant"], when: ansible_os_family == "Darwin" }
     - { role: xonsh, tags: ["xonsh", "bootstrap"] }
     - { role: python_pyenv, tags: ["python"] }
-    # Bash after Python, it needs the virtualenv tools3
+    # Bash after Python, it needs pipx installed
     - { role: bash, tags: ["bash"] }
     - { role: node, tags: ["node"] }
     - { role: hub, tags: ["hub"] }

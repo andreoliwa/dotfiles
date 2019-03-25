@@ -54,44 +54,12 @@
 - name: Update Poetry
   command: "poetry self:update"
 
-- name: "jupyter3: Create virtualenv"
-  pyenv:
-    subcommand: virtualenv
-    version: "{{ latest_python_3_6.stdout }}"
-    virtualenv_name: jupyter3
+- name: "pipx: Install https://github.com/pipxproject/pipx#install-pipx"
+  command: "python3 -m pip install -U --user pipx"
 
-- name: "jupyter3: Update pip"
-  pip:
-    name: pip
-    state: latest
-    executable: "{{ pyenv_root }}/versions/jupyter3/bin/pip"
+- name: "pipx: Ensure it's on $PATH"
+  command: "pipx ensurepath"
 
-- name: "jupyter3: Install"
-  pip:
-    name: jupyter
-    state: latest
-    executable: "{{ pyenv_root }}/versions/jupyter3/bin/pip"
-
-- name: "jupyter3: Install ipykernel"
-  command: "{{ pyenv_root }}/versions/jupyter3/bin/python -m ipykernel install --user"
-  args:
-    creates: "~/Library/Jupyter/kernels/python3"
-
-- name: "tools3: Create virtualenv"
-  pyenv:
-    subcommand: virtualenv
-    # mypy doesn't seem to work on VSCode on Python 3.7
-    version: "{{ latest_python_3_6.stdout }}"
-    virtualenv_name: tools3
-
-- name: "tools3: Update pip"
-  pip:
-    name: pip
-    state: latest
-    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
-
-- name: "tools3: Install modules"
-  pip:
-    name: "{{ python3_modules }}"
-    state: latest
-    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
+- name: "pipx: Install Python 3 modules"
+  with_items: "{{ python3_modules }}"
+  shell: "pipx install {{ item }} || true"

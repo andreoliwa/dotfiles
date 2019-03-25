@@ -16,9 +16,6 @@
     line: "source ~/.bash-powerline.sh"
 
 # https://powerline.readthedocs.io/en/latest/installation.html#pip-installation
-- name: "powerline: Install with pip"
-  pip:
-    name: powerline-status
-    state: latest
-    executable: "{{ pyenv_root }}/versions/tools3/bin/pip"
+- name: "powerline: Install with pipx"
+  shell: "pipx install powerline-status || true"
   when: tmux_install_tmuxp

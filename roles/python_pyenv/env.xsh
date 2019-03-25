@@ -17,3 +17,6 @@ $OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
 
 # https://github.com/sdispater/poetry#installation
 $PATH.append(p"~/.poetry/bin")
+
+# https://github.com/pipxproject/pipx#install-pipx
+$PATH.insert(0, p'~/.local/bin')

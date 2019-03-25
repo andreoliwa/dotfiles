@@ -23,7 +23,7 @@ update: no
 python_version: ""
 
 # Versions set by the "pyenv local" command (after the repo's virtualenv)
-local: "jupyter3 ipython2 tools3 tools2"
+local: ""
 
 # Directory containing .link files that will become symbolic links in the project root
 symlink_dir: ""

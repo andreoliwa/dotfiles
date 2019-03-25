@@ -1,8 +1,3 @@
-python2_modules:
-  - pip
-  - rename
-
 python3_modules:
-  - pipenv
   - cookiecutter
   - cookiepatcher

@@ -3,6 +3,7 @@ aliases["pyserv2"] = "python2 -m SimpleHTTPServer"
 aliases["pyserv"] = "python3 -m http.server"
 aliases["nt"] = "nosetests"
 aliases["mn"] = "python manage.py"
+aliases["ipy"] = "ipython"
 
 def _getpip():
     wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm get-pip.py

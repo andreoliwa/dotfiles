@@ -1,6 +1,7 @@
 - name: "Get installed versions of Python"
   pyenv:
     subcommand: versions
+    bare: yes
   register: pyenv_versions
 
 - name: "Get installed version of Python 2.7 {{ PYENV_ROOT }} / {{ pyenv_root }}"

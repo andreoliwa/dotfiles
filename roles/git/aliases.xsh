@@ -4,7 +4,11 @@ aliases['gf'] = "git flow"
 aliases['gaa'] = 'git add --all'
 aliases['gb'] = 'git branch'
 aliases['gba'] = 'git branch --all --verbose'
-aliases['gcd'] = 'git checkout develop'
+
+def _gcd():
+    git checkout develop || git checkout development
+aliases['gcd'] = _gcd
+
 aliases['gch'] = 'git-checkout-issue'
 aliases['gcm'] = 'git checkout master'
 aliases['gco'] = 'git checkout'

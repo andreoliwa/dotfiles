@@ -26,8 +26,21 @@ echo "docker images -a | grep -e cave_ | awk '{print \$3}' | xargs docker rmi -f
 echo
 echo
 # http://stackoverflow.com/questions/32723111/how-to-remove-old-and-unused-docker-images
-echo 'Removing exited containers...'
-docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
-echo 'Removing unused images...'
-docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
-exit 0
+# To remove, use:
+#  -q | xargs docker rm -v 2> /dev/null
+EXITED_COMMAND="docker ps --filter status=exited"
+UNUSED_COMMAND="docker images --filter dangling=true"
+CLEANUP_COMMAND="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock zzrot/docker-clean --log"
+
+echo -e "Exited containers:\n$EXITED_COMMAND"
+$EXITED_COMMAND
+echo
+echo -e "Unused images:\n$UNUSED_COMMAND"
+$UNUSED_COMMAND
+echo
+echo -e "Cleanup command:\n$CLEANUP_COMMAND"
+echo "Press any key to run them, or Ctrl-C to quit."
+read
+
+docker pull zzrot/docker-clean
+$CLEANUP_COMMAND

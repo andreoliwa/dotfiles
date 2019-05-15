@@ -5,7 +5,7 @@
     return_content: true
   register: browserosaurus_latest_release
 
-- name: "Browserosaurus: Download latest .dmg from GitHub"
+- name: "Browserosaurus: Download {{ browserosaurus_latest_release.json.assets[0].name }} from GitHub"
   get_url:
     url: "{{ browserosaurus_latest_release.json.assets[0].browser_download_url }}"
     dest: "/tmp/{{ browserosaurus_latest_release.json.assets[0].name }}"

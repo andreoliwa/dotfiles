@@ -60,6 +60,6 @@
 - name: "pipx: Ensure it's on $PATH"
   command: "pipx ensurepath"
 
-- name: "pipx: Install Python 3 modules"
+- name: "pipx: Install Python 3 modules globally with pipx"
   with_items: "{{ python3_modules }}"
   shell: "pipx install {{ item }} || true"

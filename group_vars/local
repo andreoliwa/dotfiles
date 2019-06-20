@@ -67,6 +67,8 @@ mac_homebrew_packages:
   - watch
   - jaysonsantos/tools/csv-query # https://github.com/jaysonsantos/csv-query-rs
   - fd # https://github.com/sharkdp/fd
+  - dupeguru # https://dupeguru.voltaicideas.net/
+  - terraform # https://www.terraform.io
 
   # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
@@ -164,6 +166,7 @@ pyenv_global_versions:
   - 3.5.5
   - 2.7.15
 
+# Install Python 3 modules globally with pipx
 python3_modules:
   - cookiecutter # https://pypi.org/project/cookiecutter/
   - cookiepatcher # https://pypi.org/project/cookiepatcher/
@@ -177,6 +180,9 @@ python3_modules:
   - bumpversion # https://pypi.org/project/bumpversion/
   - twine # https://pypi.org/project/twine/
   - "-e --spec {{ project_root }}/python-clit/ clit" # https://github.com/andreoliwa/python-clit
+  - identify # https://github.com/chriskuehl/identify
+  - pre-commit # https://pre-commit.com/
+  - black # https://github.com/ambv/black
 
 # Node utilities
 npm_global_packages:

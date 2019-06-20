@@ -17,7 +17,7 @@ volumes:
 
 services:
   broker:
-    container_name: mayan-edms-broker
+    container_name: mayan-broker
     image: healthcheck/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: mayan
@@ -28,14 +28,14 @@ services:
     volumes:
       - broker:/var/lib/rabbitmq
   results:
-    container_name: mayan-edms-results
+    container_name: mayan-results
     image: healthcheck/redis
     networks:
       - mayan
     volumes:
       - results:/data
-  mayan-edms:
-    container_name: mayan-edms-app
+  mayan:
+    container_name: mayan-app
     image: mayanedms/mayanedms:latest
     depends_on:
       broker:

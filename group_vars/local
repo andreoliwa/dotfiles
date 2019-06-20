@@ -48,7 +48,6 @@ mac_homebrew_packages:
   - pgbadger
   - diff-so-fancy
   - rename
-  - docker-clean
   - gpg
   - heroku/brew/heroku
   # Top for docker containers

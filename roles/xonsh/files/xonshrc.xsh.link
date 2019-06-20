@@ -4,7 +4,7 @@ from collections import defaultdict
 from glob import glob
 from pathlib import Path
 
-DOTFILES_CACHE_DIR = Path("~/dotfiles/.cache/").expanduser()
+DOTFILES_CACHE_DIR = Path("~/.cache/dotfiles").expanduser()
 DOTFILES_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # https://xon.sh/envvars.html#shell-type

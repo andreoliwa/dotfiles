@@ -66,7 +66,6 @@ mac_homebrew_packages:
   - watch
   - jaysonsantos/tools/csv-query # https://github.com/jaysonsantos/csv-query-rs
   - fd # https://github.com/sharkdp/fd
-  - dupeguru # https://dupeguru.voltaicideas.net/
   - terraform # https://www.terraform.io
 
   # Mac Apps to be installed with homebrew-cask
@@ -92,6 +91,7 @@ mac_cask_packages:
   - spectacle
   - the-unarchiver
   - authy-desktop
+  - dupeguru # https://dupeguru.voltaicideas.net/
   # E-mail
   - mia-for-gmail
   - gmail-notifier

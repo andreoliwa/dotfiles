@@ -25,10 +25,6 @@ aliases['gsta'] = _gsta
 aliases['gstl'] = 'git stash list'
 aliases['gstp'] = 'git stash pop'
 
-def _gunwip():
-    git log -n 1 | grep -q -c "__wip__" && git reset HEAD~1
-aliases['gunwip'] = _gunwip
-
 def _gwip():
     git add -A && git ls-files --deleted -z | xargs git rm && git commit -m "__wip__"
 aliases['gwip'] = _gwip

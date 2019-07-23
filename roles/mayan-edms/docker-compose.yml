@@ -58,6 +58,6 @@ services:
     ports:
       - "8001:8000"
     volumes:
-      - app:/var/lib/mayan
+      - ~/Dropbox/Apps/mayan/lib:/var/lib/mayan
       - ~/Dropbox/Apps/mayan/staging:/srv/staging
       - ~/Dropbox/Apps/mayan/watch:/srv/watch

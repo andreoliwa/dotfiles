@@ -73,7 +73,7 @@ mac_cask_packages:
   # Browsers
   - brave-browser # https://brave.com/
   - vivaldi # https://vivaldi.com/
-  - cliqz # https://cliqz.com/
+  - finicky # https://github.com/johnste/finicky
   # Development
   - visual-studio-code
   # Network

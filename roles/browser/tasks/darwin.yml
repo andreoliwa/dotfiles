@@ -1,44 +1,5 @@
-# https://developer.github.com/v3/repos/releases/#get-the-latest-release
-- name: "Browserosaurus: Get the latest release"
-  uri:
-    url: https://api.github.com/repos/will-stone/browserosaurus/releases/latest
-    return_content: true
-  register: browserosaurus_latest_release
-
-- name: "Browserosaurus: Download {{ browserosaurus_latest_release.json.assets[0].name }} from GitHub"
-  get_url:
-    url: "{{ browserosaurus_latest_release.json.assets[0].browser_download_url }}"
-    dest: "/tmp/{{ browserosaurus_latest_release.json.assets[0].name }}"
-
-- name: "Browserosaurus: Kill the app"
-  command: "pkill Browserosaurus"
-  register: browserosaurus_pkill
-  ignore_errors: yes
-
-- name: "Browserosaurus: Mount the volume"
-  command: "hdiutil attach /tmp/{{ browserosaurus_latest_release.json.assets[0].name }}"
-  become: true
-  args:
-    creates: /Volumes/Browserosaurus
-  register: browserosaurus_attach
-
-- name: "Browserosaurus: Remove existing app"
+- name: "Link ~/.finicky.js file"
   file:
-    state: absent
-    path: "/Applications/Browserosaurus.app"
-  become: true
-  when: browserosaurus_attach is success
-
-- name: "Browserosaurus: Copy the app to /Applications"
-  command: "cp -Rf /Volumes/Browserosaurus/Browserosaurus.app /Applications"
-  become: true
-  when: browserosaurus_attach is success
-
-- name: "Browserosaurus: Mount the volume"
-  command: "hdiutil unmount /Volumes/Browserosaurus"
-  become: true
-  when: browserosaurus_attach is success
-
-- name: "Browserosaurus: Reopen the app"
-  command: "open /Applications/Browserosaurus.app"
-  when: browserosaurus_pkill is success
+    src: "{{ role_path }}/files/finicky.js"
+    dest: ~/.finicky.js
+    state: link

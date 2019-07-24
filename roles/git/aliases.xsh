@@ -19,8 +19,8 @@ aliases['gp'] = "git push"
 aliases['gs'] = "git status"
 aliases['gst'] = "git status"
 
-def _gsta():
-    git add -A && git stash
+def _gsta(args):
+    git add -A && git stash push @(args)
 aliases['gsta'] = _gsta
 aliases['gstl'] = 'git stash list'
 aliases['gstp'] = 'git stash pop'

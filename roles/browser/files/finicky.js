@@ -32,8 +32,8 @@ module.exports = {
     }
   ],
   handlers: [
+    // EatFirst URLs
     {
-      // EatFirst URLs
       match: [
         /github.com\/eatfirst\//,
         /sentry.io\/organizations\/eatfirst-sentry\//
@@ -41,7 +41,7 @@ module.exports = {
       browser: "Vivaldi"
     },
     {
-      match: finicky.matchDomains([/eatfirst\.(ninja|com)$/]),
+      match: finicky.matchDomains([/eatfirst\.(ninja|com)$/, "trello.com"]),
       browser: "Vivaldi"
     },
     {

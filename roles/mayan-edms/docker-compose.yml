@@ -55,9 +55,15 @@ services:
       MAYAN_DATABASE_PASSWORD: ${MAYAN_DATABASE_PASSWORD}
       MAYAN_APT_INSTALLS: "tesseract-ocr-deu tesseract-ocr-por tesseract-ocr-ita"
       MAYAN_DOCUMENTS_LANGUAGE: deu
+      MAYAN_TIME_ZONE: Europe/Berlin
+      # http://localhost:8001/#/settings/namespace/documents/
+      MAYAN_DOCUMENTS_CACHE_STORAGE_BACKEND_ARGUMENTS: '{location: /var/lib/mayan_cache/document_cache}'
+      # http://localhost:8001/#/settings/namespace/sources/
+      MAYAN_SOURCES_STAGING_FILE_CACHE_STORAGE_BACKEND_ARGUMENTS: '{location: /var/lib/mayan_cache/staging_file_cache}'
     ports:
       - "8001:8000"
     volumes:
+      - ~/Library/Caches/mayan:/var/lib/mayan_cache
       - ~/Dropbox/Apps/mayan/lib:/var/lib/mayan
       - ~/Dropbox/Apps/mayan/staging:/srv/staging
       - ~/Dropbox/Apps/mayan/watch:/srv/watch

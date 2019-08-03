@@ -9,14 +9,14 @@ module.exports = {
         protocol: "https"
       })
     },
-    {
-      // https://github.com/johnste/finicky/wiki/Configuration-ideas#redirect-google-links-to-duckduckgocom
-      match: finicky.matchDomains([/google\.(com|de|com.br|.+)$/]),
-      url: ({ url }) => ({
-        ...url,
-        host: "duckduckgo.com"
-      })
-    },
+    // {
+    //   // https://github.com/johnste/finicky/wiki/Configuration-ideas#redirect-google-links-to-duckduckgocom
+    //   match: finicky.matchDomains([/google\.(com|de|com.br|.+)$/]),
+    //   url: ({ url }) => ({
+    //     ...url,
+    //     host: "duckduckgo.com"
+    //   })
+    // },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#remove-all-marketingtracking-information-from-urls
       match: ({ url }) => url.search.includes("utm_"),
@@ -34,14 +34,15 @@ module.exports = {
   handlers: [
     // EatFirst URLs
     {
-      match: [
-        /github.com\/eatfirst\//,
-        /sentry.io\/organizations\/eatfirst-sentry\//
-      ],
+      match: [/\/eatfirst/, /terraform.io/],
       browser: "Vivaldi"
     },
     {
-      match: finicky.matchDomains([/eatfirst\.(ninja|com)$/, "trello.com"]),
+      match: finicky.matchDomains([
+        /eatfirst\.(ninja|com)$/,
+        "trello.com",
+        "meet.google.com"
+      ]),
       browser: "Vivaldi"
     },
     {

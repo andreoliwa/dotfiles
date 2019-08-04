@@ -18,7 +18,7 @@
 
 - name: "{{ dir }}: Delete existing {{ env }} virtualenv links"
   when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
-  command: "find ~/.pyenv/versions -name {{ env }} -print -delete"
+  command: "find ~/.pyenv/versions -type f,l -name {{ env }} -print -delete"
 
 - name: "{{ dir }}: Delete existing {{ env }} virtualenv directories"
   when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg

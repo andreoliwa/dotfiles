@@ -15,6 +15,7 @@ def _pfg(args):
     pip freeze | rg @(' '.join(args))
 aliases["pfg"] = _pfg
 
+aliases["py"] = 'python3'
 aliases["pv"] = 'pyenv version'
 aliases["pvs"] = 'pyenv versions --bare'
 aliases["f"] = "flask"

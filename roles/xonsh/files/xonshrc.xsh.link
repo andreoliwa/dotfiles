@@ -8,8 +8,10 @@ DOTFILES_CACHE_DIR = Path("~/.cache/dotfiles").expanduser()
 DOTFILES_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # https://xon.sh/envvars.html#shell-type
-# $SHELL_TYPE = "readline"
-$SHELL_TYPE = "prompt_toolkit2"
+if sys.platform == 'darwin':
+    $SHELL_TYPE = "prompt_toolkit2"
+else:
+    $SHELL_TYPE = "readline"
 
 # https://xon.sh/tutorial_hist.html#sqlite-history-backend
 # https://xon.sh/envvars.html#xonsh-history-backend

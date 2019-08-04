@@ -4,7 +4,6 @@ services:
   redmine:
     container_name: redmine
     image: redmine:4
-    restart: always
     ports:
       - 8003:3000
     networks:

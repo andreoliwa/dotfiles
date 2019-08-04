@@ -15,6 +15,7 @@ services:
   postgres10:
     # https://registry.hub.docker.com/u/library/postgres/
     image: postgres:10
+    restart: always
     container_name: postgres10
     # Those are also the default values, left here for clarity. This will be the superuser.
     environment:

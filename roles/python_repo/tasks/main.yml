@@ -7,14 +7,29 @@
     accept_hostkey: yes
   become: no
 
-- name: "{{ dir }}: Create virtualenv {{ env }} with Python {{ python_version }}"
+- name: "{{ dir }}: Create {{ env }} virtualenv with Python {{ python_version }}"
   when: python_version != ''
   pyenv:
     subcommand: virtualenv
     version: "{{ python_version }}"
     virtualenv_name: "{{ env }}"
+  register: create_virtualenv
+  ignore_errors: yes
 
-# TODO  localhost failed | msg: python-clit already exists but version differs
+- name: "{{ dir }}: Delete existing {{ env }} virtualenv links"
+  when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
+  command: "find ~/.pyenv/versions -name {{ env }} -print -delete"
+
+- name: "{{ dir }}: Delete existing {{ env }} virtualenv directories"
+  when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
+  shell: "find ~/.pyenv/versions -type d -name {{ env }} | xargs rm -rvf"
+
+- name: "{{ dir }}: Recreate {{ env }} virtualenv with Python {{ python_version }}"
+  when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
+  pyenv:
+    subcommand: virtualenv
+    version: "{{ python_version }}"
+    virtualenv_name: "{{ env }}"
 
 - name: "{{ dir }}: Update pip on virtualenv {{ env }}"
   when: python_version != ''

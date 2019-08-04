@@ -1,0 +1,15 @@
+#!/bin/bash
+# Upgrade a pyenv virtualenv if it already exists
+VERSION=$1
+REPO=$2
+
+pyenv virtualenv $VERSION $REPO
+
+# The repo already exists; delete it before creating the new one
+if [[ $? -ne 0 ]]; then
+    echo "Deleting the existing $REPO repo..."
+    pyenv virtualenv-delete --force $REPO
+
+    echo "Installing $REPO repo with version $VERSION..."
+    pyenv virtualenv $VERSION $REPO
+fi

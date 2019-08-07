@@ -7,8 +7,6 @@ else
     export PENTAHO_JAVA_HOME="${JAVA_VMS_LOCATION}/${LATEST_JAVA_8}/Contents/Home"
 fi
 
-echo "PENTAHO_JAVA_HOME=$PENTAHO_JAVA_HOME"
-
 alias ll='ls -l'
 
 eval "$(pyenv init - --no-rehash)"

@@ -1,3 +1,13 @@
+- name: Change default shell to xonsh
+  command: "chsh -s /bin/bash"
+  tags: bootstrap
+
+- name: "Link .bash_profile file"
+  file:
+    src: "{{ role_path }}/files/bash_profile.link"
+    dest: ~/.bash_profile
+    state: link
+
 - name: "Link .bashrc file"
   file:
     src: "{{ role_path }}/files/bashrc.link"

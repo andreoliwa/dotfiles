@@ -20,9 +20,21 @@
   args:
     chdir: "{{ pyenv_root }}"
   register: pyenv_current_branch
-    
+
+- name: "Switch to my xonsh working branch"
+  command: "git checkout add-xonsh-support"
+  args:
+    chdir: "{{ pyenv_root }}"
+  register: checkout_xonsh_support
+  ignore_errors: yes
+
 - name: Create a new local branch pointing to the remote one
-  when: "'add-xonsh-support' not in pyenv_current_branch.stdout"
+  when: checkout_xonsh_support.failed
   command: "git checkout -b add-xonsh-support andreoliwa/add-xonsh-support"
+  args:
+    chdir: "{{ pyenv_root }}"
+
+- name: "Merge master into my branch"
+  command: "git merge master"
   args:
     chdir: "{{ pyenv_root }}"

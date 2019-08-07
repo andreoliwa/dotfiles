@@ -1,5 +1,5 @@
 # We need this for pyenv to work under xonsh (until my fork is finished, approved and merged; it's not ready for a pull request yet)
-- include_tasks: xonsh_compatibility.yml
+- include_tasks: xonsh_hack.yml
   when: "'xonsh' in ansible_user_shell"
 
 - name: Check if pytest.ini file exists

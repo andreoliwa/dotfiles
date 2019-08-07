@@ -1,0 +1,4 @@
+- name: "xonsh: switch to the master branch before running pyenv"
+  command: "git checkout master"
+  args:
+    chdir: "{{ pyenv_root }}"

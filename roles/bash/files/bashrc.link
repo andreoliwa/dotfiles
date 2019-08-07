@@ -11,15 +11,23 @@ alias ll='ls -l'
 
 eval "$(pyenv init - --no-rehash)"
 
-# Slow start with Python Powerline:
-# https://powerline.readthedocs.io/en/latest/usage/shell-prompts.html
-# powerline-daemon -q
-# POWERLINE_BASH_CONTINUATION=1
-# POWERLINE_BASH_SELECT=1
-# source ~/.local/pipx/venvs/powerline-status/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
-
 # Load environment variables if they exist
 test -f ~/.dotfiles.env && source ~/.dotfiles.env
 
-# Quick start with Bash Powerline
-source ~/.bash-powerline.sh
+# Created with http://bashrcgenerator.com/
+export PS1="\[\033[38;5;11m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\A \\$ \[$(tput sgr0)\]"
+
+########## BEGIN bash-powerline - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
+# https://github.com/riobard/bash-powerline
+# Super quick start, but it doesn't show an icon for stashed commits
+# source ~/.bash-powerline.sh
+########## END bash-powerline - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
+
+########## BEGIN bash-git-prompt - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
+# https://github.com/magicmonty/bash-git-prompt
+# Quick start
+if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+    GIT_PROMPT_ONLY_IN_REPO=1
+    source $HOME/.bash-git-prompt/gitprompt.sh
+fi
+########## END bash-git-prompt - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########

@@ -4,18 +4,46 @@
     dest: ~/.bashrc
     state: link
 
+- name: "Link .inputrc file"
+  file:
+    src: "{{ role_path }}/files/inputrc.link"
+    dest: ~/.inputrc
+    state: link
+
 - name: "bash-powerline: Get latest"
   get_url:
     url: "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh"
     dest: ~/.bash-powerline.sh
 
 - name: "bash-powerline: Add to .bashrc"
-  lineinfile:
+  blockinfile:
     path: ~/.bashrc
-    state: present
-    line: "source ~/.bash-powerline.sh"
+    marker: "########## {mark} bash-powerline - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########"
+    block: |
+      # https://github.com/riobard/bash-powerline
+      # Super quick start, but it doesn't show an icon for stashed commits
+      # source ~/.bash-powerline.sh
 
-# https://powerline.readthedocs.io/en/latest/installation.html#pip-installation
-- name: "powerline: Install with pipx"
-  shell: "pipx install powerline-status || true"
-  when: tmux_install_tmuxp
+- name: "bash-git-prompt: Git clone"
+  git:
+    repo: "https://github.com/magicmonty/bash-git-prompt.git"
+    dest: "~/.bash-git-prompt"
+    clone: yes
+    depth: 1
+
+- name: "bash-git-prompt: Add to .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "########## {mark} bash-git-prompt - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########"
+    block: |
+      # https://github.com/magicmonty/bash-git-prompt
+      # Quick start
+      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+          GIT_PROMPT_ONLY_IN_REPO=1
+          source $HOME/.bash-git-prompt/gitprompt.sh
+      fi
+
+# https://github.com/powerline/powerline
+# https://github.com/b-ryan/powerline-shell
+# They are both slow and ugly (maybe a font needs to be configured).
+# Too much hassle to configure, not ready out of the box.

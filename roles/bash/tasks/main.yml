@@ -57,3 +57,16 @@
 # https://github.com/b-ryan/powerline-shell
 # They are both slow and ugly (maybe a font needs to be configured).
 # Too much hassle to configure, not ready out of the box.
+
+- name: "z: Get script"
+  get_url:
+    url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"
+    dest: ~/.local/share/z.sh
+
+- name: "z: Add to .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "########## {mark} z - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########"
+    block: |
+      # https://github.com/rupa/z/blob/master/z.sh
+      source ~/.local/share/z.sh

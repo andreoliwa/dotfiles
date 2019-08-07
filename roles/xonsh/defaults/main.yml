@@ -2,6 +2,7 @@
 xontribs_install:
   - xonsh-autoxsh
   - xontrib-z
+  - pyyaml
 
 xontribs_load:
   # Pre-installed modules

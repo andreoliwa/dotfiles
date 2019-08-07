@@ -4,7 +4,7 @@ from collections import defaultdict
 from glob import glob
 from pathlib import Path
 
-DOTFILES_CACHE_DIR = Path("~/.cache/dotfiles").expanduser()
+DOTFILES_CACHE_DIR = Path.home() / ".cache/dotfiles/xonsh"
 DOTFILES_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # https://xon.sh/envvars.html#shell-type
@@ -94,8 +94,12 @@ def _parse_roles():
         else:
             playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
             if playbook_path.exists():
-                import yaml
-                playbook_yml = yaml.load(playbook_path.read_text())
+                try:
+                    import yaml
+                except ImportError:
+                    print(f"YAML not installed. Run:\nxpip install -U pip pyyaml")
+                    raise
+                playbook_yml = yaml.safe_load(playbook_path.read_text())
                 roles = {item["role"] for item in playbook_yml[0]["roles"]}
             cache_roles.write_text("\n".join(sorted(roles)))
     return roles

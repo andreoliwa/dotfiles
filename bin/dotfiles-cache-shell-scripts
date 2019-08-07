@@ -1,0 +1,139 @@
+#!/usr/bin/env python3 -u
+"""Find shell scripts under ~/dotfiles* and prepare a cached script to source them all."""
+import argparse
+import re
+import sys
+import time
+from typing import NamedTuple, Set
+from collections import defaultdict, OrderedDict
+from glob import glob
+from pathlib import Path
+from pprint import pprint
+
+CACHE_DIR = Path.home() / ".cache/dotfiles"
+CACHED_SCRIPT = CACHE_DIR / "cached_script.sh"
+
+
+class ScriptInfo:
+    def __init__(self):
+        self.role = ""
+        self.suffixes = set()
+
+
+class Shell:
+    BASH = "bash"
+    XONSH = "xonsh"
+
+
+def relative_to_home(full_path: str):
+    path_obj = Path(full_path)
+    return "~/{}".format(path_obj.relative_to(path_obj.home()))
+
+
+def _find_shell_files(args, extensions):
+    shell_files = set()
+    for dotfile_role_dir in Path.home().glob("dotfiles*/roles"):
+        # FIXME $PATH.append(Path(dotfile_role_dir).parent / 'bin')
+        for ext in extensions:
+            shell_files.update(dotfile_role_dir.glob(f"**/*.{ext}"))
+
+    if args.debug:
+        print("\nShell files:")
+        pprint(shell_files)
+    return shell_files
+
+
+def _parse_roles(args):
+    """Parse the roles that are active in the Ansible playbook."""
+    roles = OrderedDict()
+
+    playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
+    if playbook_path.exists():
+        import yaml
+
+        playbook_yml = yaml.safe_load(playbook_path.read_text())
+        for item in playbook_yml[0]["roles"]:
+            role_name = item["role"]
+            roles[role_name] = []
+
+    if args.debug:
+        print("\nRoles:")
+        pprint(roles)
+    return roles
+
+
+def _main():
+    """Main function."""
+    parser = argparse.ArgumentParser(
+        description="find shell scripts under ~/dotfiles* and prepare a cached script to source them all"
+    )
+    parser.add_argument("--force", "-f", action="store_true", help="discard cached script")
+    parser.add_argument("--debug", "-d", action="store_true", help="debug mode")
+    parser.add_argument("shell_name", choices=[Shell.BASH, Shell.XONSH], help="name of the shell")
+    args = parser.parse_args()
+
+    if not args.force and CACHED_SCRIPT.exists():
+        print(f"{CACHED_SCRIPT} already exists (use --force to recreate)")
+        return
+
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+    content = [f"#!/usr/bin/env {args.shell_name}"]
+
+    extensions = ["sh"]
+    if args.shell_name == Shell.XONSH:
+        extensions.append("xsh")
+
+    role_regex = re.compile(r"roles/(?P<role>.+)/")
+
+    shell_files = _find_shell_files(args, extensions)
+    roles = _parse_roles(args)
+
+    mapping = defaultdict(ScriptInfo)
+    for shell_file in sorted(shell_files):
+        shell_path = Path(shell_file)
+        parent_plus_stem = str(shell_path.parent / shell_path.stem)
+
+        # Only source scripts that belong to roles defined in the playbook.
+        match = role_regex.search(parent_plus_stem)
+        role_from_shell_file = match.groupdict().get("role")
+        if role_from_shell_file in roles:
+            script_info = mapping[parent_plus_stem]
+            script_info.role = role_from_shell_file
+            script_info.suffixes.add(shell_path.suffix)
+        else:
+            content.append(
+                f"# Role {role_from_shell_file}: script {str(shell_file)} won't be loaded because the role is not defined in the playbook"
+            )
+
+    for parent_stem in sorted(mapping):
+        script_partial_path = Path(parent_stem)
+        script_info = mapping[parent_stem]
+        if ".xsh" in script_info.suffixes:
+            # Try a xonsh script first.
+            chosen_suffix = ".xsh"
+        else:
+            # Or sort the other suffixes and get the first one.
+            chosen_suffix = list(sorted(script_info.suffixes)).pop()
+        script_path = script_partial_path.with_suffix(chosen_suffix)
+        roles[script_info.role].append(script_path)
+
+    for role, chosen_scripts in roles.items():
+        for chosen_script in chosen_scripts:
+            if chosen_script.name.startswith("_"):
+                content.append(f"# Script with _ won't be loaded: {chosen_script}")
+                continue
+
+            source_command = "source"
+            if args.shell_name == Shell.XONSH and not chosen_script.endswith(".xsh"):
+                source_command = "source-bash --interactive False"
+
+            content.append(f"{source_command} {chosen_script}")
+
+    text_content = "\n".join(content)
+    CACHED_SCRIPT.write_text(text_content)
+    print(f"{CACHED_SCRIPT} created")
+
+
+if __name__ == "__main__":
+    _main()

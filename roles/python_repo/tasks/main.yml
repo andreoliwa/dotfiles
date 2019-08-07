@@ -16,13 +16,17 @@
   register: create_virtualenv
   ignore_errors: yes
 
-- name: "{{ dir }}: Delete existing {{ env }} virtualenv links"
-  when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
-  command: "find ~/.pyenv/versions -type f,l -name {{ env }} -print -delete"
+- name: "{{ dir }}: Delete existing {{ env }} virtualenv links (Linux) [hack]"
+  when: ansible_os_family != "Darwin" and python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
+  command: "find ~/.pyenv/versions -type f,l -maxdepth 4 -name {{ env }} -print -delete"
 
-- name: "{{ dir }}: Delete existing {{ env }} virtualenv directories"
+- name: "{{ dir }}: Delete existing {{ env }} virtualenv links (Darwin) [hack]"
+  when: ansible_os_family == "Darwin" and python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
+  command: "find ~/.pyenv/versions -maxdepth 4 -name {{ env }} -print -delete"
+
+- name: "{{ dir }}: Delete existing {{ env }} virtualenv directories [hack]"
   when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
-  shell: "find ~/.pyenv/versions -type d -name {{ env }} | xargs rm -rvf"
+  shell: "find ~/.pyenv/versions -maxdepth 4 -type d -name {{ env }} | xargs rm -rvf"
 
 - name: "{{ dir }}: Recreate {{ env }} virtualenv with Python {{ python_version }}"
   when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg

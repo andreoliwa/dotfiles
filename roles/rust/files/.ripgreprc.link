@@ -1,0 +1,8 @@
+# https://github.com/BurntSushi/ripgrep
+# Run "man rg" to check the syntax here
+--smart-case
+
+--hidden
+--glob=!.git/*
+
+--max-columns=150

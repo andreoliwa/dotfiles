@@ -1,3 +1,0 @@
-- name: "direnv: Install with apt"
-  apt: name=direnv state=latest
-  become: true

@@ -11,10 +11,9 @@
   become: true
   when: default_shell.stdout != "xonsh" and ansible_os_family != "Darwin"
 
-# Start moving back to bash...
-# - name: Change default shell to xonsh
-#   command: "chsh -s {{ which_xonsh.stdout }}"
-#   when: default_shell.stdout != "xonsh"
+- name: Change default shell to xonsh
+  command: "chsh -s {{ which_xonsh.stdout }}"
+  when: default_shell.stdout != "xonsh"
 
 - name: Restore pam_shells.so to disallow change of shell without password
   lineinfile:

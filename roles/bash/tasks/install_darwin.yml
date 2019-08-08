@@ -1,0 +1,17 @@
+- name: "bash: Install with Homebrew"
+  homebrew: name=bash state=latest
+
+- name: "direnv: Install with Homebrew"
+  homebrew: name=direnv state=latest
+
+- name: Add Homebrew bash to /etc/shells
+  lineinfile:
+    line: /usr/local/bin/bash
+    dest: /etc/shells
+    state: present
+  become: true
+  tags: bootstrap
+
+- name: Change default shell to Homebrew bash
+  command: "chsh -s /usr/local/bin/bash"
+  tags: bootstrap

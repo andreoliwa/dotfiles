@@ -54,6 +54,7 @@
 
 - name: Link .ripgreprc file
   file:
-    src: "{{ role_path }}/files/.ripgreprc"
+    src: "{{ role_path }}/files/.ripgreprc.link"
     dest: "{{ dotfiles_user_home }}/.ripgreprc"
     state: link
+    follow: false

@@ -1,0 +1,15 @@
+- name: "direnv: Install with apt"
+  apt: name=direnv state=latest
+  become: true
+
+- name: Add standard bash to /etc/shells
+  lineinfile:
+    line: /bin/bash
+    dest: /etc/shells
+    state: present
+  become: true
+  tags: bootstrap
+
+- name: Change default shell to standard bash
+  command: "chsh -s /bin/bash"
+  tags: bootstrap

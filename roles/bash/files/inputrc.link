@@ -1,8 +1,0 @@
-## https://askubuntu.com/questions/59846/bash-history-search-partial-up-arrow
-## https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Commands-For-History
-
-## Arrow up
-"\e[A":history-substring-search-backward
-
-## Arrow down
-"\e[B":history-substring-search-forward

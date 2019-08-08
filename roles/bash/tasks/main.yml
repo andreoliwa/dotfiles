@@ -1,26 +1,28 @@
-- name: Change default shell to bash
-  command: "chsh -s /bin/bash"
-  tags: bootstrap
-
-- include_tasks: "{{ ansible_os_family | lower }}.yml"
+- include_tasks: "install_{{ ansible_os_family | lower }}.yml"
 
 - name: "Link .bash_profile file"
   file:
-    src: "{{ role_path }}/files/bash_profile.link"
+    src: "{{ role_path }}/files/.bash_profile.link"
     dest: ~/.bash_profile
     state: link
+    force: yes
+    follow: false
 
 - name: "Link .bashrc file"
   file:
-    src: "{{ role_path }}/files/bashrc.link"
+    src: "{{ role_path }}/files/.bashrc.link"
     dest: ~/.bashrc
     state: link
+    force: yes
+    follow: false
 
 - name: "Link .inputrc file"
   file:
-    src: "{{ role_path }}/files/inputrc.link"
+    src: "{{ role_path }}/files/.inputrc.link"
     dest: ~/.inputrc
     state: link
+    force: yes
+    follow: false
 
 - name: "bash-powerline: Get latest"
   get_url:

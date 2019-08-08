@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-JAVA_VMS_LOCATION="/Library/Java/JavaVirtualMachines"
-LATEST_JAVA_8="$(ls -1 -t $JAVA_VMS_LOCATION | grep jdk1.8 | sort | head -n 1)"
-if [ -z "$LATEST_JAVA_8" ]; then
-    echo "Java 8 not found"
-else
-    export PENTAHO_JAVA_HOME="${JAVA_VMS_LOCATION}/${LATEST_JAVA_8}/Contents/Home"
+if [[ $OSTYPE == darwin* ]]; then
+    JAVA_VMS_LOCATION="/Library/Java/JavaVirtualMachines"
+    LATEST_JAVA_8="$(ls -1 -t $JAVA_VMS_LOCATION | grep jdk1.8 | sort | head -n 1)"
+    if [ -z "$LATEST_JAVA_8" ]; then
+        echo "Java 8 not found"
+    else
+        export PENTAHO_JAVA_HOME="${JAVA_VMS_LOCATION}/${LATEST_JAVA_8}/Contents/Home"
+    fi
 fi
 
 # Load environment variables if they exist
@@ -18,6 +20,9 @@ export PS1="\[\033[38;5;11m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\A \\$ \[$(tpu
 eval "$(direnv hook bash)"
 
 # https://github.com/rupa/z/blob/master/z.sh
+if [[ $OSTYPE == linux* ]]; then
+    export _Z_NO_PROMPT_COMMAND=1
+fi
 source ~/.local/share/z.sh
 
 # https://github.com/riobard/bash-powerline

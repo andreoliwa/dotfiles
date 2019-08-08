@@ -1,1 +1,3 @@
-alias cat=bat
+if [[ $OSTYPE == darwin* ]]; then
+    alias cat=bat
+fi

@@ -7,10 +7,6 @@ else
     export PENTAHO_JAVA_HOME="${JAVA_VMS_LOCATION}/${LATEST_JAVA_8}/Contents/Home"
 fi
 
-alias ll='ls -l'
-
-eval "$(pyenv init - --no-rehash)"
-
 # Load environment variables if they exist
 test -f ~/.dotfiles.env && source ~/.dotfiles.env
 

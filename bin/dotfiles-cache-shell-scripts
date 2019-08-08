@@ -80,9 +80,11 @@ def _main():
 
     content = [f"#!/usr/bin/env {args.shell_name}"]
 
-    extensions = ["sh"]
+    # Try files with the first extension, then fallback to the other extensions if not found
     if args.shell_name == Shell.XONSH:
-        extensions.append("xsh")
+        extensions = ["xsh", "sh"]
+    if args.shell_name == Shell.BASH:
+        extensions = ["sh", "zsh"]
 
     role_regex = re.compile(r"roles/(?P<role>.+)/")
 
@@ -109,9 +111,9 @@ def _main():
     for parent_stem in sorted(mapping):
         script_partial_path = Path(parent_stem)
         script_info = mapping[parent_stem]
-        if ".xsh" in script_info.suffixes:
-            # Try a xonsh script first.
-            chosen_suffix = ".xsh"
+        first_extension = f".{extensions[0]}"
+        if first_extension in script_info.suffixes:
+            chosen_suffix = first_extension
         else:
             # Or sort the other suffixes and get the first one.
             chosen_suffix = list(sorted(script_info.suffixes)).pop()

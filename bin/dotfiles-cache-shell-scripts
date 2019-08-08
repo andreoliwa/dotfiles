@@ -4,7 +4,7 @@ import argparse
 import re
 import sys
 import time
-from typing import NamedTuple, Set
+from typing import Set, Tuple
 from collections import defaultdict, OrderedDict
 from glob import glob
 from pathlib import Path
@@ -30,17 +30,18 @@ def relative_to_home(full_path: str):
     return "~/{}".format(path_obj.relative_to(path_obj.home()))
 
 
-def _find_shell_files(args, extensions):
-    shell_files = set()
+def _find_shell_files(args, extensions) -> Tuple[Set[Path], Set[Path]]:
+    shell_files: Set[Path] = set()
+    bin_dirs: Set[Path] = set()
     for dotfile_role_dir in Path.home().glob("dotfiles*/roles"):
-        # FIXME $PATH.append(Path(dotfile_role_dir).parent / 'bin')
+        bin_dirs.add(Path(dotfile_role_dir).parent / "bin")
         for ext in extensions:
             shell_files.update(dotfile_role_dir.glob(f"**/*.{ext}"))
 
     if args.debug:
         print("\nShell files:")
         pprint(shell_files)
-    return shell_files
+    return shell_files, bin_dirs
 
 
 def _parse_roles(args):
@@ -88,7 +89,7 @@ def _main():
 
     role_regex = re.compile(r"roles/(?P<role>.+)/")
 
-    shell_files = _find_shell_files(args, extensions)
+    shell_files, bin_dirs = _find_shell_files(args, extensions)
     roles = _parse_roles(args)
 
     mapping = defaultdict(ScriptInfo)
@@ -131,6 +132,10 @@ def _main():
                 source_command = "source-bash --interactive False"
 
             content.append(f"{source_command} {chosen_script}")
+
+    path_parts = ["export PATH=$PATH"]
+    path_parts.extend([str(bin_dir) for bin_dir in bin_dirs])
+    content.append(":".join(path_parts))
 
     text_content = "\n".join(content)
     CACHED_SCRIPT.write_text(text_content)

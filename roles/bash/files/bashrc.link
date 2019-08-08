@@ -17,24 +17,25 @@ test -f ~/.dotfiles.env && source ~/.dotfiles.env
 # Created with http://bashrcgenerator.com/
 export PS1="\[\033[38;5;11m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\A \\$ \[$(tput sgr0)\]"
 
-########## BEGIN bash-powerline - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
+#################### BEGIN CREATED BY ANSIBLE - DON'T EDIT MANUALLY ####################
+# https://github.com/direnv/direnv
+eval "$(direnv hook bash)"
+
+# https://github.com/rupa/z/blob/master/z.sh
+source ~/.local/share/z.sh
+
 # https://github.com/riobard/bash-powerline
 # Super quick start, but it doesn't show an icon for stashed commits
 # source ~/.bash-powerline.sh
-########## END bash-powerline - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
 
-########## BEGIN bash-git-prompt - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
 # https://github.com/magicmonty/bash-git-prompt
-# Quick start
+# Quick start, show all details of a git repo
 if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source $HOME/.bash-git-prompt/gitprompt.sh
 fi
-########## END bash-git-prompt - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
-########## BEGIN z - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
-# https://github.com/rupa/z/blob/master/z.sh
-source ~/.local/share/z.sh
-########## END z - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########
 
-# TODO ansible task: recreate the .sh file and assert this line always exists here
+# Source all scripts. To regenerate this .sh file, run:
+# dotfiles-cache-shell-scripts -f bash
 source ~/.cache/dotfiles/cached_script.sh
+#################### END CREATED BY ANSIBLE - DON'T EDIT MANUALLY ####################

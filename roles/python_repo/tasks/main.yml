@@ -75,10 +75,28 @@
     regexp: "^.+ VIRTUAL_ENV="
     line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"
 
+- name: "{{ dir }}: Add VIRTUAL_ENV variable to .envrc"
+  when: python_version != ''
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.envrc"
+    state: present
+    create: yes
+    regexp: "^.+ VIRTUAL_ENV="
+    line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"
+
 - name: "{{ dir }}: Add PYTHONWARNINGS variable to .autoenv"
   when: python_version != ''
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoenv"
+    state: present
+    create: yes
+    regexp: "^.+ PYTHONWARNINGS="
+    line: "export PYTHONWARNINGS="
+
+- name: "{{ dir }}: Add PYTHONWARNINGS variable to .envrc"
+  when: python_version != ''
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.envrc"
     state: present
     create: yes
     regexp: "^.+ PYTHONWARNINGS="
@@ -92,6 +110,10 @@
     create: yes
     regexp: "source.+autoenv"
     line: "source-bash --interactive False ./.autoenv"
+
+- name: "{{ dir }}: Allow .envrc"
+  when: python_version != ''
+  command: "direnv allow {{ root }}/{{ dir }}"
 
 - name: "{{ dir }}: Run if this fails: bash -c 'cd {{ root }}/{{ dir }} && pyenv local {{ env }} {{ local }}'"
   when: python_version != ''

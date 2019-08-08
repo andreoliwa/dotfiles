@@ -1,6 +1,8 @@
-- name: Change default shell to xonsh
+- name: Change default shell to bash
   command: "chsh -s /bin/bash"
   tags: bootstrap
+
+- include_tasks: "{{ ansible_os_family | lower }}.yml"
 
 - name: "Link .bash_profile file"
   file:
@@ -25,33 +27,12 @@
     url: "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh"
     dest: ~/.bash-powerline.sh
 
-- name: "bash-powerline: Add to .bashrc"
-  blockinfile:
-    path: ~/.bashrc
-    marker: "########## {mark} bash-powerline - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########"
-    block: |
-      # https://github.com/riobard/bash-powerline
-      # Super quick start, but it doesn't show an icon for stashed commits
-      # source ~/.bash-powerline.sh
-
 - name: "bash-git-prompt: Git clone"
   git:
     repo: "https://github.com/magicmonty/bash-git-prompt.git"
     dest: "~/.bash-git-prompt"
     clone: yes
     depth: 1
-
-- name: "bash-git-prompt: Add to .bashrc"
-  blockinfile:
-    path: ~/.bashrc
-    marker: "########## {mark} bash-git-prompt - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########"
-    block: |
-      # https://github.com/magicmonty/bash-git-prompt
-      # Quick start
-      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
-          GIT_PROMPT_ONLY_IN_REPO=1
-          source $HOME/.bash-git-prompt/gitprompt.sh
-      fi
 
 # https://github.com/powerline/powerline
 # https://github.com/b-ryan/powerline-shell
@@ -63,10 +44,29 @@
     url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"
     dest: ~/.local/share/z.sh
 
-- name: "z: Add to .bashrc"
+# TODO ansible task: run dotfiles-cache-shell-scripts -f bash to create the .sh file
+- name: "Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "########## {mark} z - ANSIBLE MANAGED BLOCK - DON'T EDIT MANUALLY ##########"
+    marker: "#################### {mark} CREATED BY ANSIBLE - DON'T EDIT MANUALLY ####################"
     block: |
+      # https://github.com/direnv/direnv
+      eval "$(direnv hook bash)"
+
       # https://github.com/rupa/z/blob/master/z.sh
       source ~/.local/share/z.sh
+
+      # https://github.com/riobard/bash-powerline
+      # Super quick start, but it doesn't show an icon for stashed commits
+      # source ~/.bash-powerline.sh
+
+      # https://github.com/magicmonty/bash-git-prompt
+      # Quick start, show all details of a git repo
+      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+          GIT_PROMPT_ONLY_IN_REPO=1
+          source $HOME/.bash-git-prompt/gitprompt.sh
+      fi
+
+      # Source all scripts. To regenerate this .sh file, run:
+      # dotfiles-cache-shell-scripts -f bash
+      source ~/.cache/dotfiles/cached_script.sh

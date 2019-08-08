@@ -6,7 +6,6 @@
 .LSOverride
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -24,10 +23,13 @@ Icon
 .autoenv.zsh
 .ropeproject
 .autoxsh
+.envrc
 
 ### Python ###
 .venv
 docs/_build
+.python-version
+.ipynb_checkpoints
 
 ### JetBrains ###
 .idea
@@ -35,14 +37,7 @@ docs/_build
 # Sandbox for notes, throwaway scripts, etc.
 _sandbox
 
-.ipynb_checkpoints
-
 .xmark.*
-
 .konchrc
-
 .scratch
-
-.python-version
-
 .prettierignore

@@ -1,0 +1,2 @@
+- name: "direnv: Install with Homebrew"
+  homebrew: name=direnv state=latest

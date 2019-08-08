@@ -85,13 +85,13 @@ mac_cask_packages:
   - toggl
   - iterm2
   - keepingyouawake # maintained caffeinate wrapper
-  - flux
   - appcleaner
-  - raindropio
   - spectacle
   - the-unarchiver
   - authy-desktop
   - dupeguru # https://dupeguru.voltaicideas.net/
+  - meld # https://yousseb.github.io/meld/
+  - onedrive # https://onedrive.live.com/
   # E-mail
   - mia-for-gmail
   - gmail-notifier
@@ -111,14 +111,12 @@ mac_cask_packages:
   # Media/Music
   - spotify
   - vlc
-  - iina
   - beardedspice
   - musixmatch
   # Images
   - imageoptim # optimizing images
   # Notetaking
   - nvalt # for my commonplace book
-  - notion # slowly replacing evernote
   # Fonts
   - font-ubuntu
   - font-cousine

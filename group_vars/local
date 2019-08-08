@@ -123,14 +123,10 @@ mac_cask_packages:
   - font-ubuntu
   - font-cousine
   - font-hack
-  # Databases
-  - tableplus # RDBMS client
   # Deployments
   - now
   # REST client
   - insomnia
-  # Markdown-based presentations
-  - deckset
 
 # APT packages that don't get installed by a role
 apt_packages:

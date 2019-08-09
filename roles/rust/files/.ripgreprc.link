@@ -4,5 +4,3 @@
 
 --hidden
 --glob=!.git/*
-
---max-columns=150

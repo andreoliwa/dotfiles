@@ -38,6 +38,8 @@ vim_install_plugins: no
 
 # Utilities that don't get installed by a role
 mac_homebrew_packages:
+  - bash
+  - bash-completion
   - curl
   - jq
   - wget

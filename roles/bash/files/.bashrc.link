@@ -35,6 +35,10 @@ if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
     source $HOME/.bash-git-prompt/gitprompt.sh
 fi
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  source $(brew --prefix)/etc/bash_completion
+fi
+
 # Source all scripts. To regenerate this .sh file, run:
 # dotfiles-cache-shell-scripts -f bash
 source ~/.cache/dotfiles/cached_script.sh

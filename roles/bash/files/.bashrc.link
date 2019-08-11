@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 if [[ $OSTYPE == darwin* ]]; then
-    JAVA_VMS_LOCATION="/Library/Java/JavaVirtualMachines"
-    LATEST_JAVA_8="$(ls -1 -t $JAVA_VMS_LOCATION | grep jdk1.8 | sort | head -n 1)"
+    LATEST_JAVA_8="$(find /Library/Java/JavaVirtualMachines -type d -depth 1 | sort --version-sort --reverse | grep jdk1.8 | head -n 1)"
     if [ -z "$LATEST_JAVA_8" ]; then
         echo "Java 8 not found"
     else
-        export PENTAHO_JAVA_HOME="${JAVA_VMS_LOCATION}/${LATEST_JAVA_8}/Contents/Home"
+        export PENTAHO_JAVA_HOME="${LATEST_JAVA_8}/Contents/Home"
     fi
 fi
 

@@ -114,17 +114,15 @@
 - name: "{{ dir }}: Allow .envrc"
   when: python_version != ''
   command: "direnv allow {{ root }}/{{ dir }}"
+  changed_when: false
 
-- name: "{{ dir }}: Run if this fails: bash -c 'cd {{ root }}/{{ dir }} && pyenv local {{ env }} {{ local }}'"
-  when: python_version != ''
-# TODO pyenv local doesn't work yet with xonsh, it has to be run manually with bash if .python-version does not exist
-#   shell: "bash -c 'eval \"$(pyenv init -)\" && cd {{ root }}/{{ dir }} && pyenv local {{ env }} {{ local }}'"
-  shell: "pyenv local {{ env }} {{ local }}"
-  args:
-    executable: /bin/bash
-    chdir: "{{ root }}/{{ dir }}"
-    creates: "{{ root }}/{{ dir }}/.python-version"
-  ignore_errors: true
+- name: "{{ dir }}: Create .python-version manually, since pyenv local doesn't work on Ansible [hack]"
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.python-version"
+    state: present
+    create: yes
+    regexp: '^(.+)$'
+    line: "{{ env }}"
 
 # TODO The installation doesn't seem to be working properly
 # - name: "{{ dir }}: Install modules on the virtualenv {{ env }} with '{{ install_command }}'? {{ run_install_command }}"

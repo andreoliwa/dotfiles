@@ -1,6 +1,7 @@
 - name: "Get latest Python 2.7"
   shell: "pyenv install --list | grep -i ' 2.7' | grep -v dev | tr -d ' ' | tail -n 1"
   register: latest_python_2_7
+  changed_when: false
 
 - name: "Install Python {{ latest_python_2_7.stdout }}"
   pyenv:

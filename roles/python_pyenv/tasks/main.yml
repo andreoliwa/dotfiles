@@ -24,6 +24,8 @@
 
 - name: "pipx: Upgrade all packages"
   command: "pipx upgrade-all"
+  register: this_task
+  changed_when: "'Versions did not change after running' not in this_task.stdout"
 
 - name: Set global pyenv path
   pyenv:

@@ -8,6 +8,7 @@
 - name: "Get latest Python 3.7"
   shell: "pyenv install --list | grep -i -E ' 3.7[0-9.]+$' | tr -d ' ' | tail -n 1"
   register: latest_python_3_7
+  changed_when: false
 
 - name: "Install Python {{ latest_python_3_7.stdout }}"
   pyenv:
@@ -16,6 +17,7 @@
 - name: "Get latest Python 3.6"
   shell: "pyenv install --list | grep -i -E ' 3.6[0-9.]+$' | tr -d ' ' | tail -n 1"
   register: latest_python_3_6
+  changed_when: false
 
 - name: "Install Python {{ latest_python_3_6.stdout }}"
   pyenv:
@@ -24,6 +26,7 @@
 - name: "Get latest Python 3.5"
   shell: "pyenv install --list | grep -i -E ' 3.5[0-9.]+$' | tr -d ' ' | tail -n 1"
   register: latest_python_3_5
+  changed_when: false
 
 - name: "Install Python {{ latest_python_3_5.stdout }}"
   pyenv:
@@ -38,6 +41,7 @@
 - name: "Get latest Python 3.4"
   shell: "pyenv install --list | grep -i -E ' 3.4[0-9.]+$' | tr -d ' ' | tail -n 1"
   register: latest_python_3_4
+  changed_when: false
 
 - name: "Install Python {{ latest_python_3_4.stdout }}"
   pyenv:
@@ -50,16 +54,25 @@
 
 - name: Install Poetry globally
   command: "python /tmp/get-poetry.py"
+  register: this_task
+  changed_when: "'Latest version already installed' not in this_task.stdout"
 
 - name: Update Poetry
   command: "poetry self:update"
+  register: this_task
+  changed_when: "'You are using the latest version' not in this_task.stdout"
 
 - name: "pipx: Install https://github.com/pipxproject/pipx#install-pipx"
   command: "python3 -m pip install -U --user pipx"
+  register: this_task
+  changed_when: "'Requirement already up-to-date: pipx' not in this_task.stdout"
 
 - name: "pipx: Ensure it's on $PATH"
   command: "pipx ensurepath"
+  register: this_task
+  changed_when: "'is already in PATH' not in this_task.stderr"
 
 - name: "pipx: Install Python 3 modules globally with pipx"
   with_items: "{{ python3_modules }}"
-  shell: "pipx install {{ item }} || true"
+  shell: "pipx install {{ item }}"
+  ignore_errors: yes

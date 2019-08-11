@@ -67,7 +67,7 @@ def main():
     args = parser.parse_args()
 
     # Change dir to read the correct ansible.cfg
-    os.chdir(Path("~/dotfiles").expanduser())
+    os.chdir(str(Path.home() / "dotfiles"))
 
     if args.status:
         shell("vagrant status {}".format(args.virtual_machine or ""))

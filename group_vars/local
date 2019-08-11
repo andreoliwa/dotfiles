@@ -176,6 +176,7 @@ python3_modules:
   - identify # https://github.com/chriskuehl/identify
   - pre-commit # https://pre-commit.com/
   - black # https://github.com/ambv/black
+  - aws-shell # https://github.com/awslabs/aws-shell
 
 # Node utilities
 npm_global_packages:

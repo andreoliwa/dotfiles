@@ -66,23 +66,32 @@
     - "{{ symlink_dir_stat.stat.path }}/*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
-- name: "{{ dir }}: Add VIRTUAL_ENV variable to .autoenv"
+- name: "{{ dir }}: Add VIRTUAL_ENV to .autoenv"
   when: python_version != ''
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoenv"
     state: present
     create: yes
-    regexp: "^.+ VIRTUAL_ENV="
+    regexp: "^.+VIRTUAL_ENV="
     line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"
 
-- name: "{{ dir }}: Add PYTHONWARNINGS variable to .autoenv"
+- name: "{{ dir }}: Add PYTHONWARNINGS to .autoenv"
   when: python_version != ''
   lineinfile:
     path: "{{ root }}/{{ dir }}/.autoenv"
     state: present
     create: yes
-    regexp: "^.+ PYTHONWARNINGS="
+    regexp: "^.+PYTHONWARNINGS="
     line: "export PYTHONWARNINGS="
+
+- name: "{{ dir }}: Add PYENV_VERSION to .autoenv (needed by PyCharm to run pre-commit hooks)"
+  when: python_version != ''
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.autoenv"
+    state: present
+    create: yes
+    regexp: "^.+PYENV_VERSION="
+    line: "export PYENV_VERSION={{ env }}"
 
 - name: "{{ dir }}: Source bash's .autoenv by default on .autoxsh"
   when: python_version != ''

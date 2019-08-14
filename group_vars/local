@@ -174,7 +174,6 @@ python3_modules:
   - howdoi # https://pypi.org/project/howdoi/
   - bumpversion # https://pypi.org/project/bumpversion/
   - twine # https://pypi.org/project/twine/
-  - "-e --spec {{ project_root }}/python-clit/ clit" # https://github.com/andreoliwa/python-clit
   - identify # https://github.com/chriskuehl/identify
   - pre-commit # https://pre-commit.com/
   - black # https://github.com/ambv/black

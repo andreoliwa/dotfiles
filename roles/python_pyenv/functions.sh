@@ -5,8 +5,13 @@ function pyclean() {
     find . -type d -name '__pycache__' -delete
 }
 
+# Clear distribution files
+function pyclean_dist() {
+    find . -type d \( -name '*.egg-info' -or -name 'pip-wheel-metadata' -or -name 'dist' \) -print0 | xargs -0 rm -rvf
+}
+
 # Clear all ipdb statements
-functionrmpdb() {
+function rmpdb() {
     git ls-files -oc --exclude-standard "*.py" | cat | xargs sed -i '' '/import ipdb;/d'
     echo "Cleared breakpoints"
 }

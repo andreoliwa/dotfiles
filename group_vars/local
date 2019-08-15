@@ -169,6 +169,7 @@ python3_modules:
   - bumpversion # https://pypi.org/project/bumpversion/
   - cookiecutter # https://pypi.org/project/cookiecutter/
   - cookiepatcher # https://pypi.org/project/cookiepatcher/
+  - gitup # https://github.com/earwig/git-repo-updater.git
   - howdoi # https://pypi.org/project/howdoi/
   - identify # https://github.com/chriskuehl/identify
   - keyring # https://pypi.org/project/keyring/

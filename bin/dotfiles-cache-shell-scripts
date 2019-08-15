@@ -68,14 +68,9 @@ def _main():
     parser = argparse.ArgumentParser(
         description="find shell scripts under ~/dotfiles* and prepare a cached script to source them all"
     )
-    parser.add_argument("--force", "-f", action="store_true", help="discard cached script")
     parser.add_argument("--debug", "-d", action="store_true", help="debug mode")
     parser.add_argument("shell_name", choices=[Shell.BASH, Shell.XONSH], help="name of the shell")
     args = parser.parse_args()
-
-    if not args.force and CACHED_SCRIPT.exists():
-        print(f"{CACHED_SCRIPT} already exists (use --force to recreate)")
-        return
 
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
 

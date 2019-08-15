@@ -41,6 +41,6 @@ export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 # Source all scripts. To regenerate this .sh file, run:
-# dotfiles-cache-shell-scripts -f bash
+# dotfiles-cache-shell-scripts bash
 source ~/.cache/dotfiles/cached_script.sh
 #################### END CREATED BY ANSIBLE - DON'T EDIT MANUALLY ####################

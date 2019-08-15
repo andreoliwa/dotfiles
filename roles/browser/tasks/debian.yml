@@ -12,8 +12,9 @@
   command: "lsb_release -sc"
   register: release_name
 
-- name: "Brave: Add to apt sources"
-  shell: 'echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ {{ release_name.stdout }} main" | sudo tee -a /etc/apt/sources.list.d/brave-browser-release-{{ release_name.stdout }}.list'
+# TODO use lineinfile, this is duplicating sources
+# - name: "Brave: Add to apt sources"
+#   shell: 'echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ {{ release_name.stdout }} main" | sudo tee -a /etc/apt/sources.list.d/brave-browser-release-{{ release_name.stdout }}.list'
 
 - name: "Brave: Update apt cache"
   apt: update_cache=yes
@@ -22,7 +23,7 @@
 - name: "Brave: Install with apt"
   apt:
     name:
-    - brave-browser
-    - brave-keyring
+      - brave-browser
+      - brave-keyring
     state: latest
   become: true

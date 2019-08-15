@@ -163,21 +163,21 @@ pyenv_global_versions:
 
 # Install Python 3 modules globally with pipx
 python3_modules:
+  - aws-shell # https://github.com/awslabs/aws-shell
+  - awscli # https://pypi.org/project/awscli/
+  - black # https://github.com/ambv/black
+  - bumpversion # https://pypi.org/project/bumpversion/
   - cookiecutter # https://pypi.org/project/cookiecutter/
   - cookiepatcher # https://pypi.org/project/cookiepatcher/
-  - youtube-dl # https://pypi.org/project/youtube_dl/
-  - organize-tool # https://pypi.org/project/organize-tool/
-  - keyring # https://pypi.org/project/keyring/
-  - subliminal # https://pypi.org/project/subliminal/
-  - awscli # https://pypi.org/project/awscli/
-  - pgcli # https://pypi.org/project/pgcli/
   - howdoi # https://pypi.org/project/howdoi/
-  - bumpversion # https://pypi.org/project/bumpversion/
-  - twine # https://pypi.org/project/twine/
   - identify # https://github.com/chriskuehl/identify
+  - keyring # https://pypi.org/project/keyring/
+  - organize-tool # https://pypi.org/project/organize-tool/
+  - pgcli # https://pypi.org/project/pgcli/
   - pre-commit # https://pre-commit.com/
-  - black # https://github.com/ambv/black
-  - aws-shell # https://github.com/awslabs/aws-shell
+  - subliminal # https://pypi.org/project/subliminal/
+  - twine # https://pypi.org/project/twine/
+  - youtube-dl # https://pypi.org/project/youtube_dl/
 
 # Node utilities
 npm_global_packages:

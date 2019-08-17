@@ -1,5 +1,5 @@
 def _mydb_create(args):
-    # TODO Create a command: xpostgres user
+    # TODO Create a command: postgresx user
     user_name = args[0]
     if not user_name:
         echo 'Provide a username. E.g.: mydb_create my_user'

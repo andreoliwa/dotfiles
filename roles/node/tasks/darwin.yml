@@ -8,3 +8,8 @@
 - name: Install n with homebrew
   homebrew: name=n state=latest
 
+- name: Install global NPM packages
+  npm: name={{ item }} state=latest global=yes
+  with_items: '{{ npm_global_packages }}'
+  register: npm_install
+- debug: var=npm_install

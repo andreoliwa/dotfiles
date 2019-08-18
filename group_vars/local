@@ -188,7 +188,21 @@ npm_global_packages:
   - eslint-plugin-react
   - babel-eslint
   - np
-  - commitizen
+
+  # Conventional commits and semantic release
+  - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
+  - "@commitlint/cli" # https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/cli
+  - "@commitlint/config-conventional"
+  - commitizen # https://github.com/commitizen/cz-cli
+  - semantic-release-cli # https://github.com/semantic-release/cli
+
+  # Sentry
+  - "@sentry/cli" # https://github.com/getsentry/sentry-cli
+
+  # MarkDown linter
+  - remark-cli # https://github.com/remarkjs/remark/tree/master/packages/remark-cli
+  - remark-preset-lint-recommended # https://github.com/remarkjs/remark-lint#cli
+  - remark-preset-lint-markdown-style-guide # https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide
 
 rust_binaries:
   # https://github.com/nabijaczleweli/cargo-update

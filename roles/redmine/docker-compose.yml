@@ -3,7 +3,8 @@ version: "3.5"
 services:
   redmine:
     container_name: redmine
-    image: redmine:4
+    build:
+      context: .
     ports:
       - 8003:3000
     networks:
@@ -13,7 +14,7 @@ services:
       REDMINE_DB_USERNAME: redmine
       REDMINE_DB_PASSWORD: ${REDMINE_DB_PASSWORD}
     volumes:
-      - ~/Personal/redmine:/usr/src/redmine/files
+      - ~/Personal/redmine/files:/usr/src/redmine/files
 
 networks:
   net10:

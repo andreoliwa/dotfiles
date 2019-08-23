@@ -65,3 +65,6 @@ remotehosts
 
 # Ignore Galaxy roles
 roles_galaxy/
+
+# Redmine
+roles/redmine/themes/

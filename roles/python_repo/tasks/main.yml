@@ -117,6 +117,7 @@
   changed_when: false
 
 - name: "{{ dir }}: Create .python-version manually, since pyenv local doesn't work on Ansible [hack]"
+  when: python_version != ''
   lineinfile:
     path: "{{ root }}/{{ dir }}/.python-version"
     state: present

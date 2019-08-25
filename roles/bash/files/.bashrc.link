@@ -44,3 +44,8 @@ export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 # dotfiles-cache-shell-scripts bash
 source ~/.cache/dotfiles/cached_script.sh
 #################### END CREATED BY ANSIBLE - DON'T EDIT MANUALLY ####################
+
+# Increase Bash history size
+# https://unix.stackexchange.com/questions/20861/is-there-a-way-to-set-the-size-of-the-history-list-in-bash-to-more-than-5000-lin#20925
+export HISTSIZE=100000
+export HISTFILESIZE=100000

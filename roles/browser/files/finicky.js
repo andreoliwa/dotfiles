@@ -3,7 +3,7 @@ module.exports = {
   rewrite: [
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#force-https-for-all-urls
-      match: ({ url }) => url.protocol === "http",
+      match: ({ url }) => url.protocol === "http" && url.host != "localhost",
       url: ({ url }) => ({
         ...url,
         protocol: "https"

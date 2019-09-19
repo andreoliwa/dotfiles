@@ -5,6 +5,7 @@ services:
     container_name: redmine
     build:
       context: .
+    restart: unless-stopped
     ports:
       - 8003:3000
     networks:

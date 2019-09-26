@@ -11,13 +11,14 @@
 - name: Install Node.js and build tools
   apt:
     name:
-    - nodejs
-    - build-essential
+      - nodejs
+      - build-essential
   become: true
 
 - name: Install global NPM packages
   npm: name={{ item }} state=latest global=yes
-  with_items: '{{ npm_global_packages }}'
+  with_items: "{{ npm_global_packages }}"
   become: true
   register: npm_install
+  ignore_errors: yes
 - debug: var=npm_install

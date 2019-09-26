@@ -1,4 +1,3 @@
-
 - name: Install node and npm with homebrew
   homebrew: name=node state=latest
 
@@ -10,6 +9,6 @@
 
 - name: Install global NPM packages
   npm: name={{ item }} state=latest global=yes
-  with_items: '{{ npm_global_packages }}'
+  with_items: "{{ npm_global_packages }}"
   register: npm_install
 - debug: var=npm_install

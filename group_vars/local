@@ -94,6 +94,8 @@ mac_cask_packages:
   - dupeguru # https://dupeguru.voltaicideas.net/
   - meld # https://yousseb.github.io/meld/
   - onedrive # https://onedrive.live.com/
+  - wdiff # https://www.gnu.org/software/wdiff/
+  - colordiff # https://www.colordiff.org/
   # E-mail
   - mia-for-gmail
   - gmail-notifier

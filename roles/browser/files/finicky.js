@@ -1,14 +1,14 @@
 module.exports = {
   defaultBrowser: "Brave Browser",
   rewrite: [
-    {
-      // https://github.com/johnste/finicky/wiki/Configuration-ideas#force-https-for-all-urls
-      match: ({ url }) => url.protocol === "http" && url.host != "localhost",
-      url: ({ url }) => ({
-        ...url,
-        protocol: "https"
-      })
-    },
+    // {
+    //   // https://github.com/johnste/finicky/wiki/Configuration-ideas#force-https-for-all-urls
+    //   match: ({ url }) => url.protocol === "http" && url.host != "localhost",
+    //   url: ({ url }) => ({
+    //     ...url,
+    //     protocol: "https"
+    //   })
+    // },
     // {
     //   // https://github.com/johnste/finicky/wiki/Configuration-ideas#redirect-google-links-to-duckduckgocom
     //   match: finicky.matchDomains([/google\.(com|de|com.br|.+)$/]),

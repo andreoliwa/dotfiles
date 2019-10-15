@@ -34,7 +34,7 @@ module.exports = {
   handlers: [
     // EatFirst URLs
     {
-      match: [/\/eatfirst/, /terraform.io/],
+      match: [/\/eatfirst/, /terraform.io/, /dashlane.com/],
       browser: "Vivaldi"
     },
     {

@@ -32,16 +32,20 @@ module.exports = {
     }
   ],
   handlers: [
-    // EatFirst URLs
+    // Work URLs
     {
-      match: [/\/eatfirst/, /terraform.io/, /dashlane.com/],
+      match: [/\/eatfirst/],
       browser: "Vivaldi"
     },
     {
       match: finicky.matchDomains([
         /eatfirst\.(ninja|com)$/,
         "trello.com",
-        "meet.google.com"
+        "meet.google.com",
+        "terraform.io",
+        "dashlane.com",
+        /.+slack.com/,
+        /.+atlassian\.(com|net)$/
       ]),
       browser: "Vivaldi"
     },

@@ -51,8 +51,14 @@
     url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"
     dest: ~/.local/share/z.sh
 
+- name: "Install pyyaml"
+  pip:
+    name: pyyaml
+    state: latest
+    executable: pip3
+
 - name: "Create cached script that will be sourced on .bashrc"
-  command: "dotfiles-cache-shell-scripts bash"
+  command: "{{ fotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
 
 - name: "Add content to .bashrc"
   blockinfile:

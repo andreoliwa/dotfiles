@@ -52,7 +52,7 @@ cd ~/dotfiles
 -   Run the installation script.
 
 ```bash
-./bin/dot-bootstrap
+~/dotfiles/bin/multi-dev-machine --galaxy --bootstrap
 ```
 
 ## updating your local environment

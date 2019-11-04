@@ -108,6 +108,7 @@ mac_cask_packages:
   - zulip
   - telegram
   - whatsapp
+  - slack
   # Video conferencing
   - zoomus
   # Backup/storage

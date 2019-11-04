@@ -58,7 +58,7 @@
     executable: pip3
 
 - name: "Create cached script that will be sourced on .bashrc"
-  command: "{{ fotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
+  command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
 
 - name: "Add content to .bashrc"
   blockinfile:

@@ -41,6 +41,11 @@
 # They are both slow and ugly (maybe a font needs to be configured).
 # Too much hassle to configure, not ready out of the box.
 
+- name: "Create ~/.local/share"
+  file:
+    state: directory
+    path: ~/.local/share
+
 - name: "z: Get script"
   get_url:
     url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"

@@ -4,6 +4,9 @@ export PROJECT_HOME="$HOME/Code"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
+# Ansible Python tasks need this environment variable
+export PYENV_ROOT=~/.pyenv
+
 # pyenv must be found in the PATH, so "init" can work
 test -f ~/.pyenv/bin/pyenv && export PATH="$PATH:$HOME/.pyenv/bin"
 eval "$(pyenv init - --no-rehash)"

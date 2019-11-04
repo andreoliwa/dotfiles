@@ -1,7 +1,5 @@
 - name: Set up local development environment
   hosts: local
-  environment:
-    PYENV_ROOT: "{{ pyenv_root }}"
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
     - { role: ansible, tags: ["ansible"] }

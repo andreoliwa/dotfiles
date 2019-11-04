@@ -21,4 +21,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export PATH="$PATH:$HOME/.poetry/bin"
 
 # https://github.com/pipxproject/pipx#install-pipx
+if [ "$(uname -s)" == "Darwin" ]; then
+    export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
+fi
 export PATH="$HOME/.local/bin:$PATH"

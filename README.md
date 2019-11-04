@@ -23,10 +23,11 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 
 ## prerequisites (install these first)
 
--   ansible >= 2.4 (on Linux, [get the latest PPA](http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine))
--   homebrew (If on macOS)
--   git (homebrew installable on macOS)
--   Latest version of Xcode (If on macOS)
+-   HomeBrew: [macOS requirements](https://docs.brew.sh/Installation#macos-requirements) first (e.g.: XCode), then [install HomeBrew](https://brew.sh/)
+-   ansible >= 2.4:
+    -   macOS: `brew install ansible`;
+    -   Linux: [get the latest PPA](http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine).
+-   git (homebrew installable on macOS: `brew install git`)
 
 ## install
 

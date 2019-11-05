@@ -11,7 +11,9 @@
     state: present
   become: true
   tags: bootstrap
+  register: add_bash_shell
 
 - name: Change default shell to Homebrew bash
   command: "chsh -s /usr/local/bin/bash"
   tags: bootstrap
+  when: add_bash_shell.changed

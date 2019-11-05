@@ -9,7 +9,9 @@
     state: present
   become: true
   tags: bootstrap
+  register: add_bash_shell
 
 - name: Change default shell to standard bash
   command: "chsh -s /bin/bash"
   tags: bootstrap
+  when: add_bash_shell.changed

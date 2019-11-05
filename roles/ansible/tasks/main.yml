@@ -1,0 +1,4 @@
+- name: Upgrade Ansible itself with Homebrew
+  homebrew: name=ansible state=latest
+  when: ansible_os_family == "Darwin"
+  tags: bootstrap

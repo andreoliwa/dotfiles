@@ -54,6 +54,7 @@ mac_homebrew_packages:
   - heroku/brew/heroku
   - wdiff # https://www.gnu.org/software/wdiff/
   - colordiff # https://www.colordiff.org/
+  - pidof # http://www.nightproductions.net/cli.htm
   # Top for docker containers
   - ctop
   # User-contributed docs for Unix commands

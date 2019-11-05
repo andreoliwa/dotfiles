@@ -31,8 +31,3 @@
     - { role: redmine, tags: ["redmine"] }
     - { role: mayan-edms, tags: ["mayan"] }
     - { role: tt-rss, tags: ["tt-rss", "rss"] }
-    - {
-        role: activity-watch,
-        tags: ["activity-watch", "aw"],
-        when: ansible_os_family == "Darwin",
-      }

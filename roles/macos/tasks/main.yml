@@ -3,7 +3,10 @@
   changed_when: false
 
 - name: Install macOS specific Homebrew packages
-  homebrew: name="{{ mac_homebrew_packages }}" state=latest
+  homebrew:
+    name: '{{ mac_homebrew_packages }}'
+    state: latest
+  ignore_errors: yes # TODO failing in the new laptop without any error messages
 
 - name: Tap into homebrew/cask-fonts
   homebrew_tap: tap=homebrew/cask-fonts state=present

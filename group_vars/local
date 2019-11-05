@@ -109,6 +109,8 @@ mac_cask_packages:
   - telegram
   - whatsapp
   - slack
+  - skype
+  - signal
   # Video conferencing
   - zoomus
   # Backup/storage

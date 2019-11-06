@@ -7,6 +7,7 @@
   shell: "find ~ -type d -name .git -exec dirname {} \\; > ~/.config/gitup/all_home_repos"
   register: last_execution_gitup
   when: "'gitup_list_all_repos' | run_only_after"
+  ignore_errors: yes # TODO failing with several "Operation not permitted" messages
 
 - name: "gitup : Clean bookmarks"
   command: "gitup --bookmark-file ~/.config/gitup/{{ item }} --clean"

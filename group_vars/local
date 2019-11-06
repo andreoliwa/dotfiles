@@ -69,7 +69,6 @@ mac_homebrew_packages:
   - ValeLint/vale/vale
   # For repeating commands
   - watch
-  - jaysonsantos/tools/csv-query # https://github.com/jaysonsantos/csv-query-rs
   - fd # https://github.com/sharkdp/fd
   - terraform # https://www.terraform.io
 

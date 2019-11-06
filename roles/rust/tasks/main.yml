@@ -58,3 +58,7 @@
     dest: "{{ dotfiles_user_home }}/.ripgreprc"
     state: link
     follow: false
+
+# https://github.com/jaysonsantos/csv-query-rs
+- name: "Install csv-query from git (brew install jaysonsantos/tools/csv-query is broken)"
+  command: "cargo install --force --git https://github.com/jaysonsantos/csv-query-rs"

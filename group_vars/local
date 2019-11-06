@@ -93,7 +93,7 @@ mac_cask_packages:
   - authy # https://authy.com/
   - dupeguru # https://dupeguru.voltaicideas.net/
   - meld # https://yousseb.github.io/meld/
-  - onedrive # https://onedrive.live.com/
+  - ccleaner # https://www.ccleaner.com/ccleaner-mac
   # E-mail
   - mia-for-gmail
   - gmail-notifier
@@ -113,20 +113,17 @@ mac_cask_packages:
   - zoomus
   # Backup/storage
   - dropbox
+  - onedrive # https://onedrive.live.com/
   # Media/Music
   - spotify
   - vlc
   - beardedspice
   # Images
   - imageoptim # optimizing images
-  # Notetaking
-  - nvalt # for my commonplace book
   # Fonts
   - font-ubuntu
   - font-cousine
   - font-hack
-  # Deployments
-  - now
   # REST client
   - insomnia
 

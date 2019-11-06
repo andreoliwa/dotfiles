@@ -34,7 +34,7 @@ module.exports = {
   handlers: [
     // Work URLs
     {
-      match: [/\/eatfirst/, /\/makeeathappen/],
+      match: [/\/eatfirst/, /\/makeeathappen/, /\/b2bfood.group/],
       browser: "Vivaldi"
     },
     {

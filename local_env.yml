@@ -6,6 +6,7 @@
     - { role: bash, tags: ["bash"] }
     - { role: git, tags: ["git"] }
     - { role: package_manager, tags: ["package_manager", "bootstrap"] }
+    - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
     - { role: vagrant, tags: ["vagrant"], when: ansible_os_family == "Darwin" }
     - { role: python_pyenv, tags: ["python"] }
     - { role: node, tags: ["node"] }
@@ -15,7 +16,6 @@
     - { role: bat, tags: ["bat"] }
     - { role: tmux, tags: ["tmux"] }
     - { role: fzf, tags: ["fzf"] }
-    - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
     - {
         role: gantsign.visual-studio-code,
         tags: ["vscode"],

@@ -71,6 +71,7 @@ mac_homebrew_packages:
   - watch
   - fd # https://github.com/sharkdp/fd
   - terraform # https://www.terraform.io
+  - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
 
   # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

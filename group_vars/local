@@ -94,6 +94,9 @@ mac_cask_packages:
   - dupeguru # https://dupeguru.voltaicideas.net/
   - meld # https://yousseb.github.io/meld/
   - ccleaner # https://www.ccleaner.com/ccleaner-mac
+  - itau # https://www.itau.com.br/computador/
+  - dashlane # https://www.dashlane.com/
+  - graphviz # https://www.graphviz.org/
   # E-mail
   - mia-for-gmail
   - gmail-notifier

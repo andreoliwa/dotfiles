@@ -1,0 +1,45 @@
+- name: Install common Cask packages
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ mac_cask_packages['common'] }}"
+  ignore_errors: yes
+
+- name: Remove Cask packages
+  homebrew_cask:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ mac_cask_packages['remove'] }}"
+
+- name: Install Cask packages on personal_laptop
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ mac_cask_packages['personal_laptop'] }}"
+  when: ansible_hostname == personal_laptop and mac_cask_packages['personal_laptop']
+
+- name: Remove Cask packages on personal_laptop
+  homebrew_cask:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ mac_cask_packages['company_laptop'] }}"
+  when: ansible_hostname == personal_laptop and mac_cask_packages['company_laptop']
+
+- name: Install Cask packages on company_laptop
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ mac_cask_packages['company_laptop'] }}"
+  when: ansible_hostname == company_laptop and mac_cask_packages['company_laptop']
+
+- name: Remove Cask packages on company_laptop
+  homebrew_cask:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ mac_cask_packages['personal_laptop'] }}"
+  when: ansible_hostname == company_laptop and mac_cask_packages['personal_laptop']
+
+- name: Upgrade all Cask packages
+  homebrew_cask:
+    upgrade_all: yes
+  ignore_errors: yes

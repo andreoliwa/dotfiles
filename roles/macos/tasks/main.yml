@@ -2,10 +2,8 @@
   script: set-defaults.sh
   changed_when: false
 
-- name: Install macOS specific Homebrew packages
-  homebrew:
-    name: '{{ mac_homebrew_packages }}'
-    state: latest
+- name: Homebrew
+  include_tasks: brew.yml
 
 - name: Tap into homebrew/cask-fonts
   homebrew_tap: tap=homebrew/cask-fonts state=present
@@ -13,9 +11,8 @@
 - name: Tap into homebrew/cask-versions
   homebrew_tap: tap=homebrew/cask-versions state=present
 
-- name: Install Mac apps with homebrew cask
-  homebrew_cask: name={{item}} state=present
-  with_items: '{{mac_cask_packages}}'
+- name: Homebrew Cask
+  include_tasks: cask.yml
 
 - name: Install mas
   homebrew: name=mas state=latest
@@ -26,5 +23,3 @@
 
 - name: Brew cleanup
   command: brew cleanup
-  register: brew_cleanup
-- debug: var=brew_cleanup.stdout_lines

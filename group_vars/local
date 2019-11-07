@@ -15,6 +15,9 @@ project_root: "~/Code"
 
 backup_dir: "~/Dropbox/Backup/{{ ansible_hostname }}"
 
+personal_laptop: arkham
+company_laptop: lazaruspit
+
 # Name used in commit messages
 full_name: Augusto Wagner Andreoli
 # Git
@@ -36,99 +39,113 @@ vim_install_plugins: no
 
 # Utilities that don't get installed by a role
 mac_homebrew_packages:
-  - bash
-  - bash-completion2 # https://github.com/scop/bash-completion
-  - curl
-  - jq
-  - wget
-  - highlight
-  - terminal-notifier
-  - htop-osx
-  - httpie
-  - pgbadger
-  - diff-so-fancy
-  - rename
-  - gpg
-  - heroku/brew/heroku
-  - wdiff # https://www.gnu.org/software/wdiff/
-  - colordiff # https://www.colordiff.org/
-  - pidof # http://www.nightproductions.net/cli.htm
-  # Top for docker containers
-  - ctop
-  # User-contributed docs for Unix commands
-  - tldr
-  # what's the wifi password?
-  - wifi-password
-  # Share tmux sessions
-  - tmate
-  # README rendering
-  - grip
-  # Prose linting
-  - ValeLint/vale/vale
-  # For repeating commands
-  - watch
-  - fd # https://github.com/sharkdp/fd
-  - terraform # https://www.terraform.io
-  - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
+  common:
+    - bash
+    - bash-completion2 # https://github.com/scop/bash-completion
+    - curl
+    - jq
+    - wget
+    - terminal-notifier
+    - htop-osx
+    - httpie
+    - diff-so-fancy
+    - gpg
+    - wdiff # https://www.gnu.org/software/wdiff/
+    - colordiff # https://www.colordiff.org/
+    - pidof # http://www.nightproductions.net/cli.htm
+    # Top for docker containers
+    - ctop
+    # User-contributed docs for Unix commands
+    - tldr
+    # For repeating commands
+    - watch
+    - fd # https://github.com/sharkdp/fd
+    - terraform # https://www.terraform.io
+    - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
+  remove:
+    - heroku/brew/heroku
+    - highlight
+    - rename
+    # what's the wifi password?
+    - wifi-password
+    # Share tmux sessions
+    - tmate
+    # README rendering
+    - grip
+    # Prose linting
+    - ValeLint/vale/vale
+  personal_laptop:
+  company_laptop:
+    - pgbadger
 
-  # Mac Apps to be installed with homebrew-cask
+# Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
-  # Browsers
-  - brave-browser # https://brave.com/
-  - vivaldi # https://vivaldi.com/
-  - finicky # https://github.com/johnste/finicky
-  # Development
-  - visual-studio-code
-  # Network
-  - ngrok
-  - teamviewer
-  - private-internet-access
-  # Utilities
-  - toggl
-  - iterm2
-  - keepingyouawake # maintained caffeinate wrapper
-  - appcleaner
-  - spectacle
-  - the-unarchiver
-  - authy # https://authy.com/
-  - dupeguru # https://dupeguru.voltaicideas.net/
-  - meld # https://yousseb.github.io/meld/
-  - ccleaner # https://www.ccleaner.com/ccleaner-mac
-  - itau # https://www.itau.com.br/computador/
-  - dashlane # https://www.dashlane.com/
-  - graphviz # https://www.graphviz.org/
-  # E-mail
-  - mia-for-gmail
-  - gmail-notifier
-  # Vagrant/Virtualbox
-  - vagrant
-  - virtualbox
-  # Docker
-  - docker
-  # Chat
-  - zulip
-  - telegram
-  - whatsapp
-  - slack
-  - skype
-  - signal
-  # Video conferencing
-  - zoomus
-  # Backup/storage
-  - dropbox
-  - onedrive # https://onedrive.live.com/
-  # Media/Music
-  - spotify
-  - vlc
-  - beardedspice
-  # Images
-  - imageoptim # optimizing images
-  # Fonts
-  - font-ubuntu
-  - font-cousine
-  - font-hack
-  # REST client
-  - insomnia
+  common:
+    # Browsers
+    - brave-browser # https://brave.com/
+    - vivaldi # https://vivaldi.com/
+    - finicky # https://github.com/johnste/finicky
+    # Development
+    - visual-studio-code
+    # Network
+    - teamviewer
+    - private-internet-access
+    # Utilities
+    - toggl
+    - iterm2
+    - keepingyouawake # maintained caffeinate wrapper
+    - appcleaner
+    - spectacle
+    - the-unarchiver
+    - authy # https://authy.com/
+    - dupeguru # https://dupeguru.voltaicideas.net/
+    - meld # https://yousseb.github.io/meld/
+    - ccleaner # https://www.ccleaner.com/ccleaner-mac
+    - itau # https://www.itau.com.br/computador/
+    # E-mail
+    - mia-for-gmail
+    # Vagrant/Virtualbox
+    - vagrant
+    - virtualbox
+    # Docker
+    - docker
+    # Chat
+    - telegram
+    - whatsapp
+    - skype
+    - signal
+    # Video conferencing
+    - zoomus
+    # Backup/storage
+    - dropbox
+    - onedrive # https://onedrive.live.com/
+    # Media/Music
+    - spotify
+    - vlc
+    - beardedspice
+    # Fonts
+    - font-ubuntu
+    - font-cousine
+    - font-hack
+  remove:
+    # Images
+    - imageoptim # optimizing images
+    - deckset
+    - epic
+    - freeplane
+    - licecap
+    - notion
+    - pdfsam-basic
+  personal_laptop:
+  company_laptop:
+    - ngrok
+    - dashlane # https://www.dashlane.com/
+    - graphviz # https://www.graphviz.org/
+    - gmail-notifier
+    - zulip
+    - slack
+    # REST client
+    - insomnia
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -150,6 +167,7 @@ mac_mas_packages:
   - 585829637 # Todoist https://itunes.apple.com/us/app/id585829637
   - 409203825 # Numbers https://itunes.apple.com/us/app/id409203825
   - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
+  - 973134470 # Be Focused - Focus Timer https://itunes.apple.com/us/app/id973134470
 
 ruby_global_gems:
   - lunchy

@@ -44,8 +44,9 @@ module.exports = {
         "meet.google.com",
         "terraform.io",
         "dashlane.com",
-        /.+slack.com/,
-        /.+atlassian\.(com|net)$/
+        /.*slack.com/,
+        /.*atlassian\.(com|net)$/,
+        /.*atl-paas.net/
       ]),
       browser: "Vivaldi"
     },

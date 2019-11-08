@@ -231,3 +231,15 @@ rust_binaries:
   - { pkg: exa, bin: exa }
   # https://github.com/BurntSushi/ripgrep
   - { pkg: ripgrep, bin: rg }
+
+# To list extensions: code --list-extensions
+vscode_extensions:
+  common:
+    - ms-python.python
+    - vscoss.vscode-ansible
+    - esbenp.prettier-vscode
+    - Gruntfuggly.todo-tree
+    - zhouronghui.propertylist
+  remove:
+  personal_laptop:
+  company_laptop:

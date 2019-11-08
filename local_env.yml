@@ -16,6 +16,7 @@
     - { role: bat, tags: ["bat"] }
     - { role: tmux, tags: ["tmux"] }
     - { role: fzf, tags: ["fzf"] }
+    - { role: vscode, tags: ["vscode"] }
     - {
         role: gantsign.visual-studio-code,
         tags: ["vscode"],

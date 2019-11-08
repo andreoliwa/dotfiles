@@ -1,32 +1,32 @@
-- name: Install common Homebrew packages
+- name: "Homebrew: Install common"
   homebrew:
     name: "{{ mac_homebrew_packages['common'] }}"
     state: latest
 
-- name: Remove Homebrew packages
+- name: "Homebrew: Remove"
   homebrew:
     name: "{{ mac_homebrew_packages['remove'] }}"
     state: absent
 
-- name: Install Homebrew packages on personal_laptop
+- name: "Homebrew: Install on personal_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['personal_laptop'] }}"
     state: latest
   when: ansible_hostname == personal_laptop and mac_homebrew_packages['personal_laptop']
 
-- name: Remove Homebrew packages on personal_laptop
+- name: "Homebrew: Remove on personal_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['company_laptop'] }}"
     state: absent
   when: ansible_hostname == personal_laptop and mac_homebrew_packages['company_laptop']
 
-- name: Install Homebrew packages on company_laptop
+- name: "Homebrew: Install on company_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['company_laptop'] }}"
     state: latest
   when: ansible_hostname == company_laptop and mac_homebrew_packages['company_laptop']
 
-- name: Remove Homebrew packages on company_laptop
+- name: "Homebrew: Remove on company_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['personal_laptop'] }}"
     state: absent

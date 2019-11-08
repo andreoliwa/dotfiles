@@ -94,6 +94,9 @@ def main():
     if tags_with_comma:
         os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
 
+    chosen_task = ""  # TODO accept as argument and use fzf to choose multiple tasks
+    start_at_task_option = " --start-at-task {!r}".format(chosen_task) if chosen_task else ""
+    playbook_command = "ansible-playbook -i ~/dotfiles/hosts{} ~/dotfiles/local_env.yml".format(start_at_task_option)
     if args.virtual_machine:
         print("Provisioning the Vagrant virtual machine {}...".format(args.virtual_machine))
         if args.reload:
@@ -109,11 +112,7 @@ def main():
         notify("Vagrant provision", "provisioned")
     elif args.bootstrap:
         print("Setting up local dev environment...{}".format(tags_option))
-        shell(
-            "ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --ask-become-pass{}{}".format(
-                verbose_option, tags_option
-            )
-        )
+        shell("{} --ask-become-pass{}{}".format(playbook_command, verbose_option, tags_option))
         notify("Bootstrap", "set up")
     else:
         # Always ask sudo password under Linux even on update; it is needed for several roles
@@ -122,8 +121,8 @@ def main():
         print("Updating local dev environment...{}".format(tags_option))
         # Run all roles except for the ones tagged with 'bootstrap'
         shell(
-            'ansible-playbook -i ~/dotfiles/hosts ~/dotfiles/local_env.yml --skip-tags "bootstrap"{}{}{}'.format(
-                verbose_option, ask_password_option, tags_option
+            "{} --skip-tags 'bootstrap'{}{}{}".format(
+                playbook_command, verbose_option, ask_password_option, tags_option
             )
         )
         notify("Update", "updated")

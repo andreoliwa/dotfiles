@@ -74,5 +74,8 @@
 
 - name: "pipx: Install Python 3 modules globally with pipx"
   with_items: "{{ python3_modules }}"
-  shell: "pipx install {{ item }}"
+  command: "pipx install {{ item }}"
   ignore_errors: yes
+
+- name: "pipx: Install pgcli with Python 3.6 (not working with 3.7 yet: https://github.com/dbcli/pgcli)"
+  command: "pipx install --python {{ pyenv_root }}/versions/{{ latest_python_3_6.stdout }}/bin/python3.6 pgcli"

@@ -195,7 +195,6 @@ python3_modules:
   - identify # https://github.com/chriskuehl/identify
   - keyring # https://pypi.org/project/keyring/
   - organize-tool # https://pypi.org/project/organize-tool/
-  - pgcli # https://pypi.org/project/pgcli/
   - pre-commit # https://pre-commit.com/
   - subliminal # https://pypi.org/project/subliminal/
   - twine # https://pypi.org/project/twine/

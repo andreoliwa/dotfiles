@@ -121,6 +121,7 @@ mac_cask_packages:
     - onedrive # https://onedrive.live.com/
     # Media/Music
     - spotify
+    - spotify-notifications # https://spotify-notifications.citruspi.io/
     - vlc
     - beardedspice
     # Fonts

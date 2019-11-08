@@ -36,11 +36,14 @@ module.exports = {
     {
       match: [
         /\/eatfirst/,
+        /zulip/,
+        /dashlane/,
         /makeeathappen/,
         /b2bfood.group/,
         /lemoncat/,
         /caterwings/,
-        /caterdesk/
+        /caterdesk/,
+        /aws.amazon.com/
       ],
       browser: "Vivaldi"
     },

@@ -24,4 +24,4 @@ export PATH="$PATH:$HOME/.poetry/bin"
 if [ "$(uname -s)" == "Darwin" ]; then
     export PATH="$HOME/Library/Python/3.7/bin/:$PATH"
 fi
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:/usr/local/sbin:$PATH"

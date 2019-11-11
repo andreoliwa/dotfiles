@@ -4,6 +4,7 @@
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
     - { role: ansible, tags: ["ansible"] }
     - { role: bash, tags: ["bash"] }
+    - { role: ssh, tags: ["ssh"] }
     - { role: git, tags: ["git"] }
     - { role: package_manager, tags: ["package_manager", "bootstrap"] }
     - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }

@@ -33,3 +33,40 @@ function dcbash {
 function dkbash {
   docker exec -it $1 /bin/bash
 }
+
+# If the time difference assertion fails, your Mac VM clock might be out of sync.
+# To sync the clock again:
+# - Open a terminal inside the HyperKit VM under MacOS:
+#     screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
+# - Sync the current time:
+#     ntpd -d -q -n -p pool.ntp.org
+
+# - To finish it, press Control + A then, k and confirm with `y`
+# - To detach the session and keep it running in the background, press Control + A, then D.
+#   And to re-attach use screen -r without the socket file (if you use it multiple screens will run and mess up)
+#   with how you read data.
+
+# Example of output when the clock is out of sync:
+# linuxkit-025000000001:~# ntpd -d -q -n -p pool.ntp.org
+# ntpd: sending query to 213.202.247.29
+# ntpd: reply from 213.202.247.29: offset:-13.070072 delay:0.015113 status:0x24 strat:2 refid:0x08119582
+#     rootdelay:0.013642 reach:0x01
+# ntpd: sending query to 213.202.247.29
+# ntpd: reply from 213.202.247.29: offset:-13.070861 delay:0.015031 status:0x24 strat:2 refid:0x08119582
+#     rootdelay:0.013642 reach:0x03
+# ntpd: setting time to 2018-01-29 14:40:34.016203 (offset -13.070861s)
+
+# See https://stackoverflow.com/a/38133871/1391315
+
+function docker_tty {
+  cmd="screen $(find ~/Library/Containers/com.docker.docker -name tty)"
+  echo $cmd
+  echo
+  echo "To finish the session, press Control + A then, k and confirm with 'y'"
+  echo "To detach the session and keep it running in the background, press Control + A, then D."
+  echo
+  echo "Press any key to open screen or Ctrl-C to stop"
+  read -n 1 -s
+  $cmd  
+}
+alias docker-tty="docker_tty"

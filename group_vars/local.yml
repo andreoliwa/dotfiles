@@ -147,6 +147,7 @@ mac_cask_packages:
     - slack
     # REST client
     - insomnia
+    - intellij-idea-ce # IntelliJ IDEA Community Edition https://www.jetbrains.com/idea/
 
 # APT packages that don't get installed by a role
 apt_packages:

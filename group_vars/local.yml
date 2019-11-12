@@ -240,6 +240,7 @@ vscode_extensions:
     - esbenp.prettier-vscode
     - Gruntfuggly.todo-tree
     - zhouronghui.propertylist
+    - bibhasdn.unique-lines
   remove:
   personal_laptop:
   company_laptop:

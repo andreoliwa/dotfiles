@@ -102,6 +102,7 @@ mac_cask_packages:
     - meld # https://yousseb.github.io/meld/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - itau # https://www.itau.com.br/computador/
+    - grandperspective # https://grandperspectiv.sourceforge.io/
     # E-mail
     - mia-for-gmail
     # Vagrant/Virtualbox
@@ -236,12 +237,13 @@ rust_binaries:
 # To list extensions: code --list-extensions
 vscode_extensions:
   common:
+    - Gruntfuggly.todo-tree
+    - bibhasdn.unique-lines
+    - esbenp.prettier-vscode
+    - mikestead.dotenv
     - ms-python.python
     - vscoss.vscode-ansible
-    - esbenp.prettier-vscode
-    - Gruntfuggly.todo-tree
     - zhouronghui.propertylist
-    - bibhasdn.unique-lines
   remove:
   personal_laptop:
   company_laptop:

@@ -28,6 +28,7 @@
     - { role: gitup, tags: ["gitup"] }
     - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
+    - { role: b2bfg, tags: ["b2", "b2bfg", "personal"] }
     - { role: docker, tags: ["docker"] }
     - { role: postgres, tags: ["postgres", "pg", "sql"] }
     - { role: redmine, tags: ["redmine"] }

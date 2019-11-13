@@ -77,6 +77,7 @@ mac_homebrew_packages:
   personal_laptop:
   company_laptop:
     - pgbadger
+    - mysql-connector-c
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

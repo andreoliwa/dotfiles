@@ -35,7 +35,7 @@ module.exports = {
     // Work URLs
     {
       match: [
-        /\/eatfirst/,
+        /eatfirst/,
         /zulip/,
         /dashlane/,
         /makeeathappen/,

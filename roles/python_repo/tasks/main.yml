@@ -66,55 +66,44 @@
     - "{{ symlink_dir_stat.stat.path }}/*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
-- name: "{{ dir }}: Add VIRTUAL_ENV to .autoenv"
+- name: "{{ dir }}: Fill .envrc"
   when: python_version != ''
-  lineinfile:
-    path: "{{ root }}/{{ dir }}/.autoenv"
-    state: present
+  blockinfile:
+    path: "{{ root }}/{{ dir }}/.envrc"
     create: yes
-    regexp: "^.+VIRTUAL_ENV="
-    line: "export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}"
+    block: |
+      export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}
+      export PYTHONWARNINGS=
 
-- name: "{{ dir }}: Add PYTHONWARNINGS to .autoenv"
-  when: python_version != ''
-  lineinfile:
-    path: "{{ root }}/{{ dir }}/.autoenv"
-    state: present
-    create: yes
-    regexp: "^.+PYTHONWARNINGS="
-    line: "export PYTHONWARNINGS="
+      # Needed by PyCharm to run pre-commit hooks
+      # export PYENV_VERSION={{ env }}
 
-- name: "{{ dir }}: Add PYENV_VERSION to .autoenv (needed by PyCharm to run pre-commit hooks)"
-  when: python_version != ''
-  lineinfile:
-    path: "{{ root }}/{{ dir }}/.autoenv"
-    state: present
-    create: yes
-    regexp: "^.+PYENV_VERSION="
-    line: "export PYENV_VERSION={{ env }}"
-
-- name: "{{ dir }}: Source bash's .autoenv by default on .autoxsh"
-  when: python_version != ''
-  lineinfile:
-    path: "{{ root }}/{{ dir }}/.autoxsh"
-    state: present
-    create: yes
-    regexp: "source.+autoenv"
-    line: "source-bash --interactive False ./.autoenv"
-
-- name: "{{ dir }}: Link .autoenv to .envrc"
-  when: python_version != ''
-  file:
-    src: "{{ root }}/{{ dir }}/.autoenv"
-    dest: "{{ root }}/{{ dir }}/.envrc"
-    state: link
-    force: yes
-    follow: false
+      pyenv version
 
 - name: "{{ dir }}: Allow .envrc"
   when: python_version != ''
   command: "direnv allow {{ root }}/{{ dir }}"
   changed_when: false
+
+# TODO run only when the current shell is xonsh
+# - name: "{{ dir }}: Source bash's .envrc by default on .autoxsh"
+#   when: python_version != ''
+#   lineinfile:
+#     path: "{{ root }}/{{ dir }}/.autoxsh"
+#     state: present
+#     create: yes
+#     regexp: "source.+envrc"
+#     line: "source-bash --interactive False ./.envrc"
+
+# TODO run only when autoenv is istalled
+# - name: "{{ dir }}: Link .envrc to .autoenv"
+#   when: python_version != ''
+#   file:
+#     src: "{{ root }}/{{ dir }}/.envrc"
+#     dest: "{{ root }}/{{ dir }}/.autoenv"
+#     state: link
+#     force: yes
+#     follow: false
 
 - name: "{{ dir }}: Create .python-version manually, since pyenv local doesn't work on Ansible [hack]"
   when: python_version != ''
@@ -123,7 +112,15 @@
     state: present
     create: yes
     regexp: '^(.+)$'
-    line: "{{ env }}"
+    line: "{{ local }}"
+
+# FIXME set contents of the file with the
+# - name: "{{ dir }}: Create .python-version manually, since pyenv local doesn't work on Ansible [hack]"
+#   when: python_version != ''
+#   replace:
+#     path: "{{ root }}/{{ dir }}/.python-version"
+#     regexp: '^.+$'
+#     replace: "{{ local }}"
 
 # TODO The installation doesn't seem to be working properly
 # - name: "{{ dir }}: Install modules on the virtualenv {{ env }} with '{{ install_command }}'? {{ run_install_command }}"

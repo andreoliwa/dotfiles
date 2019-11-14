@@ -50,6 +50,10 @@ source ~/.cache/dotfiles/cached_script.sh
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 
+# https://askubuntu.com/questions/67283/is-it-possible-to-make-writing-to-bash-history-immediate/67306#67306
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
 export EDITOR=code
 
 # https://docs.brew.sh/Shell-Completion

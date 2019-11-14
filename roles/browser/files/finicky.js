@@ -43,7 +43,8 @@ module.exports = {
         /lemoncat/,
         /caterwings/,
         /caterdesk/,
-        /aws.amazon.com/
+        /aws.amazon.com/,
+        /orderin/
       ],
       browser: "Vivaldi"
     },

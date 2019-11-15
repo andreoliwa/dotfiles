@@ -23,7 +23,7 @@ update: no
 python_version: ""
 
 # Versions set by the "pyenv local" command (after the repo's virtualenv)
-local: ""
+local: "{{ env }}"
 
 # Directory containing .link files that will become symbolic links in the project root
 symlink_dir: ""

@@ -105,6 +105,12 @@
 #     force: yes
 #     follow: false
 
+- name: "{{ dir }}: Remove .python-version"
+  when: python_version != ''
+  file:
+    path: "{{ root }}/{{ dir }}/.python-version"
+    state: absent
+
 - name: "{{ dir }}: Create .python-version manually, since pyenv local doesn't work on Ansible [hack]"
   when: python_version != ''
   lineinfile:
@@ -112,15 +118,7 @@
     state: present
     create: yes
     regexp: '^(.+)$'
-    line: "{{ local }}"
-
-# FIXME set contents of the file with the
-# - name: "{{ dir }}: Create .python-version manually, since pyenv local doesn't work on Ansible [hack]"
-#   when: python_version != ''
-#   replace:
-#     path: "{{ root }}/{{ dir }}/.python-version"
-#     regexp: '^.+$'
-#     replace: "{{ local }}"
+    line: "{{ local | regex_replace(' ', '\n') }}"
 
 # TODO The installation doesn't seem to be working properly
 # - name: "{{ dir }}: Install modules on the virtualenv {{ env }} with '{{ install_command }}'? {{ run_install_command }}"

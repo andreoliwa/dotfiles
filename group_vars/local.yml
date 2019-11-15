@@ -62,6 +62,7 @@ mac_homebrew_packages:
     - fd # https://github.com/sharkdp/fd
     - terraform # https://www.terraform.io
     - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
+    - mosh # https://mosh.org/
   remove:
     - heroku/brew/heroku
     - highlight

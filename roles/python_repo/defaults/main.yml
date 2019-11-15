@@ -27,12 +27,3 @@ local: "{{ env }}"
 
 # Directory containing .link files that will become symbolic links in the project root
 symlink_dir: ""
-
-# Command to use to install modules in this virtualenv. E.g.:
-# - poetry install
-# - pipenv install --dev --pre
-# - pip install -r requirements.txt
-install_command: ""
-
-# Should we run the install command above?
-run_install_command: yes

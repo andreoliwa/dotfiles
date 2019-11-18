@@ -105,6 +105,7 @@ mac_cask_packages:
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - itau # https://www.itau.com.br/computador/
     - grandperspective # https://grandperspectiv.sourceforge.io/
+    - rescuetime # https://www.rescuetime.com/
     # E-mail
     - mia-for-gmail
     # Vagrant/Virtualbox

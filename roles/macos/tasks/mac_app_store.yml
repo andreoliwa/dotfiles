@@ -1,0 +1,36 @@
+- name: Install mas
+  homebrew: name=mas state=latest
+
+- name: "Mac App Store: Install common on current host ({{ ansible_hostname }})"
+  command: "mas install {{ item }}"
+  with_items: "{{ mac_mas_packages['common'] }}"
+  ignore_errors: yes
+
+- name: "Mac App Store: Remove on current host ({{ ansible_hostname }})"
+  command: "mas uninstall {{ item }}"
+  with_items: "{{ mac_mas_packages['remove'] }}"
+  when: mac_mas_packages['remove']
+
+- name: "Mac App Store: Install on personal_laptop ({{ personal_laptop }})"
+  command: "mas install {{ item }}"
+  with_items: "{{ mac_mas_packages['personal_laptop'] }}"
+  when: ansible_hostname == personal_laptop and mac_mas_packages['personal_laptop']
+
+- name: "Mac App Store: Remove on personal_laptop ({{ personal_laptop }})"
+  command: "mas uninstall {{ item }}"
+  with_items: "{{ mac_mas_packages['company_laptop'] }}"
+  when: ansible_hostname == personal_laptop and mac_mas_packages['company_laptop']
+
+- name: "Mac App Store: Install on company_laptop ({{ company_laptop }})"
+  command: "mas install {{ item }}"
+  with_items: "{{ mac_mas_packages['company_laptop'] }}"
+  when: ansible_hostname == company_laptop and mac_mas_packages['company_laptop']
+
+- name: "Mac App Store: Remove on company_laptop ({{ company_laptop }})"
+  command: "mas uninstall {{ item }}"
+  with_items: "{{ mac_mas_packages['personal_laptop'] }}"
+  when: ansible_hostname == company_laptop and mac_mas_packages['personal_laptop']
+
+- name: "Mac App Store: Upgrade all"
+  command: "mas upgrade"
+  ignore_errors: yes

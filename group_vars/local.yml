@@ -143,6 +143,7 @@ mac_cask_packages:
     - shift # https://tryshift.com/ Freemium: only one free app besides email
     - franz # https://meetfranz.com/ Deceiving freemium: trial for 14 days only, not mentioned when you download the app
   personal_laptop:
+    - hp-easy-start # https://support.hp.com/
   company_laptop:
     - vivaldi # https://vivaldi.com/
     - ngrok

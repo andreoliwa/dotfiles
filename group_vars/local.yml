@@ -85,7 +85,6 @@ mac_cask_packages:
   common:
     # Browsers
     - brave-browser # https://brave.com/
-    - vivaldi # https://vivaldi.com/
     - finicky # https://github.com/johnste/finicky
     # Development
     - visual-studio-code
@@ -141,8 +140,11 @@ mac_cask_packages:
     - licecap
     - notion
     - pdfsam-basic
+    - shift # https://tryshift.com/ Freemium: only one free app besides email
+    - franz # https://meetfranz.com/ Deceiving freemium: trial for 14 days only, not mentioned when you download the app
   personal_laptop:
   company_laptop:
+    - vivaldi # https://vivaldi.com/
     - ngrok
     - dashlane # https://www.dashlane.com/
     - graphviz # https://www.graphviz.org/

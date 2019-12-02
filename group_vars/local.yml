@@ -252,6 +252,7 @@ vscode_extensions:
     - ms-python.python
     - vscoss.vscode-ansible
     - zhouronghui.propertylist
+    - bungcip.better-toml
   remove:
   personal_laptop:
   company_laptop:

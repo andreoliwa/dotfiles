@@ -5,6 +5,22 @@
     executable: pip3
   when: ansible_os_family != "Darwin"
 
+- name: "Create ~/.config/dotfiles"
+  file:
+    state: directory
+    path: ~/.config/dotfiles
+
+- name: "openssl: Add env vars to shell script"
+  shell: "brew info openssl | grep ' export ' | sed 's/^ *//;s/ *$//' > ~/.config/dotfiles/openssl.env"
+  when: ansible_os_family == "Darwin"
+
+- name: "openssl: Export vars on .bashrc"
+  lineinfile:
+    line: "source ~/.config/dotfiles/openssl.env"
+    dest: ~/.bashrc
+    state: present
+  when: ansible_os_family == "Darwin"
+
 - name: "Get latest Python 3.7"
   shell: "pyenv install --list | grep -i -E ' 3.7[0-9.]+$' | tr -d ' ' | tail -n 1"
   register: latest_python_3_7
@@ -76,6 +92,3 @@
   with_items: "{{ python3_modules }}"
   command: "pipx install {{ item }}"
   ignore_errors: yes
-
-- name: "pipx: Install pgcli with Python 3.6 (not working with 3.7 yet: https://github.com/dbcli/pgcli)"
-  command: "pipx install --python {{ pyenv_root }}/versions/{{ latest_python_3_6.stdout }}/bin/python3.6 pgcli"

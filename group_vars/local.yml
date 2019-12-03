@@ -212,6 +212,7 @@ python3_modules:
   - subliminal # https://pypi.org/project/subliminal/
   - twine # https://pypi.org/project/twine/
   - youtube-dl # https://pypi.org/project/youtube_dl/
+  - pgcli # https://github.com/dbcli/pgcli
 
 # Node utilities
 npm_global_packages:

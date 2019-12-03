@@ -75,6 +75,7 @@ mac_homebrew_packages:
     - grip
     # Prose linting
     - ValeLint/vale/vale
+    - macvim
   personal_laptop:
   company_laptop:
     - pgbadger

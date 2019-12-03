@@ -63,6 +63,8 @@ mac_homebrew_packages:
     - terraform # https://www.terraform.io
     - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
     - mosh # https://mosh.org/
+    - nmap
+    - ipcalc
   remove:
     - heroku/brew/heroku
     - highlight

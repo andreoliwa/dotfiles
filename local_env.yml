@@ -23,6 +23,7 @@
         tags: ["vscode"],
         when: ansible_os_family != "Darwin",
       }
+    - { role: hammerspoon, tags: ["hammerspoon", "hammer"] }
     - { role: gnome_do, tags: ["gnome_do"] }
     - { role: browser, tags: ["browser"] }
     - { role: gitup, tags: ["gitup"] }

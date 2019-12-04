@@ -1,0 +1,10 @@
+# http://www.hammerspoon.org/
+- name: Install Hammerspoon with Homebrew
+  homebrew_cask: name=hammerspoon state=present
+  when: ansible_os_family == "Darwin"
+
+- name: Link ~/.hammerspoon/init.lua
+  file:
+    src: "{{ role_path }}/files/init.lua"
+    dest: "~/.hammerspoon/init.lua"
+    state: link

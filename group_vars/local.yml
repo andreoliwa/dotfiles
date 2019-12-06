@@ -260,6 +260,7 @@ vscode_extensions:
     - vscoss.vscode-ansible
     - zhouronghui.propertylist
     - bungcip.better-toml
+    - jsynowiec.vscode-insertdatestring
   remove:
   personal_laptop:
   company_laptop:

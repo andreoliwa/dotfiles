@@ -264,3 +264,4 @@ vscode_extensions:
   remove:
   personal_laptop:
   company_laptop:
+    - felixfbecker.php-intellisense

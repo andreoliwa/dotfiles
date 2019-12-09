@@ -44,7 +44,8 @@ module.exports = {
         /caterwings/,
         /caterdesk/,
         /aws.amazon.com/,
-        /orderin/
+        /orderin/,
+        /algolia.com/
       ],
       browser: "Vivaldi"
     },

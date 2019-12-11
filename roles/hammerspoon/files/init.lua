@@ -21,6 +21,7 @@ local windowLayout = {
     {"Vivaldi", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"Skype", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"PyCharm", nil, horizontalScreen, hs.layout.maximized, nil, nil},
+    {"App Store", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"TogglDesktop", nil, horizontalScreen, hs.layout.right30, nil, nil},
     
     {"iTerm2", nil, verticalScreen, hs.layout.maximized, nil, nil},
@@ -31,5 +32,6 @@ local windowLayout = {
     {"Telegram", nil, laptopScreen, hs.layout.maximized, nil, nil},
     {"WhatsApp", nil, laptopScreen, hs.layout.maximized, nil, nil},
     {"Signal", nil, laptopScreen, hs.layout.maximized, nil, nil},
+    {"Hammerspoon", "Hammerspoon Console", laptopScreen, hs.layout.maximized, nil, nil},
 }
 hs.layout.apply(windowLayout)

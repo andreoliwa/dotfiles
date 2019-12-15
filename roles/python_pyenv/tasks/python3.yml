@@ -74,7 +74,7 @@
   changed_when: "'Latest version already installed' not in this_task.stdout"
 
 - name: Update Poetry
-  command: "poetry self:update"
+  command: "poetry self update"
   register: this_task
   changed_when: "'You are using the latest version' not in this_task.stdout"
 

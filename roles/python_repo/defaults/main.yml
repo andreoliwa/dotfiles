@@ -27,3 +27,7 @@ local: "{{ env }}"
 
 # Directory containing .link files that will become symbolic links in the project root
 symlink_dir: ""
+
+# User name and email for the repo. Ignored when empty (will use the global git config)
+user_name: ""
+user_email: ""

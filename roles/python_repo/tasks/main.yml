@@ -7,6 +7,24 @@
     accept_hostkey: yes
   become: no
 
+- name: "{{ dir }}: Set user name if defined"
+  when: user_name != ''
+  git_config:
+    repo: "{{ root }}/{{ dir }}"
+    scope: local
+    state: present
+    name: "user.name"
+    value: "{{ user_name }}"
+
+- name: "{{ dir }}: Set user email if defined"
+  when: user_email != ''
+  git_config:
+    repo: "{{ root }}/{{ dir }}"
+    scope: local
+    state: present
+    name: "user.email"
+    value: "{{ user_email }}"
+
 - name: "{{ dir }}: Create {{ env }} virtualenv with Python {{ python_version }}"
   when: python_version != ''
   pyenv:

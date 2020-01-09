@@ -7,6 +7,7 @@
 
 - name: "VSCode: Remove"
   command: "code --uninstall-extension {{ item }}"
+  ignore_errors: yes
   with_items: "{{ vscode_extensions['remove'] }}"
   when: vscode_extensions['remove']
 
@@ -17,6 +18,7 @@
 
 - name: "VSCode: Remove on personal_laptop"
   command: "code --uninstall-extension {{ item }}"
+  ignore_errors: yes
   with_items: "{{ vscode_extensions['company_laptop'] }}"
   when: ansible_hostname == personal_laptop and vscode_extensions['company_laptop']
 
@@ -27,5 +29,6 @@
 
 - name: "VSCode: Remove on company_laptop"
   command: "code --uninstall-extension {{ item }}"
+  ignore_errors: yes
   with_items: "{{ vscode_extensions['personal_laptop'] }}"
   when: ansible_hostname == company_laptop and vscode_extensions['personal_laptop']

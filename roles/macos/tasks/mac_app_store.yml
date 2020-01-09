@@ -8,6 +8,9 @@
 
 - name: "Mac App Store: Remove on current host ({{ ansible_hostname }})"
   command: "mas uninstall {{ item }}"
+  become: yes
+  # To ignore "Warning: Not installed" errors
+  ignore_errors: yes
   with_items: "{{ mac_mas_packages['remove'] }}"
   when: mac_mas_packages['remove']
 
@@ -18,6 +21,9 @@
 
 - name: "Mac App Store: Remove on personal_laptop ({{ personal_laptop }})"
   command: "mas uninstall {{ item }}"
+  become: yes
+  # To ignore "Warning: Not installed" errors
+  ignore_errors: yes
   with_items: "{{ mac_mas_packages['company_laptop'] }}"
   when: ansible_hostname == personal_laptop and mac_mas_packages['company_laptop']
 
@@ -28,6 +34,9 @@
 
 - name: "Mac App Store: Remove on company_laptop ({{ company_laptop }})"
   command: "mas uninstall {{ item }}"
+  become: yes
+  # To ignore "Warning: Not installed" errors
+  ignore_errors: yes
   with_items: "{{ mac_mas_packages['personal_laptop'] }}"
   when: ansible_hostname == company_laptop and mac_mas_packages['personal_laptop']
 

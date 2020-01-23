@@ -261,7 +261,10 @@ vscode_extensions:
     - zhouronghui.propertylist
     - bungcip.better-toml
     - jsynowiec.vscode-insertdatestring
+    - ms-azuretools.vscode-docker
   remove:
   personal_laptop:
   company_laptop:
     - felixfbecker.php-intellisense
+    - bmewburn.vscode-intelephense-client
+    - crisward.riot-tag

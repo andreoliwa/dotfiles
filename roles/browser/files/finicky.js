@@ -45,7 +45,8 @@ module.exports = {
         /caterdesk/,
         /aws.amazon.com/,
         /orderin/,
-        /algolia.com/
+        /algolia.com/,
+        /adyen.com/
       ],
       browser: "Vivaldi"
     },

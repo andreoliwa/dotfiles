@@ -80,6 +80,7 @@ mac_homebrew_packages:
     - macvim
   personal_laptop:
   company_laptop:
+    - graphviz # https://www.graphviz.org/
     - pgbadger
     - mysql-connector-c
 
@@ -130,6 +131,7 @@ mac_cask_packages:
     - spotify-notifications # https://spotify-notifications.citruspi.io/
     - vlc
     - beardedspice
+    - android-file-transfer # https://www.android.com/filetransfer/
     # Fonts
     - font-ubuntu
     - font-cousine
@@ -151,7 +153,6 @@ mac_cask_packages:
     - vivaldi # https://vivaldi.com/
     - ngrok
     - dashlane # https://www.dashlane.com/
-    - graphviz # https://www.graphviz.org/
     - gmail-notifier
     - zulip
     - slack

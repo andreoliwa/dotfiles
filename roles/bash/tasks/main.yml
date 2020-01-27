@@ -41,10 +41,10 @@
 # They are both slow and ugly (maybe a font needs to be configured).
 # Too much hassle to configure, not ready out of the box.
 
-- name: "Create ~/.local/share"
+- name: "Create ~/.local/share/direnv/allow"
   file:
     state: directory
-    path: ~/.local/share
+    path: ~/.local/share/direnv/allow
 
 - name: "z: Get script"
   get_url:

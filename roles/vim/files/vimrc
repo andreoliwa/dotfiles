@@ -80,9 +80,10 @@ let g:airline_extensions = ['branch', 'ctrlp', 'tabline', 'ale', 'whitespace']
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jszakmeister/vim-togglecursor'  " change cursor shape when entering insert mode
 " Snippets
-if version >= 704 && has('python') || has('python3') | Plug 'SirVer/ultisnips' | endif
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" UltiSnips is breaking for some reason I don't want to investigate
+" if version >= 704 && has('python') || has('python3') | Plug 'SirVer/ultisnips' | endif
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 Plug 'honza/vim-snippets'
 Plug 'fcpg/vim-spotlightify'  " Highlight and show number of matches when searching
 Plug 'wellle/targets.vim'  " because cin), etc. is awesome

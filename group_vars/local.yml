@@ -161,6 +161,7 @@ mac_cask_packages:
     # REST client
     - insomnia
     - intellij-idea-ce # IntelliJ IDEA Community Edition https://www.jetbrains.com/idea/
+    - powershell # https://github.com/PowerShell/PowerShell
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -271,3 +272,5 @@ vscode_extensions:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
     - crisward.riot-tag
+    - ms-vscode.powershell
+    - mauve.terraform

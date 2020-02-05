@@ -107,7 +107,6 @@ mac_cask_packages:
     - dupeguru # https://dupeguru.voltaicideas.net/
     - meld # https://yousseb.github.io/meld/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
-    - itau # https://www.itau.com.br/computador/
     - grandperspective # https://grandperspectiv.sourceforge.io/
     - rescuetime # https://www.rescuetime.com/
     - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
@@ -149,6 +148,7 @@ mac_cask_packages:
     - pdfsam-basic
     - shift # https://tryshift.com/ Freemium: only one free app besides email
     - franz # https://meetfranz.com/ Deceiving freemium: trial for 14 days only, not mentioned when you download the app
+    - itau # https://www.itau.com.br/computador/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
   company_laptop:

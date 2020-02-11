@@ -46,7 +46,8 @@ module.exports = {
         /aws.amazon.com/,
         /orderin/,
         /algolia.com/,
-        /adyen.com/
+        /adyen.com/,
+        /salesforce.com/
       ],
       browser: "Vivaldi"
     },

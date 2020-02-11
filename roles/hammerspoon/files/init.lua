@@ -11,10 +11,15 @@ hs.window.animationDuration = 0
 -- hs.application.find('brave')
 
 -- http://www.hammerspoon.org/docs/hs.layout.html
-local laptopScreen = "Color LCD"
 local verticalScreen = "DELL P2414H"
 local horizontalScreen = "HP E241i"
+local laptopScreen = "Color LCD"
 local windowLayout = {
+    -- Left
+    {"iTerm2", nil, verticalScreen, hs.layout.maximized, nil, nil},
+    {"Zulip", nil, verticalScreen, hs.layout.maximized, nil, nil},
+
+    -- Center
     {"Code", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"Brave Browser", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"Slack", nil, horizontalScreen, hs.layout.maximized, nil, nil},
@@ -23,10 +28,9 @@ local windowLayout = {
     {"PyCharm", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"App Store", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"TogglDesktop", nil, horizontalScreen, hs.layout.right30, nil, nil},
-    
-    {"iTerm2", nil, verticalScreen, hs.layout.maximized, nil, nil},
-    {"Zulip", nil, verticalScreen, hs.layout.maximized, nil, nil},
+    {"PhpStorm", nil, horizontalScreen, hs.layout.maximized, nil, nil},
 
+    -- Right
     {nil, hs.window.find('YouTube'), laptopScreen, hs.layout.maximized, nil, nil},
     {"Spotify", nil, laptopScreen, hs.layout.maximized, nil, nil},
     {"Telegram", nil, laptopScreen, hs.layout.maximized, nil, nil},

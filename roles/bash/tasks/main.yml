@@ -46,6 +46,7 @@
     state: directory
     path: ~/.local/share/direnv/allow
 
+# https://github.com/rupa/z
 - name: "z: Get script"
   get_url:
     url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"

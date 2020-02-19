@@ -47,7 +47,8 @@ module.exports = {
         /orderin/,
         /algolia.com/,
         /adyen.com/,
-        /salesforce.com/
+        /salesforce.com/,
+        /force.com/
       ],
       browser: "Vivaldi"
     },

@@ -85,6 +85,7 @@ mac_homebrew_packages:
     - graphviz # https://www.graphviz.org/
     - pgbadger
     - mysql-connector-c
+    - composer # https://getcomposer.org/
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

@@ -23,7 +23,7 @@
 - include_tasks: python2.yml
 
 - name: "pipx: Upgrade all packages"
-  command: "pipx upgrade-all"
+  command: "pipx upgrade-all --verbose"
   register: this_task
   changed_when: "'Versions did not change after running' not in this_task.stdout"
   when: "'pipx_upgrade_all' | run_only_after"

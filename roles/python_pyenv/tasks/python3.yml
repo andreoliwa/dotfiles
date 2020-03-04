@@ -90,5 +90,5 @@
 
 - name: "pipx: Install Python 3 modules globally with pipx"
   with_items: "{{ python3_modules }}"
-  command: "pipx install {{ item }}"
+  command: "pipx install --verbose {{ item }}"
   ignore_errors: yes

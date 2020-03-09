@@ -1,2 +1,0 @@
-# Update feeds every 5 minutes
-*/5 * * * * ttrss /usr/local/bin/php /var/www/html/update.php --feeds --quiet

@@ -10,3 +10,15 @@ rules:
           startswith: Icon
     actions:
       - shell: "rename-slugify -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"
+  # Receipts
+  - folders: ~/Dropbox/Apps/mayan/staging/Deutsch
+    filters:
+      - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann)"
+    actions:
+      - move: "~/Dropbox/Apps/mayan/staging/Beleg/{filecontent.store}/"
+  # Invoices
+  - folders: ~/Dropbox/Apps/mayan/staging/Deutsch
+    filters:
+      - filecontent: "(Rechnung)"
+    actions:
+      - move: "~/Dropbox/Apps/mayan/staging/Rechnung/"

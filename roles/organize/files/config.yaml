@@ -1,0 +1,12 @@
+# https://organize.readthedocs.io/en/latest/page/config.html#configuration
+rules:
+  # Hack to call rename-slugify only once.
+  # As of March 2020, the organize tool only finds *files* under directories...
+  # it doesn't find directories, so I can't rename them
+  - folders:
+      - ~/OneDrive
+    filters:
+      - filename:
+          startswith: Icon
+    actions:
+      - shell: "rename-slugify -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"

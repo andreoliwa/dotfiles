@@ -1,0 +1,7 @@
+- name: "organize: Link config.yaml file"
+  file:
+    src: "{{ role_path }}/files/config.yaml"
+    dest: ~/Library/Application Support/organize/config.yaml
+    state: link
+    force: yes
+    follow: false

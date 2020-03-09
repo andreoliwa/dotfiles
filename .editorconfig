@@ -12,7 +12,7 @@ charset = utf-8
 [*.{bat,cmd,ps1}]
 end_of_line = crlf
 
-[*.{yml,js}]
+[*.{yml,yaml,js}]
 indent_size = 2
 
 [group_vars/local]

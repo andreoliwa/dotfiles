@@ -27,6 +27,7 @@
     - { role: gnome_do, tags: ["gnome_do"] }
     - { role: browser, tags: ["browser"] }
     - { role: gitup, tags: ["gitup"] }
+    - { role: organize, tags: ["organize"] }
     - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
     - { role: b2bfg, tags: ["b2", "b2bfg", "personal"] }

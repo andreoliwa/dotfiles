@@ -32,7 +32,7 @@
     - { role: eatfirst, tags: ["eatfirst", "personal"] }
     - { role: b2bfg, tags: ["b2", "b2bfg", "personal"] }
     - { role: docker, tags: ["docker"] }
-    - { role: postgres, tags: ["postgres", "pg", "sql"] }
+    - { role: backup, tags: ["backup"] }
     - { role: redmine, tags: ["redmine"] }
     - { role: mayan-edms, tags: ["mayan"] }
     - { role: tt-rss, tags: ["tt-rss", "rss"] }

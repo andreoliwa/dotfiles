@@ -1,5 +1,27 @@
+- name: "Stop all containers"
+  shell: "docker ps -q | xargs docker stop"
+  # No containers might be running
+  ignore_errors: true
+  register: last_execution_docker
+  when: "'docker_stop_containers' | run_only_after"
+
+- name: "List all volumes related to a Docker Compose project"
+  command: "docker volume ls --filter label=com.docker.compose.project -q"
+  register: docker_compose_volumes
+  when: last_execution_docker is not skipped
+
+- name: "Create {{ backup_dir }}/docker_volumes/"
+  file:
+    state: directory
+    path: "{{ backup_dir }}/docker_volumes/"
+
+- name: "Backup each volume in {{ backup_dir }}/docker_volumes/"
+  command: "docker-volume backup {{ backup_dir }}/docker_volumes/ {{ item }}"
+  with_items: "{{ docker_compose_volumes.stdout_lines }}"
+  when: last_execution_docker is not skipped
+
 - name: "Start the PostgreSQL Docker container ({{ role_path }})"
-  command: "docker-compose -f {{ role_path }}/docker-compose.yml up -d"
+  command: "docker-compose -f ~/container-apps/postgres/docker-compose.yml up -d"
 
 # I had to create a symlink because psql was not working:
 # https://stackoverflow.com/questions/42356309/mac-psql-readline-library-not-loaded

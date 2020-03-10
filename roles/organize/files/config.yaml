@@ -9,7 +9,7 @@ rules:
       - filename:
           startswith: Icon
     actions:
-      - shell: "rename-slugify -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"
+      - shell: "rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"
   # Receipts
   - folders: ~/Dropbox/Apps/mayan/staging/Deutsch
     filters:
@@ -22,3 +22,26 @@ rules:
       - filecontent: "(Rechnung)"
     actions:
       - move: "~/Dropbox/Apps/mayan/staging/Rechnung/"
+  - folders: ~/OneDrive/Shared_Downloads/
+    filters:
+      - filename:
+          contains:
+            - extrato
+            - tesouro
+            - btg
+            - pactual
+            - vsc11
+            - ird11
+          case_sensitive: false
+    actions:
+      - move: "~/OneDrive/Shared_Downloads/Investimentos/"
+  - folders: ~/OneDrive/Shared_Downloads/
+    filters:
+      - filename:
+          contains:
+            - Umsatz
+            - Ums_Mt
+            - Camt52
+          case_sensitive: false
+    actions:
+      - move: "~/OneDrive/Shared_Downloads/Sparkasse/"

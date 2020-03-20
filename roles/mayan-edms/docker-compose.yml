@@ -46,7 +46,7 @@ services:
       - net10
       - mayan
     environment:
-      MAYAN_BROKER_URL: amqp://mayan:mayan@broker:5672/mayan
+      MAYAN_CELERY_BROKER_URL: amqp://mayan:mayan@broker:5672/mayan
       MAYAN_CELERY_RESULT_BACKEND: redis://results:6379/0
       MAYAN_DATABASE_ENGINE: django.db.backends.postgresql
       MAYAN_DATABASE_HOST: postgres10

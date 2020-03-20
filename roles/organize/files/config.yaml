@@ -1,4 +1,8 @@
 # https://organize.readthedocs.io/en/latest/page/config.html#configuration
+download_folders: &download
+  - ~/OneDrive/Shared_Downloads/
+  - ~/Downloads/
+
 rules:
   # Hack to call rename-slugify only once.
   # As of March 2020, the organize tool only finds *files* under directories...
@@ -9,6 +13,8 @@ rules:
       - filename:
           startswith: Icon
     actions:
+      - shell: "find ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/ -type f -name .DS_Store -print -delete"
+      - shell: "find ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/ -type d -empty -print -delete"
       - shell: "rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"
   # Receipts
   - folders: ~/Dropbox/Apps/mayan/staging/Deutsch
@@ -22,7 +28,7 @@ rules:
       - filecontent: "(Rechnung)"
     actions:
       - move: "~/Dropbox/Apps/mayan/staging/Rechnung/"
-  - folders: ~/OneDrive/Shared_Downloads/
+  - folders: *download
     filters:
       - filename:
           contains:
@@ -34,8 +40,16 @@ rules:
             - ird11
           case_sensitive: false
     actions:
-      - move: "~/OneDrive/Shared_Downloads/Investimentos/"
-  - folders: ~/OneDrive/Shared_Downloads/
+      - move: "~/Dropbox/Apps/mayan/staging/Investimentos/"
+  - folders: *download
+    filters:
+      - filename:
+          startswith:
+            - clear
+          case_sensitive: false
+    actions:
+      - move: "~/Dropbox/Apps/mayan/staging/Investimentos/"
+  - folders: *download
     filters:
       - filename:
           contains:
@@ -44,4 +58,24 @@ rules:
             - Camt52
           case_sensitive: false
     actions:
-      - move: "~/OneDrive/Shared_Downloads/Sparkasse/"
+      - move: "~/OneDrive/Geld/Sparkasse/"
+  - folders: *download
+    filters:
+      - filename:
+          startswith:
+            - Whats_App
+            - WhatsApp
+          case_sensitive: false
+    actions:
+      - move: "~/OneDrive/Pictures/New/"
+  - folders: *download
+    filters:
+      - filename:
+          contains:
+            - riema
+            - miami gardens
+            - miami_gardens
+            - live_tim
+          case_sensitive: false
+    actions:
+      - move: "~/OneDrive/Geld/Contas_Alisson/"

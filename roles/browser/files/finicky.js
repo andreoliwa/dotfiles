@@ -48,7 +48,9 @@ module.exports = {
         /algolia.com/,
         /adyen.com/,
         /salesforce.com/,
-        /force.com/
+        /force.com/,
+        /cloudflare.com/,
+        /newrelic.com/
       ],
       browser: "Vivaldi"
     },

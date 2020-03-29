@@ -38,6 +38,4 @@ docs/_build
 _sandbox
 
 .xmark.*
-.konchrc
 .scratch
-.prettierignore

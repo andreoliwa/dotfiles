@@ -11,6 +11,7 @@
     - { role: vagrant, tags: ["vagrant"], when: ansible_os_family == "Darwin" }
     - { role: python_pyenv, tags: ["python"] }
     - { role: node, tags: ["node"] }
+    - { role: ruby, tags: ["ruby"] }
     - { role: hub, tags: ["hub"] }
     - { role: vim, tags: ["vim"] }
     - { role: rust, tags: ["rust"] }

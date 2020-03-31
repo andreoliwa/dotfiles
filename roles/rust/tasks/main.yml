@@ -59,6 +59,12 @@
     state: link
     follow: false
 
+# To avoid "error: no default toolchain configured" on cargo install
+- name: "rustup: Install stable toolchain"
+  command: "rustup install stable"
+- name: "rustup: Select stable toolchain"
+  command: "rustup default stable"
+
 # https://github.com/jaysonsantos/csv-query-rs
 - name: "Install csv-query from git (brew install jaysonsantos/tools/csv-query is broken)"
   command: "cargo install --force --git https://github.com/jaysonsantos/csv-query-rs"

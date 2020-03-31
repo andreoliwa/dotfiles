@@ -141,6 +141,8 @@ mac_cask_packages:
     - font-ubuntu
     - font-cousine
     - font-hack
+    - vivaldi # https://vivaldi.com/
+    - slack
   remove:
     # Images
     - imageoptim # optimizing images
@@ -158,12 +160,10 @@ mac_cask_packages:
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
   company_laptop:
-    - vivaldi # https://vivaldi.com/
     - ngrok
     - dashlane # https://www.dashlane.com/
     - gmail-notifier
     - zulip
-    - slack
     # REST client
     - insomnia
 
@@ -276,5 +276,4 @@ vscode_extensions:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
     - crisward.riot-tag
-    - ms-vscode.powershell
     - mauve.terraform

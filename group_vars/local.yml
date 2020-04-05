@@ -67,6 +67,7 @@ mac_homebrew_packages:
     - ipcalc
     - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
     - github/gh/gh # GitHub CLI https://github.com/cli/cli
+    - go # https://golang.org
   remove:
     - heroku/brew/heroku
     - highlight
@@ -141,6 +142,7 @@ mac_cask_packages:
     - font-ubuntu
     - font-cousine
     - font-hack
+    - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - vivaldi # https://vivaldi.com/
     - slack
   remove:

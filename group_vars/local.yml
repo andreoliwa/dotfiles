@@ -145,6 +145,7 @@ mac_cask_packages:
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - vivaldi # https://vivaldi.com/
     - slack
+    - pycharm-ce # https://www.jetbrains.com/pycharm/ Community Edition
   remove:
     # Images
     - imageoptim # optimizing images
@@ -159,6 +160,7 @@ mac_cask_packages:
     - itau # https://www.itau.com.br/computador/
     - intellij-idea-ce # IntelliJ IDEA Community Edition https://www.jetbrains.com/idea/
     - powershell # https://github.com/PowerShell/PowerShell
+    - pycharm # https://www.jetbrains.com/pycharm/ License expired
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
   company_laptop:

@@ -46,6 +46,8 @@ rules:
       - filename:
           startswith:
             - clear
+            - monetus
+            - rico
           case_sensitive: false
     actions:
       - move: "~/Dropbox/Apps/mayan/staging/Investimentos/"

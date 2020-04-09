@@ -13,9 +13,9 @@ rules:
       - filename:
           startswith: Icon
     actions:
-      - shell: "find ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/ -type f -name .DS_Store -print -delete"
-      - shell: "find ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/ -type d -mindepth 1 -empty -print -delete"
-      - shell: "rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"
+      - shell: "find ~/Downloads ~/Desktop ~/Dropbox/Apps/mayan/staging ~/OneDrive -type f -name .DS_Store -print -delete"
+      - shell: "find ~/Downloads ~/Desktop ~/Dropbox/Apps/mayan/staging ~/OneDrive -type d -mindepth 1 -empty -print -delete"
+      - shell: "rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"
   # Receipts
   - folders: ~/Dropbox/Apps/mayan/staging/Deutsch
     filters:

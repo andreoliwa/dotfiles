@@ -8,9 +8,11 @@ if [[ $OSTYPE == darwin* ]]; then
     fi
 fi
 
-# Load environment variables if they exist
+# Load environment variables and aliases, if they exist
 test -f ~/.dotfiles.env && source ~/.dotfiles.env
 test -f ~/.localrc && source ~/.localrc
+test -f ~/.config/dotfiles/openssl.env && source ~/.config/dotfiles/openssl.env
+test -f ~/container-apps/aliases.sh && source ~/container-apps/aliases.sh
 
 # Created with http://bashrcgenerator.com/
 export PS1="\[\033[38;5;11m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\A \\$ \[$(tput sgr0)\]"
@@ -70,5 +72,3 @@ if [[ $OSTYPE == darwin* ]]; then
         fi
     fi
 fi
-
-source ~/.config/dotfiles/openssl.env

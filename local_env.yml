@@ -35,4 +35,3 @@
     - { role: docker, tags: ["docker"] }
     - { role: backup, tags: ["backup"] }
     - { role: redmine, tags: ["redmine"] }
-    - { role: mayan-edms, tags: ["mayan"] }

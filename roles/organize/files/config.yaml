@@ -13,21 +13,21 @@ rules:
       - filename:
           startswith: Icon
     actions:
-      - shell: "find ~/Downloads ~/Desktop ~/Dropbox/Apps/mayan/staging ~/OneDrive -type f -name .DS_Store -print -delete"
-      - shell: "find ~/Downloads ~/Desktop ~/Dropbox/Apps/mayan/staging ~/OneDrive -type d -mindepth 1 -empty -print -delete"
-      - shell: "rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ ~/Downloads/ ~/Desktop/ ~/Dropbox/Apps/mayan/staging/ ~/OneDrive/"
+      - shell: "find ~/Downloads ~/Desktop ~/OneDrive/Apps/Mayan/staging ~/OneDrive -type f -name .DS_Store -print -delete"
+      - shell: "find ~/Downloads ~/Desktop ~/OneDrive/Apps/Mayan/staging ~/OneDrive -type d -mindepth 1 -empty -print -delete"
+      - shell: "rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ ~/Downloads/ ~/Desktop/ ~/OneDrive/Apps/Mayan/staging/ ~/OneDrive/"
   # Receipts
-  - folders: ~/Dropbox/Apps/mayan/staging/Deutsch
+  - folders: ~/OneDrive/Apps/Mayan/staging/Deutsch
     filters:
       - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann)"
     actions:
-      - move: "~/Dropbox/Apps/mayan/staging/Beleg/{filecontent.store}/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Beleg/{filecontent.store}/"
   # Invoices
-  - folders: ~/Dropbox/Apps/mayan/staging/Deutsch
+  - folders: ~/OneDrive/Apps/Mayan/staging/Deutsch
     filters:
       - filecontent: "(Rechnung)"
     actions:
-      - move: "~/Dropbox/Apps/mayan/staging/Rechnung/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Rechnung/"
   - folders: *download
     filters:
       - filename:
@@ -40,7 +40,7 @@ rules:
             - ird11
           case_sensitive: false
     actions:
-      - move: "~/Dropbox/Apps/mayan/staging/Investimentos/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Investimentos/"
   - folders: *download
     filters:
       - filename:
@@ -50,7 +50,7 @@ rules:
             - rico
           case_sensitive: false
     actions:
-      - move: "~/Dropbox/Apps/mayan/staging/Investimentos/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Investimentos/"
   - folders: *download
     filters:
       - filename:

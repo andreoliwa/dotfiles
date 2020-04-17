@@ -8,7 +8,7 @@
 
 -   Spin up the [shared PostgreSQL](../postgres/docker-compose.yml) instance with `docker-find yml postgres up -d`
 -   Run `mydb_create redmine`
--   `pgcli postgresql://postgres:postgres@localhost:7710`
+-   `pgcli postgresql://postgres:$POSTGRES_PASSWORD@localhost:7710`
 -   Create the redmine user with:
     ```sql
     CREATE USER redmine;

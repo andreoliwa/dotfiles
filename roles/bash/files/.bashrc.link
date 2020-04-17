@@ -11,7 +11,7 @@ fi
 # Load environment variables and aliases, if they exist
 test -f ~/.dotfiles.env && source ~/.dotfiles.env
 test -f ~/.localrc && source ~/.localrc
-test -f ~/.config/dotfiles/openssl.env && source ~/.config/dotfiles/openssl.env
+source ~/.config/dotfiles/openssl.env
 test -f ~/container-apps/aliases.sh && source ~/container-apps/aliases.sh
 
 # Created with http://bashrcgenerator.com/

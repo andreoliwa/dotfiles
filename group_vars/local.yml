@@ -144,7 +144,6 @@ mac_cask_packages:
     - font-hack
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - vivaldi # https://vivaldi.com/
-    - pycharm-ce # https://www.jetbrains.com/pycharm/ Community Edition
   remove:
     # Images
     - imageoptim # optimizing images

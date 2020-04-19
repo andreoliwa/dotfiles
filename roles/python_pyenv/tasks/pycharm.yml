@@ -1,3 +1,4 @@
-- name: Install PyCharm for macOS
-  homebrew_cask: name=pycharm state=present
+# https://www.jetbrains.com/pycharm/ Community Edition
+- name: Install PyCharm CE for macOS
+  homebrew_cask: name=pycharm-ce state=present
   when: ansible_os_family == "Darwin"

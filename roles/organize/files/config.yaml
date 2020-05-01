@@ -15,19 +15,19 @@ rules:
     actions:
       - shell: "find ~/Downloads ~/Desktop ~/OneDrive -type f -name .DS_Store -print -delete"
       - shell: "find ~/Downloads ~/Desktop ~/OneDrive -type d -mindepth 1 -empty -print -delete"
-      - shell: "rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/Mayan/lib ~/Downloads/ ~/Desktop/ ~/OneDrive/"
+      - shell: "cd ~/Code/python-clib && poetry run rename-slugify --yes -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/Mayan/lib ~/Downloads/ ~/Desktop/ ~/OneDrive/"
   # Receipts
   - folders: ~/OneDrive/Apps/Mayan/staging/Deutsch
     filters:
       - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann)"
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Beleg/{filecontent.store}/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Deutsch/Receipt/{filecontent.store}/"
   # Invoices
   - folders: ~/OneDrive/Apps/Mayan/staging/Deutsch
     filters:
       - filecontent: "(Rechnung)"
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Rechnung/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Deutsch/Invoice/"
   - folders: *download
     filters:
       - filename:

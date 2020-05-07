@@ -7,6 +7,9 @@ alias dkrm='docker rm -f '
 # Stop and remove all running containers
 alias dkrm!='docker rm -f $(docker ps -a -q)'
 
+alias d="docker"
+alias dp="docker ps"
+
 alias dc="docker-compose"
 alias dcup="docker-compose up -d "
 alias dcrun="docker-compose run --rm "
@@ -67,6 +70,6 @@ function docker_tty {
   echo
   echo "Press any key to open screen or Ctrl-C to stop"
   read -n 1 -s
-  $cmd  
+  $cmd
 }
 alias docker-tty="docker_tty"

@@ -22,3 +22,8 @@ function ve() {
     echo pyenv version:
     pyenv version
 }
+
+alias p='poetry'
+alias px='poetry run'
+alias pp='poetry run python'
+alias pu='poetry update'

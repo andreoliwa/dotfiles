@@ -44,3 +44,8 @@ read
 
 docker pull zzrot/docker-clean
 $CLEANUP_COMMAND
+
+echo -e "\nVolumes:"
+docker volume ls
+echo -e "\nNetworks:"
+docker network ls

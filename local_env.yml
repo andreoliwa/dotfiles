@@ -30,8 +30,6 @@
     - { role: gitup, tags: ["gitup"] }
     - { role: organize, tags: ["organize"] }
     - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
-    - { role: eatfirst, tags: ["eatfirst", "personal"] }
-    - { role: b2bfg, tags: ["b2", "b2bfg", "personal"] }
     - { role: docker, tags: ["docker"] }
     - { role: backup, tags: ["backup"] }
     - { role: redmine, tags: ["redmine"] }

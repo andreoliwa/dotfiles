@@ -11,7 +11,7 @@ services:
     networks:
       - net10
     environment:
-      REDMINE_DB_POSTGRES: postgres10
+      REDMINE_DB_POSTGRES: postgres12
       REDMINE_DB_USERNAME: redmine
       REDMINE_DB_PASSWORD: ${REDMINE_DB_PASSWORD}
     volumes:
@@ -19,5 +19,5 @@ services:
 
 networks:
   net10:
-    name: postgres10
+    name: postgres12
     external: true

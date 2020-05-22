@@ -25,40 +25,11 @@
     name: "user.email"
     value: "{{ user_email }}"
 
-- name: "{{ dir }}: Create {{ env }} virtualenv with Python {{ python_version }}"
+- name: "{{ dir }}: Create a Poetry virtualenv for {{ env }} with Python {{ python_version }}"
   when: python_version != ''
-  pyenv:
-    subcommand: virtualenv
-    version: "{{ python_version }}"
-    virtualenv_name: "{{ env }}"
-  register: create_virtualenv
-  ignore_errors: yes
-
-- name: "{{ dir }}: Delete existing {{ env }} virtualenv links (Linux) [hack]"
-  when: ansible_os_family != "Darwin" and python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
-  command: "find ~/.pyenv/versions -type f,l -maxdepth 4 -name {{ env }} -print -delete"
-
-- name: "{{ dir }}: Delete existing {{ env }} virtualenv links (Darwin) [hack]"
-  when: ansible_os_family == "Darwin" and python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
-  command: "find ~/.pyenv/versions -maxdepth 4 -name {{ env }} -print -delete"
-
-- name: "{{ dir }}: Delete existing {{ env }} virtualenv directories [hack]"
-  when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
-  shell: "find ~/.pyenv/versions -maxdepth 4 -type d -name {{ env }} | xargs rm -rvf"
-
-- name: "{{ dir }}: Recreate {{ env }} virtualenv with Python {{ python_version }}"
-  when: python_version != '' and create_virtualenv.failed and "already exists but version differs" in create_virtualenv.msg
-  pyenv:
-    subcommand: virtualenv
-    version: "{{ python_version }}"
-    virtualenv_name: "{{ env }}"
-
-- name: "{{ dir }}: Update pip on virtualenv {{ env }}"
-  when: python_version != ''
-  pip:
-    name: pip
-    state: latest
-    executable: "{{ pyenv_root }}/versions/{{ env }}/bin/pip"
+  command: "poetry env use {{ pyenv_root }}/versions/{{ python_version }}/bin/python"
+  args:
+    chdir: "{{ root }}/{{ dir }}"
 
 - name: "{{ dir }}: Check if the symlink directory exists"
   stat: path="{{ symlink_dir }}"
@@ -90,50 +61,29 @@
     path: "{{ root }}/{{ dir }}/.envrc"
     create: yes
     block: |
-      export VIRTUAL_ENV={{ pyenv_root }}/versions/{{ env }}
       export PYTHONWARNINGS=
-
-      # Needed by PyCharm to run pre-commit hooks
-      # export PYENV_VERSION={{ env }}
-
       pyenv version
+      poetry env info
 
 - name: "{{ dir }}: Allow .envrc"
   when: python_version != ''
   command: "direnv allow {{ root }}/{{ dir }}"
   changed_when: false
 
-# TODO run only when the current shell is xonsh
-# - name: "{{ dir }}: Source bash's .envrc by default on .autoxsh"
-#   when: python_version != ''
-#   lineinfile:
-#     path: "{{ root }}/{{ dir }}/.autoxsh"
-#     state: present
-#     create: yes
-#     regexp: "source.+envrc"
-#     line: "source-bash --interactive False ./.envrc"
+- name: "{{ dir }}: Remove .autoenv"
+  when: python_version != ''
+  file:
+    path: "{{ root }}/{{ dir }}/.autoenv"
+    state: absent
 
-# TODO run only when autoenv is istalled
-# - name: "{{ dir }}: Link .envrc to .autoenv"
-#   when: python_version != ''
-#   file:
-#     src: "{{ root }}/{{ dir }}/.envrc"
-#     dest: "{{ root }}/{{ dir }}/.autoenv"
-#     state: link
-#     force: yes
-#     follow: false
+- name: "{{ dir }}: Remove .autoxsh"
+  when: python_version != ''
+  file:
+    path: "{{ root }}/{{ dir }}/.autoxsh"
+    state: absent
 
 - name: "{{ dir }}: Remove .python-version"
   when: python_version != ''
   file:
     path: "{{ root }}/{{ dir }}/.python-version"
     state: absent
-
-- name: "{{ dir }}: Create .python-version manually, since pyenv local doesn't work on Ansible [hack]"
-  when: python_version != ''
-  lineinfile:
-    path: "{{ root }}/{{ dir }}/.python-version"
-    state: present
-    create: yes
-    regexp: '^(.+)$'
-    line: "{{ local | regex_replace(' ', '\n') }}"

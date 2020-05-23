@@ -1,0 +1,23 @@
+- name: "Link .bash_profile file"
+  file:
+    src: "{{ role_path }}/files/.bash_profile.link"
+    dest: ~/.bash_profile
+    state: link
+    force: yes
+    follow: false
+
+- name: "Link .bashrc file"
+  file:
+    src: "{{ role_path }}/files/.bashrc.link"
+    dest: ~/.bashrc
+    state: link
+    force: yes
+    follow: false
+
+- name: "Link .inputrc file"
+  file:
+    src: "{{ role_path }}/files/.inputrc.link"
+    dest: ~/.inputrc
+    state: link
+    force: yes
+    follow: false

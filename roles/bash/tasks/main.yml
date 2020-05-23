@@ -1,28 +1,9 @@
-- include_tasks: "install_{{ ansible_os_family | lower }}.yml"
+- include_tasks: "install_{{ ansible_os_family }}.yml"
 
-- name: "Link .bash_profile file"
-  file:
-    src: "{{ role_path }}/files/.bash_profile.link"
-    dest: ~/.bash_profile
-    state: link
-    force: yes
-    follow: false
-
-- name: "Link .bashrc file"
-  file:
-    src: "{{ role_path }}/files/.bashrc.link"
-    dest: ~/.bashrc
-    state: link
-    force: yes
-    follow: false
-
-- name: "Link .inputrc file"
-  file:
-    src: "{{ role_path }}/files/.inputrc.link"
-    dest: ~/.inputrc
-    state: link
-    force: yes
-    follow: false
+- include_tasks: link_files.yml
+  when: ansible_os_family != "OSMC"
+- include_tasks: copy_files.yml
+  when: ansible_os_family == "OSMC"
 
 - name: "bash-powerline: Get latest"
   get_url:
@@ -58,6 +39,7 @@
 
 - name: "Create cached script that will be sourced on .bashrc"
   command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
+  when: ansible_os_family != "OSMC"
 
 - name: "Add content to .bashrc"
   blockinfile:
@@ -90,4 +72,4 @@
 
       # Source all scripts. To regenerate this .sh file, run:
       # dotfiles-cache-shell-scripts bash
-      source ~/.cache/dotfiles/cached_script.sh
+      test -f ~/.cache/dotfiles/cached_script.sh && source ~/.cache/dotfiles/cached_script.sh

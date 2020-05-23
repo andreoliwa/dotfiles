@@ -3,3 +3,10 @@ localhost
 
 [local:vars]
 ansible_connection=local
+
+[raspberry_pi]
+styx
+
+[raspberry_pi:vars]
+ansible_connection=ssh
+ansible_python_interpreter=/usr/bin/python3

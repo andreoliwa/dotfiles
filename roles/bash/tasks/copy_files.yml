@@ -1,0 +1,20 @@
+- name: "Copy .bash_profile file"
+  copy:
+    src: "{{ role_path }}/files/.bash_profile.link"
+    dest: ~/.bash_profile
+    force: yes
+    follow: false
+
+- name: "Copy .bashrc file"
+  copy:
+    src: "{{ role_path }}/files/.bashrc.link"
+    dest: ~/.bashrc
+    force: yes
+    follow: false
+
+- name: "Copy .inputrc file"
+  copy:
+    src: "{{ role_path }}/files/.inputrc.link"
+    dest: ~/.inputrc
+    force: yes
+    follow: false

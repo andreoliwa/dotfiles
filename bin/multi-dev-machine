@@ -63,6 +63,7 @@ def main():
     )
     parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
     parser.add_argument("--sudo", action="store_true", help="ask become password (required for some roles)")
+    parser.add_argument("--rpi", action="store_true", help="setup the Raspberry Pi")
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
 
@@ -96,7 +97,10 @@ def main():
 
     chosen_task = ""  # TODO accept as argument and use fzf to choose multiple tasks
     start_at_task_option = " --start-at-task {!r}".format(chosen_task) if chosen_task else ""
-    playbook_command = "ansible-playbook -i ~/dotfiles/hosts{} ~/dotfiles/local_env.yml".format(start_at_task_option)
+    playbook_file = "raspberry_pi" if args.rpi else "local_env"
+    playbook_command = "ansible-playbook -i ~/dotfiles/hosts{} ~/dotfiles/{}.yml".format(
+        start_at_task_option, playbook_file
+    )
     if args.virtual_machine:
         print("Provisioning the Vagrant virtual machine {}...".format(args.virtual_machine))
         if args.reload:

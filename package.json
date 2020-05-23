@@ -1,0 +1,16 @@
+{
+    "name": "pydotfiles",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andreoliwa/dotfiles"
+    },
+    "release": {
+        "plugins": []
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    }
+}

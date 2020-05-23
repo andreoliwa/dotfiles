@@ -2,30 +2,32 @@
 """Find shell scripts under ~/dotfiles* and prepare a cached script to source them all."""
 import argparse
 import re
-import sys
-import time
-from typing import Set, Tuple
-from collections import defaultdict, OrderedDict
-from glob import glob
+from collections import OrderedDict, defaultdict
 from pathlib import Path
 from pprint import pprint
+from typing import Set, Tuple
 
 CACHE_DIR = Path.home() / ".cache/dotfiles"
 CACHED_SCRIPT = CACHE_DIR / "cached_script.sh"
 
 
 class ScriptInfo:
+    """Info about a shell script."""
+
     def __init__(self):
         self.role = ""
         self.suffixes = set()
 
 
 class Shell:
+    """Possible shells."""
+
     BASH = "bash"
     XONSH = "xonsh"
 
 
 def relative_to_home(full_path: str):
+    """Display the path relative to the home dir."""
     path_obj = Path(full_path)
     return "~/{}".format(path_obj.relative_to(path_obj.home()))
 
@@ -112,11 +114,11 @@ def _main():
             chosen_suffix = first_extension
         else:
             # Or sort the other suffixes and get the first one.
-            chosen_suffix = list(sorted(script_info.suffixes)).pop()
+            chosen_suffix = sorted(script_info.suffixes).pop()
         script_path = script_partial_path.with_suffix(chosen_suffix)
         roles[script_info.role].append(script_path)
 
-    for role, chosen_scripts in roles.items():
+    for _role, chosen_scripts in roles.items():
         for chosen_script in chosen_scripts:
             if chosen_script.name.startswith("_"):
                 content.append(f"# Script with _ won't be loaded: {chosen_script}")

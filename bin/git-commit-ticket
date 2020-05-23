@@ -7,16 +7,16 @@
 # "Fix bug with user merge" in the commit message
 # Optionally pass a ticket ID to populate the "Ticket" section
 # with the JIRA URL
-# 
+#
 # Examples:
 #   git commit-ticket
 #   git commit-ticket PLAT-1234
 
 set -e
 if [ $# -eq 0 ]; then
-  ticket="No ticket"
+    ticket="No ticket"
 else
-  ticket="https://openscience.atlassian.net/browse/$1"
+    ticket="https://openscience.atlassian.net/browse/$1"
 fi
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 

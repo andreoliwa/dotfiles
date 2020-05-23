@@ -23,4 +23,3 @@
     state: present
   become: true
   when: default_shell.stdout != "xonsh" and ansible_os_family != "Darwin"
-

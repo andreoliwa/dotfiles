@@ -5,7 +5,7 @@
 # more can be found here : https://gist.github.com/brandonb927/3195465
 
 if [ "$(uname -s)" != "Darwin" ]; then
-	exit 0
+    exit 0
 fi
 
 set +e
@@ -16,7 +16,8 @@ defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 echo "  › show the ~/Library folder"
 chflags nohidden ~/Library
 
-echo "  › disable smart quotes and smart dashes as they're annoying when typing code"
+echo "  › disable smart quotes and smart dashes" \
+    " as they're annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 

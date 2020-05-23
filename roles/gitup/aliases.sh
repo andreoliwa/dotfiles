@@ -1,1 +1,1 @@
-alias gu="gitup . && echo 'Running git bclean...' && gitup --exec 'git bclean' ."
+alias gu="gitup . && gitup --exec 'git bclean' ."

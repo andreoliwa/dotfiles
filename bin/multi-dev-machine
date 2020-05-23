@@ -97,8 +97,8 @@ def main():
 
     chosen_task = ""  # TODO accept as argument and use fzf to choose multiple tasks
     start_at_task_option = " --start-at-task {!r}".format(chosen_task) if chosen_task else ""
-    playbook_file = "raspberry_pi" if args.rpi else "local_env"
-    playbook_command = "ansible-playbook -i ~/dotfiles/hosts{} ~/dotfiles/{}.yml".format(
+    playbook_file = "raspberry_pi" if args.rpi else "local"
+    playbook_command = "ansible-playbook -i ~/dotfiles/hosts{} ~/dotfiles/playbook_{}.yml".format(
         start_at_task_option, playbook_file
     )
     if args.virtual_machine:

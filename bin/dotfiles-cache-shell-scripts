@@ -50,7 +50,7 @@ def _parse_roles(args):
     """Parse the roles that are active in the Ansible playbook."""
     roles = OrderedDict()
 
-    playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
+    playbook_path = Path("~/dotfiles/playbook_local.yml").expanduser()
     if playbook_path.exists():
         import yaml
 

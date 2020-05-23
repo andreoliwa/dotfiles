@@ -92,7 +92,7 @@ def _parse_roles():
         if cache_roles.exists():
             roles.update(cache_roles.read_text().split("\n"))
         else:
-            playbook_path = Path("~/dotfiles/local_env.yml").expanduser()
+            playbook_path = Path("~/dotfiles/playbook_local.yml").expanduser()
             if playbook_path.exists():
                 try:
                     import yaml

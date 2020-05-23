@@ -86,7 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 ansible.provisioning_path = "/home/vagrant/dotfiles"
                 ansible.limit = "all"
                 ansible.inventory_path = "hosts"
-                ansible.playbook = "local_env.yml"
+                ansible.playbook = "playbook_local.yml"
 
                 verbose = ENV['MULTI_DEV_MACHINE_VERBOSE']
                 if verbose

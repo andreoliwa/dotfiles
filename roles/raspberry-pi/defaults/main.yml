@@ -8,5 +8,6 @@ rpi_apt_packages:
   - gddrescue
   - pv
   - testdisk
+  - docker-ce
   - docker-compose
   - zerotier-one

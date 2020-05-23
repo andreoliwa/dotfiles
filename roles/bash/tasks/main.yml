@@ -62,7 +62,10 @@
       # https://github.com/magicmonty/bash-git-prompt
       # Quick start, show all details of a git repo
       if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
-          GIT_PROMPT_ONLY_IN_REPO=1
+          # Show a different prompt when there is an active SSH connection
+          test -n "$SSH_CONNECTION" && GIT_PROMPT_THEME=Evermeet_Ubuntu
+
+          # GIT_PROMPT_ONLY_IN_REPO=1
           source $HOME/.bash-git-prompt/gitprompt.sh
       fi
 

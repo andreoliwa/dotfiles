@@ -1,0 +1,12 @@
+rpi_apt_packages:
+  - lsb-release
+  - htop
+  - lsof
+  - strace
+  - tmux
+  - cron
+  - gddrescue
+  - pv
+  - testdisk
+  - docker-compose
+  - zerotier-one

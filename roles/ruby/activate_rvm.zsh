@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # Lazily load rvm, irb, rake, rails
 
 export PATH="$PATH:$HOME/.rvm/bin:~/.gem/ruby/2.6.0/bin" # Add RVM to PATH for scripting

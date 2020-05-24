@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 alias dk="docker "
 alias dklog="docker logs -f --tail 100 "
 alias dkl="docker logs -f --tail 100 "
@@ -14,8 +15,8 @@ alias dc="docker-compose"
 alias dcup="docker-compose up -d "
 alias dcrun="docker-compose run --rm "
 function dcdebug {
-  docker-compose kill $1
-  docker-compose run --service-ports $1
+    docker-compose kill $1
+    docker-compose run --service-ports $1
 }
 # Stop and recreate a container
 alias dcre="docker-compose up -d --force-recreate --no-deps "
@@ -29,12 +30,12 @@ alias dcbomb!="docker-compose down -v"
 
 # Open bash in a container. Pass docker-compose name
 function dcbash {
-  docker-compose exec $1 /bin/bash
+    docker-compose exec $1 /bin/bash
 }
 
 # Open bash in a container. Pass container name
 function dkbash {
-  docker exec -it $1 /bin/bash
+    docker exec -it $1 /bin/bash
 }
 
 # If the time difference assertion fails, your Mac VM clock might be out of sync.
@@ -62,14 +63,16 @@ function dkbash {
 # See https://stackoverflow.com/a/38133871/1391315
 
 function docker_tty {
-  cmd="screen $(find ~/Library/Containers/com.docker.docker -name tty)"
-  echo $cmd
-  echo
-  echo "To finish the session, press Control + A then, k and confirm with 'y'"
-  echo "To detach the session and keep it running in the background, press Control + A, then D."
-  echo
-  echo "Press any key to open screen or Ctrl-C to stop"
-  read -n 1 -s
-  $cmd
+    cmd="screen $(find ~/Library/Containers/com.docker.docker -name tty)"
+    echo $cmd
+    echo
+    echo "To finish the session, press Control + A then," \
+        " k and confirm with 'y'"
+    echo "To detach the session and keep it running in the background," \
+        " press Control + A, then D."
+    echo
+    echo "Press any key to open screen or Ctrl-C to stop"
+    read -n 1 -s
+    $cmd
 }
 alias docker-tty="docker_tty"

@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 usage() {
-	echo "Usage: $(basename $0) <MINUTES> <CACHE_FILE> <COMMAND AND ARGUMENTS>
-Run <COMMAND AND ARGUMENTS> if <CACHE_FILE> does not exist or hasn't been touched in for <MINUTES> minutes."
-	exit $1
+    echo "Usage: $(basename $0) <MINUTES> <CACHE_FILE> <COMMAND AND ARGUMENTS>"
+    echo "Run <COMMAND AND ARGUMENTS> if <CACHE_FILE> does not exist or" \
+        " hasn't been touched in for <MINUTES> minutes."
+    exit $1
 }
 
 DEBUG=
@@ -24,8 +25,10 @@ SHOULD_RUN=
 if [[ ! -f $CACHE_FILE ]]; then
     [[ -n $DEBUG ]] && echo "   >> Cache file does not exist, will run command"
     SHOULD_RUN=1
-elif [[ -n "$(find $DIRNAME -maxdepth 1 -iname $BASENAME -cmin +$MINUTES)" ]]; then
-    [[ -n $DEBUG ]] && echo "   >> Cache file is older than $MINUTES minutes, will run command"
+elif [[ -n "$(find $DIRNAME -maxdepth 1 -iname $BASENAME \
+    -cmin +$MINUTES)" ]]; then
+    [[ -n $DEBUG ]] && echo "   >> Cache file is older than $MINUTES " \
+        "minutes, will run command"
     SHOULD_RUN=1
 else
     [[ -n $DEBUG ]] && echo "   >> Not enough time has passed since last run"
@@ -40,7 +43,8 @@ if [[ -n $SHOULD_RUN ]]; then
         [[ -n $DEBUG ]] && echo "   >> Command was successful, touch the file"
         touch $CACHE_FILE
     else
-        [[ -n $DEBUG ]] && echo "   >> Command failed, file stays the same, return the failed result"
+        [[ -n $DEBUG ]] && echo "   >> Command failed, file stays the same," \
+            " return the failed result"
         exit $RESULT
     fi
 fi

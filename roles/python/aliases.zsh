@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 alias py="python"
 alias py3="python3"
 alias ipy="ipython"

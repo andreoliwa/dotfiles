@@ -3,7 +3,6 @@
 
 # https://github.com/suzuki-shunsuke/ansible-pyenv
 - src: suzuki-shunsuke.pyenv
-  version: v.3.2.5
 
 # https://github.com/suzuki-shunsuke/ansible-pyenv-virtualenv
 - src: suzuki-shunsuke.pyenv-virtualenv

@@ -11,15 +11,35 @@
     path: ~/.config/dotfiles
 
 - name: "openssl: Add env vars to shell script"
-  shell: "brew info openssl | grep ' export ' | sed 's/^ *//;s/ *$//' > ~/.config/dotfiles/openssl.env"
+  shell: "brew info openssl | grep ' export ' | awk '{$1=$1};1' > ~/.config/dotfiles/openssl.env"
   when: ansible_os_family == "Darwin"
 
 - name: "openssl: Export vars on .bashrc"
   lineinfile:
-    line: "source ~/.config/dotfiles/openssl.env"
-    dest: ~/.bashrc
+    path: ~/.bashrc
     state: present
+    regexp: 'source ~/.config/dotfiles/openssl.env'
+    line: "test -f ~/.config/dotfiles/openssl.env && source ~/.config/dotfiles/openssl.env"
+    insertafter: 'test -f'
   when: ansible_os_family == "Darwin"
+
+- name: "Get latest Python 3.9"
+  shell: "pyenv install --list | grep -i -E ' 3.9[0-9.a]+$' | tr -d ' ' | tail -n 1"
+  register: latest_python_3_9
+  changed_when: false
+
+- name: "Install Python {{ latest_python_3_9.stdout }}"
+  pyenv:
+    version: "{{ latest_python_3_9.stdout }}"
+
+- name: "Get latest Python 3.8"
+  shell: "pyenv install --list | grep -i -E ' 3.8[0-9.]+$' | tr -d ' ' | tail -n 1"
+  register: latest_python_3_8
+  changed_when: false
+
+- name: "Install Python {{ latest_python_3_8.stdout }}"
+  pyenv:
+    version: "{{ latest_python_3_8.stdout }}"
 
 - name: "Get latest Python 3.7"
   shell: "pyenv install --list | grep -i -E ' 3.7[0-9.]+$' | tr -d ' ' | tail -n 1"
@@ -47,21 +67,6 @@
 - name: "Install Python {{ latest_python_3_5.stdout }}"
   pyenv:
     version: "{{ latest_python_3_5.stdout }}"
-
-# https://github.com/pyenv/pyenv/wiki/Common-build-problems#error-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib
-- name: Install a different SSL version to install Python 3.4
-  apt: name=libssl1.0-dev state=latest
-  become: true
-  when: ansible_os_family == "Debian"
-
-- name: "Get latest Python 3.4"
-  shell: "pyenv install --list | grep -i -E ' 3.4[0-9.]+$' | tr -d ' ' | tail -n 1"
-  register: latest_python_3_4
-  changed_when: false
-
-- name: "Install Python {{ latest_python_3_4.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_4.stdout }}"
 
 - name: "Download Poetry install script (https://pypi.org/project/poetry/)"
   get_url:

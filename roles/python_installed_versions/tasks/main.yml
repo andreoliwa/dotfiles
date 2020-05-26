@@ -9,6 +9,16 @@
   register: latest_python_2_7
   changed_when: false
 
+- name: "Get installed version of Python 3.9"
+  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.9[0-9.]+$' | tail -n 1"
+  register: latest_python_3_9
+  changed_when: false
+
+- name: "Get installed version of Python 3.8"
+  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.8[0-9.]+$' | tail -n 1"
+  register: latest_python_3_8
+  changed_when: false
+
 - name: "Get installed version of Python 3.7"
   shell: "echo {{ pyenv_versions }} | grep -i -E '^3.7[0-9.]+$' | tail -n 1"
   register: latest_python_3_7
@@ -22,9 +32,4 @@
 - name: "Get installed version of Python 3.5"
   shell: "echo {{ pyenv_versions }} | grep -i -E '^3.5[0-9.]+$' | tail -n 1"
   register: latest_python_3_5
-  changed_when: false
-
-- name: "Get installed version of Python 3.4"
-  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.4[0-9.]+$' | tail -n 1"
-  register: latest_python_3_4
   changed_when: false

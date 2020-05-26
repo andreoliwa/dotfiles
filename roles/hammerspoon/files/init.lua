@@ -23,7 +23,7 @@ local windowLayout = {
     {"Code", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"Brave Browser", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"Slack", nil, horizontalScreen, hs.layout.maximized, nil, nil},
-    {"Vivaldi", nil, horizontalScreen, hs.layout.maximized, nil, nil},
+    {"Brave Browser Dev", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"Skype", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"PyCharm", nil, horizontalScreen, hs.layout.maximized, nil, nil},
     {"App Store", nil, horizontalScreen, hs.layout.maximized, nil, nil},

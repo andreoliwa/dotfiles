@@ -23,13 +23,13 @@ module.exports = {
       url: ({ url }) => {
         const search = url.search
           .split("&")
-          .filter(part => !part.startsWith("utm_"));
+          .filter((part) => !part.startsWith("utm_"));
         return {
           ...url,
-          search: search.join("&")
+          search: search.join("&"),
         };
-      }
-    }
+      },
+    },
   ],
   handlers: [
     // Work URLs
@@ -50,9 +50,9 @@ module.exports = {
         /salesforce.com/,
         /force.com/,
         /cloudflare.com/,
-        /newrelic.com/
+        /newrelic.com/,
       ],
-      browser: "Vivaldi"
+      browser: "Brave Browser Dev",
     },
     {
       match: finicky.matchDomains([
@@ -63,15 +63,15 @@ module.exports = {
         "dashlane.com",
         /.*slack.com/,
         /.*atlassian\.(com|net)$/,
-        /.*atl-paas.net/
+        /.*atl-paas.net/,
       ]),
-      browser: "Vivaldi"
+      browser: "Brave Browser Dev",
     },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-spotify-links-in-spotify-app
       match: finicky.matchDomains("open.spotify.com"),
-      browser: "Spotify"
-    }
-  ]
+      browser: "Spotify",
+    },
+  ],
 };
 // For more examples, see the Finicky github page https://github.com/johnste/finicky

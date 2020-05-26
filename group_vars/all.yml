@@ -93,6 +93,7 @@ mac_cask_packages:
   common:
     # Browsers
     - brave-browser # https://brave.com/
+    - brave-browser-dev # https://brave.com/download-dev/
     - finicky # https://github.com/johnste/finicky
     # Development
     - visual-studio-code
@@ -141,7 +142,6 @@ mac_cask_packages:
     - font-cousine
     - font-hack
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
-    - vivaldi # https://vivaldi.com/
   remove:
     # Images
     - imageoptim # optimizing images
@@ -157,6 +157,7 @@ mac_cask_packages:
     - intellij-idea-ce # IntelliJ IDEA Community Edition https://www.jetbrains.com/idea/
     - powershell # https://github.com/PowerShell/PowerShell
     - pycharm # https://www.jetbrains.com/pycharm/ License expired
+    - vivaldi # https://vivaldi.com/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
   company_laptop:

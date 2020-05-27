@@ -32,8 +32,5 @@
 # Aborted
 # I ran:
 # ln -s /usr/local/opt/readline/lib/libreadline.8.dylib /usr/local/opt/readline/lib/libreadline.7.dylib
-- name: "Backup all local PostgreSQL 10 databases to .sql files: postgresx postgresql://postgres:$POSTGRES_PASSWORD@localhost:7710 backup {{ backup_dir }}"
-  command: "postgresx postgresql://postgres:$POSTGRES_PASSWORD@localhost:7710 backup {{ backup_dir }}"
-
 - name: "Backup all local PostgreSQL 12 databases to .sql files: postgresx postgresql://postgres:$POSTGRES_PASSWORD@localhost:7712 backup {{ backup_dir }}"
   command: "postgresx postgresql://postgres:$POSTGRES_PASSWORD@localhost:7712 backup {{ backup_dir }}"

@@ -10,4 +10,4 @@ rpi_apt_packages:
   - testdisk
   - docker-ce
   - docker-compose
-  - zerotier-one
+  - zerotier-one # https://www.zerotier.com/download.shtml

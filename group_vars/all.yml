@@ -98,6 +98,7 @@ mac_cask_packages:
     # Network
     - teamviewer
     - private-internet-access
+    - zerotier-one # https://www.zerotier.com/download.shtml
     # Utilities
     - toggl
     - iterm2

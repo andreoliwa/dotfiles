@@ -48,7 +48,7 @@ export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 
 # Source all scripts. To regenerate this .sh file, run:
 # dotfiles-cache-shell-scripts bash
-source ~/.cache/dotfiles/cached_script.sh
+test -f ~/.cache/dotfiles/cached_script.sh && source ~/.cache/dotfiles/cached_script.sh
 #################### END CREATED BY ANSIBLE - DON'T EDIT MANUALLY ####################
 
 # Increase Bash history size

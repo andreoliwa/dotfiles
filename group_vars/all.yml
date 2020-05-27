@@ -77,14 +77,14 @@ mac_homebrew_packages:
     # Prose linting
     - ValeLint/vale/vale
     - macvim
-  personal_laptop:
-  company_laptop:
     - graphviz # https://www.graphviz.org/
     - pgbadger
     - mysql-connector-c
     - composer # https://getcomposer.org/
     - kettle # Pentaho Data Integration software https://community.hitachivantara.com/docs/DOC-1009931-downloads
     - s3cmd # https://s3tools.org/s3cmd
+  personal_laptop:
+  company_laptop:
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
@@ -157,15 +157,15 @@ mac_cask_packages:
     - powershell # https://github.com/PowerShell/PowerShell
     - pycharm # https://www.jetbrains.com/pycharm/ License expired
     - vivaldi # https://vivaldi.com/
-  personal_laptop:
-    - hp-easy-start # https://support.hp.com/
-  company_laptop:
     - ngrok
     - dashlane # https://www.dashlane.com/
     - gmail-notifier
     - zulip
     # REST client
     - insomnia
+  personal_laptop:
+    - hp-easy-start # https://support.hp.com/
+  company_laptop:
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -272,10 +272,10 @@ vscode_extensions:
     - jsynowiec.vscode-insertdatestring
     - ms-azuretools.vscode-docker
     - wolfmah.ansible-vault-inline
+    - mauve.terraform
   remove:
-  personal_laptop:
-  company_laptop:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
     - crisward.riot-tag
-    - mauve.terraform
+  personal_laptop:
+  company_laptop:

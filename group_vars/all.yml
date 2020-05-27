@@ -63,7 +63,8 @@ mac_homebrew_packages:
     - mosh # https://mosh.org/
     - nmap
     - ipcalc
-    - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
+    # TODO: this needs "brew cask install osxfuse" before:
+    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
     - github/gh/gh # GitHub CLI https://github.com/cli/cli
     - go # https://golang.org
   remove:

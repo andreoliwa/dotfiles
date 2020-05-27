@@ -1,0 +1,90 @@
+{
+  "python.linting.enabled": true,
+  // "python.pythonPath": "~/.pyenv/versions/tools3/bin/python3",
+  "editor.formatOnSave": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length", "120"],
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--ignore=D107,D202,D203,D401,E203,E402,E501,W503",
+    "--max-line-length=120"
+  ],
+  "workbench.startupEditor": "newUntitledFile",
+  "explorer.confirmDragAndDrop": false,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "files.associations": {
+    "**/defaults/**/*": "ansible",
+    "**/tasks/**/*.yml": "ansible",
+    "**/handler/*.yml": "ansible",
+    "**/*_vars/**/*.yml": "ansible",
+    "**/roles/**/*.yml": "ansible",
+    "**/playbooks/**/*.yml": "ansible",
+    "**/*ansible*/**/*.yml": "ansible",
+    "**/vars/**/*.yml": "ansible",
+    "**/inventory/*/*": "ansible",
+    "*.xsh": "shellscript",
+    "*.xsh.link": "shellscript",
+    "**/dotfiles/group_vars/local": "yaml",
+    "*.ktr": "xml",
+    "*.kjb": "xml",
+    "*.drawio": "xml"
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "extensions.ignoreRecommendations": false,
+  "breadcrumbs.enabled": true,
+  "workbench.activityBar.visible": true,
+  "workbench.statusBar.visible": true,
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "none",
+  "workbench.colorTheme": "Default Light+",
+  "window.zoomLevel": 0,
+  // "python.linting.flake8Path": "~/.pyenv/versions/tools3/bin/flake8",
+  "python.pipenvPath": "",
+  "python.formatting.blackPath": "~/.local/bin/black",
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "git.enableCommitSigning": true,
+  "git.showPushSuccessNotification": true,
+  "editor.renderControlCharacters": true,
+  "editor.multiCursorModifier": "alt",
+  "git.postCommitCommand": "sync",
+  "todo-tree.tree.flat": true,
+  "todo-tree.tree.grouped": true,
+  "todo-tree.tree.hideIconsWhenGroupedByTag": true,
+  "todo-tree.ripgrep.ripgrep": "~/.cargo/bin/rg",
+  "todo-tree.tree.showCountsInTree": true,
+  "todo-tree.tree.showInExplorer": false,
+  "todo-tree.general.statusBar": "tags",
+  "todo-tree.tree.tagsOnly": true,
+  "todo-tree.filtering.excludedWorkspaces": ["node_modules/*"],
+  "todo-tree.filtering.excludeGlobs": ["**/node_modules/*"],
+  "todo-tree.highlights.enabled": true,
+  "todo-tree.tree.showScanModeButton": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "python.envFile": "${workspaceFolder}/.envrc",
+  "python.venvPath": "~/Library/Caches/pypoetry/virtualenvs",
+  "explorer.confirmDelete": false,
+  "editor.fontSize": 13,
+  "githubIssues.queries": [
+    {
+      "label": "My Issues",
+      "query": "default"
+    },
+    {
+      "label": "Created Issues",
+      "query": "author:${user} state:open repo:${owner}/${repository} sort:updated-desc"
+    },
+    {
+      "label": "Open Issues",
+      "query": "state:open repo:${owner}/${repository} sort:updated-desc"
+    }
+  ]
+}

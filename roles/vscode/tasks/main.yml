@@ -1,5 +1,11 @@
-- name: "VSCode: Install common"
-  command: "code --install-extension {{ item }}"
+- name: "Link settings file"
+  file:
+    src: "{{ role_path }}/files/settings.json"
+    dest: "~/Library/Application Support/Code/User/settings.json"
+    state: link
+
+- name: "VSCode: Install/update common"
+  command: "code --install-extension {{ item }} --force"
   with_items: "{{ vscode_extensions['common'] }}"
   when: vscode_extensions['common']
   register: this_task

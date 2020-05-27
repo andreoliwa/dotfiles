@@ -29,7 +29,7 @@
     - { role: browser, tags: ["browser"] }
     - { role: gitup, tags: ["gitup"] }
     - { role: organize, tags: ["organize"] }
-    - { role: andreoliwa, tags: ["andreoliwa", "personal"] }
+    - { role: personal, tags: ["personal"] }
     - { role: docker, tags: ["docker"] }
     - { role: backup, tags: ["backup"] }
     - { role: redmine, tags: ["redmine"] }

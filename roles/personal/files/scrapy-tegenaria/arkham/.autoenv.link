@@ -1,0 +1,12 @@
+export FLASK_APP=autoapp.py
+export FLASK_DEBUG=1
+
+# BEGIN ANSIBLE MANAGED BLOCK
+export VIRTUAL_ENV=~/.pyenv/versions/scrapy-tegenaria
+export PYTHONWARNINGS=
+
+# Needed by PyCharm to run pre-commit hooks
+# export PYENV_VERSION=scrapy-tegenaria
+
+pyenv version
+# END ANSIBLE MANAGED BLOCK

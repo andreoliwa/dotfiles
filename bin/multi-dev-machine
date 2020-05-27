@@ -40,7 +40,7 @@ def notify(title, message):
 def main():
     """Main function."""
     parser = argparse.ArgumentParser(
-        description="run ansible-playbook to setup a similar dev machine in multiple operating systems"
+        description="run an Ansible playbook to setup a similar dev machine in multiple operating systems"
     )
     parser.add_argument("--debug", "-d", action="store_true", help="debug mode")
     parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
@@ -51,7 +51,7 @@ def main():
         "-p",
         dest="virtual_machine",
         metavar="VIRTUAL MACHINE",
-        help="provision a Vagrant virtual machine with this ansible-playbook",
+        help="provision a Vagrant virtual machine",
     )
     parser.add_argument("--reload", "-r", action="store_true", help="reload the VM")
     parser.add_argument(
@@ -98,8 +98,11 @@ def main():
     chosen_task = ""  # TODO accept as argument and use fzf to choose multiple tasks
     start_at_task_option = " --start-at-task {!r}".format(chosen_task) if chosen_task else ""
     playbook_file = "raspberry_pi" if args.rpi else "local"
-    playbook_command = "ansible-playbook -i ~/dotfiles/hosts{} ~/dotfiles/playbook_{}.yml".format(
-        start_at_task_option, playbook_file
+
+    # https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords
+    playbook_command = (
+        "ansible-playbook --vault-id dotfiles@~/.config/dotfiles/vault_password.txt"
+        + " --inventory ~/dotfiles/hosts{} ~/dotfiles/playbook_{}.yml".format(start_at_task_option, playbook_file)
     )
     if args.virtual_machine:
         print("Provisioning the Vagrant virtual machine {}...".format(args.virtual_machine))

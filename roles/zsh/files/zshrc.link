@@ -69,11 +69,11 @@ done
 unset config_files
 unset -f group_lazy_load
 
-# use .localrc for SUPER SECRET CRAP that you don't
+# use this for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
-if [[ -a ~/.localrc ]]
+if [[ -a ~/.config/dotfiles/local.env ]]
 then
-  source ~/.localrc
+  source ~/.config/dotfiles/local.env
 fi
 
 export NVM_DIR="$HOME/.nvm"

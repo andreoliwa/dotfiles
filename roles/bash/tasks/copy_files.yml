@@ -1,7 +1,7 @@
-- name: "Copy ~/.localrc"
+- name: "Copy private local variables"
   copy:
-    src: ~/.localrc
-    dest: ~/.localrc
+    src: ~/.config/dotfiles/local.env
+    dest: ~/.config/dotfiles/local.env
     mode: '0600'
     force: yes
 

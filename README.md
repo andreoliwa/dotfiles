@@ -32,7 +32,7 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 -   If you're installing a new computer, copy these files/directories:
     -   `~/.ssh`
     -   `~/.gnupg`
-    -   `~/.localrc`, set `export COMPANY_LAPTOP=` variable
+    -   `~/.config/dotfiles/local.env`, set `export COMPANY_LAPTOP=` variable
 
 ## install
 

@@ -1,3 +1,8 @@
+- name: "Create ~/.config/dotfiles"
+  file:
+    state: directory
+    path: ~/.config/dotfiles
+
 - include_tasks: "install_{{ ansible_os_family }}.yml"
 
 # To check the distribution on the local machine:

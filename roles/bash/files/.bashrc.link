@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 if [[ $OSTYPE == darwin* ]]; then
+# TODO: company laptop only
     LATEST_JAVA_8="$(find /Library/Java/JavaVirtualMachines -type d -depth 1 | sort --version-sort --reverse | grep jdk1.8 | head -n 1)"
     if [ -z "$LATEST_JAVA_8" ]; then
         echo "Java 8 not found"
@@ -9,8 +10,8 @@ if [[ $OSTYPE == darwin* ]]; then
 fi
 
 # Load environment variables and aliases; some files should exist, you will get a warning to remind you to create them
-source ~/.localrc
-source ~/.config/dotfiles/openssl.env
+source ~/.config/dotfiles/local.env
+test -f ~/.config/dotfiles/openssl.env && source ~/.config/dotfiles/openssl.env
 test -f ~/container-apps/aliases.sh && source ~/container-apps/aliases.sh
 test -f ~/container-apps-private/aliases.sh && source ~/container-apps-private/aliases.sh
 

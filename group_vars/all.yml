@@ -271,6 +271,7 @@ vscode_extensions:
     - bungcip.better-toml
     - jsynowiec.vscode-insertdatestring
     - ms-azuretools.vscode-docker
+    - wolfmah.ansible-vault-inline
   remove:
   personal_laptop:
   company_laptop:

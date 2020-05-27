@@ -11,10 +11,7 @@ pyenv_root: "~/.pyenv"
 # Root directory for projects
 project_root: "~/Code"
 
-backup_dir: "~/Dropbox/Backup/{{ ansible_hostname }}"
-
-personal_laptop: arkham
-company_laptop: lazaruspit
+backup_dir: "~/OneDrive/Backup/{{ ansible_hostname }}"
 
 # Name used in commit messages
 full_name: Augusto W. Andreoli

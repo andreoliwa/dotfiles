@@ -23,24 +23,27 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 
 ## prerequisites (install these first)
 
+-   [macOS: upgrade to the latest version possible](https://support.apple.com/macos)
 -   HomeBrew: [macOS requirements](https://docs.brew.sh/Installation#macos-requirements) first (e.g.: XCode), then [install HomeBrew](https://brew.sh/)
 -   ansible >= 2.4:
     -   macOS: `brew install ansible`;
     -   Linux: [get the latest PPA](http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine).
--   git (homebrew installable on macOS: `brew install git`)
+-   Tools to start working on this repo: `brew install ansible git python vim`
+-   If you're installing a new computer, copy these files/directories:
+    -   `~/.ssh`
+    -   `~/.gnupg`
+    -   `~/.localrc`, set `export COMPANY_LAPTOP=` variable
 
 ## install
 
 -   [Fork](https://github.com/sloria/dotfiles/fork) this repo.
 -   Clone your fork.
-
-```bash
-# Replace git url with your fork
-# NOTE: It is important that you clone to ~/dotfiles
-git clone https://github.com/YOU/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-```
-
+    ```bash
+    # Replace git url with your fork
+    # NOTE: It is important that you clone to ~/dotfiles
+    git clone https://github.com/YOU/dotfiles.git ~/dotfiles
+    cd ~/dotfiles
+    ```
 -   Update the following variables in `group_vars/local` (at a minimum)
     -   `full_name`: Your name, which will be attached to commit messages, e.g. "Steven Loria"
     -   `git_user`: Your Github username.
@@ -50,23 +53,23 @@ cd ~/dotfiles
     -   `mac_cask_packages`: Mac Apps you want installed with [homebrew-cask][].
 -   Edit `playbook_local.yml` as you see fit. Remove any roles you don't use. Edit roles that you do use.
 -   Run the installation script.
-
-```bash
-~/dotfiles/bin/multi-dev-machine --galaxy --bootstrap
-```
+    Comment out private roles (they will fail on first execution).
+    ```bash
+    ~/dotfiles/bin/multi-dev-machine --galaxy --bootstrap
+    ```
 
 ## updating your local environment
 
 Once you have the dotfiles installed you can run the following command to rerun the ansible playbook:
 
 ```bash
-dot-update
+multi-dev-machine
 ```
 
 You can optionally pass role names
 
 ```bash
-dot-update git python
+multi-dev-machine git python
 ```
 
 ## updating your dotfiles repo
@@ -78,13 +81,15 @@ git remote add sloria https://github.com/sloria/dotfiles.git
 git pull sloria master
 ```
 
-## commands
+## command
 
-There are three main commands in the `bin` directory for setting up and updating development environments:
+There is a script `multi-dev-machine` in the `bin` directory for setting up and updating development environments:
 
--   `dot-bootstrap`: sets up local environment by executing all roles in `playbook_local.yml`.
--   `dot-update`: updates local environment by executing all roles in `playbook_local.yml` except for the ones tagged with "bootstrap".
--   `multi-dev-machine`: `dot-update` plus `dot-bootstrap`, install Galaxy roles and run Ansible on Vagrant VMs. Type `multi-dev-machine -h` to see all possibilities.
+-   bootstrap/updates the local environment
+-   install Galaxy roles
+-   run Ansible on Vagrant VMs
+
+Type `multi-dev-machine -h` to see all possibilities.
 
 ## special files
 

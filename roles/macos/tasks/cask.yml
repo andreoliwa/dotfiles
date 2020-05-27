@@ -16,28 +16,28 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ mac_cask_packages['personal_laptop'] }}"
-  when: ansible_hostname == personal_laptop and mac_cask_packages['personal_laptop']
+  when: not ansible_env.COMPANY_LAPTOP and mac_cask_packages['personal_laptop']
 
 - name: "Cask: Remove on personal_laptop"
   homebrew_cask:
     name: "{{ item }}"
     state: absent
   with_items: "{{ mac_cask_packages['company_laptop'] }}"
-  when: ansible_hostname == personal_laptop and mac_cask_packages['company_laptop']
+  when: not ansible_env.COMPANY_LAPTOP and mac_cask_packages['company_laptop']
 
 - name: "Cask: Install on company_laptop"
   homebrew_cask:
     name: "{{ item }}"
     state: present
   with_items: "{{ mac_cask_packages['company_laptop'] }}"
-  when: ansible_hostname == company_laptop and mac_cask_packages['company_laptop']
+  when: ansible_env.COMPANY_LAPTOP and mac_cask_packages['company_laptop']
 
 - name: "Cask: Remove on company_laptop"
   homebrew_cask:
     name: "{{ item }}"
     state: absent
   with_items: "{{ mac_cask_packages['personal_laptop'] }}"
-  when: ansible_hostname == company_laptop and mac_cask_packages['personal_laptop']
+  when: ansible_env.COMPANY_LAPTOP and mac_cask_packages['personal_laptop']
 
 - name: "Cask: Upgrade all"
   homebrew_cask:

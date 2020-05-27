@@ -8,10 +8,9 @@ if [[ $OSTYPE == darwin* ]]; then
     fi
 fi
 
-# Load environment variables and aliases, if they exist
-test -f ~/.dotfiles.env && source ~/.dotfiles.env
-test -f ~/.localrc && source ~/.localrc
-test -f ~/.config/dotfiles/openssl.env && source ~/.config/dotfiles/openssl.env
+# Load environment variables and aliases; some files should exist, you will get a warning to remind you to create them
+source ~/.localrc
+source ~/.config/dotfiles/openssl.env
 test -f ~/container-apps/aliases.sh && source ~/container-apps/aliases.sh
 test -f ~/container-apps-private/aliases.sh && source ~/container-apps-private/aliases.sh
 

@@ -198,7 +198,7 @@ def _main(debug):
         source ~/.xonsh_xontrib_load
 
     # Load environment variables if they exist
-    test -f ~/.dotfiles.env && source-bash --interactive False ~/.dotfiles.env
+    source-bash --interactive False ~/.localrc
 
     # http://xon.sh/tutorial.html#customizing-the-prompt
     # http://xon.sh/envvars.html#xonsh-gitstatus

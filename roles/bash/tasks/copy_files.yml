@@ -1,3 +1,10 @@
+- name: "Copy ~/.localrc"
+  copy:
+    src: ~/.localrc
+    dest: ~/.localrc
+    mode: '0600'
+    force: yes
+
 - name: "Copy .bash_profile file"
   copy:
     src: "{{ role_path }}/files/.bash_profile.link"

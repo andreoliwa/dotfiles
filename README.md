@@ -55,7 +55,7 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 -   Run the installation script.
     Comment out private roles (they will fail on first execution).
     ```bash
-    ~/dotfiles/bin/multi-dev-machine --galaxy --bootstrap
+    ~/dotfiles/bin/dotfiles-setup --galaxy --bootstrap
     ```
 
 ## updating your local environment
@@ -63,13 +63,13 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 Once you have the dotfiles installed you can run the following command to rerun the ansible playbook:
 
 ```bash
-multi-dev-machine
+dotfiles-setup
 ```
 
 You can optionally pass role names
 
 ```bash
-multi-dev-machine git python
+dotfiles-setup git python
 ```
 
 ## updating your dotfiles repo
@@ -83,13 +83,13 @@ git pull sloria master
 
 ## command
 
-There is a script `multi-dev-machine` in the `bin` directory for setting up and updating development environments:
+There is a script `dotfiles-setup` in the `bin` directory for setting up and updating development environments:
 
 -   bootstrap/updates the local environment
 -   install Galaxy roles
 -   run Ansible on Vagrant VMs
 
-Type `multi-dev-machine -h` to see all possibilities.
+Type `dotfiles-setup -h` to see all possibilities.
 
 ## special files
 

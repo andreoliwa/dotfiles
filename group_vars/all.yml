@@ -189,8 +189,6 @@ mac_mas_packages:
     - 409203825 # Numbers https://itunes.apple.com/us/app/id409203825
     - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
     - 973134470 # Be Focused - Focus Timer https://itunes.apple.com/us/app/id973134470
-    - 497799835 # Xcode https://apps.apple.com/de/app/xcode/id497799835, needed to compile Python, mysql-connector-c, etc.
-  remove:
   personal_laptop:
   company_laptop:
 

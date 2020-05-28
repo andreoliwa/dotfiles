@@ -28,9 +28,9 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 -   ansible >= 2.4:
     -   macOS: `brew install ansible`;
     -   Linux: [get the latest PPA](http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine).
--   Tools to start working on this repo: `brew install ansible git python vim`
+-   Tools to start working on this repo: `brew install ansible git python vim fzf`
+-   Run `xcode-select --install`
 -   If you're installing a new computer, copy these files/directories:
-    -   `~/.ssh`
     -   `~/.gnupg`
     -   `~/.config/dotfiles/local.env`, set `export COMPANY_LAPTOP=` variable
 

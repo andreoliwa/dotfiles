@@ -8,28 +8,34 @@
     - { role: git, tags: ["git"] }
     - { role: package_manager, tags: ["package_manager", "bootstrap"] }
     - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
-    - { role: vagrant, tags: ["vagrant"], when: ansible_os_family == "Darwin" }
-    - { role: python_pyenv, tags: ["python"] }
-    - { role: node, tags: ["node"] }
-    - { role: ruby, tags: ["ruby"] }
+
+    # Tools
+    - { role: gnome_do, tags: ["gnome_do", "alfred"] }
+    - { role: browser, tags: ["browser"] }
+    - { role: fzf, tags: ["fzf"] }
+    - { role: gitup, tags: ["gitup"] }
     - { role: hub, tags: ["hub"] }
     - { role: vim, tags: ["vim"] }
-    - { role: rust, tags: ["rust"] }
     - { role: bat, tags: ["bat"] }
     - { role: tmux, tags: ["tmux"] }
-    - { role: fzf, tags: ["fzf"] }
+    - { role: hammerspoon, tags: ["hammerspoon", "hammer"] }
+
+    # Languages
+    - { role: python_pyenv, tags: ["python"] }
+    - { role: docker, tags: ["docker"] }
     - { role: vscode, tags: ["vscode"] }
     - {
         role: gantsign.visual-studio-code,
         tags: ["vscode"],
         when: ansible_os_family != "Darwin",
       }
-    - { role: hammerspoon, tags: ["hammerspoon", "hammer"] }
-    - { role: gnome_do, tags: ["gnome_do"] }
-    - { role: browser, tags: ["browser"] }
-    - { role: gitup, tags: ["gitup"] }
+    - { role: rust, tags: ["rust"] }
+    - { role: node, tags: ["node"] }
+    - { role: ruby, tags: ["ruby"] }
+
+    # Personal and last
     - { role: organize, tags: ["organize"] }
     - { role: personal, tags: ["personal"] }
-    - { role: docker, tags: ["docker"] }
-    - { role: backup, tags: ["backup"] }
     - { role: redmine, tags: ["redmine"] }
+    - { role: vagrant, tags: ["vagrant"], when: ansible_os_family == "Darwin" }
+    - { role: backup, tags: ["backup"] }

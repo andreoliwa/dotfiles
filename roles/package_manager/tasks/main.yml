@@ -1,1 +1,6 @@
-- include_tasks: "{{ ansible_os_family | lower }}.yml"
+- import_tasks: darwin.yml
+  when: ansible_os_family == "Darwin"
+- import_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+- import_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"

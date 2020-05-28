@@ -1,1 +1,2 @@
-- include_tasks: "install_{{ ansible_os_family | lower }}.yml"
+- import_tasks: darwin.yml
+  when: ansible_os_family == "Darwin"

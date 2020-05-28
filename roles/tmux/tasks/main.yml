@@ -1,6 +1,7 @@
-- include_tasks: "{{ ansible_os_family | lower }}.yml"
-
-# TODO: Fedora
+- import_tasks: darwin.yml
+  when: ansible_os_family == "Darwin"
+- import_tasks: debian.yml
+  when: ansible_os_family == "Debian"
 
 - name: Install tmuxp
   shell: "pipx install tmuxp || true"

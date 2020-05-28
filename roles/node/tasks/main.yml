@@ -1,4 +1,7 @@
-- include_tasks: "{{ ansible_os_family | lower }}.yml"
+- import_tasks: darwin.yml
+  when: ansible_os_family == "Darwin"
+- import_tasks: debian.yml
+  when: ansible_os_family == "Debian"
 
 # https://github.com/nvm-sh/nvm
 - name: Install nvm

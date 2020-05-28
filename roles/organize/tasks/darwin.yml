@@ -1,3 +1,8 @@
+- name: "organize: Create directory"
+  file:
+    state: directory
+    path: ~/Library/Application Support/organize
+
 - name: "organize: Link config.yaml file"
   file:
     src: "{{ role_path }}/files/config.yaml"

@@ -13,7 +13,30 @@
   register: this_task
   changed_when: "'is already in PATH' not in this_task.stderr"
 
-- name: "pipx: Install Python 3 modules globally with pipx"
-  with_items: "{{ python3_modules }}"
+- name: "pipx: Install common Python 3 modules globally with pipx"
+  with_items: "{{ python3_modules['common'] }}"
   command: "pipx install --verbose {{ item }}"
-  ignore_errors: yes
+
+- name: "pipx: Remove"
+  with_items: "{{ python3_modules['remove'] }}"
+  command: "pipx uninstall {{ item }}"
+
+- name: "pipx: Install on personal_laptop"
+  with_items: "{{ python3_modules['personal_laptop'] }}"
+  command: "pipx install {{ item }}"
+  when: not ansible_env.COMPANY_LAPTOP and python3_modules['personal_laptop']
+
+- name: "pipx: Remove on personal_laptop"
+  with_items: "{{ python3_modules['company_laptop'] }}"
+  command: "pipx uninstall {{ item }}"
+  when: not ansible_env.COMPANY_LAPTOP and python3_modules['company_laptop']
+
+- name: "pipx: Install on company_laptop"
+  with_items: "{{ python3_modules['company_laptop'] }}"
+  command: "pipx install {{ item }}"
+  when: ansible_env.COMPANY_LAPTOP and python3_modules['company_laptop']
+
+- name: "pipx: Remove on company_laptop"
+  with_items: "{{ python3_modules['personal_laptop'] }}"
+  command: "pipx uninstall {{ item }}"
+  when: ansible_env.COMPANY_LAPTOP and python3_modules['personal_laptop']

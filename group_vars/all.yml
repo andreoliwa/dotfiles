@@ -57,11 +57,8 @@ mac_homebrew_packages:
     - fd # https://github.com/sharkdp/fd
     - terraform # https://www.terraform.io
     - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
-    - mosh # https://mosh.org/
     - nmap
     - ipcalc
-    # TODO: this needs "brew cask install osxfuse" before:
-    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
     - github/gh/gh # GitHub CLI https://github.com/cli/cli
     - go # https://golang.org
   remove:
@@ -84,6 +81,9 @@ mac_homebrew_packages:
     - kettle # Pentaho Data Integration software https://community.hitachivantara.com/docs/DOC-1009931-downloads
     - s3cmd # https://s3tools.org/s3cmd
   personal_laptop:
+    - mosh # https://mosh.org/
+    # TODO: this needs "brew cask install osxfuse" before:
+    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
   company_laptop:
 
 # Mac Apps to be installed with homebrew-cask
@@ -107,17 +107,10 @@ mac_cask_packages:
     - spectacle
     - the-unarchiver
     - authy # https://authy.com/
-    - dupeguru # https://dupeguru.voltaicideas.net/
     - meld # https://yousseb.github.io/meld/
-    - ccleaner # https://www.ccleaner.com/ccleaner-mac
-    - grandperspective # https://grandperspectiv.sourceforge.io/
     - rescuetime # https://www.rescuetime.com/
-    - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
     # E-mail
     - mia-for-gmail
-    # Vagrant/Virtualbox
-    - vagrant
-    - virtualbox
     # Docker
     - docker
     # Chat
@@ -133,7 +126,6 @@ mac_cask_packages:
     # Media/Music
     - spotify
     - spotify-notifications # https://spotify-notifications.citruspi.io/
-    - vlc
     - beardedspice
     - android-file-transfer # https://www.android.com/filetransfer/
     # Fonts
@@ -163,9 +155,18 @@ mac_cask_packages:
     - zulip
     # REST client
     - insomnia
+    # Vagrant/Virtualbox
+    - vagrant
+    - virtualbox
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
+    - dupeguru # https://dupeguru.voltaicideas.net/
+    - ccleaner # https://www.ccleaner.com/ccleaner-mac
+    - grandperspective # https://grandperspectiv.sourceforge.io/
+    - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
+    - vlc
   company_laptop:
+    - slack # https://slack.com/
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -185,8 +186,9 @@ apt_packages:
 # Use App IDs found with `mas search <name>`
 mac_mas_packages:
   common:
-    - 585829637 # Todoist https://itunes.apple.com/us/app/id585829637
     - 409203825 # Numbers https://itunes.apple.com/us/app/id409203825
+  remove:
+    - 585829637 # Todoist https://itunes.apple.com/us/app/id585829637
     - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
     - 973134470 # Be Focused - Focus Timer https://itunes.apple.com/us/app/id973134470
   personal_laptop:
@@ -201,30 +203,38 @@ ruby_global_gems:
 # Especially useful when using tox
 # NOTE: 2.7 gets installed by Homebrew
 pyenv_global_versions:
-  - 3.6.5
-  - 3.5.5
+  - 3.9.0a6
+  - 3.8.3
+  - 3.7.7
+  - 3.6.10
+  - 3.5.9
   - 2.7.15
 
 # Install Python 3 modules globally with pipx
 python3_modules:
-  - aws-shell # https://github.com/awslabs/aws-shell
-  - awscli # https://pypi.org/project/awscli/
-  - black # https://github.com/ambv/black
-  - bumpversion # https://pypi.org/project/bumpversion/
-  - cookiecutter # https://pypi.org/project/cookiecutter/
-  - cookiepatcher # https://pypi.org/project/cookiepatcher/
-  - gitup # https://github.com/earwig/git-repo-updater.git
-  - howdoi # https://pypi.org/project/howdoi/
-  - identify # https://github.com/chriskuehl/identify
-  - keyring # https://pypi.org/project/keyring/
-  - organize-tool # https://pypi.org/project/organize-tool/
-  - pre-commit # https://pre-commit.com/
-  - subliminal # https://pypi.org/project/subliminal/
-  - twine # https://pypi.org/project/twine/
-  - youtube-dl # https://pypi.org/project/youtube_dl/
-  - pgcli # https://github.com/dbcli/pgcli
+  common:
+    - black # https://github.com/ambv/black
+    - cookiecutter # https://pypi.org/project/cookiecutter/
+    - cookiepatcher # https://pypi.org/project/cookiepatcher/
+    - gitup # https://github.com/earwig/git-repo-updater.git
+    - howdoi # https://pypi.org/project/howdoi/
+    - identify # https://github.com/chriskuehl/identify
+    - keyring # https://pypi.org/project/keyring/
+    - organize-tool # https://pypi.org/project/organize-tool/
+    - pre-commit # https://pre-commit.com/
+    - pgcli # https://github.com/dbcli/pgcli
+  remove:
+    - bumpversion # https://pypi.org/project/bumpversion/
+    - twine # https://pypi.org/project/twine/
+  personal_laptop:
+    - subliminal # https://pypi.org/project/subliminal/
+    - youtube-dl # https://pypi.org/project/youtube_dl/
+  company_laptop:
+    - aws-shell # https://github.com/awslabs/aws-shell
+    - awscli # https://pypi.org/project/awscli/
 
 # Node utilities
+# TODO: common, remove, personal_laptop, company_laptop
 npm_global_packages:
   - webpack
   - eslint
@@ -248,6 +258,7 @@ npm_global_packages:
   - remark-preset-lint-recommended # https://github.com/remarkjs/remark-lint#cli
   - remark-preset-lint-markdown-style-guide # https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide
 
+# TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:
   # https://github.com/nabijaczleweli/cargo-update
   - { pkg: cargo-update, bin: cargo-install-update }

@@ -37,5 +37,4 @@
     - { role: organize, tags: ["organize"] }
     - { role: personal, tags: ["personal"] }
     - { role: redmine, tags: ["redmine"] }
-    - { role: vagrant, tags: ["vagrant"], when: ansible_os_family == "Darwin" }
     - { role: backup, tags: ["backup"] }

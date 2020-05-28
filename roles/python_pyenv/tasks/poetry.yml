@@ -1,0 +1,14 @@
+- name: "Download Poetry install script (https://pypi.org/project/poetry/)"
+  get_url:
+    url: "https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py"
+    dest: /tmp/get-poetry.py
+
+- name: Install Poetry globally
+  command: "python /tmp/get-poetry.py"
+  register: this_task
+  changed_when: "'Latest version already installed' not in this_task.stdout"
+
+- name: Update Poetry
+  command: "poetry self update"
+  register: this_task
+  changed_when: "'You are using the latest version' not in this_task.stdout"

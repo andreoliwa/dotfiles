@@ -23,12 +23,12 @@
     # Languages
     - { role: python_pyenv, tags: ["python"] }
     - { role: docker, tags: ["docker"] }
-    - { role: vscode, tags: ["vscode"] }
     - {
         role: gantsign.visual-studio-code,
         tags: ["vscode"],
         when: ansible_os_family != "Darwin",
       }
+    - { role: vscode, tags: ["vscode"] }
     - { role: rust, tags: ["rust"] }
     - { role: node, tags: ["node"] }
     - { role: ruby, tags: ["ruby"] }

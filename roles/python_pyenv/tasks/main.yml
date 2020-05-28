@@ -19,8 +19,16 @@
     state: link
 
 # https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14
-- import_tasks: python3.yml
-- import_tasks: python2.yml
+- name: "Install Python 3 versions with pyenv"
+  import_tasks: python3.yml
+- name: "Install Python 2 versions with pyenv"
+  import_tasks: python2.yml
+
+- name: "Install Poetry"
+  import_tasks: poetry.yml
+
+- name: "Install pipx"
+  import_tasks: pipx.yml
 
 - name: "pipx: Upgrade all packages"
   command: "pipx upgrade-all --verbose"
@@ -35,4 +43,5 @@
     - "{{ latest_python_3_7.stdout }}"
     - "{{ latest_python_2_7.stdout }}"
 
-- import_tasks: pycharm.yml
+- name: "Install JetBrains PyCharm"
+  import_tasks: pycharm.yml

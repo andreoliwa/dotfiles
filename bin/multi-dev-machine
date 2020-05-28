@@ -37,6 +37,17 @@ def notify(title, message):
         )
 
 
+def get_python():
+    """Get the Python interpreter used by ansible."""
+    ansible_python_interpreter = shell(
+        "ansible --version | grep 'ansible python' |"
+        + r" sed -E -e 's#/site.+##g' -e 's#.+ (/usr)#\1#g' -e 's#/lib/#/bin/#g'",
+        return_lines=True,
+    )[0]
+    print("Using this Python interpreter:", ansible_python_interpreter)
+    return ansible_python_interpreter
+
+
 def main():
     """Main function."""
     parser = argparse.ArgumentParser(
@@ -101,6 +112,7 @@ def main():
     playbook_file = "raspberry_pi" if args.rpi else "local"
     command_parts = [
         "ansible-playbook",
+        "-e ansible_python_interpreter={}".format(get_python()),
         # https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords
         "--vault-id dotfiles@~/.config/dotfiles/vault_password.txt",
         "--inventory ~/dotfiles/hosts",

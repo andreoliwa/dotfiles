@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
-if [[ $OSTYPE == darwin* ]]; then
-# TODO: company laptop only
-    LATEST_JAVA_8="$(find /Library/Java/JavaVirtualMachines -type d -depth 1 | sort --version-sort --reverse | grep jdk1.8 | head -n 1)"
-    if [ -z "$LATEST_JAVA_8" ]; then
-        echo "Java 8 not found"
-    else
-        export PENTAHO_JAVA_HOME="${LATEST_JAVA_8}/Contents/Home"
-    fi
-fi
 
 # Load environment variables and aliases; some files should exist, you will get a warning to remind you to create them
 source ~/.config/dotfiles/local.env

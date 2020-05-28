@@ -88,5 +88,6 @@
     }
   ],
   "ansibleVaultInline.keyfile": "~/.config/dotfiles/vault_password.txt",
-  "editor.rulers": [80, 120]
+  "editor.rulers": [80, 120],
+  "workbench.editor.enablePreview": false
 }

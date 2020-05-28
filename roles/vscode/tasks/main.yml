@@ -1,3 +1,8 @@
+- name: "Create VSCode user directory"
+  file:
+    state: directory
+    path: "~/Library/Application Support/Code/User"
+
 - name: "Link settings file"
   file:
     src: "{{ role_path }}/files/settings.json"

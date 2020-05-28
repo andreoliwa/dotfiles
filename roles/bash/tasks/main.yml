@@ -3,13 +3,18 @@
     state: directory
     path: ~/.config/dotfiles
 
-- include_tasks: "install_{{ ansible_os_family }}.yml"
+- import_tasks: install_darwin.yml
+  when: ansible_os_family == "Darwin"
+- import_tasks: install_debian.yml
+  when: ansible_os_family == "Debian"
+- import_tasks: install_osmc.yml
+  when: ansible_os_family == "OSMC"
 
 # To check the distribution on the local machine:
 # ansible -m setup localhost | rg 'distribution"'
-- include_tasks: link_files.yml
+- import_tasks: link_files.yml
   when: ansible_distribution == "MacOSX"  # TODO: Or Linux
-- include_tasks: copy_files.yml
+- import_tasks: copy_files.yml
   when: ansible_distribution == "OSMC" or ansible_distribution == "Amazon"
 
 - name: "bash-powerline: Get latest"

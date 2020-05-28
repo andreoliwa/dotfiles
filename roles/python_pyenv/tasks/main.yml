@@ -1,5 +1,5 @@
 # We need this for pyenv to work under xonsh (until my fork is finished, approved and merged; it's not ready for a pull request yet)
-- include_tasks: xonsh_hack.yml
+- import_tasks: xonsh_hack.yml
   when: "'xonsh' in ansible_user_shell"
 
 - name: Check if pytest.ini file exists
@@ -19,8 +19,8 @@
     state: link
 
 # https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14
-- include_tasks: python3.yml
-- include_tasks: python2.yml
+- import_tasks: python3.yml
+- import_tasks: python2.yml
 
 - name: "pipx: Upgrade all packages"
   command: "pipx upgrade-all --verbose"
@@ -35,4 +35,4 @@
     - "{{ latest_python_3_7.stdout }}"
     - "{{ latest_python_2_7.stdout }}"
 
-- include_tasks: pycharm.yml
+- import_tasks: pycharm.yml

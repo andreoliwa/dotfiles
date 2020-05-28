@@ -3,7 +3,7 @@
   changed_when: false
 
 - name: Homebrew
-  include_tasks: brew.yml
+  import_tasks: brew.yml
 
 - name: Tap into homebrew/cask-fonts
   homebrew_tap: tap=homebrew/cask-fonts state=present
@@ -12,10 +12,10 @@
   homebrew_tap: tap=homebrew/cask-versions state=present
 
 - name: Homebrew Cask
-  include_tasks: cask.yml
+  import_tasks: cask.yml
 
 - name: Mac App Store
-  include_tasks: mac_app_store.yml
+  import_tasks: mac_app_store.yml
 
 - name: Brew cleanup
   command: brew cleanup

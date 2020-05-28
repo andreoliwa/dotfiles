@@ -1,4 +1,4 @@
-- include_tasks: "install.yml"
+- import_tasks: "install.yml"
 
 - name: Link xonshrc file
   file:
@@ -21,10 +21,10 @@
   become: true
   tags: bootstrap
 
-- include_tasks: "default_shell.yml"
+- import_tasks: "default_shell.yml"
   tags: bootstrap
 
-- include_tasks: "xontribs.yml"
+- import_tasks: "xontribs.yml"
 
 - name: Link global .autoxsh file
   file:
@@ -32,5 +32,5 @@
     dest: "{{ dotfiles_user_home }}/.autoxsh"
     state: link
 
-- include_tasks: xonsh_hack.yml
+- import_tasks: xonsh_hack.yml
   when: "'xonsh' in ansible_user_shell"

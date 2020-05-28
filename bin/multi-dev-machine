@@ -42,6 +42,9 @@ def main():
     parser = argparse.ArgumentParser(
         description="run an Ansible playbook to setup a similar dev machine in multiple operating systems"
     )
+    parser.add_argument(
+        "--task", "-t", dest="task", metavar="START_AT_TASK", help="start the playbook at this task",
+    )
     parser.add_argument("--debug", "-d", action="store_true", help="debug mode")
     parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
     parser.add_argument("--bootstrap", "-b", action="store_true", help="bootstrap the dev machine")
@@ -95,15 +98,35 @@ def main():
     if tags_with_comma:
         os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
 
-    chosen_task = ""  # TODO accept as argument and use fzf to choose multiple tasks
-    start_at_task_option = " --start-at-task {!r}".format(chosen_task) if chosen_task else ""
     playbook_file = "raspberry_pi" if args.rpi else "local"
+    command_parts = [
+        "ansible-playbook",
+        # https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords
+        "--vault-id dotfiles@~/.config/dotfiles/vault_password.txt",
+        "--inventory ~/dotfiles/hosts",
+        "~/dotfiles/playbook_{}.yml".format(playbook_file),
+    ]
 
-    # https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords
-    playbook_command = (
-        "ansible-playbook --vault-id dotfiles@~/.config/dotfiles/vault_password.txt"
-        + " --inventory ~/dotfiles/hosts{} ~/dotfiles/playbook_{}.yml".format(start_at_task_option, playbook_file)
-    )
+    if args.task:
+        fzf_parts = command_parts.copy()
+        fzf_parts.extend(
+            [
+                "--list-tasks",
+                "2>/dev/null",
+                "| tail -n +6",
+                "| fzf --select-1 --exit-0 --height=20% --cycle",
+                "--query={!r}".format(args.task),
+            ]
+        )
+        selected = shell(" ".join(fzf_parts), quiet=True, return_lines=True)
+        if not selected:
+            print("No task was chosen")
+            sys.exit(-1)
+        role_task = selected[0].split("\t")[0]
+        chosen_task = role_task.split(":", 1)[1].strip()
+        command_parts.append("--start-at-task {!r}".format(chosen_task))
+
+    playbook_command = " ".join(command_parts)
     if args.virtual_machine:
         print("Provisioning the Vagrant virtual machine {}...".format(args.virtual_machine))
         if args.reload:

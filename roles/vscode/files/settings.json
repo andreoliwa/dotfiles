@@ -87,5 +87,6 @@
       "query": "state:open repo:${owner}/${repository} sort:updated-desc"
     }
   ],
-  "ansibleVaultInline.keyfile": "~/.config/dotfiles/vault_password.txt"
+  "ansibleVaultInline.keyfile": "~/.config/dotfiles/vault_password.txt",
+  "editor.rulers": [80, 120]
 }

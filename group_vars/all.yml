@@ -282,6 +282,7 @@ vscode_extensions:
     - ms-azuretools.vscode-docker
     - wolfmah.ansible-vault-inline
     - mauve.terraform
+    - redhat.vscode-yaml
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

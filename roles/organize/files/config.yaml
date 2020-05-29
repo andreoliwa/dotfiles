@@ -1,6 +1,6 @@
 # https://organize.readthedocs.io/en/latest/page/config.html#configuration
 download_folders: &download
-  - ~/OneDrive/Shared_Downloads/
+  - ~/OneDrive/Apps/Mayan/Staging/Shared_Downloads/
   - ~/Downloads/
 
 rules:

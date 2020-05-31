@@ -28,7 +28,8 @@
     "*.xsh.link": "shellscript",
     "*.ktr": "xml",
     "*.kjb": "xml",
-    "*.drawio": "xml"
+    "*.drawio": "xml",
+    "**/.ssh/config": "shellscript"
   },
   "diffEditor.ignoreTrimWhitespace": false,
   "extensions.ignoreRecommendations": false,

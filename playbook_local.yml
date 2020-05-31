@@ -36,5 +36,4 @@
     # Personal and last
     - { role: organize, tags: ["organize"] }
     - { role: personal, tags: ["personal"] }
-    - { role: redmine, tags: ["redmine"] }
     - { role: backup, tags: ["backup"] }

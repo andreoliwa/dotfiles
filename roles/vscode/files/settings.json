@@ -26,7 +26,6 @@
     "**/inventory/*/*": "ansible",
     "*.xsh": "shellscript",
     "*.xsh.link": "shellscript",
-    "**/dotfiles/group_vars/local": "yaml",
     "*.ktr": "xml",
     "*.kjb": "xml",
     "*.drawio": "xml"

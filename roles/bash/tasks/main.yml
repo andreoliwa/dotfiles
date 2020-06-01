@@ -9,13 +9,16 @@
   when: ansible_os_family == "Debian"
 - import_tasks: install_osmc.yml
   when: ansible_os_family == "OSMC"
+# TODO: direnv is not yet available for RedHat: https://direnv.net/docs/installation.html#from-system-packages
+# - import_tasks: install_redhat.yml
+#   when: ansible_os_family == "RedHat"
 
 # To check the distribution on the local machine:
 # ansible -m setup localhost | rg 'distribution"'
 - import_tasks: link_files.yml
   when: ansible_distribution == "MacOSX"  # TODO: Or Linux
 - import_tasks: copy_files.yml
-  when: ansible_distribution == "OSMC" or ansible_distribution == "Amazon"
+  when: ansible_distribution in ("OSMC", "Amazon")
 
 - name: "bash-powerline: Get latest"
   get_url:
@@ -48,10 +51,11 @@
 - name: "Install/upgrade pip and pyyaml"
   # The pip module doesn't install pyyaml the place the script needs
   command: "/usr/bin/env python3 -m pip install -U pip pyyaml"
+  when: ansible_distribution != "Amazon"
 
 - name: "Create cached script that will be sourced on .bashrc"
   command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
-  when: ansible_os_family != "OSMC"
+  when: ansible_distribution not in ("OSMC", "Amazon")
 
 - name: "Add content to .bashrc"
   blockinfile:

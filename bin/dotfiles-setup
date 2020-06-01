@@ -67,7 +67,7 @@ def main():
         metavar="VIRTUAL MACHINE",
         help="provision a Vagrant virtual machine",
     )
-    parser.add_argument("--reload", "-r", action="store_true", help="reload the VM")
+    parser.add_argument("--reload", "-l", action="store_true", help="reload the VM")
     parser.add_argument(
         "--gui",
         "--ui",
@@ -77,7 +77,7 @@ def main():
     )
     parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
     parser.add_argument("--sudo", action="store_true", help="ask become password (required for some roles)")
-    parser.add_argument("--rpi", action="store_true", help="setup the Raspberry Pi")
+    parser.add_argument("--remote", "-r", choices=["pi", "aws"], help="setup remote servers (Raspberry Pi and AWS)")
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
 
@@ -109,15 +109,22 @@ def main():
     if tags_with_comma:
         os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
 
-    playbook_file = "raspberry_pi" if args.rpi else "local"
-    command_parts = [
-        "ansible-playbook",
-        "-e ansible_python_interpreter={}".format(get_python()),
-        # https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords
-        "--vault-id dotfiles@~/.config/dotfiles/vault_password.txt",
-        "--inventory ~/dotfiles/hosts",
-        "~/dotfiles/playbook_{}.yml".format(playbook_file),
-    ]
+    playbook_file = args.remote or "local"
+    command_parts = ["ansible-playbook"]
+
+    # Find the correct interpreter only on localhost,
+    # otherwise it fails with error: "The following modules failed to execute: setup"
+    if not args.remote:
+        command_parts.append("-e ansible_python_interpreter={}".format(get_python()))
+
+    command_parts.extend(
+        [
+            # https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords
+            "--vault-id dotfiles@~/.config/dotfiles/vault_password.txt",
+            "--inventory ~/dotfiles/hosts",
+            "~/dotfiles/playbook_{}.yml".format(playbook_file),
+        ]
+    )
 
     if args.task:
         fzf_parts = command_parts.copy()

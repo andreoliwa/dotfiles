@@ -1,0 +1,4 @@
+# TODO: direnv is not yet available for RedHat: https://direnv.net/docs/installation.html#from-system-packages
+# - name: "direnv: Install with yum"
+#   yum: name=direnv state=latest
+#   become: true

@@ -1,4 +1,5 @@
-rpi_apt_packages:
+# APT packages that don't get installed by a role
+apt_packages:
   - lsb-release
   - htop
   - lsof

@@ -1,0 +1,6 @@
+- name: Set up the Raspberry Pi
+  hosts: pi
+  roles:
+    # Tag each role so that we can select individual roles to run with ansible-playbook --tags
+    - { role: bash, tags: ["bash"] }
+    - { role: remote-server, tags: ["remote", "pi"] }

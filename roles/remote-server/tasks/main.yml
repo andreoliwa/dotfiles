@@ -1,0 +1,20 @@
+- name: "Install apt packages"
+  apt: name="{{ apt_packages }}" state=latest
+  become: true
+  when: "ansible_distribution == 'OSMC' and 'apt_packages' | run_only_after"
+
+- name: Clone container-apps
+  git:
+    repo: https://github.com/andreoliwa/container-apps
+    dest: ~/container-apps
+    clone: yes
+    update: yes
+  when: ansible_distribution == "Amazon"
+
+- name: Clone container-apps-private
+  git:
+    repo: git@github.com:andreoliwa/container-apps-private.git
+    dest: ~/container-apps-private
+    clone: yes
+    update: yes
+  when: ansible_distribution == "OSMC"

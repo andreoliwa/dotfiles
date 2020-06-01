@@ -29,7 +29,8 @@
     "*.ktr": "xml",
     "*.kjb": "xml",
     "*.drawio": "xml",
-    "**/.ssh/config": "shellscript"
+    "**/.ssh/config": "shellscript",
+    "hosts": "ini"
   },
   "diffEditor.ignoreTrimWhitespace": false,
   "extensions.ignoreRecommendations": false,

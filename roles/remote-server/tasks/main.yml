@@ -3,6 +3,12 @@
   become: true
   when: "ansible_distribution == 'OSMC' and 'apt_packages' | run_only_after"
 
+- name: "Create ~/OneDrive/Backup"
+  file:
+    state: directory
+    path: ~/OneDrive/Backup
+  when: ansible_distribution == "Amazon"
+
 - name: Clone container-apps
   git:
     repo: https://github.com/andreoliwa/container-apps

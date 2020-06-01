@@ -92,3 +92,10 @@
       # Source all scripts. To regenerate this .sh file, run:
       # dotfiles-cache-shell-scripts bash
       test -f ~/.cache/dotfiles/cached_script.sh && source ~/.cache/dotfiles/cached_script.sh
+
+- name: "Add .local/bin to PATH"
+  lineinfile:
+    path: ~/.bashrc
+    state: present
+    line: 'export PATH="$HOME/.local/bin:$PATH"'
+  when: ansible_distribution == "Amazon"

@@ -67,6 +67,17 @@ module.exports = {
       ]),
       browser: "Brave Browser Dev",
     },
+    // Work apps
+    {
+      // https://github.com/johnste/finicky/wiki/Configuration-ideas#matching-an-array-of-multiple-apps
+      // https://github.com/johnste/finicky#advanced-usage
+      match: ({ sourceBundleIdentifier }) =>
+        [
+          // Slack
+          "com.tinyspeck.slackmacgap",
+        ].includes(sourceBundleIdentifier),
+      browser: "Brave Browser Dev",
+    },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-spotify-links-in-spotify-app
       match: finicky.matchDomains("open.spotify.com"),

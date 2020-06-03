@@ -21,7 +21,7 @@ rules:
   # Receipts
   - folders: ~/OneDrive/Apps/Mayan/staging/Deutsch
     filters:
-      - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann)"
+      - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann|Penny|Budni)"
     actions:
       - move: "~/OneDrive/Apps/Mayan/staging/Deutsch/Receipt/{filecontent.store}/"
   # Invoices
@@ -42,7 +42,7 @@ rules:
             - ird11
           case_sensitive: false
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Investimentos/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Cabinets/Investimentos/"
   - folders: *download
     filters:
       - filename:
@@ -52,7 +52,7 @@ rules:
             - rico
           case_sensitive: false
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Investimentos/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Cabinets/Investimentos/"
   - folders: *download
     filters:
       - filename:

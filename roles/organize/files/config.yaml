@@ -2,6 +2,15 @@
 download_folders: &download
   - ~/OneDrive/Apps/Mayan/Staging/Shared_Downloads/
   - ~/Downloads/
+  - ~/OneDrive/Apps/Mayan/staging/Deutsch
+  - ~/OneDrive/Apps/Mayan/staging/Portugues
+
+slugify_folders: &slugify
+  - ~/Documents
+  - ~/Downloads/
+  - ~/Desktop/
+  - ~/OneDrive/
+  - ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
 
 rules:
   # Hack to call rename-slugify only once.
@@ -13,19 +22,28 @@ rules:
       - filename:
           startswith: .keep
     actions:
-      - shell: "find ~/Downloads ~/Desktop ~/OneDrive -type f -name .DS_Store -print -delete"
-      - shell: "find ~/Downloads ~/Desktop ~/OneDrive -type d -mindepth 1 -empty -print -delete"
+      - shell: "fd -uu -0 -tf .DS_Store ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
+      - shell: "fd -uu -0 -te -td --min-depth 1 . ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -rv"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
-      - shell: "rename-slugify -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/Mayan/lib -x ~/OneDrive/Apps/Redmine -x ~/OneDrive/Code/ --yes ~/Downloads/ ~/Desktop/ ~/OneDrive/"
+      - shell: "rename-slugify -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/Mayan/lib -x ~/OneDrive/Apps/Redmine -x ~/OneDrive/Code/ --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
+  # TODO: the search is slow. Suggest using find/fd instead?
+  # TODO: This filter below doesn't work, nothing is found. Open a bug on organize?
+  # - folders: *slugify
+  #   subfolders: true
+  #   filters:
+  #     - filename:
+  #         startswith: .DS_Store
+  #   actions:
+  #     - trash
   # Receipts
-  - folders: ~/OneDrive/Apps/Mayan/staging/Deutsch
+  - folders: *download
     filters:
       - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann|Penny|Budni)"
     actions:
       - move: "~/OneDrive/Apps/Mayan/staging/Deutsch/Receipt/{filecontent.store}/"
   # Invoices
-  - folders: ~/OneDrive/Apps/Mayan/staging/Deutsch
+  - folders: *download
     filters:
       - filecontent: "(Rechnung)"
     actions:

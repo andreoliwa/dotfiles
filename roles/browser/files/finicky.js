@@ -1,5 +1,6 @@
 module.exports = {
-  defaultBrowser: "Brave Browser",
+  // Using the unstable browser for personal purposes, and the stable one for work
+  defaultBrowser: "Brave Browser Dev",
   rewrite: [
     // {
     //   // https://github.com/johnste/finicky/wiki/Configuration-ideas#force-https-for-all-urls
@@ -52,7 +53,7 @@ module.exports = {
         /cloudflare.com/,
         /newrelic.com/,
       ],
-      browser: "Brave Browser Dev",
+      browser: "Brave Browser",
     },
     {
       match: finicky.matchDomains([
@@ -65,7 +66,7 @@ module.exports = {
         /.*atlassian\.(com|net)$/,
         /.*atl-paas.net/,
       ]),
-      browser: "Brave Browser Dev",
+      browser: "Brave Browser",
     },
     // Work apps
     {
@@ -76,12 +77,17 @@ module.exports = {
           // Slack
           "com.tinyspeck.slackmacgap",
         ].includes(sourceBundleIdentifier),
-      browser: "Brave Browser Dev",
+      browser: "Brave Browser",
     },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-spotify-links-in-spotify-app
       match: finicky.matchDomains("open.spotify.com"),
       browser: "Spotify",
+    },
+    {
+      // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-zoom-links-in-zoom-app
+      match: /zoom.us\/j\//,
+      browser: "us.zoom.xos",
     },
   ],
 };

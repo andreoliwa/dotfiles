@@ -2,6 +2,11 @@
   set_fact:
     personal_role_path: "{{ role_path }}"
 
+# My private scripts toolbox
+- include_role: name=python_repo
+  vars:
+    repo: "git@github.com:andreoliwa/toolbox.git"
+
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/nitpick.git"
@@ -30,7 +35,7 @@
 # Editable mode (-e) not working anymore with pipx, since I removed setup.py:
 # ERROR: File "setup.py" not found. Directory cannot be installed in editable mode: /Users/aa/Code/python-clib
 # (A "pyproject.toml" file was found, but editable mode currently requires a setup.py based build.)
-- name: "clib: Install in editable mode: pipx install {{ project_root }}/python-clib/"
+- name: "clib: Install with: pipx install {{ project_root }}/python-clib/"
   command: "pipx install {{ project_root }}/python-clib/"
 
 - include_role: name=python_repo
@@ -48,6 +53,11 @@
     repo: "git@github.com:andreoliwa/germanize-telegram.git"
 
 - import_tasks: vault_projects.yml
+  when: not ansible_env.COMPANY_LAPTOP
+
+- import_tasks: vault_sennder.yml
+  when: ansible_env.COMPANY_LAPTOP
+
 - import_tasks: vault_not_company.yml
   when: not ansible_env.COMPANY_LAPTOP
 

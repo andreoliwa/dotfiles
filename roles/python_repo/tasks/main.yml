@@ -1,4 +1,4 @@
-- name: "{{ dir }}: git clone {{ repo }} {{ root }}/{{ dir }} (update: {{ update }})"
+- name: "{{ dir }}: git clone {{ repo }} {{ root }}{{ dir }} (update: {{ update }})"
   git:
     repo: "{{ repo }}"
     dest: "{{ root }}/{{ dir }}"
@@ -25,8 +25,18 @@
     name: "user.email"
     value: "{{ user_email }}"
 
+- name: Check if pyproject.toml exists in this repo
+  stat:
+    path: "{{ root }}/{{ dir }}/pyproject.toml"
+  register: pyproject_toml
+
+- name: Check if requirements.txt exists in this repo
+  stat:
+    path: "{{ root }}/{{ dir }}/requirements.txt"
+  register: requirements_txt
+
 - name: "{{ dir }}: Create a Poetry virtualenv for {{ env }} with Python {{ python_version }}"
-  when: python_version != ''
+  when: python_version != '' and pyproject_toml.stat.exists and not requirements_txt.stat.exists
   command: "poetry env use {{ pyenv_root }}/versions/{{ python_version }}/bin/python"
   args:
     chdir: "{{ root }}/{{ dir }}"
@@ -63,7 +73,15 @@
     block: |
       export PYTHONWARNINGS=
       pyenv version
-      poetry env info
+
+- name: "{{ dir }}: Fill .envrc for poetry"
+  lineinfile:
+    path: "{{ root }}/{{ dir }}/.envrc"
+    state: present
+    insertafter: EOF
+    regexp: "poetry env"
+    line: "poetry env info"
+  when: python_version != '' and pyproject_toml.stat.exists and not requirements_txt.stat.exists
 
 - name: "{{ dir }}: Allow .envrc"
   when: python_version != ''

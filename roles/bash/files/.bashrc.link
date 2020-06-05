@@ -42,6 +42,9 @@ export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 test -f ~/.cache/dotfiles/cached_script.sh && source ~/.cache/dotfiles/cached_script.sh
 #################### END CREATED BY ANSIBLE - DON'T EDIT MANUALLY ####################
 
+# Add my private script toolbox as last on the PATH
+test -d ~/Code/toolbox/bin && export PATH="$PATH:~/Code/toolbox/bin"
+
 # Increase Bash history size
 # https://unix.stackexchange.com/questions/20861/is-there-a-way-to-set-the-size-of-the-history-list-in-bash-to-more-than-5000-lin#20925
 export HISTSIZE=100000

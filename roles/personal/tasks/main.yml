@@ -2,10 +2,6 @@
   set_fact:
     personal_role_path: "{{ role_path }}"
 
-- name: "gitup: Update project root"
-  command: "gitup {{ project_root }}"
-  when: "'gitup_update_project' | run_only_after"
-
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/nitpick.git"
@@ -54,3 +50,8 @@
 - import_tasks: vault_projects.yml
 - import_tasks: vault_not_company.yml
   when: not ansible_env.COMPANY_LAPTOP
+
+# This can be slow; updates can be done on a as-needed basis, for each individual repo
+- name: "gitup: Update project root (for git projects that were not updated above)"
+  command: "gitup {{ project_root }}"
+  when: "'gitup_update_project' | run_only_after"

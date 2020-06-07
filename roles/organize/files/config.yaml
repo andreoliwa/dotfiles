@@ -39,9 +39,9 @@ rules:
   # Receipts
   - folders: *download
     filters:
-      - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann|Penny|Budni)"
+      - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann|Penny|Budni|LPG Biomarkt)"
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Deutsch/Receipt/{filecontent.store}/"
+      - move: "~/OneDrive/Apps/Mayan/staging/Companies/{filecontent.store}/Receipt/"
   # Invoices
   - folders: *download
     filters:

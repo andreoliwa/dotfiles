@@ -20,8 +20,3 @@ alias update!='sudo softwareupdate -i -a; brew update; brew upgrade; \
 alias cleanup!='brew cleanup --force; brew cask cleanup;'
 
 alias sleep!="pmset sleepnow"
-
-# See `brew info mysql-client` and see https://pypi.org/project/mysqlclient/
-if [[ $OSTYPE == darwin* ]]; then
-    export PATH="$PATH:/usr/local/opt/mysql-client/bin"
-fi

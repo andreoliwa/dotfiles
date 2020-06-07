@@ -267,6 +267,10 @@ rust_binaries:
   # https://github.com/BurntSushi/ripgrep
   - { pkg: ripgrep, bin: rg }
 
+rust_git_repos:
+  - { bin: csv-query, git: https://github.com/jaysonsantos/csv-query-rs }
+  - { bin: toml, git: https://github.com/gnprice/toml-cli }
+
 # To list extensions: code --list-extensions
 vscode_extensions:
   common:

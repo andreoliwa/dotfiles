@@ -1,4 +1,9 @@
-# https://www.jetbrains.com/pycharm/ Community Edition
-- name: Install PyCharm CE for macOS
-  homebrew_cask: name=pycharm-ce state=present
+# https://www.jetbrains.com/pycharm/
+- name: Install PyCharm on macOS
+  homebrew_cask: name=pycharm state=present
+  when: ansible_os_family == "Darwin"
+
+# Company has a license for the Professional Edition
+- name: Remove PyCharm CE on macOS
+  homebrew_cask: name=pycharm-ce state=absent
   when: ansible_os_family == "Darwin"

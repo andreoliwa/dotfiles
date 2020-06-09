@@ -145,17 +145,14 @@ mac_cask_packages:
     - shift # https://tryshift.com/ Freemium: only one free app besides email
     - franz # https://meetfranz.com/ Deceiving freemium: trial for 14 days only, not mentioned when you download the app
     - itau # https://www.itau.com.br/computador/
-    - intellij-idea-ce # IntelliJ IDEA Community Edition https://www.jetbrains.com/idea/
+    - intellij-idea-ce # https://www.jetbrains.com/idea/ IntelliJ IDEA Community Edition
     - powershell # https://github.com/PowerShell/PowerShell
-    - pycharm # https://www.jetbrains.com/pycharm/ License expired
     - vivaldi # https://vivaldi.com/
     - ngrok
     - dashlane # https://www.dashlane.com/
     - gmail-notifier
     - zulip
-    # REST client
-    - insomnia
-    # Vagrant/Virtualbox
+    - insomnia # REST client
     - vagrant
     - virtualbox
   personal_laptop:

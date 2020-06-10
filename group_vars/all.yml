@@ -164,6 +164,7 @@ mac_cask_packages:
     - vlc
   company_laptop:
     - slack # https://slack.com/
+    - bitwarden # https://bitwarden.com/
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -311,3 +312,4 @@ chrome_extensions:
   personal_laptop:
     - "https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde"
   company_laptop:
+    - "https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb/related"

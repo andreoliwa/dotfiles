@@ -61,6 +61,7 @@ mac_homebrew_packages:
     - ipcalc
     - github/gh/gh # GitHub CLI https://github.com/cli/cli
     - go # https://golang.org
+    - speedtest-cli # https://github.com/sivel/speedtest-cli
   remove:
     - heroku/brew/heroku
     - highlight

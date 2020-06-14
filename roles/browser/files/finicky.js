@@ -78,6 +78,11 @@ module.exports = {
       ]),
       browser: "Brave Browser",
     },
+    // Work parameters on the query string
+    {
+      match: ({ url }) => url.search.includes(["sennder", "eatfirst"]),
+      browser: "Brave Browser",
+    },
     // Work apps
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#matching-an-array-of-multiple-apps

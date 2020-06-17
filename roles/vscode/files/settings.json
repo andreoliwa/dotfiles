@@ -30,7 +30,8 @@
     "*.kjb": "xml",
     "*.drawio": "xml",
     "**/.ssh/config": "shellscript",
-    "hosts": "ini"
+    "hosts": "ini",
+    "Makefile*": "makefile"
   },
   "diffEditor.ignoreTrimWhitespace": false,
   "extensions.ignoreRecommendations": false,

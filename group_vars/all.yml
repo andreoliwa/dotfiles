@@ -286,6 +286,7 @@ vscode_extensions:
     - wolfmah.ansible-vault-inline
     - mauve.terraform
     - redhat.vscode-yaml
+    - grapecity.gc-excelviewer
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

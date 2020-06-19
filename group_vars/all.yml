@@ -62,6 +62,8 @@ mac_homebrew_packages:
     - github/gh/gh # GitHub CLI https://github.com/cli/cli
     - go # https://golang.org
     - speedtest-cli # https://github.com/sivel/speedtest-cli
+    - procs # https://lib.rs/crates/procs
+    - dust # https://lib.rs/crates/du-dust
   remove:
     - heroku/brew/heroku
     - highlight
@@ -309,7 +311,7 @@ chrome_extensions:
     - https://chrome.google.com/webstore/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd
     - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     - https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
-    - https://www.crx4chrome.com/crx/3417/ # Copy as markdown
+    - https://www.crx4chrome.com/crx/3417/ # Copy as markdown - it's not on the Chrome Store: https://github.com/chitsaou/copy-as-markdown/issues/84
   remove:
   personal_laptop:
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde

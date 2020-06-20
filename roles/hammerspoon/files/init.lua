@@ -73,6 +73,7 @@ config_screen(horizontal_screen_center, {
     {"PyCharm", nil, hs.layout.maximized},
     {"App Store", nil, hs.layout.maximized},
     {"TogglDesktop", nil, hs.layout.right30},
+    {"VLC", nil, hs.layout.maximized},
 })
 
 config_screen(laptop_screen_right, {

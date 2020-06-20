@@ -8,6 +8,10 @@
 
 hs.window.animationDuration = 0
 
+-- Reload config with function key
+-- http://www.hammerspoon.org/docs/hs.hotkey.html#bind
+hs.hotkey.bind(nil, 'f15', 'Config reloaded', hs.reload, nil, nil)
+
 -- http://www.hammerspoon.org/docs/hs.application.html#find
 -- To find an application, run this on the console:
 -- hs.application.find('brave')
@@ -36,8 +40,17 @@ local window_layout = {}
 
 function config_screen(screen, apps)
     for index, tuple in pairs(apps) do
-        config = {tuple[1], tuple[2], screen, tuple[3], nil, nil}
+        local app_name = tuple[1]
+        local config = {app_name, tuple[2], screen, tuple[3], nil, nil}
         table.insert(window_layout, config)
+
+        -- Find and activate the application window (layout only works on visible/activated windows)
+        if app_name ~= nil then
+            app = hs.application.find(app_name)
+            if app ~= nil then
+                app:activate()
+            end
+        end
     end
 end
 

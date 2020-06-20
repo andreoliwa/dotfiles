@@ -946,7 +946,7 @@
 	<key>NoSyncLastTipTime</key>
 	<real>595272571.69927895</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>132</integer>
+	<integer>133</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1903,7 +1903,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-06-18T17:14:09Z</date>
+	<date>2020-06-20T17:14:14Z</date>
 	<key>SUUpdateGroupIdentifier</key>
 	<integer>331112895</integer>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -1911,6 +1911,8 @@
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SoundForEsc</key>
+	<false/>
+	<key>SwapFindNextPrevious</key>
 	<false/>
 	<key>UKCrashReporterLastCrashReportDate</key>
 	<real>1573123584</real>

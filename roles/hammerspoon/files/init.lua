@@ -12,6 +12,10 @@ hs.window.animationDuration = 0
 -- http://www.hammerspoon.org/docs/hs.hotkey.html#bind
 hs.hotkey.bind(nil, 'f15', 'Config reloaded', hs.reload, nil, nil)
 
+-- https://github.com/scottwhudson/Lunette
+hs.loadSpoon("Lunette")
+spoon.Lunette:bindHotkeys()
+
 -- http://www.hammerspoon.org/docs/hs.application.html#find
 -- To find an application, run this on the console:
 -- hs.application.find('brave')

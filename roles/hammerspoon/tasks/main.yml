@@ -13,3 +13,19 @@
     src: "{{ role_path }}/files/init.lua"
     dest: "~/.hammerspoon/init.lua"
     state: link
+
+- name: "Create ~/.hammerspoon/Spoons"
+  file:
+    state: directory
+    path: ~/.hammerspoon/Spoons
+
+- name: Clone Lunette
+  git:
+    repo: https://github.com/scottwhudson/Lunette
+    dest: "~/.hammerspoon/Lunette"
+
+- name: "Link Lunette spoon"
+  file:
+    src: ~/.hammerspoon/Lunette/Source/Lunette.spoon
+    dest: ~/.hammerspoon/Spoons/Lunette.spoon
+    state: link

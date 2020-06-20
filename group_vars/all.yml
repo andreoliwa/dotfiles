@@ -107,7 +107,6 @@ mac_cask_packages:
     - iterm2
     - keepingyouawake # maintained caffeinate wrapper
     - appcleaner
-    - spectacle
     - the-unarchiver
     - authy # https://authy.com/
     - meld # https://yousseb.github.io/meld/
@@ -158,6 +157,7 @@ mac_cask_packages:
     - insomnia # REST client
     - vagrant
     - virtualbox
+    - spectacle
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/

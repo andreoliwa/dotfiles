@@ -223,7 +223,7 @@ python3_modules:
     - howdoi # https://pypi.org/project/howdoi/
     - identify # https://github.com/chriskuehl/identify
     - keyring # https://pypi.org/project/keyring/
-    - organize-tool # https://pypi.org/project/organize-tool/
+    - organize-tool # https://github.com/tfeldmann/organize
     - pre-commit # https://pre-commit.com/
     - pgcli # https://github.com/dbcli/pgcli
   remove:

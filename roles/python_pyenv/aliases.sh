@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alias jpnb="jupyter notebook"
 alias pyserv2="python2 -m SimpleHTTPServer"
 alias pyserv="python3 -m http.server"
@@ -5,7 +6,8 @@ alias nt="nosetests"
 alias mn="python manage.py"
 alias ipy="ipython"
 
-alias getpip="wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm get-pip.py"
+alias getpip="wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py \
+&& rm get-pip.py"
 
 alias pf='pip freeze'
 
@@ -16,9 +18,9 @@ alias pv='pyenv version'
 alias pvs='pyenv versions --bare'
 alias f="flask"
 
-function ve() {
-    echo PYENV_VERSION: ${PYENV_VERSION-<undefined>}
-    echo VIRTUAL_ENV: ${VIRTUAL_ENV-<undefined>}
+function ve {
+    echo PYENV_VERSION: "${PYENV_VERSION-<undefined>}"
+    echo VIRTUAL_ENV: "${VIRTUAL_ENV-<undefined>}"
     echo pyenv version:
     pyenv version
 }
@@ -27,3 +29,5 @@ alias p='poetry'
 alias px='poetry run'
 alias pp='poetry run python'
 alias pu='poetry update'
+
+alias makenitpick="make -f ~/Code/nitpick/Makefile.projects "

@@ -18,8 +18,8 @@
     - { role: vim, tags: ["vim"] }
     - { role: bat, tags: ["bat"] }
     - { role: tmux, tags: ["tmux"] }
-    - { role: hammerspoon, tags: ["hammerspoon", "hammer"] }
-    - { role: todoist, tags: ["todoist", "todo"] }
+    - { role: hammerspoon, tags: ["hammerspoon"] }
+    - { role: todoist, tags: ["todoist"] }
 
     # Languages
     - { role: python_pyenv, tags: ["python"] }

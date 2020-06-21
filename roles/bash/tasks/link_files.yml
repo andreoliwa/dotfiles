@@ -1,23 +1,32 @@
-- name: "Link .bash_profile file"
+- name: "Link .bash_profile"
   file:
-    src: "{{ role_path }}/files/.bash_profile.link"
+    src: "{{ role_path }}/files/.bash_profile.sh"
     dest: ~/.bash_profile
     state: link
     force: yes
     follow: false
 
-- name: "Link .bashrc file"
+- name: "Link .bashrc"
   file:
-    src: "{{ role_path }}/files/.bashrc.link"
+    src: "{{ role_path }}/files/.bashrc.sh"
     dest: ~/.bashrc
     state: link
     force: yes
     follow: false
 
-- name: "Link .inputrc file"
+- name: "Link .inputrc"
   file:
-    src: "{{ role_path }}/files/.inputrc.link"
+    src: "{{ role_path }}/files/.inputrc.sh"
     dest: ~/.inputrc
+    state: link
+    force: yes
+    follow: false
+
+- name: "Link dotfiles-bash-completion.sh"
+  file:
+    src: "{{ role_path }}/files/dotfiles-bash-completion.sh"
+    # Destination should have been $(brew --prefix), which usually points to /usr/local
+    dest: "/usr/local/etc/bash_completion.d/dotfiles-bash-completion.sh"
     state: link
     force: yes
     follow: false

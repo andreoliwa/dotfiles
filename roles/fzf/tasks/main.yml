@@ -1,2 +1,5 @@
 - name: Install fzf with Homebrew
   homebrew: name=fzf state=latest
+
+- name: "Enable fuzzy auto-completion and key bindings"
+  command: "/usr/local/opt/fzf/install"

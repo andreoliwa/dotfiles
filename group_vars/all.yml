@@ -38,7 +38,8 @@ mac_homebrew_packages:
     - bash
     - bash-completion2 # https://github.com/scop/bash-completion
     - curl
-    - jq
+    - jq # https://github.com/stedolan/jq
+    - python-yq # https://github.com/kislyuk/yq#installation
     - wget
     - terminal-notifier
     - htop-osx

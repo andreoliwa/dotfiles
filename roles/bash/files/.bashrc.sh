@@ -58,15 +58,15 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 export EDITOR=vim
 
 # https://docs.brew.sh/Shell-Completion
-if [[ $OSTYPE == darwin* ]]; then
-    HOMEBREW_PREFIX=$(brew --prefix)
-    if type brew &>/dev/null; then
-        if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
-            source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
-        else
-            for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
-                [[ -r "$COMPLETION" ]] && source "$COMPLETION"
-            done
-        fi
+if type brew &>/dev/null; then
+    if [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]; then
+        source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+    else
+        for COMPLETION in "$(brew --prefix)/etc/bash_completion.d/"*; do
+            [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+        done
     fi
 fi
+
+# Taken from 'brew info fzf':
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

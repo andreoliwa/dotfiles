@@ -309,3 +309,7 @@ augroup END
 set guifont=Hack:h12
 " Hide scrollbars and menu
 set guioptions-=T guioptions-=R guioptions-=r guioptions-=m guioptions-=l guioptions-=L
+
+" Taken from `brew info fzf`:
+" To use fzf in Vim, add the following line to your .vimrc:
+set rtp+=/usr/local/opt/fzf

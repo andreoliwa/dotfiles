@@ -1,0 +1,13 @@
+# https://github.com/sachaos/todoist#homebrew-mac-os
+- name: Tap into sachaos/todoist
+  homebrew_tap: tap=sachaos/todoist state=present
+- name: Install sachaos/todoist with Homebrew
+  homebrew: name=todoist state=latest
+
+# https://github.com/sachaos/todoist#config
+- name: "Copy .todoist.config.json"
+  copy:
+    src: "{{ role_path }}/files/vault.todoist.config.json"
+    dest: ~/.todoist.config.json
+    mode: '0600'
+    force: true

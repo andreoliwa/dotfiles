@@ -65,6 +65,7 @@ mac_homebrew_packages:
     - speedtest-cli # https://github.com/sivel/speedtest-cli
     - procs # https://lib.rs/crates/procs
     - dust # https://lib.rs/crates/du-dust
+    - shellcheck # https://github.com/koalaman/shellcheck#installing
   remove:
     - heroku/brew/heroku
     - highlight

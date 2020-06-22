@@ -12,6 +12,11 @@
     mode: '0600'
     force: true
 
+- name: Clone todoist-cli
+  git:
+    repo: git@github.com:andreoliwa/todoist.git
+    dest: "{{ project_root }}/todoist"
+
 - name: "Get brew prefix"
   command: "brew --prefix"
   register: brew_prefix

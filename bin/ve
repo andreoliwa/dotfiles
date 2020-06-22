@@ -34,3 +34,5 @@ if [ -n "$VIRTUAL_ENV" ]; then
         venv "$(greadlink -f "$VIRTUAL_ENV"/bin/python)" \
         pyenv "$(greadlink -f "$(pyenv which python)")"
 fi
+
+grep -q tool.poetry pyproject.toml 2>/dev/null && poetry env info

@@ -65,6 +65,7 @@
     - "{{ symlink_dir_stat.stat.path }}/*.link"
   when: symlink_dir_stat.stat.exists and symlink_dir_stat.stat.isdir
 
+# https://docs.python.org/3/using/cmdline.html#environment-variables
 - name: "{{ dir }}: Fill .envrc"
   when: python_version != ''
   blockinfile:
@@ -72,16 +73,7 @@
     create: yes
     block: |
       export PYTHONWARNINGS=
-      pyenv version
-
-- name: "{{ dir }}: Fill .envrc for poetry"
-  lineinfile:
-    path: "{{ root }}/{{ dir }}/.envrc"
-    state: present
-    insertafter: EOF
-    regexp: "poetry env"
-    line: "poetry env info"
-  when: python_version != '' and pyproject_toml.stat.exists and not requirements_txt.stat.exists
+      export PYTHONUNBUFFERED=1
 
 - name: "{{ dir }}: Allow .envrc"
   when: python_version != ''

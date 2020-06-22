@@ -6,7 +6,7 @@
   when: ansible_os_family != "Darwin"
 
 - name: "Get latest Python 3.9"
-  shell: "pyenv install --list | grep -i -E ' 3.9[0-9.a]+$' | tr -d ' ' | tail -n 1"
+  shell: "pyenv install --list | egrep -i ' 3.9.[0-9.ab]+$' | tail -n 1 | xargs"
   register: latest_python_3_9
   changed_when: false
 
@@ -15,7 +15,7 @@
     version: "{{ latest_python_3_9.stdout }}"
 
 - name: "Get latest Python 3.8"
-  shell: "pyenv install --list | grep -i -E ' 3.8[0-9.]+$' | tr -d ' ' | tail -n 1"
+  shell: "pyenv install --list | egrep -i ' 3.8[0-9.]+$' | tail -n 1 | xargs"
   register: latest_python_3_8
   changed_when: false
 
@@ -24,7 +24,7 @@
     version: "{{ latest_python_3_8.stdout }}"
 
 - name: "Get latest Python 3.7"
-  shell: "pyenv install --list | grep -i -E ' 3.7[0-9.]+$' | tr -d ' ' | tail -n 1"
+  shell: "pyenv install --list | egrep -i ' 3.7[0-9.]+$' | tail -n 1 | xargs"
   register: latest_python_3_7
   changed_when: false
 
@@ -33,7 +33,7 @@
     version: "{{ latest_python_3_7.stdout }}"
 
 - name: "Get latest Python 3.6"
-  shell: "pyenv install --list | grep -i -E ' 3.6[0-9.]+$' | tr -d ' ' | tail -n 1"
+  shell: "pyenv install --list | egrep -i ' 3.6[0-9.]+$' | tail -n 1 | xargs"
   register: latest_python_3_6
   changed_when: false
 
@@ -42,7 +42,7 @@
     version: "{{ latest_python_3_6.stdout }}"
 
 - name: "Get latest Python 3.5"
-  shell: "pyenv install --list | grep -i -E ' 3.5[0-9.]+$' | tr -d ' ' | tail -n 1"
+  shell: "pyenv install --list | egrep -i ' 3.5[0-9.]+$' | tail -n 1 | xargs"
   register: latest_python_3_5
   changed_when: false
 

@@ -28,7 +28,6 @@
   pyenv:
     subcommand: global
     versions:
-    - system
     - "{{ latest_python_3_8.stdout }}"
     - "{{ latest_python_3_7.stdout }}"
     - "{{ latest_python_3_6.stdout }}"

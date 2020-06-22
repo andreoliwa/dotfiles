@@ -7,6 +7,15 @@
 -- https://github.com/scottwhudson/Lunette
 
 hs.window.animationDuration = 0
+hs.console.clearConsole()
+
+-- http://www.hammerspoon.org/docs/hs.network.configuration.html#open
+computer_name = hs.network.configuration.open():computerName()
+print('Computer name: ' .. computer_name)
+work = string.match(computer_name, 'mac13')
+if work then
+    print('This is the work laptop')
+end
 
 -- Reload config with function key
 -- http://www.hammerspoon.org/docs/hs.hotkey.html#bind
@@ -21,8 +30,13 @@ spoon.Lunette:bindHotkeys()
 -- hs.application.find('brave')
 
 -- http://www.hammerspoon.org/docs/hs.application.html#runningApplications
-for index, app in pairs(hs.application.runningApplications()) do
-    print('App #' .. index .. ': ' .. tostring(app))
+hs.application.enableSpotlightForNameSearches(true)
+for i, app in pairs(hs.application.runningApplications()) do
+    print('App #' .. i .. ': ' .. tostring(app))
+
+    for j, window in pairs(app:allWindows()) do
+        print('    Window #' .. j .. ': ' .. tostring(window))
+    end
 end
 
 -- http://www.hammerspoon.org/docs/hs.screen.html#allScreens
@@ -33,7 +47,7 @@ end
 -- The two external monitors have the same name (HP E241i), so I have to use the UUID instead
 -- If the external monitors are off, fallback to other screens
 local laptop_screen_right = 'Color LCD'
-local horizontal_screen_center = hs.screen.find('565E033B-3870-00DF-A63A-1F5160E08F52') or laptop_screen_right
+local horizontal_screen_center = hs.screen.find('565E033B-3870-00DF-A63A-1F5160E08F52') or hs.screen.find('E225737C-8F00-0D95-82AF-6FBF32B14368') or laptop_screen_right
 local vertical_screen_left = hs.screen.find('7B9820D5-4E5D-A176-973E-790B87B2F4FA') or horizontal_screen_center
 
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
@@ -78,6 +92,7 @@ config_screen(horizontal_screen_center, {
     {"App Store", nil, hs.layout.maximized},
     {"TogglDesktop", nil, hs.layout.right30},
     {"VLC", nil, hs.layout.maximized},
+    {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
 })
 
 config_screen(laptop_screen_right, {

@@ -18,13 +18,6 @@ alias pv='pyenv version'
 alias pvs='pyenv versions --bare'
 alias f="flask"
 
-function ve {
-    echo PYENV_VERSION: "${PYENV_VERSION-<undefined>}"
-    echo VIRTUAL_ENV: "${VIRTUAL_ENV-<undefined>}"
-    echo pyenv version:
-    pyenv version
-}
-
 alias p='poetry'
 alias px='poetry run'
 alias pp='poetry run python'

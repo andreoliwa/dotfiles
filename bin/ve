@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Compare Python versions and virtual envs
+set -e
+
+_BOLD_ON='\e[1m'
+_BOLD_OFF='\e[m'
+
+show() {
+    echo -e "${_BOLD_ON}$1 = ${_BOLD_OFF}$2"
+}
+compare() {
+    if [ "$3" == "$5" ]; then
+        show "$1" "\033[1;32m$2 ($3) == $4 ($5)\033[0m"
+    else
+        show "$1" "\033[1;31m$2 ($3) != $4 ($5)\033[0m"
+    fi
+}
+realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
+show 'pyenv version' "$(pyenv version)"
+show PYENV_VERSION "${PYENV_VERSION-<undefined>}"
+show VIRTUAL_ENV "${VIRTUAL_ENV-<undefined>}"
+show Poetry "$(poetry -V)"
+show 'which python' "$(pyenv which python)"
+show Python "$(python -V)"
+
+if [ -n "$VIRTUAL_ENV" ]; then
+    compare 'Python versions' venv "$("$VIRTUAL_ENV"/bin/python -V)" \
+        pyenv "$(python -V)"
+
+    compare 'Python executable' \
+        venv "$(greadlink -f "$VIRTUAL_ENV"/bin/python)" \
+        pyenv "$(greadlink -f "$(pyenv which python)")"
+fi

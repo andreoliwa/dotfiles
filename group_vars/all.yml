@@ -67,6 +67,7 @@ mac_homebrew_packages:
     - dust # https://lib.rs/crates/du-dust
     - shellcheck # https://github.com/koalaman/shellcheck#installing
     - asciinema # https://github.com/asciinema/asciinema
+    - coreutils # https://www.gnu.org/software/coreutils
   remove:
     - heroku/brew/heroku
     - highlight

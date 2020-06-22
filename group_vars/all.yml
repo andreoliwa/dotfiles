@@ -66,6 +66,7 @@ mac_homebrew_packages:
     - procs # https://lib.rs/crates/procs
     - dust # https://lib.rs/crates/du-dust
     - shellcheck # https://github.com/koalaman/shellcheck#installing
+    - asciinema # https://github.com/asciinema/asciinema
   remove:
     - heroku/brew/heroku
     - highlight

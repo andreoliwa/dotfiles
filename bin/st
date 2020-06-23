@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Wrap speedtest-cli and save results as JSON
+#
+# Sample output of speedtest-cli:
+#
+# Retrieving speedtest.net configuration...
+# Testing from Vodafone Kabel Deutschland (95.91.245.43)...
+# Retrieving speedtest.net server list...
+# Selecting best server based on ping...
+# Hosted by Deutsche Telekom Technik GmbH (Berlin) [3.42 km]: 43.438 ms
+# Testing download speed................................................................................
+# Download: 24.33 Mbit/s
+# Testing upload speed......................................................................................................
+# Upload: 8.99 Mbit/s
+set -e
+JSON_FILE=~/OneDrive/Apps/speedtest/speedtest-$(date +%Y-%m-%dT%H-%M-%S).json
+echo "Running speedtest-cli and saving $JSON_FILE..."
+speedtest-cli --json > "$JSON_FILE"
+
+_info() {
+    jq -r "$1" "$JSON_FILE"
+}
+
+_number() {
+    printf "%.$3f\n" "$(echo "scale=2;$(_info "$1")/$2" | bc)"
+}
+
+echo "Testing from $(_info .client.isp) ($(_info .client.ip))..."
+echo -e "Hosted by $(_info .server.sponsor) ($(_info .server.name))" \
+    "[$(_number .server.d 1 2) km]: $(_info .server.latency) ms"
+echo -e "Download: \033[1;32m$(_number .download 1000000 2)\033[0m Mbit/s"
+echo -e "Upload: \033[1;32m$(_number .upload 1000000 2)\033[0m Mbit/s"

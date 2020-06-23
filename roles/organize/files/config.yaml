@@ -1,9 +1,9 @@
 # https://organize.readthedocs.io/en/latest/page/config.html#configuration
 download_folders: &download
-  - ~/OneDrive/Apps/Mayan/Staging/Shared_Downloads/
   - ~/Downloads/
-  - ~/OneDrive/Apps/Mayan/staging/Deutsch
-  - ~/OneDrive/Apps/Mayan/staging/Portugues
+  - ~/OneDrive/Documents/Mayan_Staging/Shared_Downloads/
+  - ~/OneDrive/Documents/Mayan_Staging/Deutsch
+  - ~/OneDrive/Documents/Mayan_Staging/Portugues
 
 slugify_folders: &slugify
   - ~/Documents
@@ -26,8 +26,7 @@ rules:
       - shell: "fd -uu -0 -te -td --min-depth 1 . ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -rv"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
-      - shell: "rename-slugify -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/Mayan/lib -x ~/OneDrive/Apps/Redmine -x ~/OneDrive/Apps/dontforget -x ~/OneDrive/Code/ --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
-  # TODO: the search is slow. Suggest using find/fd instead?
+      - shell: "rename-slugify -x ~/OneDrive/Documents/Notebook/cv/ -x ~/OneDrive/Documents/Notebook/diary/ -x ~/OneDrive/Documents/Notebook/vscode_notebook/ -x ~/OneDrive/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
   # TODO: This filter below doesn't work, nothing is found. Open a bug on organize?
   # - folders: *slugify
   #   subfolders: true
@@ -41,13 +40,13 @@ rules:
     filters:
       - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann|Penny|Budni|LPG Biomarkt)"
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Companies/{filecontent.store}/Receipt/"
+      - move: "~/OneDrive/Documents/Mayan_Staging/Companies/{filecontent.store}/Receipt/"
   # Invoices
   - folders: *download
     filters:
       - filecontent: "(Rechnung)"
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Deutsch/Invoice/"
+      - move: "~/OneDrive/Documents/Mayan_Staging/Deutsch/Invoice/"
   - folders: *download
     filters:
       - filename:
@@ -60,7 +59,7 @@ rules:
             - ird11
           case_sensitive: false
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Cabinets/Investimentos/"
+      - move: "~/OneDrive/Documents/Mayan_Staging/Cabinets/Investimentos/"
   - folders: *download
     filters:
       - filename:
@@ -70,7 +69,7 @@ rules:
             - rico
           case_sensitive: false
     actions:
-      - move: "~/OneDrive/Apps/Mayan/staging/Cabinets/Investimentos/"
+      - move: "~/OneDrive/Documents/Mayan_Staging/Cabinets/Investimentos/"
   - folders: *download
     filters:
       - filename:

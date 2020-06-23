@@ -316,7 +316,7 @@ chrome_extensions:
     - https://chrome.google.com/webstore/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd
     - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     - https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
-    - https://www.crx4chrome.com/crx/3417/ # Copy as markdown - it's not on the Chrome Store: https://github.com/chitsaou/copy-as-markdown/issues/84
+    - https://github.com/chitsaou/copy-as-markdown/pull/85/files # Copy as markdown - it's not on the Chrome Store: https://github.com/chitsaou/copy-as-markdown/issues/84
   remove:
   personal_laptop:
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde

@@ -16,6 +16,8 @@
 	<integer>1</integer>
 	<key>AppleWindowTabbingMode</key>
 	<string>manual</string>
+	<key>AutoHideTmuxClientSession</key>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>40C69864-2230-45FD-9594-91A66BDE6BE9</string>
 	<key>EnableDivisionView</key>
@@ -209,7 +211,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>0 255 700 622 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1 6 1438 864 0 0 1440 877 </string>
+	<string>0 0 1920 1177 0 0 1920 1177 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -485,18 +487,11 @@
 				<key>0xf700-0x240000</key>
 				<dict>
 					<key>Action</key>
-					<integer>10</integer>
+					<integer>11</integer>
 					<key>Text</key>
-					<string>[A</string>
+					<string>0x01 0x6b</string>
 				</dict>
 				<key>0xf700-0x260000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>[A</string>
-				</dict>
-				<key>0xf700-0x280000</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -513,18 +508,11 @@
 				<key>0xf701-0x240000</key>
 				<dict>
 					<key>Action</key>
-					<integer>10</integer>
+					<integer>11</integer>
 					<key>Text</key>
-					<string>[B</string>
+					<string>0x01 0x6a</string>
 				</dict>
 				<key>0xf701-0x260000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>[B</string>
-				</dict>
-				<key>0xf701-0x280000</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -541,23 +529,16 @@
 				<key>0xf702-0x240000</key>
 				<dict>
 					<key>Action</key>
-					<integer>10</integer>
+					<integer>11</integer>
 					<key>Text</key>
-					<string>[5D</string>
+					<string>0x01 0x68</string>
 				</dict>
 				<key>0xf702-0x260000</key>
 				<dict>
 					<key>Action</key>
 					<integer>11</integer>
 					<key>Text</key>
-					<string>0x1b 0x1b 0x5b 0x44</string>
-				</dict>
-				<key>0xf702-0x280000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>b</string>
+					<string>0x01 0x08</string>
 				</dict>
 				<key>0xf703-0x220000</key>
 				<dict>
@@ -569,23 +550,16 @@
 				<key>0xf703-0x240000</key>
 				<dict>
 					<key>Action</key>
-					<integer>10</integer>
+					<integer>11</integer>
 					<key>Text</key>
-					<string>[5C</string>
+					<string>0x01 0x6c</string>
 				</dict>
 				<key>0xf703-0x260000</key>
 				<dict>
 					<key>Action</key>
-					<integer>10</integer>
+					<integer>11</integer>
 					<key>Text</key>
-					<string>[C</string>
-				</dict>
-				<key>0xf703-0x280000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>f</string>
+					<string>0x01 0x0c</string>
 				</dict>
 				<key>0xf708-0x20000</key>
 				<dict>
@@ -883,6 +857,11 @@
 		<string>3.3.11</string>
 		<string>3.3.10</string>
 	</array>
+	<key>NoSyncBFPRecents</key>
+	<array>
+		<string>Monaco</string>
+		<string>JetBrains Mono</string>
+	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
 	<key>NoSyncFrame_SharedPreferences</key>
@@ -890,14 +869,14 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1920, 1200}}</string>
 		<key>topLeft</key>
-		<string>{269, 595}</string>
+		<string>{528, 839}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>1014F5B9-58AF-456A-80AB-D83518B069CD</string>
 	<key>NoSyncLastTipTime</key>
-	<real>614588360.51480103</real>
+	<real>614674893.19882405</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>33</integer>
+	<integer>37</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>612945091.38869703</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -1247,6 +1226,22 @@
 				<true/>
 				<key>name</key>
 				<string>currentTab.currentSession.termid</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.tmuxClientName</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.tmuxRole</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -1629,7 +1624,8 @@
 		<string>0004</string>
 		<string>0000</string>
 		<string>0010</string>
-		<string>0014</string>
+		<string>0008</string>
+		<string>0017</string>
 		<string>0007</string>
 		<string>0003</string>
 		<string>0013</string>
@@ -1643,9 +1639,11 @@
 		<string>0001</string>
 		<string>0011</string>
 		<string>0015</string>
-		<string>0008</string>
-		<string>0017</string>
+		<string>0014</string>
+		<string>0018</string>
 	</array>
+	<key>OpenTmuxWindowsIn</key>
+	<integer>2</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -1696,7 +1694,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-06-23T06:59:20Z</date>
+	<date>2020-06-24T07:01:32Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -1708,6 +1706,8 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SwapFindNextPrevious</key>
+	<false/>
+	<key>TmuxUsesDedicatedProfile</key>
 	<false/>
 	<key>UseBorder</key>
 	<true/>

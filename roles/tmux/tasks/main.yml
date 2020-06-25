@@ -10,20 +10,37 @@
 - name: Install tpm
   git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: "{{dotfiles_user_home}}/.tmux/plugins/tpm"
+    dest: "{{ dotfiles_user_home }}/.tmux/plugins/tpm"
 
-- name: Symlink .tmux.conf
-  file:
-    src: "{{ role_path }}/files/tmux.conf"
-    dest: "{{dotfiles_user_home}}/.tmux.conf"
-    state: link
-  when: ansible_os_family != "Darwin"
+- name: "Oh My Tmux: Install"
+  git:
+    repo: https://github.com/gpakosz/.tmux.git
+    dest: "{{ dotfiles_user_home }}/.tmux"
 
-# On macOS, use the same tmux.conf, but also use
-# reattach_to_user_namespace (for clipboard support)
-- name: Symlink .tmux.conf (macOS)
+- name: "Oh My Tmux: Symlink .tmux.conf"
   file:
-    src: "{{ role_path }}/files/tmux-mac.conf"
-    dest: "{{dotfiles_user_home}}/.tmux.conf"
+    src: "{{ dotfiles_user_home }}/.tmux/.tmux.conf"
+    dest: "{{ dotfiles_user_home }}/.tmux.conf"
     state: link
-  when: ansible_os_family == "Darwin"
+
+- name: "Oh My Tmux: Symlink .tmux.conf.local"
+  file:
+    src: "{{ role_path }}/files/oh-my-tmux-local.conf"
+    dest: "{{ dotfiles_user_home }}/.tmux.conf.local"
+    state: link
+
+# - name: Symlink .tmux.conf
+#   file:
+#     src: "{{ role_path }}/files/tmux.conf"
+#     dest: "{{ dotfiles_user_home }}/.tmux.conf"
+#     state: link
+#   when: ansible_os_family != "Darwin"
+
+# # On macOS, use the same tmux.conf, but also use
+# # reattach_to_user_namespace (for clipboard support)
+# - name: Symlink .tmux.conf (macOS)
+#   file:
+#     src: "{{ role_path }}/files/tmux-mac.conf"
+#     dest: "{{ dotfiles_user_home }}/.tmux.conf"
+#     state: link
+#   when: ansible_os_family == "Darwin"

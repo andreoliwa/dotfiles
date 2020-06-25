@@ -470,12 +470,33 @@
 					<key>Text</key>
 					<string>0x1f</string>
 				</dict>
+				<key>0x44-0x120000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x01 0x22</string>
+				</dict>
 				<key>0x5e-0x60000</key>
 				<dict>
 					<key>Action</key>
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x1e</string>
+				</dict>
+				<key>0x64-0x100000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x01 0x25</string>
+				</dict>
+				<key>0x6b-0x100000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x0c</string>
 				</dict>
 				<key>0xf700-0x220000</key>
 				<dict>
@@ -498,6 +519,13 @@
 					<key>Text</key>
 					<string>[A</string>
 				</dict>
+				<key>0xf700-0x280000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x1b 0x5b 0x48</string>
+				</dict>
 				<key>0xf701-0x220000</key>
 				<dict>
 					<key>Action</key>
@@ -518,6 +546,13 @@
 					<integer>10</integer>
 					<key>Text</key>
 					<string>[B</string>
+				</dict>
+				<key>0xf701-0x280000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x1b 0x5b 0x46</string>
 				</dict>
 				<key>0xf702-0x220000</key>
 				<dict>
@@ -540,6 +575,13 @@
 					<key>Text</key>
 					<string>0x01 0x08</string>
 				</dict>
+				<key>0xf702-0x280000</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Text</key>
+					<string>b</string>
+				</dict>
 				<key>0xf703-0x220000</key>
 				<dict>
 					<key>Action</key>
@@ -560,6 +602,13 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x01 0x0c</string>
+				</dict>
+				<key>0xf703-0x280000</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Text</key>
+					<string>f</string>
 				</dict>
 				<key>0xf708-0x20000</key>
 				<dict>
@@ -867,16 +916,16 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1920, 1200}}</string>
+		<string>{{1920, -350}, {1440, 900}}</string>
 		<key>topLeft</key>
-		<string>{528, 839}</string>
+		<string>{2169, 375}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>1014F5B9-58AF-456A-80AB-D83518B069CD</string>
 	<key>NoSyncLastTipTime</key>
-	<real>614674893.19882405</real>
+	<real>614761366.301772</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>37</integer>
+	<integer>42</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>612945091.38869703</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -1621,26 +1670,27 @@
 	<real>612263737.04845905</real>
 	<key>NoSyncTipsToNotShow</key>
 	<array>
-		<string>0004</string>
-		<string>0000</string>
 		<string>0010</string>
-		<string>0008</string>
-		<string>0017</string>
-		<string>0007</string>
-		<string>0003</string>
-		<string>0013</string>
-		<string>0016</string>
-		<string>0006</string>
-		<string>0002</string>
-		<string>000</string>
-		<string>0012</string>
-		<string>0009</string>
-		<string>0005</string>
-		<string>0001</string>
-		<string>0011</string>
 		<string>0015</string>
-		<string>0014</string>
+		<string>0004</string>
+		<string>0009</string>
+		<string>0013</string>
+		<string>0002</string>
 		<string>0018</string>
+		<string>0007</string>
+		<string>0011</string>
+		<string>0000</string>
+		<string>0016</string>
+		<string>0005</string>
+		<string>0014</string>
+		<string>0003</string>
+		<string>0008</string>
+		<string>0012</string>
+		<string>0001</string>
+		<string>000</string>
+		<string>0017</string>
+		<string>0006</string>
+		<string>0019</string>
 	</array>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>2</integer>
@@ -1694,7 +1744,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-06-24T07:01:32Z</date>
+	<date>2020-06-25T07:01:33Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>

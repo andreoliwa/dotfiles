@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Fuzzy branch picker
+# Requires fzf
+# https://github.com/junegunn/fzf/wiki/Examples
+
+cliargs="$*"
+fzfquery=
+[ -n "$cliargs" ] && fzfquery="-q $cliargs"
+
+# - Include remote branches
+# - Remove "HEAD -> master" from the list
+# - Strip the "remotes/<name>" from the chosen branch
+# - Checkout the local branch that points to that remote
+branch=$(git branch -vv --all | grep -v ' -> ' | fzf --select-1 --exit-0 \
+    --cycle "$fzfquery" | awk '{ gsub(/remotes\/.+\//," "); printf $1 }' )
+echo "Switching to branch '$branch'"
+git checkout "$branch"

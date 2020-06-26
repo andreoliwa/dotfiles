@@ -7,15 +7,15 @@
   shell: "pipx install tmuxp || true"
   when: tmux_install_tmuxp
 
-- name: Install tpm
-  git:
-    repo: https://github.com/tmux-plugins/tpm
-    dest: "{{ dotfiles_user_home }}/.tmux/plugins/tpm"
-
 - name: "Oh My Tmux: Install"
   git:
     repo: https://github.com/gpakosz/.tmux.git
     dest: "{{ dotfiles_user_home }}/.tmux"
+
+- name: Install tpm
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ dotfiles_user_home }}/.tmux/plugins/tpm"
 
 - name: "Oh My Tmux: Symlink .tmux.conf"
   file:

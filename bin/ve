@@ -23,16 +23,40 @@ show 'pyenv version' "$(pyenv version)"
 show PYENV_VERSION "${PYENV_VERSION-<undefined>}"
 show VIRTUAL_ENV "${VIRTUAL_ENV-<undefined>}"
 show Poetry "$(poetry -V)"
-show 'which python' "$(pyenv which python)"
-show Python "$(python -V)"
+
+# Python
+show 'which python' "$(which python)"
+show 'pyenv which python' "$(pyenv which python)"
+show 'python' "$(python -V)"
+
+# pip
+show 'which pip' "$(which python)"
+show 'pyenv which pip' "$(pyenv which python)"
+show 'pip' "$(pip --version)"
+show 'python -m pip' "$(python -m pip --version)"
 
 if [ -n "$VIRTUAL_ENV" ]; then
-    compare 'Python versions' venv "$("$VIRTUAL_ENV"/bin/python -V)" \
-        pyenv "$(python -V)"
+    compare 'Python versions' \
+        '\nvenv' "$("$VIRTUAL_ENV"/bin/python -V)" \
+        '\npyenv' "$(python -V)"
 
     compare 'Python executable' \
-        venv "$(greadlink -f "$VIRTUAL_ENV"/bin/python)" \
-        pyenv "$(greadlink -f "$(pyenv which python)")"
+        '\nvenv' "$(greadlink -f "$VIRTUAL_ENV"/bin/python)" \
+        '\npyenv' "$(greadlink -f "$(pyenv which python)")"
 fi
 
-grep -q tool.poetry pyproject.toml 2>/dev/null && poetry env info
+if [ -f pyproject.toml ] && grep -q tool.poetry pyproject.toml; then
+    show 'poetry pip' "$(poetry run pip --version)"
+    show 'poetry python -m pip' "$(poetry run python -m pip --version)"
+
+    echo
+    compare 'Python versions' \
+        '\npoetry' "$(poetry run python -V)" \
+        '\npyenv' "$(python -V)"
+
+    compare 'Python executable' \
+        '\nvenv' "$(greadlink -f "$(poetry run which python)")" \
+        '\npyenv' "$(greadlink -f "$(pyenv which python)")"
+
+    poetry env info
+fi

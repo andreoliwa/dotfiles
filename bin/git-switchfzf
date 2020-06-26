@@ -11,7 +11,10 @@ fzfquery=
 # - Remove "HEAD -> master" from the list
 # - Strip the "remotes/<name>" from the chosen branch
 # - Checkout the local branch that points to that remote
-branch=$(git branch -vv --all | grep -v ' -> ' | fzf --select-1 --exit-0 \
-    --cycle "$fzfquery" | awk '{ gsub(/remotes\/.+\//," "); printf $1 }' )
+branch=$(git branch -vv --all | grep -v ' -> ' | cut -b 3- | \
+    fzf --select-1 --exit-0 --cycle "$fzfquery" | \
+    awk '{ gsub(/remotes\/.+\//, " "); printf $1 }' )
+[ -z "$branch" ] && exit 1
+
 echo "Switching to branch '$branch'"
 git checkout "$branch"

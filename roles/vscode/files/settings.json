@@ -15,6 +15,7 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "files.associations": {
+    "*.conf.local": "properties",
     "**/defaults/**/*": "ansible",
     "**/tasks/**/*.yml": "ansible",
     "**/handler/*.yml": "ansible",

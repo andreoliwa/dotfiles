@@ -75,8 +75,8 @@ end
 config_screen(vertical_screen_left, {
     {"iTerm2", nil, hs.layout.maximized},
     {"Skype", nil, hs.layout.maximized},
-    {"Telegram", nil, layout_top50},
-    {"WhatsApp", nil, layout_bottom50},
+    {"Telegram", nil, layout_bottom50},
+    {"WhatsApp", nil, layout_top50},
     {"Signal", nil, hs.layout.maximized},
     {nil, hs.window.find('YouTube'), hs.layout.maximized},
     {"Preview", nil, hs.layout.maximized},
@@ -98,6 +98,7 @@ config_screen(horizontal_screen_center, {
 config_screen(laptop_screen_right, {
     {"Spotify", nil, hs.layout.maximized},
     {"Hammerspoon", "Hammerspoon Console", layout_bottom50},
+    {"TeamViewer", nil, hs.layout.maximized},
 })
 
 function apply_window_layout()

@@ -300,6 +300,7 @@ vscode_extensions:
     - crisward.riot-tag
   personal_laptop:
   company_laptop:
+    - octref.vetur # Vue.js
 
 # Chrome extensions used on Brave.
 # They cannot be automatically installed, but I will at least list them here.

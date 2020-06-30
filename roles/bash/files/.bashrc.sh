@@ -18,6 +18,10 @@ test -f "$HOME"/container-apps-private/aliases.sh && \
 PS1="\[\033[38;5;11m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\A \\$ \[$(tput sgr0)\]"
 export PS1
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 ############### BEGIN CREATED BY ANSIBLE - DON'T EDIT MANUALLY ###############
 # https://github.com/direnv/direnv
 eval "$(direnv hook bash)"

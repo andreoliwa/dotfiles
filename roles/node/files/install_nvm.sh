@@ -6,12 +6,20 @@ nvm_has() {
   type "$1" > /dev/null 2>&1
 }
 
+nvm_default_install_dir() {
+  [ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm"
+}
+
 nvm_install_dir() {
-  printf %s "${NVM_DIR:-"$HOME/.nvm"}"
+  if [ -n "$NVM_DIR" ]; then
+    printf %s "${NVM_DIR}"
+  else
+    nvm_default_install_dir
+  fi
 }
 
 nvm_latest_version() {
-  echo "v0.33.8"
+  echo "v0.35.3"
 }
 
 nvm_profile_is_bash_or_zsh() {
@@ -39,14 +47,14 @@ nvm_source() {
   local NVM_SOURCE_URL
   NVM_SOURCE_URL="$NVM_SOURCE"
   if [ "_$NVM_METHOD" = "_script-nvm-exec" ]; then
-    NVM_SOURCE_URL="https://raw.githubusercontent.com/creationix/nvm/$(nvm_latest_version)/nvm-exec"
+    NVM_SOURCE_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$(nvm_latest_version)/nvm-exec"
   elif [ "_$NVM_METHOD" = "_script-nvm-bash-completion" ]; then
-    NVM_SOURCE_URL="https://raw.githubusercontent.com/creationix/nvm/$(nvm_latest_version)/bash_completion"
+    NVM_SOURCE_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$(nvm_latest_version)/bash_completion"
   elif [ -z "$NVM_SOURCE_URL" ]; then
     if [ "_$NVM_METHOD" = "_script" ]; then
-      NVM_SOURCE_URL="https://raw.githubusercontent.com/creationix/nvm/$(nvm_latest_version)/nvm.sh"
+      NVM_SOURCE_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$(nvm_latest_version)/nvm.sh"
     elif [ "_$NVM_METHOD" = "_git" ] || [ -z "$NVM_METHOD" ]; then
-      NVM_SOURCE_URL="https://github.com/creationix/nvm.git"
+      NVM_SOURCE_URL="https://github.com/nvm-sh/nvm.git"
     else
       echo >&2 "Unexpected value \"$NVM_METHOD\" for \$NVM_METHOD"
       return 1
@@ -68,12 +76,12 @@ nvm_download() {
   elif nvm_has "wget"; then
     # Emulate curl with wget
     ARGS=$(echo "$*" | command sed -e 's/--progress-bar /--progress=bar /' \
-                           -e 's/-L //' \
-                           -e 's/--compressed //' \
-                           -e 's/-I /--server-response /' \
-                           -e 's/-s /-q /' \
-                           -e 's/-o /-O /' \
-                           -e 's/-C - /-c /')
+                            -e 's/-L //' \
+                            -e 's/--compressed //' \
+                            -e 's/-I /--server-response /' \
+                            -e 's/-s /-q /' \
+                            -e 's/-o /-O /' \
+                            -e 's/-C - /-c /')
     # shellcheck disable=SC2086
     eval wget $ARGS
   fi
@@ -85,7 +93,7 @@ install_nvm_from_git() {
 
   if [ -d "$INSTALL_DIR/.git" ]; then
     echo "=> nvm is already installed in $INSTALL_DIR, trying to update using git"
-    command printf "\r=> "
+    command printf '\r=> '
     command git --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" fetch origin tag "$(nvm_latest_version)" --depth=1 2> /dev/null || {
       echo >&2 "Failed to update nvm, run 'git fetch' in $INSTALL_DIR yourself."
       exit 1
@@ -93,7 +101,7 @@ install_nvm_from_git() {
   else
     # Cloning to $INSTALL_DIR
     echo "=> Downloading nvm from git to '$INSTALL_DIR'"
-    command printf "\r=> "
+    command printf '\r=> '
     mkdir -p "${INSTALL_DIR}"
     if [ "$(ls -A "${INSTALL_DIR}")" ]; then
       command git init "${INSTALL_DIR}" || {
@@ -110,14 +118,14 @@ install_nvm_from_git() {
         exit 2
       }
     else
-      command git clone "$(nvm_source)" -b "$(nvm_latest_version)" --depth=1 "${INSTALL_DIR}" || {
+      command git -c advice.detachedHead=false clone "$(nvm_source)" -b "$(nvm_latest_version)" --depth=1 "${INSTALL_DIR}" || {
         echo >&2 'Failed to clone nvm repo. Please report this!'
         exit 2
       }
     fi
   fi
-  command git --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" checkout -f --quiet "$(nvm_latest_version)"
-  if [ ! -z "$(command git --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" show-ref refs/heads/master)" ]; then
+  command git -c advice.detachedHead=false --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" checkout -f --quiet "$(nvm_latest_version)"
+  if [ -n "$(command git --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" show-ref refs/heads/master)" ]; then
     if command git --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" branch --quiet 2>/dev/null; then
       command git --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" branch --quiet -D master >/dev/null 2>&1
     else
@@ -188,7 +196,7 @@ install_nvm_as_script() {
     echo >&2 "Failed to download '$NVM_BASH_COMPLETION_SOURCE'"
     return 2
   } &
-  for job in $(jobs -p | sort)
+  for job in $(jobs -p | command sort)
   do
     wait "$job" || return $?
   done
@@ -212,6 +220,11 @@ nvm_try_profile() {
 # Otherwise, an empty string is returned
 #
 nvm_detect_profile() {
+  if [ "${PROFILE-}" = '/dev/null' ]; then
+    # the user has specifically requested NOT to have nvm touch their profile
+    return
+  fi
+
   if [ -n "${PROFILE}" ] && [ -f "${PROFILE}" ]; then
     echo "${PROFILE}"
     return
@@ -219,16 +232,14 @@ nvm_detect_profile() {
 
   local DETECTED_PROFILE
   DETECTED_PROFILE=''
-  local SHELLTYPE
-  SHELLTYPE="$(basename "/$SHELL")"
 
-  if [ "$SHELLTYPE" = "bash" ]; then
+  if [ -n "${BASH_VERSION-}" ]; then
     if [ -f "$HOME/.bashrc" ]; then
       DETECTED_PROFILE="$HOME/.bashrc"
     elif [ -f "$HOME/.bash_profile" ]; then
       DETECTED_PROFILE="$HOME/.bash_profile"
     fi
-  elif [ "$SHELLTYPE" = "zsh" ]; then
+  elif [ -n "${ZSH_VERSION-}" ]; then
     DETECTED_PROFILE="$HOME/.zshrc"
   fi
 
@@ -241,7 +252,7 @@ nvm_detect_profile() {
     done
   fi
 
-  if [ ! -z "$DETECTED_PROFILE" ]; then
+  if [ -n "$DETECTED_PROFILE" ]; then
     echo "$DETECTED_PROFILE"
   fi
 }
@@ -268,7 +279,7 @@ nvm_check_global_modules() {
   MODULE_COUNT="$(
     command printf %s\\n "$NPM_GLOBAL_MODULES" |
     command sed -ne '1!p' |                     # Remove the first line
-    wc -l | tr -d ' '                           # Count entries
+    wc -l | command tr -d ' '                   # Count entries
   )"
 
   if [ "${MODULE_COUNT}" != '0' ]; then
@@ -294,6 +305,19 @@ nvm_check_global_modules() {
 }
 
 nvm_do_install() {
+  if [ -n "${NVM_DIR-}" ] && ! [ -d "${NVM_DIR}" ]; then
+    if [ -e "${NVM_DIR}" ]; then
+      echo >&2 "File \"${NVM_DIR}\" has the same name as installation directory."
+      exit 1
+    fi
+
+    if [ "${NVM_DIR}" = "$(nvm_default_install_dir)" ]; then
+      mkdir "${NVM_DIR}"
+    else
+      echo >&2 "You have \$NVM_DIR set to \"${NVM_DIR}\", but that directory does not exist. Check your profile files and environment."
+      exit 1
+    fi
+  fi
   if [ -z "${METHOD}" ]; then
     # Autodetect install method
     if nvm_has git; then
@@ -316,6 +340,9 @@ nvm_do_install() {
       exit 1
     fi
     install_nvm_as_script
+  else
+    echo >&2 "The environment variable \$METHOD is set to \"${METHOD}\", which is not recognized as a valid installation method."
+    exit 1
   fi
 
   echo
@@ -323,10 +350,12 @@ nvm_do_install() {
   local NVM_PROFILE
   NVM_PROFILE="$(nvm_detect_profile)"
   local PROFILE_INSTALL_DIR
-  PROFILE_INSTALL_DIR="$(nvm_install_dir| sed "s:^$HOME:\$HOME:")"
+  PROFILE_INSTALL_DIR="$(nvm_install_dir | command sed "s:^$HOME:\$HOME:")"
 
-  SOURCE_STR="\nexport NVM_DIR=\"${PROFILE_INSTALL_DIR}\"\n[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm\n"
-  COMPLETION_STR="[ -s \"\$NVM_DIR/bash_completion\" ] && \\. \"\$NVM_DIR/bash_completion\"  # This loads nvm bash_completion\n"
+  SOURCE_STR="\\nexport NVM_DIR=\"${PROFILE_INSTALL_DIR}\"\\n[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm\\n"
+
+  # shellcheck disable=SC2016
+  COMPLETION_STR='[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion\n'
   BASH_OR_ZSH=false
 
   if [ -z "${NVM_PROFILE-}" ] ; then
@@ -339,6 +368,7 @@ nvm_do_install() {
     echo "   OR"
     echo "=> Append the following lines to the correct file yourself:"
     command printf "${SOURCE_STR}"
+    echo
   else
     if nvm_profile_is_bash_or_zsh "${NVM_PROFILE-}"; then
       BASH_OR_ZSH=true
@@ -387,7 +417,7 @@ nvm_reset() {
   unset -f nvm_has nvm_install_dir nvm_latest_version nvm_profile_is_bash_or_zsh \
     nvm_source nvm_node_version nvm_download install_nvm_from_git nvm_install_node \
     install_nvm_as_script nvm_try_profile nvm_detect_profile nvm_check_global_modules \
-    nvm_do_install nvm_reset
+    nvm_do_install nvm_reset nvm_default_install_dir
 }
 
 [ "_$NVM_ENV" = "_testing" ] || nvm_do_install

@@ -4,7 +4,12 @@
   when: ansible_os_family == "Debian"
 
 # https://github.com/nvm-sh/nvm
+- name: "nvm: Get latest install script"
+  get_url:
+    url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh"
+    dest: "{{ role_path }}/files/install_nvm.sh"
+
 - name: Install nvm
-  script: install_nvm.sh
+  script: "{{ role_path }}/files/install_nvm.sh"
   args:
     creates: "{{dotfiles_user_home}}/.nvm"

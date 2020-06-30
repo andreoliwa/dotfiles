@@ -77,7 +77,7 @@ config_screen(vertical_screen_left, {
     {"Skype", nil, hs.layout.maximized},
     {"Telegram", nil, layout_bottom50},
     {"WhatsApp", nil, layout_top50},
-    {"Signal", nil, hs.layout.maximized},
+    {"Signal", nil, layout_top50},
     {nil, hs.window.find('YouTube'), hs.layout.maximized},
     {"Preview", nil, hs.layout.maximized},
 })

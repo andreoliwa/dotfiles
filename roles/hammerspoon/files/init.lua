@@ -46,9 +46,10 @@ end
 
 -- The two external monitors have the same name (HP E241i), so I have to use the UUID instead
 -- If the external monitors are off, fallback to other screens
-local laptop_screen_right = 'Color LCD'
-local horizontal_screen_center = hs.screen.find('565E033B-3870-00DF-A63A-1F5160E08F52') or hs.screen.find('E225737C-8F00-0D95-82AF-6FBF32B14368') or laptop_screen_right
-local vertical_screen_left = hs.screen.find('7B9820D5-4E5D-A176-973E-790B87B2F4FA') or horizontal_screen_center
+local laptop_screen = 'Color LCD'
+local wide_screen = hs.screen.find('DELL U3415W')
+local horizontal_screen = hs.screen.find('565E033B-3870-00DF-A63A-1F5160E08F52') or hs.screen.find('E225737C-8F00-0D95-82AF-6FBF32B14368') or laptop_screen
+local vertical_screen = hs.screen.find('7B9820D5-4E5D-A176-973E-790B87B2F4FA') or horizontal_screen
 
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
 layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)
@@ -72,34 +73,61 @@ function config_screen(screen, apps)
     end
 end
 
-config_screen(vertical_screen_left, {
-    {"iTerm2", nil, hs.layout.maximized},
-    {"Skype", nil, hs.layout.maximized},
-    {"Telegram", nil, layout_bottom50},
-    {"WhatsApp", nil, layout_top50},
-    {"Signal", nil, layout_top50},
-    {nil, hs.window.find('YouTube'), hs.layout.maximized},
-    {"Preview", nil, hs.layout.maximized},
-})
+if wide_screen ~= nil then
+    config_screen(wide_screen, {
+        {"iTerm2", nil, hs.layout.left50},
+        {"Preview", nil, hs.layout.left50},
+        {"Finder", nil, hs.layout.left50},
+        {"Brave Browser", nil, hs.layout.left50},
 
-config_screen(horizontal_screen_center, {
-    {"Finder", nil, layout_top50},
-    {"Code", nil, hs.layout.maximized},
-    {"Brave Browser", nil, hs.layout.maximized},
-    {"Slack", nil, hs.layout.maximized},
-    {"Brave Browser Dev", nil, hs.layout.maximized},
-    {"PyCharm", nil, hs.layout.maximized},
-    {"App Store", nil, hs.layout.maximized},
-    {"TogglDesktop", nil, hs.layout.right30},
-    {"VLC", nil, hs.layout.maximized},
-    {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
-})
+        {"PyCharm", nil, hs.layout.right50},
+        {"Code", nil, hs.layout.right50},
+        {"App Store", nil, hs.layout.right50},
+        {"Hammerspoon", "Hammerspoon Console", hs.layout.right50},
 
-config_screen(laptop_screen_right, {
-    {"Spotify", nil, hs.layout.maximized},
-    {"Hammerspoon", "Hammerspoon Console", layout_bottom50},
-    {"TeamViewer", nil, hs.layout.maximized},
-})
+        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
+    })
+    config_screen(laptop_screen, {
+        {"Skype", nil, hs.layout.maximized},
+        {"Telegram", nil, hs.layout.maximized},
+        {"WhatsApp", nil, hs.layout.maximized},
+        {"Signal", nil, hs.layout.maximized},
+        {nil, hs.window.find('YouTube'), hs.layout.maximized},
+        {"Slack", nil, hs.layout.maximized},
+        {"Brave Browser Dev", nil, hs.layout.maximized},
+        {"TogglDesktop", nil, hs.layout.right30},
+        {"VLC", nil, hs.layout.maximized},
+        {"Spotify", nil, hs.layout.maximized},
+        {"TeamViewer", nil, hs.layout.maximized},
+    })
+else
+    config_screen(vertical_screen, {
+        {"iTerm2", nil, hs.layout.maximized},
+        {"Skype", nil, hs.layout.maximized},
+        {"Telegram", nil, layout_bottom50},
+        {"WhatsApp", nil, layout_top50},
+        {"Signal", nil, layout_top50},
+        {nil, hs.window.find('YouTube'), hs.layout.maximized},
+        {"Preview", nil, hs.layout.maximized},
+    })
+    config_screen(horizontal_screen, {
+        {"Finder", nil, layout_top50},
+        {"Code", nil, hs.layout.maximized},
+        {"Brave Browser", nil, hs.layout.maximized},
+        {"Slack", nil, hs.layout.maximized},
+        {"Brave Browser Dev", nil, hs.layout.maximized},
+        {"PyCharm", nil, hs.layout.maximized},
+        {"App Store", nil, hs.layout.maximized},
+        {"TogglDesktop", nil, hs.layout.right30},
+        {"VLC", nil, hs.layout.maximized},
+        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
+    })
+    config_screen(laptop_screen, {
+        {"Spotify", nil, hs.layout.maximized},
+        {"Hammerspoon", "Hammerspoon Console", layout_bottom50},
+        {"TeamViewer", nil, hs.layout.maximized},
+    })
+end
 
 function apply_window_layout()
     -- http://www.hammerspoon.org/docs/hs.layout.html

@@ -236,7 +236,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1200 -720 1200 1920 -1200 -720 1200 1920 </string>
+	<string>247 132 1425 813 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1440 265 1914 1165 1440 253 1920 1177 </string>
 	<key>New Bookmarks</key>
@@ -455,7 +455,7 @@
 				<real>1</real>
 			</dict>
 			<key>Custom Command</key>
-			<string>No</string>
+			<string>Yes</string>
 			<key>Custom Directory</key>
 			<string>Advanced</string>
 			<key>Default Bookmark</key>
@@ -481,6 +481,8 @@
 			<real>1</real>
 			<key>Idle Code</key>
 			<integer>0</integer>
+			<key>Initial Text</key>
+			<string>tmux attach-session || tmux new-session</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -947,6 +949,13 @@
 	<true/>
 	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt_selection</key>
 	<integer>1</integer>
+	<key>NoSyncFrame_SessionsPreferences</key>
+	<dict>
+		<key>screenFrame</key>
+		<string>{{-1200, -720}, {1200, 1920}}</string>
+		<key>topLeft</key>
+		<string>{-903, 856}</string>
+	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
@@ -971,7 +980,7 @@
 	<key>NoSyncLastTipTime</key>
 	<real>595272571.69927895</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>146</integer>
+	<integer>154</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1930,7 +1939,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-06-26T09:56:34Z</date>
+	<date>2020-07-01T20:54:26Z</date>
 	<key>SUUpdateGroupIdentifier</key>
 	<integer>331112895</integer>
 	<key>SUUpdateRelaunchingMarker</key>

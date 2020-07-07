@@ -79,13 +79,12 @@ if wide_screen ~= nil then
         {"Preview", nil, hs.layout.left50},
         {"Finder", nil, hs.layout.left50},
         {"Brave Browser", nil, hs.layout.left50},
+        {"zoom.us", 'Zoom', hs.layout.left50},
 
         {"PyCharm", nil, hs.layout.right50},
         {"Code", nil, hs.layout.right50},
         {"App Store", nil, hs.layout.right50},
         {"Hammerspoon", "Hammerspoon Console", hs.layout.right50},
-
-        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized},
@@ -99,6 +98,7 @@ if wide_screen ~= nil then
         {"VLC", nil, hs.layout.maximized},
         {"Spotify", nil, hs.layout.maximized},
         {"TeamViewer", nil, hs.layout.maximized},
+        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
     })
 else
     config_screen(vertical_screen, {
@@ -120,12 +120,13 @@ else
         {"App Store", nil, hs.layout.maximized},
         {"TogglDesktop", nil, hs.layout.right30},
         {"VLC", nil, hs.layout.maximized},
-        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
+        {"zoom.us", 'Zoom', hs.layout.maximized},
     })
     config_screen(laptop_screen, {
         {"Spotify", nil, hs.layout.maximized},
         {"Hammerspoon", "Hammerspoon Console", layout_bottom50},
         {"TeamViewer", nil, hs.layout.maximized},
+        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
     })
 end
 

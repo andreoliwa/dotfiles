@@ -132,7 +132,7 @@ mac_cask_packages:
     - onedrive # https://onedrive.live.com/
     # Media/Music
     - spotify
-    - spotify-notifications # https://spotify-notifications.citruspi.io/
+    - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
     - beardedspice
     - android-file-transfer # https://www.android.com/filetransfer/
     # Fonts
@@ -291,7 +291,7 @@ vscode_extensions:
     - jsynowiec.vscode-insertdatestring
     - ms-azuretools.vscode-docker
     - wolfmah.ansible-vault-inline
-    - mauve.terraform
+    - hashicorp.terraform
     - redhat.vscode-yaml
     - grapecity.gc-excelviewer
   remove:

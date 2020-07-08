@@ -14,7 +14,7 @@
 
 - name: Clone todoist-cli
   git:
-    repo: git@github.com:andreoliwa/todoist.git
+    repo: https://github.com/sachaos/todoist
     dest: "{{ project_root }}/todoist"
 
 - name: "Get brew prefix"

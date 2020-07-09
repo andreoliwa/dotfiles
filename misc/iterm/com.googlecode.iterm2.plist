@@ -211,7 +211,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>610 416 700 622 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1920 1177 0 0 1920 1177 </string>
+	<string>226 155 1610 813 0 0 1920 1177 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -430,7 +430,7 @@
 				<real>1</real>
 			</dict>
 			<key>Cursor Type</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Custom Command</key>
 			<string>Yes</string>
 			<key>Custom Directory</key>
@@ -934,7 +934,7 @@
 	<key>NoSyncLastTipTime</key>
 	<real>615896317.05286396</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>72</integer>
+	<integer>73</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>

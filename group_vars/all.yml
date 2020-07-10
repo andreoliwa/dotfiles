@@ -248,6 +248,7 @@ npm_global_packages:
   - eslint-plugin-react
   - babel-eslint
   - np
+  - jira-cl # https://jiracli.com/
 
   # Conventional commits and semantic release
   - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli

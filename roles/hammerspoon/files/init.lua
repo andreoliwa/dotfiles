@@ -49,7 +49,7 @@ end
 local laptop_screen = 'Color LCD'
 local wide_screen = hs.screen.find('DELL U3415W')
 local horizontal_screen = hs.screen.find('565E033B-3870-00DF-A63A-1F5160E08F52') or hs.screen.find('E225737C-8F00-0D95-82AF-6FBF32B14368') or laptop_screen
-local vertical_screen = hs.screen.find('7B9820D5-4E5D-A176-973E-790B87B2F4FA') or horizontal_screen
+local vertical_screen = hs.screen.find('7B9820D5-4E5D-A176-973E-790B87B2F4FA') or hs.screen.find('4198EDAA-340A-0A10-CCA4-3216126A10C8') or horizontal_screen
 
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
 layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)

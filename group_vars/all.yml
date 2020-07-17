@@ -163,7 +163,7 @@ mac_cask_packages:
     - insomnia # REST client
     - vagrant
     - virtualbox
-    - spectacle
+    # - spectacle # Warning: Unexpected method 'accessibility_access' called on Cask spectacle.
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/

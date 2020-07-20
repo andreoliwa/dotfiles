@@ -69,6 +69,7 @@
   },
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
   "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
   "python.envFile": "${workspaceFolder}/.envrc",
   "python.venvPath": "~/Library/Caches/pypoetry/virtualenvs",
@@ -92,5 +93,6 @@
   "editor.rulers": [80, 120],
   "workbench.editor.enablePreview": false,
   "editor.unusualLineTerminators": "auto",
-  "ansible.autocompletion": false
+  "ansible.autocompletion": false,
+  "python.languageServer": "Pylance"
 }

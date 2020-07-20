@@ -1,6 +1,5 @@
 {
   "python.linting.enabled": true,
-  // "python.pythonPath": "~/.pyenv/versions/tools3/bin/python3",
   "editor.formatOnSave": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["--line-length", "120"],
@@ -43,7 +42,6 @@
   "editor.renderWhitespace": "none",
   "workbench.colorTheme": "Default Light+",
   "window.zoomLevel": 0,
-  // "python.linting.flake8Path": "~/.pyenv/versions/tools3/bin/flake8",
   "python.pipenvPath": "",
   "python.formatting.blackPath": "~/.local/bin/black",
   "[json]": {
@@ -93,5 +91,6 @@
   "ansibleVaultInline.keyfile": "~/.config/dotfiles/vault_password.txt",
   "editor.rulers": [80, 120],
   "workbench.editor.enablePreview": false,
-  "editor.unusualLineTerminators": "auto"
+  "editor.unusualLineTerminators": "auto",
+  "ansible.autocompletion": false
 }

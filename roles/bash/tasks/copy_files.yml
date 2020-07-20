@@ -7,21 +7,21 @@
 
 - name: "Copy .bash_profile file"
   copy:
-    src: "{{ role_path }}/files/.bash_profile.link"
+    src: "{{ role_path }}/files/.bash_profile.sh"
     dest: ~/.bash_profile
     force: yes
     follow: false
 
 - name: "Copy .bashrc file"
   copy:
-    src: "{{ role_path }}/files/.bashrc.link"
+    src: "{{ role_path }}/files/.bashrc.sh"
     dest: ~/.bashrc
     force: yes
     follow: false
 
 - name: "Copy .inputrc file"
   copy:
-    src: "{{ role_path }}/files/.inputrc.link"
+    src: "{{ role_path }}/files/.inputrc.sh"
     dest: ~/.inputrc
     force: yes
     follow: false

@@ -1,4 +1,4 @@
-- name: "{{ dir }}: git clone {{ repo }} {{ root }}{{ dir }} (update: {{ update }})"
+- name: "{{ dir }}: git clone {{ repo }} {{ root }}/{{ dir }} (update: {{ update }})"
   git:
     repo: "{{ repo }}"
     dest: "{{ root }}/{{ dir }}"

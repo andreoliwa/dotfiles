@@ -48,7 +48,11 @@
     url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"
     dest: ~/.local/share/z.sh
 
-- name: "Create cached script that will be sourced on .bashrc"
+- name: "dotfiles-cache-shell-scripts: Install PyYAML"
+  command: "python3 -m pip install pyyaml"
+  when: ansible_distribution not in ("OSMC", "Amazon")
+
+- name: "dotfiles-cache-shell-scripts: Create cached script that will be sourced on .bashrc"
   command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
   when: ansible_distribution not in ("OSMC", "Amazon")
 

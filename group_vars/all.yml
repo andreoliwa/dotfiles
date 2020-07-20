@@ -286,6 +286,7 @@ vscode_extensions:
     - esbenp.prettier-vscode
     - mikestead.dotenv
     - ms-python.python
+    - ms-python.vscode-pylance
     - vscoss.vscode-ansible
     - zhouronghui.propertylist
     - bungcip.better-toml
@@ -300,6 +301,7 @@ vscode_extensions:
     - bmewburn.vscode-intelephense-client
     - crisward.riot-tag
   personal_laptop:
+    - matklad.rust-analyzer # https://rust-analyzer.github.io/
   company_laptop:
     - octref.vetur # Vue.js
 

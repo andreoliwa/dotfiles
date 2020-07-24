@@ -63,13 +63,14 @@ function config_screen(screen, apps)
         local config = {app_name, tuple[2], screen, tuple[3], nil, nil}
         table.insert(window_layout, config)
 
-        -- Find and activate the application window (layout only works on visible/activated windows)
-        if app_name ~= nil then
-            app = hs.application.find(app_name)
-            if app ~= nil then
-                app:activate()
-            end
-        end
+        -- Only visible windows will be repositioned
+        -- Uncomment this to find and activate the application window (layout only works on visible/activated windows)
+        -- if app_name ~= nil then
+        --     app = hs.application.find(app_name)
+        --     if app ~= nil then
+        --         app:activate()
+        --     end
+        -- end
     end
 end
 

@@ -321,7 +321,7 @@ chrome_extensions:
     - https://chrome.google.com/webstore/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd
     - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     - https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
-    - https://github.com/chitsaou/copy-as-markdown/pull/85/files # Copy as markdown - it's not on the Chrome Store: https://github.com/chitsaou/copy-as-markdown/issues/84
+    - https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn # https://github.com/chitsaou/copy-as-markdown/
   remove:
   personal_laptop:
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde

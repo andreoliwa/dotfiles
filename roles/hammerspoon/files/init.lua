@@ -47,7 +47,7 @@ end
 -- The two external monitors have the same name (HP E241i), so I have to use the UUID instead
 -- If the external monitors are off, fallback to other screens
 local laptop_screen = 'Color LCD'
-local wide_screen = hs.screen.find('DELL U3415W')
+local wide_curved_screen = hs.screen.find('DELL U3415W')
 local horizontal_screen = hs.screen.find('565E033B-3870-00DF-A63A-1F5160E08F52') or hs.screen.find('E225737C-8F00-0D95-82AF-6FBF32B14368') or laptop_screen
 local vertical_screen = hs.screen.find('7B9820D5-4E5D-A176-973E-790B87B2F4FA') or hs.screen.find('4198EDAA-340A-0A10-CCA4-3216126A10C8') or horizontal_screen
 
@@ -74,8 +74,8 @@ function config_screen(screen, apps)
     end
 end
 
-if wide_screen ~= nil then
-    config_screen(wide_screen, {
+if wide_curved_screen ~= nil then
+    config_screen(wide_curved_screen, {
         {"iTerm2", nil, hs.layout.left50},
         {"Preview", nil, hs.layout.left50},
         {"Finder", nil, hs.layout.left50},
@@ -110,6 +110,7 @@ else
         {"Signal", nil, layout_top50},
         {nil, hs.window.find('YouTube'), hs.layout.maximized},
         {"Preview", nil, hs.layout.maximized},
+        {"dupeGuru", "dupeGuru", layout_top50},
     })
     config_screen(horizontal_screen, {
         {"Finder", nil, layout_top50},
@@ -121,7 +122,8 @@ else
         {"App Store", nil, hs.layout.maximized},
         {"TogglDesktop", nil, hs.layout.right30},
         {"VLC", nil, hs.layout.maximized},
-        {"zoom.us", 'Zoom', hs.layout.maximized},
+        {"zoom.us", "Zoom", hs.layout.maximized},
+        {"dupeGuru", "dupeGuru Results", hs.layout.maximized},
     })
     config_screen(laptop_screen, {
         {"Spotify", nil, hs.layout.maximized},

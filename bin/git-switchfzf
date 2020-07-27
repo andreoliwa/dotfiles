@@ -12,7 +12,7 @@ fzfquery=
 # shellcheck disable=SC2086
 branch=$(git branch -vv --all | grep -v ' -> ' | cut -b 3- | \
     fzf --select-1 --exit-0 --cycle $fzfquery | \
-    awk '{ gsub(/remotes\/.+\//, " "); printf $1 }' )
+    awk '{gsub(/remotes\/origin\//, " "); printf $1}')
 [ -z "$branch" ] && exit 1
 
 echo "Switching to branch '$branch'"

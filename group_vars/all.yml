@@ -250,7 +250,6 @@ npm_global_packages:
   - eslint-plugin-react
   - babel-eslint
   - np
-  - jira-cl # https://jiracli.com/
 
   # Conventional commits and semantic release
   - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
@@ -266,6 +265,10 @@ npm_global_packages:
   - remark-cli # https://github.com/remarkjs/remark/tree/master/packages/remark-cli
   - remark-preset-lint-recommended # https://github.com/remarkjs/remark-lint#cli
   - remark-preset-lint-markdown-style-guide # https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide
+
+  # company_laptop:
+  - jira-cl # https://jiracli.com/
+  - aws-es-kibana
 
 # TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:

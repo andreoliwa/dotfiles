@@ -301,6 +301,7 @@ vscode_extensions:
     - hashicorp.terraform
     - redhat.vscode-yaml
     - grapecity.gc-excelviewer
+    - vscode-org-mode.org-mode
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

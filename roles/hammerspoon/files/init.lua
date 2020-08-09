@@ -75,6 +75,7 @@ if vertical_screen == nil then
 end
 
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
+layout_top30 = hs.geometry.rect(0, 0, 1, 0.33)
 layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)
 layout_bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
 
@@ -127,10 +128,9 @@ if wide_curved_screen ~= nil then
 else
     config_screen(vertical_screen, {
         {"iTerm2", nil, hs.layout.maximized},
-        {"Skype", nil, hs.layout.maximized},
         {"Telegram", nil, layout_bottom50},
         {"WhatsApp", nil, layout_top50},
-        {"Signal", nil, layout_top50},
+        {"Signal", nil, layout_top30},
         {nil, hs.window.find('YouTube'), hs.layout.maximized},
         {"Preview", nil, hs.layout.maximized},
         {"dupeGuru", "dupeGuru", layout_top50},
@@ -153,6 +153,7 @@ else
         {"Hammerspoon", "Hammerspoon Console", layout_bottom50},
         {"TeamViewer", nil, hs.layout.maximized},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
+        {"Skype", nil, hs.layout.maximized},
     })
 end
 

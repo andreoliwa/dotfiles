@@ -134,6 +134,9 @@ else
         {nil, hs.window.find('YouTube'), hs.layout.maximized},
         {"Preview", nil, hs.layout.maximized},
         {"dupeGuru", "dupeGuru", layout_top50},
+        -- TODO: partial window names don't work
+        -- {"Brave Browser", "Brave – Octopus", layout_top50},
+        -- {"Brave Browser", "Brave – Orcas", layout_bottom50},
     })
     config_screen(horizontal_screen, {
         {"Finder", nil, layout_top50},
@@ -154,6 +157,7 @@ else
         {"TeamViewer", nil, hs.layout.maximized},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
         {"Skype", nil, hs.layout.maximized},
+        {"Bitwarden", nil, hs.layout.maximized},
     })
 end
 

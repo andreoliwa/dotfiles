@@ -27,6 +27,7 @@ Icon
 
 ### Python ###
 .venv
+venv/
 docs/_build
 .python-version
 .ipynb_checkpoints

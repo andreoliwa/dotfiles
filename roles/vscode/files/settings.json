@@ -94,5 +94,6 @@
   "workbench.editor.enablePreview": false,
   "editor.unusualLineTerminators": "auto",
   "ansible.autocompletion": false,
-  "python.languageServer": "Pylance"
+  "python.languageServer": "Pylance",
+  "python.showStartPage": false
 }

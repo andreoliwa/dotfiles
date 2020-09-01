@@ -43,11 +43,13 @@ module.exports = {
         /slack/,
         /datadog/,
         /aws/,
+        /awsapps.com/,
         /amazon/,
         /bitwarden/,
         /thoughtworks/,
         /martinfowler/,
         /salesforce/,
+        /invisionapp.com/,
         // EatFirst
         /eatfirst/,
         /zulip/,

@@ -93,6 +93,7 @@ mac_homebrew_packages:
     # TODO: this needs "brew cask install osxfuse" before:
     # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
   company_laptop:
+    - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - helm # https://helm.sh/
 
 # Mac Apps to be installed with homebrew-cask
@@ -234,12 +235,12 @@ python3_modules:
   remove:
     - bumpversion # https://pypi.org/project/bumpversion/
     - twine # https://pypi.org/project/twine/
+    - awscli # https://pypi.org/project/awscli/ Older version 1.18.*
   personal_laptop:
     - subliminal # https://pypi.org/project/subliminal/
     - youtube-dl # https://pypi.org/project/youtube_dl/
   company_laptop:
     - aws-shell # https://github.com/awslabs/aws-shell
-    - awscli # https://pypi.org/project/awscli/
 
 # Node utilities
 # TODO: common, remove, personal_laptop, company_laptop

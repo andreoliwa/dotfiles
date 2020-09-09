@@ -110,7 +110,7 @@ mac_cask_packages:
     - private-internet-access
     - zerotier-one # https://www.zerotier.com/download.shtml
     # Utilities
-    - toggl
+    - toggl-track
     - iterm2
     - keepingyouawake # maintained caffeinate wrapper
     - appcleaner
@@ -120,8 +120,6 @@ mac_cask_packages:
     - rescuetime # https://www.rescuetime.com/
     # E-mail
     - mia-for-gmail
-    # Docker
-    - docker
     # Chat
     - telegram
     - whatsapp
@@ -172,10 +170,12 @@ mac_cask_packages:
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - grandperspective # https://grandperspectiv.sourceforge.io/
     - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
+    - docker
   company_laptop:
     - slack # https://slack.com/
     - bitwarden # https://bitwarden.com/
     - pritunl # VPN https://client.pritunl.com/#install
+    - docker-edge
 
 # APT packages that don't get installed by a role
 apt_packages:

@@ -21,6 +21,11 @@ end
 -- http://www.hammerspoon.org/docs/hs.hotkey.html#bind
 hs.hotkey.bind(nil, 'f15', 'Config reloaded', hs.reload, nil, nil)
 
+-- http://www.hammerspoon.org/docs/hs.screen.html#allScreens
+for index, screen in pairs(hs.screen.allScreens()) do
+    print('Screen #' .. index .. ': UUID: ' .. screen:getUUID() .. ' ' .. tostring(screen))
+end
+
 -- https://github.com/scottwhudson/Lunette
 hs.loadSpoon("Lunette")
 spoon.Lunette:bindHotkeys()
@@ -37,11 +42,6 @@ for i, app in pairs(hs.application.runningApplications()) do
     for j, window in pairs(app:allWindows()) do
         print('    Window #' .. j .. ': ' .. tostring(window))
     end
-end
-
--- http://www.hammerspoon.org/docs/hs.screen.html#allScreens
-for index, screen in pairs(hs.screen.allScreens()) do
-    print('Screen #' .. index .. ': UUID: ' .. screen:getUUID() .. ' ' .. tostring(screen))
 end
 
 -- The two external monitors have the same name (HP E241i), so I have to use the UUID instead
@@ -119,7 +119,7 @@ if wide_curved_screen ~= nil then
         {nil, hs.window.find('YouTube'), hs.layout.maximized},
         {"Slack", nil, hs.layout.maximized},
         {"Brave Browser Dev", nil, hs.layout.maximized},
-        {"TogglDesktop", nil, hs.layout.right30},
+        {"Toggl Track", nil, hs.layout.right30},
         {"VLC", nil, hs.layout.maximized},
         {"Spotify", nil, hs.layout.maximized},
         {"TeamViewer", nil, hs.layout.maximized},
@@ -146,7 +146,7 @@ else
         {"Brave Browser Dev", nil, hs.layout.maximized},
         {"PyCharm", nil, hs.layout.maximized},
         {"App Store", nil, hs.layout.maximized},
-        {"TogglDesktop", nil, hs.layout.right30},
+        {"Toggl Track", nil, hs.layout.right30},
         {"VLC", nil, hs.layout.maximized},
         {"zoom.us", "Zoom", hs.layout.maximized},
         {"dupeGuru", "dupeGuru Results", hs.layout.maximized},

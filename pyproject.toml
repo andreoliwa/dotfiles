@@ -1,5 +1,5 @@
-[tool.nitpick]
-style = ["https://raw.githubusercontent.com/andreoliwa/nitpick/develop/nitpick-style.toml"]
+# [tool.nitpick]
+# style = ["https://raw.githubusercontent.com/andreoliwa/nitpick/develop/nitpick-style.toml"]
 
 [tool.poetry]
 name = "pydotfiles"

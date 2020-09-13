@@ -6,7 +6,7 @@
   when: ansible_os_family != "Darwin"
 
 - name: "Get latest Python 3.9"
-  shell: "pyenv install --list | egrep -i ' 3.9.[0-9.ab]+$' | tail -n 1 | xargs"
+  shell: "pyenv install --list | egrep -i ' 3.9.[0-9.abrc]+$' | tail -n 1 | xargs"
   register: latest_python_3_9
   changed_when: false
 

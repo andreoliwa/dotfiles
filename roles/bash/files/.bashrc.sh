@@ -90,4 +90,4 @@ fi
 
 # Taken from 'brew info fzf':
 # shellcheck source=/dev/null
-[ -f "$HOME"/.fzf.bash ] && source "$HOME"/.fzf.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -1,32 +1,35 @@
-- name: "Homebrew: Install common"
+- name: "Brew: Install common"
   homebrew:
     name: "{{ mac_homebrew_packages['common'] }}"
     state: latest
 
-- name: "Homebrew: Remove"
+- name: "Brew: Remove"
   homebrew:
     name: "{{ mac_homebrew_packages['remove'] }}"
     state: absent
 
-- name: "Homebrew: Install on personal_laptop"
+- name: "Brew: upgrade"
+  command: brew upgrade
+
+- name: "Brew: Install on personal_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['personal_laptop'] }}"
     state: latest
   when: not ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['personal_laptop']
 
-- name: "Homebrew: Remove on personal_laptop"
+- name: "Brew: Remove on personal_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['company_laptop'] }}"
     state: absent
   when: not ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['company_laptop']
 
-- name: "Homebrew: Install on company_laptop"
+- name: "Brew: Install on company_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['company_laptop'] }}"
     state: latest
   when: ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['company_laptop']
 
-- name: "Homebrew: Remove on company_laptop"
+- name: "Brew: Remove on company_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['personal_laptop'] }}"
     state: absent

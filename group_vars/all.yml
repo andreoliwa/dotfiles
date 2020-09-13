@@ -69,6 +69,7 @@ mac_homebrew_packages:
     - asciinema # https://github.com/asciinema/asciinema
     - coreutils # https://www.gnu.org/software/coreutils
     - blueutil # https://github.com/toy/blueutil
+    - svn # needed by font-ubuntu
   remove:
     - heroku/brew/heroku
     - highlight
@@ -318,6 +319,7 @@ vscode_extensions:
 chrome_extensions:
   common:
     - https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd
+    - https://chrome.google.com/webstore/detail/todoist-for-chrome/jldhpllghnbhlbpcmnajkpdmadaolakh
     - https://chrome.google.com/webstore/detail/todoist-for-gmail/clgenfnodoocmhnlnpknojdbjjnmecff
     - https://chrome.google.com/webstore/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn
     - https://chrome.google.com/webstore/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen
@@ -331,5 +333,6 @@ chrome_extensions:
   remove:
   personal_laptop:
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
+    - https://chrome.google.com/webstore/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj/related
   company_laptop:
     - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb/related

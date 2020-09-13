@@ -16,7 +16,7 @@
 # To check the distribution on the local machine:
 # ansible -m setup localhost | rg 'distribution"'
 - import_tasks: link_files.yml
-  when: ansible_distribution == "MacOSX"  # TODO: Or Linux
+  when: ansible_distribution == "MacOSX" # TODO: Or Linux
 - import_tasks: copy_files.yml
   when: ansible_distribution in ("OSMC", "Amazon")
 
@@ -68,20 +68,22 @@
       if [[ $OSTYPE == linux* ]]; then
           export _Z_NO_PROMPT_COMMAND=1
       fi
-      source ~/.local/share/z.sh
+      # shellcheck source=/dev/null
+      source "$HOME"/.local/share/z.sh
 
       # https://github.com/riobard/bash-powerline
       # Super quick start, but it doesn't show an icon for stashed commits
-      # source ~/.bash-powerline.sh
+      # source "$HOME"/.bash-powerline.sh
 
       # https://github.com/magicmonty/bash-git-prompt
       # Quick start, show all details of a git repo
-      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+      if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
           # Show a different prompt when there is an active SSH connection
-          test -n "$SSH_CONNECTION" && GIT_PROMPT_THEME=Evermeet_Ubuntu
+          test -n "$SSH_CONNECTION" && export GIT_PROMPT_THEME=Evermeet_Ubuntu
 
           # GIT_PROMPT_ONLY_IN_REPO=1
-          source $HOME/.bash-git-prompt/gitprompt.sh
+          # shellcheck source=/dev/null
+          source "$HOME"/.bash-git-prompt/gitprompt.sh
       fi
 
       # brew info bash-completion2
@@ -91,8 +93,9 @@
 
       # Source all scripts. To regenerate this .sh file, run:
       # dotfiles-cache-shell-scripts bash
-      test -f ~/.cache/dotfiles/cached_script.sh && \
-          source ~/.cache/dotfiles/cached_script.sh
+      # shellcheck source=/dev/null
+      test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
+          source "$HOME"/.cache/dotfiles/cached_script.sh
 
 - name: "Add .local/bin to PATH"
   lineinfile:

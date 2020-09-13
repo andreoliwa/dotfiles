@@ -40,6 +40,8 @@
   when: ansible_env.COMPANY_LAPTOP and mac_cask_packages['personal_laptop']
 
 - name: "Cask: Upgrade all"
-  homebrew_cask:
-    upgrade_all: yes
+  # This module now raises an error: Warning: Calling brew cask upgrade is deprecated! Use brew upgrade --cask instead.
+  # homebrew_cask:
+  #   upgrade_all: yes
+  command: "brew upgrade --cask"
   ignore_errors: yes

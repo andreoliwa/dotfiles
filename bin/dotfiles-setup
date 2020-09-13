@@ -133,6 +133,7 @@ def main():
                 "--list-tasks",
                 "2>/dev/null",
                 "| tail -n +6",
+                "| sort | uniq",
                 "| fzf --select-1 --exit-0 --min-height=15 --height=20% --cycle",
                 "--query={!r}".format(args.task),
             ]

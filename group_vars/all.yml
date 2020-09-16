@@ -119,8 +119,6 @@ mac_cask_packages:
     - authy # https://authy.com/
     - meld # https://yousseb.github.io/meld/
     - rescuetime # https://www.rescuetime.com/
-    # E-mail
-    - mia-for-gmail
     # Chat
     - telegram
     - whatsapp
@@ -142,6 +140,8 @@ mac_cask_packages:
     - font-hack
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - vlc
+    - docker-edge
+    - kap
   remove:
     # Images
     - imageoptim # optimizing images
@@ -165,18 +165,34 @@ mac_cask_packages:
     - vagrant
     - virtualbox
     # - spectacle # Warning: Unexpected method 'accessibility_access' called on Cask spectacle.
+    - dissenter-browser
+    - flux
+    - freemind
+    - google-chrome
+    # - google-cloud-sdk # Error: Cask 'google-cloud-sdk' is unreadable: undefined method `undent' for #<String:0x00007fec9300cfa8>
+    - iina
+    - java8
+    - jumpcut
+    - kivy
+    - macterm
+    - mia-for-gmail
+    - musixmatch
+    - raindropio
+    - selfcontrol
+    - simbl
+    - spotifree
+    - toggl
+    - tor-browser
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - grandperspective # https://grandperspectiv.sourceforge.io/
     - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
-    - docker
   company_laptop:
     - slack # https://slack.com/
     - bitwarden # https://bitwarden.com/
     - pritunl # VPN https://client.pritunl.com/#install
-    - docker-edge
 
 # APT packages that don't get installed by a role
 apt_packages:

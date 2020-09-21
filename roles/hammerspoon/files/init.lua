@@ -1,6 +1,7 @@
 -- https://www.tutorialspoint.com/lua/
 
 -- Documentation: http://www.hammerspoon.org/
+-- Code: https://github.com/Hammerspoon/hammerspoon
 -- Examples:
 -- https://github.com/derekwyatt/dotfiles/blob/master/hammerspoon-init.lua
 -- https://github.com/fikovnik/ShiftIt/wiki/The-Hammerspoon-Alternative
@@ -25,6 +26,14 @@ hs.hotkey.bind(nil, 'f15', 'Config reloaded', hs.reload, nil, nil)
 for index, screen in pairs(hs.screen.allScreens()) do
     print('Screen #' .. index .. ': UUID: ' .. screen:getUUID() .. ' ' .. tostring(screen))
 end
+
+-- After v0.9.79, hs.configdir now contains the target of the symbolic link (~/.hammerspoon/init.lua)
+print('hs.configdir = ' .. hs.configdir)
+
+-- Change the relative path to load spoons
+-- https://github.com/Hammerspoon/hammerspoon/blob/master/SPOONS.md#loading-a-spoon
+package.path = package.path .. ";" .. hs.configdir .. "/../../../../.hammerspoon/Spoons/?.spoon/init.lua"
+print('package.path = ' .. package.path)
 
 -- https://github.com/scottwhudson/Lunette
 hs.loadSpoon("Lunette")

@@ -94,79 +94,86 @@ function config_screen(screen, apps)
     for index, tuple in pairs(apps) do
         local app_name = tuple[1]
         local config = {app_name, tuple[2], screen, tuple[3], nil, nil}
+        local show_app = tuple[4]
         table.insert(window_layout, config)
 
-        -- Only visible windows will be repositioned
-        -- Uncomment this to find and activate the application window (layout only works on visible/activated windows)
-        -- if app_name ~= nil then
-        --     app = hs.application.find(app_name)
-        --     if app ~= nil then
-        --         app:activate()
-        --     end
-        -- end
+        if show_app ~= nil and app_name ~= nil then
+            app = hs.application.find(app_name)
+            if app ~= nil then
+                -- Uncomment this to find and activate the application window (layout only works on visible/activated windows)
+                -- app:activate()
+                if show_app then
+                    -- http://www.hammerspoon.org/docs/hs.application.html#unhide
+                    app:unhide()
+                else
+                    -- http://www.hammerspoon.org/docs/hs.application.html#hide
+                    app:hide()
+                end
+            end
+        end
     end
 end
 
 if wide_curved_screen ~= nil then
     config_screen(wide_curved_screen, {
-        {"iTerm2", nil, hs.layout.left50},
-        {"Preview", nil, hs.layout.left50},
-        {"Finder", nil, hs.layout.left50},
-        {"Brave Browser", nil, hs.layout.left50},
-        {"zoom.us", 'Zoom', hs.layout.left50},
+        {"iTerm2", nil, hs.layout.left50, nil},
+        {"Preview", nil, hs.layout.left50, nil},
+        {"Finder", nil, hs.layout.left50, nil},
+        {"Brave Browser", nil, hs.layout.left50, nil},
+        {"zoom.us", 'Zoom', hs.layout.left50, nil},
 
-        {"PyCharm", nil, hs.layout.right50},
-        {"Code", nil, hs.layout.right50},
-        {"App Store", nil, hs.layout.right50},
-        {"Hammerspoon", "Hammerspoon Console", hs.layout.right50},
+        {"PyCharm", nil, hs.layout.right50, nil},
+        {"Code", nil, hs.layout.right50, nil},
+        {"App Store", nil, hs.layout.right50, nil},
+        {"Hammerspoon", "Hammerspoon Console", hs.layout.right50, nil},
     })
     config_screen(laptop_screen, {
-        {"Skype", nil, hs.layout.maximized},
-        {"Telegram", nil, hs.layout.maximized},
-        {"WhatsApp", nil, hs.layout.maximized},
-        {"Signal", nil, hs.layout.maximized},
-        {nil, hs.window.find('YouTube'), hs.layout.maximized},
-        {"Slack", nil, hs.layout.maximized},
-        {"Brave Browser Dev", nil, hs.layout.maximized},
-        {"Toggl Track", nil, hs.layout.right30},
-        {"VLC", nil, hs.layout.maximized},
-        {"Spotify", nil, hs.layout.maximized},
-        {"TeamViewer", nil, hs.layout.maximized},
-        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
+        {"Skype", nil, hs.layout.maximized, nil},
+        {"Telegram", nil, hs.layout.maximized, false},
+        {"WhatsApp", nil, hs.layout.maximized, false},
+        {"Signal", nil, hs.layout.maximized, false},
+        {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
+        {"Slack", nil, hs.layout.maximized, nil},
+        {"Brave Browser Dev", nil, hs.layout.maximized, nil},
+        {"Toggl Track", nil, hs.layout.right30, false},
+        {"VLC", nil, hs.layout.maximized, false},
+        {"Spotify", nil, hs.layout.maximized, false},
+        {"TeamViewer", nil, hs.layout.maximized, nil},
+        {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
     })
 else
     config_screen(vertical_screen, {
-        {"iTerm2", nil, hs.layout.maximized},
-        {"Telegram", nil, layout_bottom50},
-        {"WhatsApp", nil, layout_top50},
-        {"Signal", nil, layout_top30},
-        {nil, hs.window.find('YouTube'), hs.layout.maximized},
-        {"Preview", nil, hs.layout.maximized},
-        {"dupeGuru", "dupeGuru", layout_top50},
+        {"iTerm2", nil, hs.layout.maximized, nil},
+        {"Telegram", nil, layout_bottom50, false},
+        {"WhatsApp", nil, layout_top50, false},
+        {"Signal", nil, layout_top30, false},
+        {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
+        {"Preview", nil, hs.layout.maximized, nil},
+        {"dupeGuru", "dupeGuru", layout_top50, nil},
         -- TODO: partial window names don't work
-        -- {"Brave Browser", "Brave – Octopus", layout_top50},
-        -- {"Brave Browser", "Brave – Orcas", layout_bottom50},
+        -- {"Brave Browser", "Brave – Octopus", layout_top50, nil},
+        -- {"Brave Browser", "Brave – Orcas", layout_bottom50, nil},
     })
     config_screen(horizontal_screen, {
-        {"Finder", nil, layout_top50},
-        {"Code", nil, hs.layout.maximized},
-        {"Brave Browser", nil, hs.layout.maximized},
-        {"Slack", nil, hs.layout.maximized},
-        {"Brave Browser Dev", nil, hs.layout.maximized},
-        {"PyCharm", nil, hs.layout.maximized},
-        {"App Store", nil, hs.layout.maximized},
-        {"Toggl Track", nil, hs.layout.right30},
-        {"VLC", nil, hs.layout.maximized},
-        {"zoom.us", "Zoom", hs.layout.maximized},
-        {"dupeGuru", "dupeGuru Results", hs.layout.maximized},
+        {"Finder", nil, layout_top50, nil},
+        {"Code", nil, hs.layout.maximized, nil},
+        {"Brave Browser", nil, hs.layout.maximized, nil},
+        {"Slack", nil, hs.layout.maximized, nil},
+        {"Brave Browser Dev", nil, hs.layout.maximized, nil},
+        {"PyCharm", nil, hs.layout.maximized, nil},
+        {"App Store", nil, hs.layout.maximized, nil},
+        {"Toggl Track", nil, hs.layout.right30, false},
+        {"VLC", nil, hs.layout.maximized, false},
+        {"zoom.us", "Zoom", hs.layout.maximized, nil},
+        {"dupeGuru", "dupeGuru Results", hs.layout.maximized, nil},
     })
     config_screen(laptop_screen, {
-        {"Spotify", nil, hs.layout.maximized},
-        {"Hammerspoon", "Hammerspoon Console", layout_bottom50},
-        {"TeamViewer", nil, hs.layout.maximized},
-        {"zoom.us", 'Zoom Meeting', hs.layout.maximized},
-        {"Skype", nil, hs.layout.maximized},
-        {"Bitwarden", nil, hs.layout.maximized},
+        {"Spotify", nil, hs.layout.maximized, false},
+        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, nil},
+        {"TeamViewer", nil, hs.layout.maximized, nil},
+        {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
+        {"Skype", nil, hs.layout.maximized, nil},
+        {"Bitwarden", nil, hs.layout.maximized, nil},
     })
 end
 

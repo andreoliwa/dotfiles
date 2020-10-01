@@ -95,5 +95,8 @@
   "editor.unusualLineTerminators": "auto",
   "ansible.autocompletion": false,
   "python.languageServer": "Pylance",
-  "python.showStartPage": false
+  "python.showStartPage": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

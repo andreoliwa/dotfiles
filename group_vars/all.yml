@@ -320,6 +320,7 @@ vscode_extensions:
     - redhat.vscode-yaml
     - grapecity.gc-excelviewer
     - vscode-org-mode.org-mode
+    - eamodio.gitlens
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
@@ -349,6 +350,8 @@ chrome_extensions:
   remove:
   personal_laptop:
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
-    - https://chrome.google.com/webstore/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj/related
+    - https://chrome.google.com/webstore/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
   company_laptop:
-    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb/related
+    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
+    - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
+    - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL

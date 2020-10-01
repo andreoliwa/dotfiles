@@ -51,6 +51,7 @@ module.exports = {
         /salesforce/,
         /invisionapp.com/,
         /asana.com/,
+        /miro.com/,
         // EatFirst
         /eatfirst/,
         /zulip/,

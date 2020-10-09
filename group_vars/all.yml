@@ -287,6 +287,7 @@ npm_global_packages:
   # company_laptop:
   - jira-cl # https://jiracli.com/
   - aws-es-kibana
+  - codeowners # https://github.com/beaugunderson/codeowners
 
 # TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:

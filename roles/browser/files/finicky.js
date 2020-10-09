@@ -52,6 +52,7 @@ module.exports = {
         /invisionapp.com/,
         /asana.com/,
         /miro.com/,
+        /jetbrains.com/,
         // EatFirst
         /eatfirst/,
         /zulip/,

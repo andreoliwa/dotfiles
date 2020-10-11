@@ -53,9 +53,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="run an Ansible playbook to setup a similar dev machine in multiple operating systems"
     )
-    parser.add_argument(
-        "--task", "-t", dest="task", metavar="START_AT_TASK", help="start the playbook at this task",
-    )
+    parser.add_argument("--task", "-t", dest="task", metavar="START_AT_TASK", help="start the playbook at this task")
     parser.add_argument("--debug", "-d", action="store_true", help="debug mode")
     parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
     parser.add_argument("--bootstrap", "-b", action="store_true", help="bootstrap the dev machine")
@@ -77,7 +75,9 @@ def main():
     )
     parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
     parser.add_argument("--sudo", action="store_true", help="ask become password (required for some roles)")
-    parser.add_argument("--remote", "-r", choices=["pi", "aws"], help="setup remote servers (Raspberry Pi and AWS)")
+    parser.add_argument(
+        "--remote", "-r", choices=["pi", "aws", "ocean"], help="setup remote servers (Raspberry Pi, AWS, Digital Ocean)"
+    )
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
 

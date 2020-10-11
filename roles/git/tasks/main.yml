@@ -6,4 +6,4 @@
   when: ansible_os_family == "RedHat"
 
 - import_tasks: gitconfig.yml
-  when: ansible_distribution != "Amazon"
+  when: ansible_distribution != "Amazon" and ansible_system_vendor != "DigitalOcean"

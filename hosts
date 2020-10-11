@@ -19,3 +19,9 @@ ansible_connection=ssh
 # Can't install yum package on Amazon Linux 2 when ansible is installed using python 3
 # https://github.com/ansible/ansible/issues/62722#issuecomment-537096638
 ansible_python_interpreter=/usr/bin/python
+
+[ocean]
+gotham
+
+[aws:vars]
+ansible_connection=ssh

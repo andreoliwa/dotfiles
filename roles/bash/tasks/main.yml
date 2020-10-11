@@ -18,7 +18,7 @@
 - import_tasks: link_files.yml
   when: ansible_distribution == "MacOSX" # TODO: Or Linux
 - import_tasks: copy_files.yml
-  when: ansible_distribution in ("OSMC", "Amazon")
+  when: ansible_distribution in ("OSMC", "Amazon") or ansible_system_vendor == "DigitalOcean"
 
 - name: "bash-powerline: Get latest"
   get_url:
@@ -50,11 +50,11 @@
 
 - name: "dotfiles-cache-shell-scripts: Install PyYAML"
   command: "python3 -m pip install pyyaml"
-  when: ansible_distribution not in ("OSMC", "Amazon")
+  when: ansible_distribution not in ("OSMC", "Amazon") and ansible_system_vendor != "DigitalOcean"
 
 - name: "dotfiles-cache-shell-scripts: Create cached script that will be sourced on .bashrc"
   command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
-  when: ansible_distribution not in ("OSMC", "Amazon")
+  when: ansible_distribution not in ("OSMC", "Amazon") and ansible_system_vendor != "DigitalOcean"
 
 - name: "Add content to .bashrc"
   blockinfile:
@@ -102,4 +102,4 @@
     path: ~/.bashrc
     state: present
     line: 'export PATH="$HOME/.local/bin:$PATH"'
-  when: ansible_distribution == "Amazon"
+  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean"

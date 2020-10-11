@@ -1,13 +1,13 @@
 - name: "Install apt packages"
   apt: name="{{ apt_packages }}" state=latest
   become: true
-  when: "ansible_distribution == 'OSMC' and 'apt_packages' | run_only_after"
+  when: "(ansible_distribution == 'OSMC' or ansible_system_vendor == 'DigitalOcean') and 'apt_packages' | run_only_after"
 
 - name: "Create ~/OneDrive/Backup"
   file:
     state: directory
     path: ~/OneDrive/Backup
-  when: ansible_distribution == "Amazon"
+  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean"
 
 - name: Clone container-apps
   git:
@@ -15,7 +15,7 @@
     dest: ~/container-apps
     clone: yes
     update: yes
-  when: ansible_distribution == "Amazon"
+  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean"
 
 - name: Clone container-apps-private
   git:

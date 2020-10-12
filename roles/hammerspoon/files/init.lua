@@ -163,6 +163,7 @@ else
         {"PyCharm", nil, hs.layout.maximized, nil},
         {"App Store", nil, hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right30, false},
+        {"Todoist", nil, hs.layout.maximized, nil},
         {"VLC", nil, hs.layout.maximized, false},
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru Results", hs.layout.maximized, nil},

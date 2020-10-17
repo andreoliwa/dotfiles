@@ -53,6 +53,7 @@ module.exports = {
         /asana.com/,
         /miro.com/,
         /jetbrains.com/,
+        /pardot.com/,
         // EatFirst
         /eatfirst/,
         /zulip/,

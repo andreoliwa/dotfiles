@@ -4,13 +4,16 @@
 # vim /etc/fstab
 
 # <file system> <dir> <type> <options> <dump> <pass>
-/dev/mmcblk0p1  /boot    vfat     defaults,noatime    0   0
-/dev/mmcblk0p2  /    ext4      defaults,noatime    0   0
+/dev/mmcblk0p1  /boot    vfat     defaults,noatime,noauto,x-systemd.automount    0   0
+# rootfs is not mounted in fstab as we do it via initramfs. Uncomment for remount (slower boot)
+#/dev/mmcblk0p2  /    ext4      defaults,noatime    0   0
 
+# To list devices:
 # blkid:
 # /dev/sda5: LABEL="red" UUID="5754-52A9" TYPE="exfat" PARTUUID="13949af5-05"
 # /dev/sda2: LABEL="wd" UUID="5E51-D247" TYPE="exfat" PARTLABEL="Elements" PARTUUID="99a700ae-9f47-48c8-842b-34c9e29b6584"
 
+# To list mounted devices:
 # mount:
 # /dev/sda5 on /media/red type fuseblk (rw,nosuid,nodev,relatime,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096,uhelper=udisks)
 
@@ -19,11 +22,11 @@
 # This is actually the hard drive labelled "wd", named as /mnt/red to keep compatibility with the old replaced drive
 UUID="5E51-D247"   /mnt/red    exfat   rw,nosuid,nodev,relatime,auto,users   0   0
 
-# To mount, run:
+# To mount, run this as sudo and after /etc/fstab is correctly edited:
 # mkdir -p /mnt/red
 # mount -a -t exfat
 
 # Diagnose errors on exfat ("[partition] not cleanly unmounted")
 # sudo -i
-# fsck.exfat /dev/sdc6
+# fsck.exfat /dev/sda2
 # https://askubuntu.com/questions/609003/mount-exfat-warning

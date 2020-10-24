@@ -9,6 +9,6 @@ apt_packages:
   - gddrescue
   - pv
   - testdisk
-  - docker-ce
-  - docker-compose
-  - zerotier-one # https://www.zerotier.com/download.shtml
+  # - docker-ce
+  # - docker-compose
+  # - zerotier-one # https://www.zerotier.com/download.shtml

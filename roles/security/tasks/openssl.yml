@@ -1,0 +1,12 @@
+- name: "openssl: Add env vars to shell script"
+  shell: "brew info openssl | grep ' export ' | awk '{$1=$1};1' > ~/.config/dotfiles/openssl.env"
+  when: ansible_os_family == "Darwin"
+
+- name: "openssl: Export vars on .bashrc"
+  lineinfile:
+    path: ~/.bashrc
+    state: present
+    regexp: "source ~/.config/dotfiles/openssl.env"
+    line: "test -f ~/.config/dotfiles/openssl.env && source ~/.config/dotfiles/openssl.env"
+    insertafter: "test -f"
+  when: ansible_os_family == "Darwin"

@@ -1,1 +1,9 @@
-- import_tasks: ssh.yml
+- name: Create SSH directory
+  file:
+    state: directory
+    path: ~/.ssh
+
+- import_tasks: ssh_keys.yml
+- import_tasks: ssh_config.yml
+- import_tasks: ssh_known_hosts.yml
+- import_tasks: openssl.yml

@@ -5,7 +5,18 @@
     - 'ansible_os_family == "OSMC" or ansible_system_vendor == "DigitalOcean"'
     - "'apt_packages' | run_only_after"
 
+- name: "Get Debian release name with lsb_release -cs"
+  command: "lsb_release -cs"
+  register: lsb_release_cs
+
+- import_tasks: docker.yml
+  when: ansible_os_family == "OSMC"
+
+- import_tasks: zerotier.yml
+  when: ansible_os_family == "OSMC"
+
 - import_tasks: pipx.yml
+
 - import_tasks: subtitles.yml
   when: ansible_os_family == "OSMC"
 

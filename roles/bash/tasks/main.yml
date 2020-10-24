@@ -102,4 +102,4 @@
     path: ~/.bashrc
     state: present
     line: 'export PATH="$HOME/.local/bin:$PATH"'
-  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean"
+  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean" or ansible_os_family == "OSMC"

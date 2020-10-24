@@ -6,6 +6,10 @@
     state: present
   become: true
 
+- name: "zerotier: Get Debian release name"
+  command: "lsb_release -cs"
+  register: lsb_release_cs
+
 - name: "zerotier: Add stable repository"
   apt_repository:
     filename: zerotier

@@ -1,4 +1,6 @@
 dependencies:
-  - { role: geerlingguy.docker,
+  - {
+      role: geerlingguy.docker,
       become: true,
-      when: ansible_os_family != "Darwin" }
+      when: 'ansible_os_family not in ("Darwin", "OSMC")',
+    }

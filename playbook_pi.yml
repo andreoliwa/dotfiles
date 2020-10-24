@@ -6,3 +6,5 @@
     - { role: security, tags: ["security", "ssh", "gpg"] }
     - { role: bash, tags: ["bash"] }
     - { role: remote-server, tags: ["remote", "pi"] }
+    - { role: docker, tags: ["docker"] }
+    - { role: zerotier, tags: ["zerotier"] }

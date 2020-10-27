@@ -10,3 +10,4 @@ apt_packages:
   - pv
   - testdisk
   - fzf
+  - fd-find

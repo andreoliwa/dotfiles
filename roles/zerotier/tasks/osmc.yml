@@ -1,0 +1,28 @@
+# https://www.zerotier.com/download/#downloadLinux
+
+- name: "zerotier: Add GPG key"
+  apt_key:
+    url: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
+    state: present
+  become: true
+
+- name: "zerotier: Get Debian release name"
+  command: "lsb_release -cs"
+  register: lsb_release_cs
+
+- name: "zerotier: Add stable repository"
+  apt_repository:
+    filename: zerotier
+    repo: "deb http://download.zerotier.com/debian/{{ lsb_release_cs.stdout }} {{ lsb_release_cs.stdout }} main"
+    state: present
+    update_cache: no
+  become: true
+
+- name: "zerotier: Update index and install packages"
+  apt:
+    update_cache: yes
+    state: latest
+    name: zerotier-one
+  become: true
+
+  # TODO: [Fails to connect on boot · Issue #728 · zerotier/ZeroTierOne](https://github.com/zerotier/ZeroTierOne/issues/728)

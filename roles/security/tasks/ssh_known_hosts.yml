@@ -1,0 +1,14 @@
+- name: "known_hosts: Remove GitHub"
+  lineinfile:
+    path: ~/.ssh/known_hosts
+    state: absent
+    regexp: github\.com
+
+- name: "known_hosts: Remove BitBucket"
+  lineinfile:
+    path: ~/.ssh/known_hosts
+    state: absent
+    regexp: bitbucket\.org
+
+- name: "known_hosts: Add GitHub and BitBucket"
+  shell: "ssh-keyscan -t rsa github.com bitbucket.org >> ~/.ssh/known_hosts"

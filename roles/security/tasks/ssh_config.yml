@@ -1,0 +1,33 @@
+- name: Create temporary config directory to decrypt vault files
+  tempfile:
+    state: directory
+  register: ssh_temp_dir
+
+- name: Copy fragments to temp dir, decrypting them from the vault if necessary
+  copy:
+    src: "{{ role_path }}/files/ssh_config_fragments"
+    dest: "{{ ssh_temp_dir.path }}"
+
+- name: Assemble SSH config file from temp dir
+  assemble:
+    src: "{{ ssh_temp_dir.path }}/ssh_config_fragments"
+    dest: ~/.ssh/config
+    mode: "0600"
+    # TODO: Remove temp dir and use decrypt when this is solved: https://github.com/ansible/ansible/issues/65450
+    # decrypt: yes
+    # validate: /usr/sbin/sshd -t -f %s
+
+- name: Remove temp dir
+  file:
+    path: "{{ ssh_temp_dir.path }}"
+    state: absent
+  when: ssh_temp_dir.path is defined
+
+- name: "Use keychain on macOS"
+  lineinfile:
+    path: ~/.ssh/config
+    state: present
+    regexp: UseKeychain
+    line: "  UseKeychain yes"
+    insertafter: "PreferredAuthentications"
+  when: ansible_os_family == "Darwin"

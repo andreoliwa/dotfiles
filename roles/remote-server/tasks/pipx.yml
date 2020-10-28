@@ -1,0 +1,8 @@
+- name: "pipx: Install with apt"
+  apt:
+    state: latest
+    name:
+      - python3-venv
+      - pipx
+  become: true
+  when: ansible_os_family == "OSMC"

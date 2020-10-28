@@ -1,7 +1,14 @@
 - name: "Install apt packages"
   apt: name="{{ apt_packages }}" state=latest
   become: true
-  when: "(ansible_distribution == 'OSMC' or ansible_system_vendor == 'DigitalOcean') and 'apt_packages' | run_only_after"
+  when:
+    - 'ansible_os_family == "OSMC" or ansible_system_vendor == "DigitalOcean"'
+    - "'apt_packages' | run_only_after"
+
+- import_tasks: pipx.yml
+
+- import_tasks: subtitles.yml
+  when: ansible_os_family == "OSMC"
 
 - name: "Create ~/OneDrive/Backup"
   file:
@@ -23,4 +30,4 @@
     dest: ~/container-apps-private
     clone: yes
     update: yes
-  when: ansible_distribution == "OSMC"
+  when: ansible_os_family == "OSMC"

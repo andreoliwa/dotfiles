@@ -11,3 +11,4 @@ apt_packages:
   - testdisk
   - fzf
   - fd-find
+  - ripgrep

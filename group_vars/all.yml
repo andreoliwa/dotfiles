@@ -96,6 +96,7 @@ mac_homebrew_packages:
   company_laptop:
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - helm # https://helm.sh/
+    - git-secret # https://git-secret.io/installation
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

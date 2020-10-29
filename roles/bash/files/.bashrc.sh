@@ -22,22 +22,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-############### BEGIN CREATED BY ANSIBLE - DON'T EDIT MANUALLY ###############
-# https://github.com/direnv/direnv
+# https://github.com/direnv/direnv BEGIN ----------------------------------------------------------------
 eval "$(direnv hook bash)"
+# https://github.com/direnv/direnv END ----------------------------------------------------------------
 
-# https://github.com/rupa/z/blob/master/z.sh
-if [[ $OSTYPE == linux* ]]; then
-    export _Z_NO_PROMPT_COMMAND=1
-fi
-# shellcheck source=/dev/null
-source "$HOME"/.local/share/z.sh
 
-# https://github.com/riobard/bash-powerline
-# Super quick start, but it doesn't show an icon for stashed commits
-# source "$HOME"/.bash-powerline.sh
-
-# https://github.com/magicmonty/bash-git-prompt
+# https://github.com/magicmonty/bash-git-prompt BEGIN ---------------------------------------------------
 # Quick start, show all details of a git repo
 if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
     # Show a different prompt when there is an active SSH connection
@@ -47,7 +37,23 @@ if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
     # shellcheck source=/dev/null
     source "$HOME"/.bash-git-prompt/gitprompt.sh
 fi
+# https://github.com/magicmonty/bash-git-prompt END ---------------------------------------------------
 
+# https://github.com/junegunn/fzf/wiki/Examples#autojump BEGIN ------------------------------------------
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+j() {
+    if [[ "$#" -ne 0 ]]; then
+        cd "$(autojump "$@")" || return
+        return
+    fi
+    cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)" || exit
+}
+
+# https://github.com/wting/autojump#known-issues
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
+# https://github.com/junegunn/fzf/wiki/Examples#autojump END ------------------------------------------
+
+# Bash completion / dotfiles BEGIN ----------------------------------------------------------------------
 # brew info bash-completion2
 export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
@@ -58,7 +64,7 @@ export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 # shellcheck source=/dev/null
 test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
     source "$HOME"/.cache/dotfiles/cached_script.sh
-############### END CREATED BY ANSIBLE - DON'T EDIT MANUALLY ###############
+# Bash completion / dotfiles END ----------------------------------------------------------------------
 
 # Add my private script toolbox as last on the PATH
 test -d "$HOME"/Code/toolbox/bin && export PATH="$PATH:$HOME/Code/toolbox/bin"
@@ -70,7 +76,6 @@ export HISTFILESIZE=100000
 
 # https://askubuntu.com/questions/67283/is-it-possible-to-make-writing-to-bash-history-immediate/67306#67306
 shopt -s histappend
-PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # Switch to a CLI editor
 export EDITOR=vim
@@ -88,6 +93,7 @@ if type brew &>/dev/null; then
     fi
 fi
 
-# Taken from 'brew info fzf':
+# https://github.com/junegunn/fzf
+# Taken from 'brew info fzf' (and edited by an ansible role):
 # shellcheck source=/dev/null
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

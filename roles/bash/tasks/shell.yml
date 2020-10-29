@@ -1,0 +1,33 @@
+- name: "bash: Install with Homebrew"
+  homebrew: name=bash state=latest
+  when: ansible_os_family == "Darwin"
+
+- name: Add Homebrew bash to /etc/shells
+  lineinfile:
+    line: /usr/local/bin/bash
+    dest: /etc/shells
+    state: present
+  become: true
+  tags: bootstrap
+  register: add_bash_shell
+  when: ansible_os_family == "Darwin"
+
+- name: Change default shell to Homebrew bash
+  command: "chsh -s /usr/local/bin/bash"
+  tags: bootstrap
+  when: ansible_os_family == "Debian" and add_bash_shell.changed
+
+- name: Add standard bash to /etc/shells
+  lineinfile:
+    line: /bin/bash
+    dest: /etc/shells
+    state: present
+  become: true
+  tags: bootstrap
+  register: add_bash_shell
+  when: ansible_os_family == "Debian"
+
+- name: Change default shell to standard bash
+  command: "chsh -s /bin/bash"
+  tags: bootstrap
+  when: ansible_os_family == "Debian" and add_bash_shell.changed

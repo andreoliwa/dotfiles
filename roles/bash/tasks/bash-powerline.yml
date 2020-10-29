@@ -1,0 +1,12 @@
+- name: "bash-powerline: Get latest"
+  get_url:
+    url: "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh"
+    dest: ~/.bash-powerline.sh
+
+- name: "bash-powerline: Add content to .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# https://github.com/riobard/bash-powerline {mark} -------------------------------------------------------"
+    block: |
+      # Super quick start, but it doesn't show an icon for stashed commits
+      source "$HOME"/.bash-powerline.sh

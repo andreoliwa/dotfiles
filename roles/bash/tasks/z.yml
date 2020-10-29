@@ -1,0 +1,24 @@
+# https://github.com/rupa/z
+- name: "z: Get script"
+  get_url:
+    url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"
+    dest: ~/.local/share/z.sh
+
+- name: "z: Add content to .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# https://github.com/rupa/z {mark} -----------------------------------------------------------------------"
+    block: |
+      if [[ $OSTYPE == linux* ]]; then
+          export _Z_NO_PROMPT_COMMAND=1
+      fi
+
+      # shellcheck source=/dev/null
+      source "$HOME"/.local/share/z.sh
+
+      # https://github.com/junegunn/fzf/wiki/Examples#z
+      unalias z 2> /dev/null
+      z() {
+        [ $# -gt 0 ] && _z "$*" && return
+        cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+      }

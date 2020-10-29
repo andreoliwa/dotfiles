@@ -3,89 +3,36 @@
     state: directory
     path: ~/.config/dotfiles
 
-- import_tasks: install_darwin.yml
-  when: ansible_os_family == "Darwin"
-- import_tasks: install_debian.yml
-  when: ansible_os_family == "Debian"
-- import_tasks: install_osmc.yml
-  when: ansible_os_family == "OSMC"
-# TODO: direnv is not yet available for RedHat: https://direnv.net/docs/installation.html#from-system-packages
-# - import_tasks: install_redhat.yml
-#   when: ansible_os_family == "RedHat"
+- import_tasks: shell.yml
 
 # To check the distribution on the local machine:
 # ansible -m setup localhost | rg 'distribution"'
 - import_tasks: link_files.yml
   when: ansible_distribution == "MacOSX" # TODO: Or Linux
 - import_tasks: copy_files.yml
-  when: ansible_distribution in ("OSMC", "Amazon") or ansible_system_vendor == "DigitalOcean"
-
-- name: "bash-powerline: Get latest"
-  get_url:
-    url: "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh"
-    dest: ~/.bash-powerline.sh
-
-- name: "bash-git-prompt: Git clone"
-  git:
-    repo: "https://github.com/magicmonty/bash-git-prompt.git"
-    dest: "~/.bash-git-prompt"
-    clone: yes
-    depth: 1
+  when: ansible_distribution in ("OSMC", "Amazon") or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
 
 # https://github.com/powerline/powerline
 # https://github.com/b-ryan/powerline-shell
 # They are both slow and ugly (maybe a font needs to be configured).
 # Too much hassle to configure, not ready out of the box.
+# - import_tasks: bash-powerline.yml
 
-- name: "Create ~/.local/share/direnv/allow"
-  file:
-    state: directory
-    path: ~/.local/share/direnv/allow
+- import_tasks: bash-git-prompt.yml
 
-# https://github.com/rupa/z
-- name: "z: Get script"
-  get_url:
-    url: "https://raw.githubusercontent.com/rupa/z/master/z.sh"
-    dest: ~/.local/share/z.sh
+- import_tasks: direnv.yml
 
-- name: "dotfiles-cache-shell-scripts: Install PyYAML"
-  command: "python3 -m pip install pyyaml"
-  when: ansible_distribution not in ("OSMC", "Amazon") and ansible_system_vendor != "DigitalOcean"
+- import_tasks: z.yml
+  when: ansible_os_family in ("Debian", "OSMC")
 
-- name: "dotfiles-cache-shell-scripts: Create cached script that will be sourced on .bashrc"
-  command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
-  when: ansible_distribution not in ("OSMC", "Amazon") and ansible_system_vendor != "DigitalOcean"
+- import_tasks: autojump.yml
+  when: ansible_os_family == "Darwin"
 
 - name: "Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "############### {mark} CREATED BY ANSIBLE - DON'T EDIT MANUALLY ###############"
+    marker: "# Bash completion / dotfiles {mark} ----------------------------------------------------------------------"
     block: |
-      # https://github.com/direnv/direnv
-      eval "$(direnv hook bash)"
-
-      # https://github.com/rupa/z/blob/master/z.sh
-      if [[ $OSTYPE == linux* ]]; then
-          export _Z_NO_PROMPT_COMMAND=1
-      fi
-      # shellcheck source=/dev/null
-      source "$HOME"/.local/share/z.sh
-
-      # https://github.com/riobard/bash-powerline
-      # Super quick start, but it doesn't show an icon for stashed commits
-      # source "$HOME"/.bash-powerline.sh
-
-      # https://github.com/magicmonty/bash-git-prompt
-      # Quick start, show all details of a git repo
-      if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
-          # Show a different prompt when there is an active SSH connection
-          test -n "$SSH_CONNECTION" && export GIT_PROMPT_THEME=Evermeet_Ubuntu
-
-          # GIT_PROMPT_ONLY_IN_REPO=1
-          # shellcheck source=/dev/null
-          source "$HOME"/.bash-git-prompt/gitprompt.sh
-      fi
-
       # brew info bash-completion2
       export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
       [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
@@ -97,9 +44,21 @@
       test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
           source "$HOME"/.cache/dotfiles/cached_script.sh
 
+- name: "dotfiles-cache-shell-scripts: Install PyYAML"
+  command: "python3 -m pip install pyyaml"
+  when:
+    - ansible_distribution not in ("OSMC", "Amazon")
+    - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"
+
+- name: "dotfiles-cache-shell-scripts: Create cached script that will be sourced on .bashrc"
+  command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
+  when:
+    - ansible_distribution not in ("OSMC", "Amazon")
+    - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"
+
 - name: "Add .local/bin to PATH"
   lineinfile:
     path: ~/.bashrc
     state: present
     line: 'export PATH="$HOME/.local/bin:$PATH"'
-  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean" or ansible_os_family == "OSMC"
+  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean") or ansible_os_family == "OSMC"

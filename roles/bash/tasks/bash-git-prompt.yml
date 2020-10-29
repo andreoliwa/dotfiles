@@ -1,0 +1,21 @@
+- name: "bash-git-prompt: Git clone"
+  git:
+    repo: "https://github.com/magicmonty/bash-git-prompt.git"
+    dest: "~/.bash-git-prompt"
+    clone: yes
+    depth: 1
+
+- name: "bash-git-prompt: Add content to .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# https://github.com/magicmonty/bash-git-prompt {mark} ---------------------------------------------------"
+    block: |
+      # Quick start, show all details of a git repo
+      if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
+          # Show a different prompt when there is an active SSH connection
+          test -n "$SSH_CONNECTION" && export GIT_PROMPT_THEME=Evermeet_Ubuntu
+
+          # GIT_PROMPT_ONLY_IN_REPO=1
+          # shellcheck source=/dev/null
+          source "$HOME"/.bash-git-prompt/gitprompt.sh
+      fi

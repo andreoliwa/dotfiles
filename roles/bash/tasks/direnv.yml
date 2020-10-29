@@ -1,0 +1,31 @@
+- name: "direnv: Install with Homebrew"
+  homebrew: name=direnv state=latest
+  when: ansible_os_family == "Darwin"
+
+- name: "direnv: Install with apt"
+  apt: name=direnv state=latest
+  become: true
+  when: ansible_os_family == "Debian"
+
+- name: "direnv: Install with apt"
+  apt: name=direnv state=latest
+  become: true
+  when: ansible_os_family == "OSMC"
+
+# TODO: direnv is not yet available for RedHat: https://direnv.net/docs/installation.html#from-system-packages
+# - name: "direnv: Install with yum"
+#   yum: name=direnv state=latest
+#   become: true
+#   when: ansible_os_family == "RedHat"
+
+- name: "direnv: Create ~/.local/share/direnv/allow"
+  file:
+    state: directory
+    path: ~/.local/share/direnv/allow
+
+- name: "direnv: Add content to .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# https://github.com/direnv/direnv {mark} ----------------------------------------------------------------"
+    block: |
+      eval "$(direnv hook bash)"

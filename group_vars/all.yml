@@ -250,6 +250,7 @@ python3_modules:
     - organize-tool # https://github.com/tfeldmann/organize
     - pre-commit # https://pre-commit.com/
     - pgcli # https://github.com/dbcli/pgcli
+    - tox # https://github.com/tox-dev/tox/
   remove:
     - bumpversion # https://pypi.org/project/bumpversion/
     - twine # https://pypi.org/project/twine/

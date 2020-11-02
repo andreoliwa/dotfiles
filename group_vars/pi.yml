@@ -12,3 +12,4 @@ apt_packages:
   - fzf
   - fd-find
   - ripgrep
+  - rsync

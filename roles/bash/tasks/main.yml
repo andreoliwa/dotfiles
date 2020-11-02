@@ -62,3 +62,10 @@
     state: present
     line: 'export PATH="$HOME/.local/bin:$PATH"'
   when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean") or ansible_os_family == "OSMC"
+
+- name: "Add ~/container-apps-private/bin to PATH"
+  lineinfile:
+    path: ~/.bashrc
+    state: present
+    line: 'export PATH="$PATH:$HOME/container-apps-private/bin"'
+  when: ansible_os_family == "OSMC"

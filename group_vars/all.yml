@@ -330,6 +330,7 @@ vscode_extensions:
     - crisward.riot-tag
   personal_laptop:
     - matklad.rust-analyzer # https://rust-analyzer.github.io/
+    - vscode-ext.sync-rsync
   company_laptop:
     - octref.vetur # Vue.js
 

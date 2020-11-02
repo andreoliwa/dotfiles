@@ -98,5 +98,6 @@
   "python.showStartPage": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "sync-rsync.onSaveIndividual": true
 }

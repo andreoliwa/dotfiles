@@ -13,3 +13,4 @@ apt_packages:
   - fd-find
   - ripgrep
   - rsync
+  - man-db

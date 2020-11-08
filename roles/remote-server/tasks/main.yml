@@ -5,6 +5,15 @@
     - 'ansible_os_family == "OSMC" or ansible_system_vendor == "DigitalOcean"'
     - "'apt_packages' | run_only_after"
 
+# Sad face loop - open /dev/fb0: Permission denied - Help and Support / Raspberry Pi - OSMC Forums
+# https://discourse.osmc.tv/t/sad-face-loop-open-dev-fb0-permission-denied/87539?u=andreoliwa
+- name: "Add osmc to video group"
+  user:
+    name: osmc
+    groups: video
+    append: yes
+  become: true
+
 - import_tasks: pipx.yml
 
 - import_tasks: subtitles.yml

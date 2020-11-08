@@ -76,4 +76,5 @@
   user:
     name: osmc
     groups: docker
+    append: yes
   become: true

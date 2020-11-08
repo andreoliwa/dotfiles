@@ -14,3 +14,7 @@ apt_packages:
   - ripgrep
   - rsync
   - man-db
+  - manpages
+  - manpages-dev
+  - manpages-posix
+  - manpages-posix-dev

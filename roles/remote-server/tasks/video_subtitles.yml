@@ -1,0 +1,49 @@
+# https://github.com/Diaoul/subliminal
+- name: "subliminal: Install develop branch with pipx"
+  command: "pipx install --verbose git+https://github.com/Diaoul/subliminal.git@develop"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+
+# https://github.com/smacke/ffsubsync
+- name: "ffsubsync: Install dependencies with apt"
+  apt:
+    state: latest
+    name:
+      - build-essential
+      - ffmpeg
+      - gcc
+      - python3-dev
+      - python3-numpy
+      - python3-pip
+      - python3-setuptools
+      - python3-wheel
+  become: true
+
+- name: "ffsubsync: Install with pipx"
+  command: "pipx install --verbose --system-site-packages ffsubsync"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+
+- name: "vidsub: Install dependencies with apt"
+  apt:
+    state: latest
+    name:
+      - libffi-dev
+      - libssl-dev
+      - libxml2-dev
+      - libxslt-dev
+      - libxslt1-dev
+      - python3-dev
+      - python3-lxml
+  become: true
+
+- name: "vidsub: Install with pipx"
+  command: "pipx install --verbose --system-site-packages git+https://github.com/andreoliwa/python-vidsub"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"

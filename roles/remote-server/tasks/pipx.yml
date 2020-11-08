@@ -1,8 +1,13 @@
-- name: "pipx: Install with apt"
+- name: "pipx: Install dependencies"
   apt:
     state: latest
     name:
       - python3-venv
-      - pipx
   become: true
-  when: ansible_os_family == "OSMC"
+
+# https://pipxproject.github.io/pipx/installation/
+- name: "pipx: Install with pip"
+  command: "python3 -m pip install --user pipx"
+
+- name: "pipx: Ensure path"
+  command: "python3 -m pipx ensurepath"

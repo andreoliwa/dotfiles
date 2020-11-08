@@ -1,0 +1,16 @@
+# Sad face loop - open /dev/fb0: Permission denied - Help and Support / Raspberry Pi - OSMC Forums
+# https://discourse.osmc.tv/t/sad-face-loop-open-dev-fb0-permission-denied/87539?u=andreoliwa
+- name: "osmc: Add to correct groups"
+  user:
+    name: osmc
+    groups:
+      - osmc
+      - adm
+      - disk
+      - lp
+      - dialout
+      - cdrom
+      - audio
+      - video
+    append: yes
+  become: true

@@ -126,6 +126,7 @@ if wide_curved_screen ~= nil then
         {"Code", nil, hs.layout.right50, nil},
         {"App Store", nil, hs.layout.right50, nil},
         {"Hammerspoon", "Hammerspoon Console", hs.layout.right50, nil},
+        {"Activity Monitor", nil, hs.layout.right50, nil},
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized, nil},
@@ -153,6 +154,7 @@ else
         -- TODO: partial window names don't work
         -- {"Brave Browser", "Brave – Octopus", layout_top50, nil},
         -- {"Brave Browser", "Brave – Orcas", layout_bottom50, nil},
+        {"Activity Monitor", nil, hs.layout.maximized, nil},
     })
     config_screen(horizontal_screen, {
         {"Finder", nil, layout_top50, nil},
@@ -161,7 +163,6 @@ else
         {"Slack", nil, hs.layout.maximized, nil},
         {"Brave Browser Dev", nil, hs.layout.maximized, nil},
         {"PyCharm", nil, hs.layout.maximized, nil},
-        {"App Store", nil, hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right30, false},
         {"Todoist", nil, hs.layout.maximized, nil},
         {"VLC", nil, hs.layout.maximized, false},
@@ -175,6 +176,7 @@ else
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"Skype", nil, hs.layout.maximized, nil},
         {"Bitwarden", nil, hs.layout.maximized, nil},
+        {"App Store", nil, hs.layout.maximized, nil},
     })
 end
 

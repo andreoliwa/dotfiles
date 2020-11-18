@@ -109,3 +109,47 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Geld/Juridica/"
+  - folders:
+      - ~/OneDrive/Pictures/Camera_Roll/
+    # subfolders: true
+    filters:
+      - filename:
+          startswith:
+            - img_
+          case_sensitive: false
+      - LastModified
+    actions:
+      - move: "~/OneDrive/Pictures/Whats_App/{lastmodified.year}/{lastmodified.month}/"
+  - folders:
+      - ~/OneDrive/Pictures/Camera_Roll/
+    # subfolders: true
+    filters:
+      - filename:
+          startswith:
+            - vid_
+          case_sensitive: false
+      - LastModified
+    actions:
+      - move: "~/OneDrive/Pictures/Whats_App/{lastmodified.year}/{lastmodified.month}/"
+  - folders:
+      - ~/OneDrive/Pictures/Camera_Roll/
+    # subfolders: true
+    filters:
+      - filename:
+          startswith:
+            - Screenshot_
+          case_sensitive: false
+      - LastModified
+    actions:
+      - move: "~/OneDrive/Pictures/Screenshots/"
+  - folders:
+      - ~/OneDrive/Pictures/Camera_Roll/
+    # subfolders: true
+    filters:
+      - filename:
+          startswith:
+            - 20
+          case_sensitive: false
+      - LastModified
+    actions:
+      - move: "~/OneDrive/Pictures/Camera_Roll/{lastmodified.year}/{lastmodified.month}/"

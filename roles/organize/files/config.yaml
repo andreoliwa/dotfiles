@@ -22,7 +22,8 @@ rules:
       - filename:
           startswith: .keep
     actions:
-      - shell: "fd -uu -0 -tf .DS_Store ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
+      - shell: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
+      - shell: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
       - shell: "fd -uu -0 -te -td --min-depth 1 . ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -rv"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
@@ -83,15 +84,6 @@ rules:
   - folders: *download
     filters:
       - filename:
-          startswith:
-            - Whats_App
-            - WhatsApp
-          case_sensitive: false
-    actions:
-      - move: "~/OneDrive/Pictures/New/"
-  - folders: *download
-    filters:
-      - filename:
           contains:
             - riema
             - miami gardens
@@ -111,45 +103,42 @@ rules:
       - move: "~/OneDrive/Geld/Juridica/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
-    # subfolders: true
+      - *download
+    subfolders: true
     filters:
       - filename:
           startswith:
             - img_
-          case_sensitive: false
-      - LastModified
-    actions:
-      - move: "~/OneDrive/Pictures/Whats_App/{lastmodified.year}/{lastmodified.month}/"
-  - folders:
-      - ~/OneDrive/Pictures/Camera_Roll/
-    # subfolders: true
-    filters:
-      - filename:
-          startswith:
             - vid_
+            - aud_
+            - ptt
+            - whats_app
+            - whatsapp
           case_sensitive: false
       - LastModified
     actions:
       - move: "~/OneDrive/Pictures/Whats_App/{lastmodified.year}/{lastmodified.month}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
-    # subfolders: true
+    subfolders: true
     filters:
       - filename:
           startswith:
             - Screenshot_
+            - Temp_File_For_Share
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/Screenshots/"
+      - move: "~/OneDrive/Pictures/Screenshots/{lastmodified.year}/{lastmodified.month}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
-    # subfolders: true
+    subfolders: true
     filters:
       - filename:
           startswith:
+            - P_
             - 20
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/Camera_Roll/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New/By_Date/{lastmodified.year}/{lastmodified.month}/"

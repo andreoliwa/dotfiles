@@ -107,17 +107,40 @@ rules:
     subfolders: true
     filters:
       - filename:
-          startswith:
-            - img_
-            - vid_
-            - aud_
-            - ptt
+          contains:
+            # WhatsApp
+            - _wa_
             - whats_app
             - whatsapp
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/Whats_App/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/Chat/{lastmodified.year}/{lastmodified.month}/"
+  - folders:
+      - ~/OneDrive/Pictures/Camera_Roll/
+    subfolders: true
+    filters:
+      - filename:
+          startswith:
+            # Telegram
+            - "1_"
+            - "2_"
+            - "3_"
+            - "4_"
+            - "5_"
+            - "22"
+            - "23"
+            - "42"
+            - "70"
+            - "71"
+            - "80"
+            - "81"
+            # Facebook Messenger
+            - Received
+          case_sensitive: false
+      - LastModified
+    actions:
+      - move: "~/OneDrive/Pictures/Chat/{lastmodified.year}/{lastmodified.month}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -141,4 +164,11 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New/By_Date/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New/{lastmodified.year}/{lastmodified.month}/"
+  - folders:
+      - ~/OneDrive/Pictures/Classify/
+    subfolders: true
+    filters:
+      - LastModified
+    actions:
+      - move: "~/OneDrive/Pictures/New/{lastmodified.year}/{lastmodified.month}/"

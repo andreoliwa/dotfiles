@@ -93,6 +93,11 @@ if type brew &>/dev/null; then
     fi
 fi
 
+# https://github.com/scop/bash-completion/blob/master/README.md#faq
+for f in ~/.local/share/bash-completion/completions/*; do
+    source "$f"
+done
+
 # https://github.com/junegunn/fzf
 # Taken from 'brew info fzf' (and edited by an ansible role):
 # shellcheck source=/dev/null

@@ -54,6 +54,7 @@ module.exports = {
         /miro.com/,
         /jetbrains.com/,
         /pardot.com/,
+        /sentry.io/,
         // EatFirst
         /eatfirst/,
         /zulip/,

@@ -26,6 +26,7 @@ alias gwip="git add -A && git ls-files --deleted -z |
             xargs git rm && git commit -m '__wip__'"
 
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
+alias gu="gitup . && gitup --exec 'git bclean' ."
 
 # Shortcut to commit files with a message
 function co {

@@ -2,7 +2,7 @@
   apt: name="{{ apt_packages }}" state=latest
   become: true
   when:
-    - 'ansible_os_family == "OSMC" or ansible_system_vendor == "DigitalOcean"'
+    - 'ansible_os_family == "OSMC" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")'
     - "'apt_packages' | run_only_after"
 
 - import_tasks: osmc.yml
@@ -18,7 +18,7 @@
   file:
     state: directory
     path: ~/OneDrive/Backup
-  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean"
+  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
 
 - name: Clone container-apps
   git:
@@ -26,7 +26,7 @@
     dest: ~/container-apps
     clone: yes
     update: yes
-  when: ansible_distribution == "Amazon" or ansible_system_vendor == "DigitalOcean"
+  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
 
 - name: Clone container-apps-private
   git:

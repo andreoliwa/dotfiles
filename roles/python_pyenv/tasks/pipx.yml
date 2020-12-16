@@ -1,7 +1,7 @@
 # Don't install with Homebrew; it uses python@3.9 from the Homebrew dir,
 # which is then used to install pipx modules
-- name: "pipx: Install from GitHub https://github.com/pipxproject/pipx#install-pipx"
-  command: "python3 -m pip install -U --user pipx"
+- name: "pipx: Install from GitHub with Python 3.8 https://github.com/pipxproject/pipx#install-pipx"
+  command: "{{ pyenv_root }}/versions/{{ latest_python_3_8.stdout }}/bin/python3 -m pip install -U --user pipx"
   register: this_task
   changed_when: "'Requirement already up-to-date: pipx' not in this_task.stdout"
 

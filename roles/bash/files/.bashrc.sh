@@ -5,8 +5,7 @@
 # shellcheck source=/dev/null
 source "$HOME"/.config/dotfiles/local.env
 # shellcheck source=/dev/null
-test -f "$HOME"/.config/dotfiles/openssl.env && \
-    source "$HOME"/.config/dotfiles/openssl.env
+test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/openssl.env
 # shellcheck source=/dev/null
 test -f "$HOME"/container-apps/aliases.sh && \
     source "$HOME"/container-apps/aliases.sh

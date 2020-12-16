@@ -6,7 +6,7 @@
   lineinfile:
     path: ~/.bashrc
     state: present
-    regexp: "source ~/.config/dotfiles/openssl.env"
-    line: "test -f ~/.config/dotfiles/openssl.env && source ~/.config/dotfiles/openssl.env"
+    regexp: "/.config/dotfiles/openssl.env"
+    line: 'test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/openssl.env'
     insertafter: "test -f"
   when: ansible_os_family == "Darwin"

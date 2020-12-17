@@ -239,9 +239,8 @@ pyenv_global_versions:
   - 2.7.15
 
 # Install Python 3 modules globally with pipx
-python3_modules:
+python3_pipx_modules:
   common:
-    - black # https://github.com/ambv/black
     - cookiecutter # https://pypi.org/project/cookiecutter/
     - cookiepatcher # https://pypi.org/project/cookiepatcher/
     - gitup # https://github.com/earwig/git-repo-updater.git
@@ -257,10 +256,13 @@ python3_modules:
     - twine # https://pypi.org/project/twine/
     - awscli # https://pypi.org/project/awscli/ Older version 1.18.*
   personal_laptop:
+    - black # https://github.com/ambv/black
     - subliminal # https://pypi.org/project/subliminal/
     - youtube-dl # https://pypi.org/project/youtube_dl/
   company_laptop:
     - aws-shell # https://github.com/awslabs/aws-shell
+    - "black==19.3b0" # https://github.com/ambv/black
+    - "isort==4.3.21" # https://github.com/PyCQA/isort
 
 # Node utilities
 # TODO: common, remove, personal_laptop, company_laptop

@@ -10,19 +10,19 @@
   register: this_task
   changed_when: "'is already in PATH' not in this_task.stderr"
 
-- name: "pipx: Remove"
-  with_items: "{{ python3_modules['remove'] }}"
+- name: "pipx: Remove common packages"
+  with_items: "{{ python3_pipx_modules['remove'] }}"
   command: "pipx uninstall {{ item }}"
 
-- name: "pipx: Remove on personal_laptop"
-  with_items: "{{ python3_modules['company_laptop'] }}"
+- name: "pipx: Remove packages on personal_laptop"
+  with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx uninstall {{ item }}"
-  when: not ansible_env.COMPANY_LAPTOP and python3_modules['company_laptop']
+  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop']
 
-- name: "pipx: Remove on company_laptop"
-  with_items: "{{ python3_modules['personal_laptop'] }}"
+- name: "pipx: Remove packages on company_laptop"
+  with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx uninstall {{ item }}"
-  when: ansible_env.COMPANY_LAPTOP and python3_modules['personal_laptop']
+  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop']
 
 - name: "pipx: List invalid packages"
   shell: "pipx list | grep -e 'has invalid interpreter' -e 'has missing internal' | sed 's/^ *//g' | cut -d ' ' -f 2"
@@ -33,15 +33,15 @@
   command: "pipx uninstall {{ item }}"
 
 - name: "pipx: Install common Python 3 modules globally with pipx"
-  with_items: "{{ python3_modules['common'] }}"
+  with_items: "{{ python3_pipx_modules['common'] }}"
   command: "pipx install --verbose {{ item }}"
 
-- name: "pipx: Install on personal_laptop"
-  with_items: "{{ python3_modules['personal_laptop'] }}"
+- name: "pipx: Install packages on personal_laptop"
+  with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
-  when: not ansible_env.COMPANY_LAPTOP and python3_modules['personal_laptop']
+  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop']
 
-- name: "pipx: Install on company_laptop"
-  with_items: "{{ python3_modules['company_laptop'] }}"
+- name: "pipx: Install packages on company_laptop"
+  with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
-  when: ansible_env.COMPANY_LAPTOP and python3_modules['company_laptop']
+  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop']

@@ -28,13 +28,14 @@
   pyenv:
     subcommand: global
     versions:
-    - "{{ latest_python_3_8.stdout }}"
-    - "{{ latest_python_3_7.stdout }}"
-    - "{{ latest_python_3_6.stdout }}"
-    - "{{ latest_python_3_5.stdout }}"
-    - "{{ latest_python_2_7.stdout }}"
-    # Not stable yet
-    - "{{ latest_python_3_9.stdout }}"
+      - "{{ latest_python_3_8.stdout }}"
+      - "{{ latest_python_3_7.stdout }}"
+      # TODO: Python cannot be installed on Mac OS 11.0.1 pyenv https://github.com/pyenv/pyenv/issues/1737
+      # - "{{ latest_python_3_6.stdout }}"
+      # - "{{ latest_python_3_5.stdout }}"
+      - "{{ latest_python_2_7.stdout }}"
+      # Not stable yet
+      - "{{ latest_python_3_9.stdout }}"
 
 - name: "Install Poetry"
   import_tasks: poetry.yml

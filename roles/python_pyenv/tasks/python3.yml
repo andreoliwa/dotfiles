@@ -9,8 +9,9 @@
   shell: "pyenv install --list | egrep -i ' 3.9.[0-9.abrc]+$' | tail -n 1 | xargs"
   register: latest_python_3_9
   changed_when: false
+# TODO: if latest_python_3_9.stdout is empty, show warning "run pyenv in another terminal"
 
-- name: "Install Python {{ latest_python_3_9.stdout }}"
+- name: "Install Python 3.9 version {{ latest_python_3_9.stdout }}"
   pyenv:
     version: "{{ latest_python_3_9.stdout }}"
 
@@ -19,7 +20,7 @@
   register: latest_python_3_8
   changed_when: false
 
-- name: "Install Python {{ latest_python_3_8.stdout }}"
+- name: "Install Python 3.8 version {{ latest_python_3_8.stdout }}"
   pyenv:
     version: "{{ latest_python_3_8.stdout }}"
 
@@ -28,7 +29,7 @@
   register: latest_python_3_7
   changed_when: false
 
-- name: "Install Python {{ latest_python_3_7.stdout }}"
+- name: "Install Python 3.7 version {{ latest_python_3_7.stdout }}"
   pyenv:
     version: "{{ latest_python_3_7.stdout }}"
 
@@ -37,15 +38,16 @@
   register: latest_python_3_6
   changed_when: false
 
-- name: "Install Python {{ latest_python_3_6.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_6.stdout }}"
+# TODO: Python cannot be installed on Mac OS 11.0.1 pyenv https://github.com/pyenv/pyenv/issues/1737
+# - name: "Install Python 3.6 version {{ latest_python_3_6.stdout }}"
+#   pyenv:
+#     version: "{{ latest_python_3_6.stdout }}"
 
 - name: "Get latest Python 3.5"
   shell: "pyenv install --list | egrep -i ' 3.5[0-9.]+$' | tail -n 1 | xargs"
   register: latest_python_3_5
   changed_when: false
-
-- name: "Install Python {{ latest_python_3_5.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_5.stdout }}"
+# TODO: Python cannot be installed on Mac OS 11.0.1 pyenv https://github.com/pyenv/pyenv/issues/1737
+# - name: "Install Python 3.5 version {{ latest_python_3_5.stdout }}"
+#   pyenv:
+#     version: "{{ latest_python_3_5.stdout }}"

@@ -24,11 +24,8 @@
 
 - name: "Install Rust utils (binaries)"
   command: "~/.cargo/bin/cargo +nightly install {{ item.pkg }}"
-  args:
-    creates: "~/.cargo/bin/{{ item.bin }}"
-  when: (rust_binaries or False) and ('rust_install_binaries' | run_only_after)
-  with_items:
-    - "{{ rust_binaries }}"
+  with_items: "{{ rust_binaries }}"
+  # when: "'rust_install_binaries' | run_only_after"
 
 - name: "Install Rust utils from Git"
   command: "~/.cargo/bin/cargo install --force --git {{ item.git }}"

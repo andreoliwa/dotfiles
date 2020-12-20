@@ -97,6 +97,7 @@ mac_homebrew_packages:
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - helm # https://helm.sh/
     - git-secret # https://git-secret.io/installation
+    - mailhog # https://github.com/mailhog/MailHog/
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

@@ -101,7 +101,3 @@ done
 # Taken from 'brew info fzf' (and edited by an ansible role):
 # shellcheck source=/dev/null
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# Temporarily disable Homebrew updates until there is a new version of the general collection (maybe Jan 4th)
-# https://github.com/ansible-collections/community.general/issues/1524#issuecomment-749226927
-export HOMEBREW_NO_AUTO_UPDATE=1

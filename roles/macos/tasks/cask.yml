@@ -3,7 +3,6 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ mac_cask_packages['common'] }}"
-  ignore_errors: yes
 
 - name: "Cask: Remove"
   homebrew_cask:

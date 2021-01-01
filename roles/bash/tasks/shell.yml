@@ -15,7 +15,7 @@
 - name: Change default shell to Homebrew bash
   command: "chsh -s /usr/local/bin/bash"
   tags: bootstrap
-  when: ansible_os_family == "Debian" and add_bash_shell.changed
+  when: ansible_os_family == "Darwin"
 
 - name: Add standard bash to /etc/shells
   lineinfile:

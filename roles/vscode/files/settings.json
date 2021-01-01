@@ -33,7 +33,7 @@
     "hosts": "ini",
     "Makefile*": "makefile"
   },
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": true,
   "extensions.ignoreRecommendations": false,
   "breadcrumbs.enabled": true,
   "workbench.activityBar.visible": true,
@@ -99,5 +99,9 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "sync-rsync.onSaveIndividual": true
+  "sync-rsync.onSaveIndividual": true,
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "diffEditor.renderSideBySide": true
 }

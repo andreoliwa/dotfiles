@@ -11,9 +11,9 @@ fzfquery=
 # - Checkout the local branch that points to that remote
 # shellcheck disable=SC2086
 branch=$(git branch -vv --all | grep -v ' -> ' | cut -b 3- | \
-    fzf --select-1 --exit-0 --cycle $fzfquery | \
+    fzf --height 50% --reverse --inline-info --select-1 --exit-0 --cycle $fzfquery | \
     awk '{gsub(/remotes\/origin\//, " "); printf $1}')
-[ -z "$branch" ] && exit 1
+[ -z "$branch" ] && echo "No branch selected" && exit 1
 
 echo "Switching to branch '$branch'"
 git checkout "$branch"

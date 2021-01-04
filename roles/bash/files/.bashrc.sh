@@ -94,7 +94,7 @@ fi
 # Where should I install my own local completions?
 # https://github.com/scop/bash-completion/blob/master/README.md#faq
 if [[ -d "$HOME/.local/share/bash-completion/completions" ]]; then
-    for COMPLETION in "$HOME/.local/share/bash-completion/completions/*"; do
+    for COMPLETION in "$HOME/.local/share/bash-completion/completions/"*; do
         source "$COMPLETION"
     done
 fi

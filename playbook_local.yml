@@ -13,7 +13,6 @@
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }
     - { role: browser, tags: ["browser"] }
     - { role: fzf, tags: ["fzf"] }
-    - { role: hub, tags: ["hub"] }
     - { role: vim, tags: ["vim"] }
     - { role: bat, tags: ["bat"] }
     - { role: tmux, tags: ["tmux"] }

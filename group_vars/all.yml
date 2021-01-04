@@ -98,6 +98,8 @@ mac_homebrew_packages:
     - helm # https://helm.sh/
     - git-secret # https://git-secret.io/installation
     - mailhog # https://github.com/mailhog/MailHog/
+    - gdal
+    - librdkafka
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

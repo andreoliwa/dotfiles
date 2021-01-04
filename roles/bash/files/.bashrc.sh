@@ -81,21 +81,23 @@ export EDITOR=vim
 
 # https://docs.brew.sh/Shell-Completion
 if type brew &>/dev/null; then
-    if [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]; then
-        # shellcheck source=/dev/null
-        source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+    HOMEBREW_PREFIX="$(brew --prefix)"
+    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+        source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
     else
-        for COMPLETION in "$(brew --prefix)/etc/bash_completion.d/"*; do
-            # shellcheck source=/dev/null
+        for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
             [[ -r "$COMPLETION" ]] && source "$COMPLETION"
         done
     fi
 fi
 
+# Where should I install my own local completions?
 # https://github.com/scop/bash-completion/blob/master/README.md#faq
-for f in ~/.local/share/bash-completion/completions/*; do
-    source "$f"
-done
+if [[ -d "$HOME/.local/share/bash-completion/completions" ]]; then
+    for COMPLETION in "$HOME/.local/share/bash-completion/completions/*"; do
+        source "$COMPLETION"
+    done
+fi
 
 # https://github.com/junegunn/fzf
 # Taken from 'brew info fzf' (and edited by an ansible role):

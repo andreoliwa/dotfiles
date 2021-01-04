@@ -24,7 +24,7 @@ rules:
     actions:
       - shell: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
       - shell: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
-      - shell: "fd -uu -0 -te -td --min-depth 1 . ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -rv"
+      - shell: "find -f ~/Downloads -f ~/Desktop -f ~/OneDrive /Volumes/m3/backup/Pictures -mindepth 1 -type d -empty -print -delete"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
       - shell: "rename-slugify -x ~/Documents/Notebook/cv/ -x ~/Documents/Notebook/diary/ -x ~/Documents/Notebook/vscode_notebook/ -x ~/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/Documents/ScanSnapHome.localized -x ~/OneDrive/Icon? --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
@@ -115,7 +115,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/Chat/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year}/{lastmodified.month}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -140,7 +140,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/Chat/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year}/{lastmodified.month}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -152,7 +152,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/Screenshots/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Screenshots/{lastmodified.year}/{lastmodified.month}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -164,11 +164,12 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.year}/{lastmodified.month}/"
   - folders:
       - ~/OneDrive/Pictures/Classify/
+      - ~/OneDrive/Pictures/Organize/
     subfolders: true
     filters:
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.year}/{lastmodified.month}/"

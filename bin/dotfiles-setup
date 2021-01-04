@@ -134,7 +134,7 @@ def main():
                 "2>/dev/null",
                 "| tail -n +6",
                 "| sort | uniq",
-                "| fzf --select-1 --exit-0 --min-height=15 --height=20% --cycle",
+                "| fzf --height 50% --reverse --inline-info --select-1 --exit-0 --cycle",
                 "--query={!r}".format(args.task),
             ]
         )

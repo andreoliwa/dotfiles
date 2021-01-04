@@ -47,7 +47,8 @@
   command: "pipx upgrade-all --verbose"
   register: this_task
   changed_when: "'Versions did not change after running' not in this_task.stdout"
-  when: "'pipx_upgrade_all' | run_only_after"
+  # Can't run this global upgrade on the company laptop, because it has pinned packages
+  when: not ansible_env.COMPANY_LAPTOP and "'pipx_upgrade_all' | run_only_after"
 
 - name: "Install JetBrains PyCharm"
   import_tasks: pycharm.yml

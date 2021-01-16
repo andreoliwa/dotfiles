@@ -1,0 +1,7 @@
+- name: "gita: Install with pipx"
+  command: "pipx install --verbose gita"
+
+- name: "gita: Auto completion"
+  get_url:
+    url: "https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.bash"
+    dest: ~/.local/share/bash-completion/completions/gita-completion.bash

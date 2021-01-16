@@ -28,6 +28,11 @@
 - import_tasks: autojump.yml
   when: ansible_os_family == "Darwin"
 
+- name: "Create local bash completions dir: ~/.local/share/bash-completion/completions"
+  file:
+    state: directory
+    path: ~/.local/share/bash-completion/completions
+
 - name: "Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc

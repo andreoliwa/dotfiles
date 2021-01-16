@@ -9,3 +9,8 @@
   when:
     - ansible_distribution not in ("Amazon", "OSMC")
     - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"
+
+- import_tasks: gita.yml
+  when:
+    - ansible_distribution not in ("Amazon", "OSMC")
+    - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"

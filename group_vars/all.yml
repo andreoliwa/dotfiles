@@ -100,6 +100,8 @@ mac_homebrew_packages:
     - mailhog # https://github.com/mailhog/MailHog/
     - gdal
     - librdkafka
+    - adoptopenjdk # dbeaver-community requires Java 8+
+    - dbeaver-community
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
@@ -219,11 +221,13 @@ mac_mas_packages:
   common:
     - 409203825 # Numbers https://itunes.apple.com/us/app/id409203825
     - 585829637 # Todoist https://itunes.apple.com/us/app/id585829637
+    - 973134470 # Be Focused - Focus Timer https://apps.apple.com/us/app/be-focused-focus-timer/id973134470
   remove:
     - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
     - 973134470 # Be Focused - Focus Timer https://itunes.apple.com/us/app/id973134470
   personal_laptop:
   company_laptop:
+    - 526298438 # Lightshot Screenshot https://apps.apple.com/us/app/lightshot-screenshot/id526298438
 
 ruby_global_gems:
   - lunchy
@@ -281,7 +285,7 @@ npm_global_packages:
   - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
   - "@commitlint/cli" # https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/cli
   - "@commitlint/config-conventional"
-  - commitizen # https://github.com/commitizen/cz-cli
+  # TODO: remove - commitizen # https://github.com/commitizen/cz-cli
   - semantic-release-cli # https://github.com/semantic-release/cli
 
   # Sentry
@@ -319,7 +323,7 @@ vscode_extensions:
     - mikestead.dotenv
     - ms-python.python
     - ms-python.vscode-pylance
-    - vscoss.vscode-ansible
+    - haaaad.ansible
     - zhouronghui.propertylist
     - bungcip.better-toml
     - jsynowiec.vscode-insertdatestring
@@ -330,10 +334,12 @@ vscode_extensions:
     - grapecity.gc-excelviewer
     - vscode-org-mode.org-mode
     - eamodio.gitlens
+    - lextudio.restructuredtext
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
     - crisward.riot-tag
+    - vscoss.vscode-ansible
   personal_laptop:
     - matklad.rust-analyzer # https://rust-analyzer.github.io/
     - vscode-ext.sync-rsync

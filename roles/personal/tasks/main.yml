@@ -6,6 +6,7 @@
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/toolbox.git"
+    gita_group: personal
 
 - include_role: name=python_repo
   vars:
@@ -15,21 +16,31 @@
     # Using the latest Python 3.5 has failed before.
     python_version: "{{ latest_python_3_5.stdout }}"
     # python_version: "3.5.6"
+    gita_group: oss
+
+- include_role: name=python_repo
+  vars:
+    repo: "git@github.com:andreoliwa/python-cdown.git"
+    python_version: "{{ latest_python_3_7.stdout }}"
+    gita_group: oss
 
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/container-apps.git"
     root: ~/
+    gita_group: personal
 
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/dontforget.git"
-    python_version: "{{ latest_python_3_7.stdout }}"
+    python_version: "{{ latest_python_3_8.stdout }}"
+    gita_group: oss
 
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/python-clib.git"
-    python_version: "{{ latest_python_3_7.stdout }}"
+    python_version: "{{ latest_python_3_8.stdout }}"
+    gita_group: oss
 
 # https://github.com/andreoliwa/python-clib
 # Editable mode (-e) not working anymore with pipx, since I removed setup.py:
@@ -41,27 +52,26 @@
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/answering-machine.git"
+    gita_group: personal
 
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/scrapy-tegenaria.git"
     symlink_dir: "{{ personal_role_path }}/files/scrapy-tegenaria/{{ ansible_hostname }}"
     python_version: "{{ latest_python_3_7.stdout }}"
+    gita_group: personal
 
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/germanize-telegram.git"
-
-- import_tasks: vault_projects.yml
-  when: not ansible_env.COMPANY_LAPTOP
+    gita_group: personal
 
 - import_tasks: vault_sennder.yml
   when: ansible_env.COMPANY_LAPTOP
 
-- import_tasks: vault_not_company.yml
+- import_tasks: vault_personal.yml
   when: not ansible_env.COMPANY_LAPTOP
-
 # This can be slow; updates can be done on a as-needed basis, for each individual repo
-- name: "gitup: Update project root (for git projects that were not updated above)"
-  command: "gitup {{ project_root }}"
-  when: "'gitup_update_project' | run_only_after"
+#- name: "gitup: Update project root (for git projects that were not updated above)"
+#  command: "gitup {{ project_root }}"
+#  when: "'gitup_update_project' | run_only_after"

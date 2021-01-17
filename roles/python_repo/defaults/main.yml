@@ -31,3 +31,6 @@ symlink_dir: ""
 # User name and email for the repo. Ignored when empty (will use the global git config)
 user_name: ""
 user_email: ""
+
+# gita group for the project
+gita_group: ""

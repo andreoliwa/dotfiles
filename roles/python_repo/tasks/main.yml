@@ -7,6 +7,14 @@
     accept_hostkey: yes
   become: no
 
+- name: "{{ dir }}: Add gita project"
+  command: "gita add {{ root }}/{{ dir }}"
+  when: gita_group != ''
+
+- name: "{{ dir }}: Add to gita group {{ gita_group }}"
+  command: "gita group add -n {{ gita_group }} {{ dir }}"
+  when: gita_group != ''
+
 - name: "{{ dir }}: Set user name if defined"
   when: user_name != ''
   git_config:

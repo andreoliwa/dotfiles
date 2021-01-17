@@ -20,6 +20,7 @@ alias pvs='pyenv versions --bare'
 alias p='poetry'
 alias px='poetry run'
 alias pp='poetry run python'
+alias ppp='poetry run python -m pip'
 alias pu='poetry update'
 
 alias makenitpick="make -f ~/Code/nitpick/Makefile.projects "

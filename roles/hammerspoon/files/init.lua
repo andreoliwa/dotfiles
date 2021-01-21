@@ -155,6 +155,7 @@ else
         -- {"Brave Browser", "Brave – Octopus", layout_top50, nil},
         -- {"Brave Browser", "Brave – Orcas", layout_bottom50, nil},
         {"Activity Monitor", nil, hs.layout.maximized, nil},
+        {"Todoist", nil, layout_bottom50, nil},
     })
     config_screen(horizontal_screen, {
         {"Finder", nil, layout_top50, nil},
@@ -164,7 +165,6 @@ else
         {"Brave Browser Dev", nil, hs.layout.maximized, nil},
         {"PyCharm", nil, hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right30, false},
-        {"Todoist", nil, hs.layout.maximized, nil},
         {"VLC", nil, hs.layout.maximized, false},
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru Results", hs.layout.maximized, nil},

@@ -335,6 +335,7 @@ vscode_extensions:
     - vscode-org-mode.org-mode
     - eamodio.gitlens
     - lextudio.restructuredtext
+    - ms-vsliveshare.vsliveshare # https://docs.microsoft.com/en-us/visualstudio/liveshare/use/vscode
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

@@ -28,8 +28,3 @@
   shell: "echo {{ pyenv_versions }} | grep -i -E '^3.6[0-9.]+$' | tail -n 1"
   register: latest_python_3_6
   changed_when: false
-
-- name: "Get installed version of Python 3.5"
-  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.5[0-9.]+$' | tail -n 1"
-  register: latest_python_3_5
-  changed_when: false

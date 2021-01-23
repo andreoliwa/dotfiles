@@ -8,14 +8,11 @@
     repo: "git@github.com:andreoliwa/toolbox.git"
     gita_group: personal
 
-- include_role: name=python_repo
+- name: "python_repo: andreoliwa/nitpick"
+  include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/nitpick.git"
-    # Travis is using 3.5.6, in which pytest 5.4.1 works: https://travis-ci.com/github/andreoliwa/nitpick/jobs/308512851
-    # platform linux -- Python 3.5.6, pytest-5.4.1, py-1.8.1, pluggy-0.13.1 -- /home/travis/virtualenv/python3.5.6/bin/python
-    # Using the latest Python 3.5 has failed before.
-    python_version: "{{ latest_python_3_5.stdout }}"
-    # python_version: "3.5.6"
+    python_version: "{{ latest_python_3_6.stdout }}"
     gita_group: oss
 
 - include_role: name=python_repo

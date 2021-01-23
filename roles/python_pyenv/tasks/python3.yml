@@ -38,16 +38,10 @@
   register: latest_python_3_6
   changed_when: false
 
-# TODO: Python cannot be installed on Mac OS 11.0.1 pyenv https://github.com/pyenv/pyenv/issues/1737
-# - name: "Install Python 3.6 version {{ latest_python_3_6.stdout }}"
-#   pyenv:
-#     version: "{{ latest_python_3_6.stdout }}"
-
-- name: "Get latest Python 3.5"
-  shell: "pyenv install --list | egrep -i ' 3.5[0-9.]+$' | tail -n 1 | xargs"
-  register: latest_python_3_5
-  changed_when: false
-# TODO: Python cannot be installed on Mac OS 11.0.1 pyenv https://github.com/pyenv/pyenv/issues/1737
-# - name: "Install Python 3.5 version {{ latest_python_3_5.stdout }}"
-#   pyenv:
-#     version: "{{ latest_python_3_5.stdout }}"
+- name: "Install Python 3.6 version {{ latest_python_3_6.stdout }}"
+  # Python cannot be installed on Mac OS 11.0.1 pyenv · Issue #1737 · pyenv/pyenv
+  # https://github.com/pyenv/pyenv/issues/1737#issuecomment-765724815
+  environment:
+    CFLAGS: -Wno-implicit-function-declaration
+  pyenv:
+    version: "{{ latest_python_3_6.stdout }}"

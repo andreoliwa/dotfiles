@@ -12,6 +12,11 @@ slugify_folders: &slugify
   - ~/OneDrive/
   - ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
 
+empty_folders: &empty
+  - ~/Downloads/
+  - ~/Desktop/
+  # - ~/OneDrive/Documents/Mayan_Staging/Shared_Downloads/
+
 rules:
   # Hack to call rename-slugify only once.
   # As of March 2020, the organize tool only finds *files* under directories...
@@ -173,3 +178,12 @@ rules:
       - LastModified
     actions:
       - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.year}/{lastmodified.month}/"
+  # https://organize.readthedocs.io/en/latest/page/actions.html#id9
+  - folders: *empty
+    subfolders: true
+    filters:
+      - python: |
+          return not path.name.startswith('.')
+    actions:
+      - echo: "Directory should be empty: {path}"
+      - shell: 'open "{basedir}"'

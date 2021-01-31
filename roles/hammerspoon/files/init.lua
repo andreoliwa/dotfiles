@@ -164,7 +164,6 @@ else
         {"Slack", nil, hs.layout.maximized, nil},
         {"Brave Browser Dev", nil, hs.layout.maximized, nil},
         {"PyCharm", nil, hs.layout.maximized, nil},
-        {"Toggl Track", nil, hs.layout.right30, false},
         {"VLC", nil, hs.layout.maximized, false},
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru Results", hs.layout.maximized, nil},
@@ -177,6 +176,8 @@ else
         {"Skype", nil, hs.layout.maximized, nil},
         {"Bitwarden", nil, hs.layout.maximized, nil},
         {"App Store", nil, hs.layout.maximized, nil},
+        {"Toggl Track", nil, hs.layout.left30, false},
+        {'Pritunl', 'Pritunl', hs.layout.right50, nil},
     })
 end
 

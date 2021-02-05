@@ -70,6 +70,7 @@ mac_homebrew_packages:
     - coreutils # https://www.gnu.org/software/coreutils
     - blueutil # https://github.com/toy/blueutil
     - svn # needed by font-ubuntu
+    - moreutils # https://joeyh.name/code/moreutils/ with the sponge command
   remove:
     - heroku/brew/heroku
     - highlight

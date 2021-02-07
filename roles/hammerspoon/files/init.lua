@@ -143,26 +143,12 @@ if wide_curved_screen ~= nil then
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
     })
 else
-    config_screen(vertical_screen, {
-        {"iTerm2", nil, hs.layout.maximized, nil},
-        {"Telegram", nil, layout_bottom50, false},
-        {"WhatsApp", nil, layout_top50, false},
-        {"Signal", nil, layout_top30, false},
-        {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
-        {"Preview", nil, hs.layout.maximized, nil},
-        {"dupeGuru", "dupeGuru", layout_top50, nil},
-        -- TODO: partial window names don't work
-        -- {"Brave Browser", "Brave – Octopus", layout_top50, nil},
-        -- {"Brave Browser", "Brave – Orcas", layout_bottom50, nil},
-        {"Activity Monitor", nil, hs.layout.maximized, nil},
-        {"Todoist", nil, layout_bottom50, nil},
-    })
     config_screen(horizontal_screen, {
         {"Finder", nil, layout_top50, nil},
         {"Code", nil, hs.layout.maximized, nil},
         {"Brave Browser", nil, hs.layout.maximized, nil},
         {"Slack", nil, hs.layout.maximized, nil},
-        {"Brave Browser Dev", nil, hs.layout.maximized, nil},
+        {"Brave Browser Dev", "Brave Dev – WAA", hs.layout.maximized, nil},
         {"PyCharm", nil, hs.layout.maximized, nil},
         {"VLC", nil, hs.layout.maximized, false},
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
@@ -179,11 +165,41 @@ else
         {"Toggl Track", nil, hs.layout.left30, false},
         {'Pritunl', 'Pritunl', hs.layout.right50, nil},
     })
+    config_screen(vertical_screen, {
+        {"iTerm2", nil, hs.layout.maximized, nil},
+        {"Telegram", nil, layout_bottom50, false},
+        {"WhatsApp", nil, layout_top50, false},
+        {"Signal", nil, layout_top30, false},
+        {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
+        {"Preview", nil, hs.layout.maximized, nil},
+        {"dupeGuru", "dupeGuru", layout_top50, nil},
+        {"Brave Browser Dev", "Brave Dev – Regina", layout_top50, nil},
+        {"Brave Browser Dev", "Brave Dev – Torrent", layout_bottom50, nil},
+
+        -- Work profiles
+        -- TODO: find a better way to configure apps/windows, because the order of these layout tables is important
+        --   they are applied in the order they appear
+        {"Brave Browser", "PES-", hs.layout.maximized, nil},
+        {"Brave Browser", "Brave – Finance", layout_top50, nil},
+        {"Brave Browser", "Brave – DD", layout_bottom50, nil},
+
+        {"Activity Monitor", nil, hs.layout.maximized, nil},
+        {"Todoist", nil, layout_bottom50, nil},
+    })
+end
+
+-- http://www.hammerspoon.org/docs/hs.layout.html#apply
+function compare_window_title(actual_window_title, expected_window_title)
+    local found = string.match(actual_window_title, expected_window_title)
+    if found ~= nil then
+        print('  Found this: ' .. expected_window_title .. ' in this existing window title: ' .. actual_window_title)
+    end
+    return found
 end
 
 function apply_window_layout()
     -- http://www.hammerspoon.org/docs/hs.layout.html
-    hs.layout.apply(window_layout)
+    hs.layout.apply(window_layout, compare_window_title)
 end
 
 apply_window_layout()

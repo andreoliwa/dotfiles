@@ -154,17 +154,6 @@ else
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru Results", hs.layout.maximized, nil},
     })
-    config_screen(laptop_screen, {
-        {"Spotify", nil, hs.layout.maximized, false},
-        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, nil},
-        {"TeamViewer", nil, hs.layout.maximized, nil},
-        {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
-        {"Skype", nil, hs.layout.maximized, nil},
-        {"Bitwarden", nil, hs.layout.maximized, nil},
-        {"App Store", nil, hs.layout.maximized, nil},
-        {"Toggl Track", nil, hs.layout.left30, false},
-        {'Pritunl', 'Pritunl', hs.layout.right50, nil},
-    })
     config_screen(vertical_screen, {
         {"iTerm2", nil, hs.layout.maximized, nil},
         {"Telegram", nil, layout_bottom50, false},
@@ -185,6 +174,18 @@ else
 
         {"Activity Monitor", nil, hs.layout.maximized, nil},
         {"Todoist", nil, layout_bottom50, nil},
+    })
+    config_screen(laptop_screen, {
+        {"Spotify", nil, hs.layout.maximized, false},
+        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, nil},
+        {"TeamViewer", nil, hs.layout.maximized, nil},
+        {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
+        {"Skype", nil, hs.layout.maximized, nil},
+        {"Bitwarden", nil, hs.layout.maximized, nil},
+        {"App Store", nil, hs.layout.maximized, nil},
+        {"Toggl Track", nil, hs.layout.left30, false},
+        {'Pritunl', 'Pritunl', hs.layout.right50, nil},
+        {"Brave Browser Dev", "YouTube", hs.layout.maximized, nil},
     })
 end
 

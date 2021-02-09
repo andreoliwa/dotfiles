@@ -83,9 +83,11 @@ if vertical_screen == nil then
     vertical_screen = horizontal_screen
 end
 
+-- Default layouts: http://www.hammerspoon.org/docs/hs.layout.html
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
-layout_top30 = hs.geometry.rect(0, 0, 1, 0.33)
+layout_top30 = hs.geometry.rect(0, 0, 1, 0.30)
 layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)
+layout_top70 = hs.geometry.rect(0, 0, 1, 0.7)
 layout_bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
 
 local window_layout = {}
@@ -153,6 +155,7 @@ else
         {"VLC", nil, hs.layout.maximized, false},
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru Results", hs.layout.maximized, nil},
+        {"Brave Browser", "Todoist", hs.layout.maximized, nil},
     })
     config_screen(vertical_screen, {
         {"iTerm2", nil, hs.layout.maximized, nil},
@@ -166,14 +169,22 @@ else
         {"Brave Browser Dev", "Brave Dev – Torrent", layout_bottom50, nil},
 
         -- Work profiles
-        -- TODO: find a better way to configure apps/windows, because the order of these layout tables is important
+        -- TODO: find a better way to configure apps/windows here in this script,
+        --   because the order of these layout tables is important;
         --   they are applied in the order they appear
-        {"Brave Browser", "PES-", hs.layout.maximized, nil},
+        {"Brave Browser", "JIRA", layout_top70, nil},
+        {"Brave Browser", "Google Sheets", layout_top70, nil},
+        {"Brave Browser", "Figma", layout_top70, nil},
         {"Brave Browser", "Brave – Finance", layout_top50, nil},
         {"Brave Browser", "Brave – DD", layout_bottom50, nil},
+        {"Brave Browser", "DevTools", layout_top50, nil},
 
         {"Activity Monitor", nil, hs.layout.maximized, nil},
         {"Todoist", nil, layout_bottom50, nil},
+        {"Bitwarden", nil, layout_bottom50, nil},
+
+        {"PyCharm", "Debug -", layout_top50, nil},
+        {"PyCharm", "Run -", layout_bottom50, nil},
     })
     config_screen(laptop_screen, {
         {"Spotify", nil, hs.layout.maximized, false},
@@ -181,9 +192,8 @@ else
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"Skype", nil, hs.layout.maximized, nil},
-        {"Bitwarden", nil, hs.layout.maximized, nil},
         {"App Store", nil, hs.layout.maximized, nil},
-        {"Toggl Track", nil, hs.layout.left30, false},
+        {"Toggl Track", nil, hs.layout.left30, true},
         {'Pritunl', 'Pritunl', hs.layout.right50, nil},
         {"Brave Browser Dev", "YouTube", hs.layout.maximized, nil},
     })

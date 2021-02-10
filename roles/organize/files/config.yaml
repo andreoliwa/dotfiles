@@ -1,7 +1,7 @@
 # https://organize.readthedocs.io/en/latest/page/config.html#configuration
 download_folders: &download
   - ~/Downloads/
-  - ~/OneDrive/Documents/Mayan_Staging/Shared_Downloads/
+  - ~/Documents/Shared_Downloads/
   - ~/OneDrive/Documents/Mayan_Staging/Deutsch
   - ~/OneDrive/Documents/Mayan_Staging/Portugues
 
@@ -15,7 +15,7 @@ slugify_folders: &slugify
 empty_folders: &empty
   - ~/Downloads/
   - ~/Desktop/
-  # - ~/OneDrive/Documents/Mayan_Staging/Shared_Downloads/
+  # - ~/Documents/Shared_Downloads/
 
 rules:
   # Hack to call rename-slugify only once.
@@ -27,12 +27,13 @@ rules:
       - filename:
           startswith: .keep
     actions:
-      - shell: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
-      - shell: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive | xargs -0 rm -v"
-      - shell: "find -f ~/Downloads -f ~/Desktop -f ~/OneDrive /Volumes/m3/backup/Pictures -mindepth 1 -type d -empty -print -delete"
+      - shell: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
+      - shell: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
+      # /Volumes/m3/backup/Pictures
+      - shell: "find -f ~/Downloads -f ~/Desktop -f ~/Documents ~/OneDrive -mindepth 1 -type d -empty -print -delete"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
-      - shell: "rename-slugify -x ~/Documents/Notebook/cv/ -x ~/Documents/Notebook/diary/ -x ~/Documents/Notebook/vscode_notebook/ -x ~/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/Documents/ScanSnapHome.localized -x ~/OneDrive/Icon? --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
+      - shell: "rename-slugify -x ~/Documents/Notebook/cv/ -x ~/Documents/Notebook/diary/ -x ~/Documents/Notebook/vscode_notebook/ -x ~/Documents/Notebook/manager.py -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
   # TODO: This filter below doesn't work, nothing is found. Open a bug on organize?
   # - folders: *slugify
   #   subfolders: true
@@ -52,7 +53,7 @@ rules:
     filters:
       - filecontent: "(Rechnung)"
     actions:
-      - move: "~/OneDrive/Documents/Mayan_Staging/Deutsch/Invoice/"
+      - move: "~/OneDrive/Documents/Mayan_Staging/Deutsch/Type_Invoice/"
   - folders: *download
     filters:
       - filename:

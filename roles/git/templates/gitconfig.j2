@@ -67,12 +67,24 @@
         editor = vim
 [apply]
         whitespace = nowarn
-[merge]
-        tool = meld
-[mergetool]
-        keepBackup = false
+
+# https://yousseb.github.io/meld/
+[diff]
+    tool = meld
 [difftool]
-        prompt = false
+    prompt = false
+[difftool "meld"]
+    trustExitCode = true
+    cmd = open -W -a Meld --args \"$LOCAL\" \"$REMOTE\"
+[merge]
+    tool = meld
+[mergetool]
+    prompt = false
+# Using this doesn't work, the files don't open:
+# [mergetool "meld"]
+#     trustExitCode = true
+#     cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
+
 [push]
         # See `git help config` (search for push.default)
         # for more information on different options of the below setting.

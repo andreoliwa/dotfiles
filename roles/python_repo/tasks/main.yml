@@ -44,7 +44,7 @@
   register: requirements_txt
 
 - name: "{{ dir }}: Create a Poetry virtualenv for {{ env }} with Python {{ python_version }}"
-  when: python_version != '' and pyproject_toml.stat.exists and not requirements_txt.stat.exists
+  when: python_version != '' and pyproject_toml.stat.exists and poetry_env
   command: "poetry env use {{ pyenv_root }}/versions/{{ python_version }}/bin/python"
   args:
     chdir: "{{ root }}/{{ dir }}"

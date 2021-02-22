@@ -1,14 +1,22 @@
-- name: "Download Poetry install script (https://pypi.org/project/poetry/)"
+- name: "poetry: Download install script (https://pypi.org/project/poetry/)"
   get_url:
     url: "https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py"
     dest: /tmp/get-poetry.py
 
-- name: Install Poetry globally
+- name: "poetry: Install globally"
   command: "python /tmp/get-poetry.py"
   register: this_task
   changed_when: "'Latest version already installed' not in this_task.stdout"
 
-- name: Update Poetry
+- name: "Get brew prefix"
+  command: "brew --prefix"
+  register: brew_prefix
+
+# https://python-poetry.org/docs/#enable-tab-completion-for-bash-fish-or-zsh
+- name: "poetry: Enable tab completion"
+  shell: "poetry completions bash > {{ brew_prefix.stdout }}/etc/bash_completion.d/poetry.bash-completion"
+
+- name: "poetry: Update"
   command: "poetry self update"
   register: this_task
   changed_when: "'You are using the latest version' not in this_task.stdout"

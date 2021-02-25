@@ -18,7 +18,8 @@ eval "$(pyenv init - --no-rehash)"
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # https://github.com/sdispater/poetry#installation
-export PATH="$PATH:$HOME/.poetry/bin"
+# Poetry first, in case some clown decides to use it inside a virtualenv
+export PATH="$HOME/.poetry/bin:$PATH"
 
 # https://github.com/pipxproject/pipx#install-pipx
 export PATH="$HOME/.local/bin:/usr/local/sbin:$PATH"

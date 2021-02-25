@@ -71,6 +71,7 @@ module.exports = {
         /caterdesk/,
         /orderin/,
         /algolia/,
+        /sli.do/,
       ],
       browser: "Brave Browser",
     },

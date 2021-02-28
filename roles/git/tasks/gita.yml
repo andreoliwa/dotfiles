@@ -1,7 +1,12 @@
+# https://github.com/nosarthur/gita
 - name: "gita: Install with pipx"
   command: "pipx install --verbose gita"
 
-- name: "gita: Auto completion"
+- name: "gita: Get brew prefix"
+  command: "brew --prefix"
+  register: brew_prefix
+
+- name: "gita: Tab completion"
   get_url:
     url: "https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.bash"
-    dest: ~/.local/share/bash-completion/completions/gita-completion.bash
+    dest: "{{ brew_prefix.stdout }}/etc/bash_completion.d/gita.bash-completion"

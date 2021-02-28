@@ -41,7 +41,10 @@
 - name: "Install pipx"
   import_tasks: pipx.yml
 
-- name: "pipx: Upgrade all packages"
+- name: "Install Invoke"
+  import_tasks: invoke.yml
+
+- name: "pipx: Upgrade all packages (pipx upgrade-all --verbose)"
   command: "pipx upgrade-all --verbose"
   register: this_task
   changed_when: "'Versions did not change after running' not in this_task.stdout"

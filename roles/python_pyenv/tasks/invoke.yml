@@ -1,6 +1,11 @@
 # https://github.com/pyinvoke/invoke
 - name: "invoke: Install with pipx"
-  command: "pipx install --verbose invoke"
+  command: "pipx install invoke"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"

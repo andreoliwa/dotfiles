@@ -1,6 +1,11 @@
 # https://github.com/nosarthur/gita
 - name: "gita: Install with pipx"
-  command: "pipx install --verbose gita"
+  command: "pipx install gita"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 - name: "gita: Get brew prefix"
   command: "brew --prefix"
@@ -10,3 +15,9 @@
   get_url:
     url: "https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.bash"
     dest: "{{ brew_prefix.stdout }}/etc/bash_completion.d/gita.bash-completion"
+
+- name: "gita: Add dotfiles"
+  command: "gita add {{ dotfiles_home }}"
+
+- name: "gita: Add dotfiles to the 'personal' group"
+  command: "gita group add -n personal dotfiles"

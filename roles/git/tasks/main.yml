@@ -10,6 +10,8 @@
     - ansible_distribution not in ("Amazon", "OSMC")
     - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"
 
+- name: "gita: Import tasks"
+  debug: msg="I want to use --start-at-task here, but 'name' is ignored on 'import_tasks'"
 - import_tasks: gita.yml
   when:
     - ansible_distribution not in ("Amazon", "OSMC")

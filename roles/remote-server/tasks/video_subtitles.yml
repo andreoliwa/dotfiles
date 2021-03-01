@@ -5,6 +5,7 @@
   failed_when:
     - result.rc > 0
     - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 # https://github.com/smacke/ffsubsync
 - name: "ffsubsync: Install dependencies with apt"
@@ -27,6 +28,7 @@
   failed_when:
     - result.rc > 0
     - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 - name: "vidsub: Install dependencies with apt"
   apt:
@@ -47,3 +49,4 @@
   failed_when:
     - result.rc > 0
     - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"

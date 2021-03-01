@@ -143,7 +143,7 @@ def main():
             print("No task was chosen")
             sys.exit(-1)
         role_task = selected[0].split("\t")[0]
-        task_parts = role_task.split(":", 1)
+        task_parts = role_task.split(" :", 1)  # Ansible adds a "<role> :" prefix on tasks, with a space before ":"
         chosen_task = task_parts[1].strip() if len(task_parts) > 1 else role_task
         command_parts.append("--start-at-task {!r}".format(chosen_task))
 

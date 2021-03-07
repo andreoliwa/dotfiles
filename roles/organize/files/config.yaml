@@ -121,7 +121,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -146,7 +146,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -158,7 +158,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Screenshots/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Screenshots/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -170,7 +170,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Classify/
       - ~/OneDrive/Pictures/Organize/
@@ -178,7 +178,7 @@ rules:
     filters:
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.year}/{lastmodified.month}/"
+      - move: "~/OneDrive/Pictures/New_Split/{lastmodified.year:04}/{lastmodified.month:02}/{lastmodified.year:04}-{lastmodified.month:02}-{lastmodified.day:02}/"
   # https://organize.readthedocs.io/en/latest/page/actions.html#id9
   - folders: *empty
     subfolders: true

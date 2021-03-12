@@ -55,7 +55,7 @@ end
 
 -- The two external monitors have the same name (HP E241i), so I have to use the UUID instead
 -- If the external monitors are off, fallback to other screens
-local laptop_screen = 'Color LCD'
+local laptop_screen = 'Built-in Retina Display'
 local wide_curved_screen = hs.screen.find('DELL U3415W')
 
 local horizontal_screen = nil
@@ -162,7 +162,6 @@ else
         {"Telegram", nil, layout_bottom50, false},
         {"WhatsApp", nil, layout_top50, false},
         {"Signal", nil, layout_top30, false},
-        {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
         {"Preview", nil, hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru", layout_top50, nil},
         {"Brave Browser Dev", "Brave Dev – Regina", layout_top50, nil},
@@ -195,7 +194,7 @@ else
         {"App Store", nil, hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.left70, true},
         {'Pritunl', 'Pritunl', hs.layout.right50, nil},
-        {"Brave Browser Dev", "YouTube", hs.layout.maximized, nil},
+        {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
     })
 end
 

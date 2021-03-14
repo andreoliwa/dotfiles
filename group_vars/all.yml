@@ -124,6 +124,7 @@ mac_cask_packages:
     - appcleaner
     - the-unarchiver
     - authy # https://authy.com/
+    - keepassxc https://keepassxc.org/
     # To open Meld even with the security warning: https://github.com/yousseb/meld/issues/19#issuecomment-541239058
     - meld # https://yousseb.github.io/meld/
     - rescuetime # https://www.rescuetime.com/

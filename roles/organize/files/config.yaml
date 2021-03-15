@@ -33,7 +33,7 @@ rules:
       - shell: "find -f ~/Downloads -f ~/Desktop -f ~/Documents ~/OneDrive -mindepth 1 -type d -empty -print -delete"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
-      - shell: "rename-slugify -n -x ~/OneDrive/Documents/Musicas_LuisAndreoli -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Notebook/cv/ -x ~/Documents/Notebook/diary/ -x ~/Documents/Notebook/vscode_notebook/ -x ~/Documents/Notebook/manager.py -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
+      - shell: "rename-slugify -x ~/OneDrive/Documents/Musicas_LuisAndreoli -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Notebook/cv/ -x ~/Documents/Notebook/diary/ -x ~/Documents/Notebook/vscode_notebook/ -x ~/Documents/Notebook/manager.py -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
   # TODO: This filter below doesn't work, nothing is found. Open a bug on organize?
   # - folders: *slugify
   #   subfolders: true

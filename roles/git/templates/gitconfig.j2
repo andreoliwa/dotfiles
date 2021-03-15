@@ -43,6 +43,11 @@
         l = log --graph --decorate --oneline --abbrev-commit --all
         h = log --graph --decorate --oneline --abbrev-commit
 
+        # https://martinheinz.dev/blog/43
+        graph = log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) \
+        - %C(bold cyan)%aD%C(dim white) \
+        - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
+
         issues = !hub browse -- issues
         url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
         # Copy current branch name to clipboard (macOS only)

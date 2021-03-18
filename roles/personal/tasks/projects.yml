@@ -41,7 +41,11 @@
 # (A "pyproject.toml" file was found, but editable mode currently requires a setup.py based build.)
 - name: "clib: Install with: pipx install {{ project_root }}/python-clib/"
   command: "pipx install {{ project_root }}/python-clib/"
-  ignore_errors: yes
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 - include_role: name=python_repo
   vars:

@@ -4,8 +4,13 @@
   when: ansible_os_family == "Debian"
 
 - name: Install tmuxp
-  shell: "pipx install tmuxp || true"
+  command: "pipx install tmuxp"
   when: tmux_install_tmuxp
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 - name: "Oh My Tmux: Install"
   git:
@@ -28,7 +33,6 @@
     src: "{{ role_path }}/files/oh-my-tmux-local.conf"
     dest: "{{ dotfiles_user_home }}/.tmux.conf.local"
     state: link
-
 # - name: Symlink .tmux.conf
 #   file:
 #     src: "{{ role_path }}/files/tmux.conf"

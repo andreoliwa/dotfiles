@@ -13,16 +13,28 @@
 - name: "pipx: Remove common packages"
   with_items: "{{ python3_pipx_modules['remove'] }}"
   command: "pipx uninstall {{ item }}"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Nothing to uninstall for' not in result.stdout"
 
 - name: "pipx: Remove packages on personal_laptop"
   with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx uninstall {{ item }}"
   when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop']
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Nothing to uninstall for' not in result.stdout"
 
 - name: "pipx: Remove packages on company_laptop"
   with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx uninstall {{ item }}"
   when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop']
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Nothing to uninstall for' not in result.stdout"
 
 - name: "pipx: List invalid packages"
   shell: "pipx list | grep -e 'has invalid interpreter' -e 'has missing internal' | sed 's/^ *//g' | cut -d ' ' -f 2"
@@ -35,13 +47,28 @@
 - name: "pipx: Install common Python 3 modules globally with pipx"
   with_items: "{{ python3_pipx_modules['common'] }}"
   command: "pipx install --verbose {{ item }}"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 - name: "pipx: Install packages on personal_laptop"
   with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
   when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop']
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
 
 - name: "pipx: Install packages on company_laptop"
   with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
   when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop']
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"

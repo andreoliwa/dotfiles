@@ -23,3 +23,6 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 # https://github.com/pipxproject/pipx#install-pipx
 export PATH="$HOME/.local/bin:/usr/local/sbin:$PATH"
+
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONBREAKPOINT
+export PYTHONBREAKPOINT=ipdb.set_trace

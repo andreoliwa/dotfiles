@@ -41,9 +41,7 @@ _sandbox
 .xmark.*
 .scratch
 
-# Ignore invoke tasks.py files on the root of projects.
+# Ignore certain invoke files
 # This way, I can add my unofficial tasks to these files, without commiting them to Git.
-# I couldn't find a way to make invoke use "private_tasks.py" and then fallback on "tasks.py".
-# Possibility: use a custom Loader class (but how?)
 # http://docs.pyinvoke.org/en/latest/concepts/configuration.html
-/tasks.py
+_invoke*.py

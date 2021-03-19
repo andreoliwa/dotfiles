@@ -7,6 +7,12 @@
     - "'Not installing to existing directory' not in result.stderr"
     - "'already seems to be installed' not in result.stdout"
 
+- name: "invoke: Link .invoke.yaml"
+  file:
+    src: "{{ role_path }}/files/.invoke.yaml"
+    dest: "{{ dotfiles_user_home }}/.invoke.yaml"
+    state: link
+
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"
 

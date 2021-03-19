@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export PROJECT_HOME="$HOME/Code"
 
 # To avoid locale errors in some Python modules.
@@ -26,3 +27,7 @@ export PATH="$HOME/.local/bin:/usr/local/sbin:$PATH"
 
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONBREAKPOINT
 export PYTHONBREAKPOINT=ipdb.set_trace
+
+# Echo all commands in all tasks by default (like 'make' does)
+# http://docs.pyinvoke.org/en/stable/concepts/configuration.html#basic-rules
+export INVOKE_RUN_ECHO=1

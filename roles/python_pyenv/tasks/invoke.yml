@@ -13,6 +13,12 @@
     dest: "{{ dotfiles_user_home }}/.invoke.yaml"
     state: link
 
+- name: "invoke: Link home_tasks.py"
+  file:
+    src: "{{ role_path }}/files/home_tasks.py"
+    dest: "{{ dotfiles_user_home }}/home_tasks.py"
+    state: link
+
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"
 

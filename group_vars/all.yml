@@ -340,6 +340,8 @@ vscode_extensions:
     - lextudio.restructuredtext
     - ms-vsliveshare.vsliveshare # https://docs.microsoft.com/en-us/visualstudio/liveshare/use/vscode
     - editorconfig.editorconfig
+    - golang.go
+    - daohong-emilio.yash # Yet another syntax highlighter for lex/yacc & flex/bison.
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

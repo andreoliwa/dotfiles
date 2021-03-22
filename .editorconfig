@@ -18,3 +18,16 @@ indent_size = 2
 [group_vars/local]
 # Also a YAML file, despite not having .yml
 indent_size = 2
+
+[*.py]
+charset = utf-8
+
+[*.{js,json}]
+charset = utf-8
+indent_size = 2
+
+[*.{yml,yaml,md}]
+indent_size = 2
+
+[Makefile]
+indent_style = tab

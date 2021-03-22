@@ -31,3 +31,7 @@ export PYTHONBREAKPOINT=ipdb.set_trace
 # Echo all commands in all tasks by default (like 'make' does)
 # http://docs.pyinvoke.org/en/stable/concepts/configuration.html#basic-rules
 export INVOKE_RUN_ECHO=1
+
+# Use a pseudoterminal by default (display colored output)
+# http://docs.pyinvoke.org/en/stable/api/runners.html#invoke.runners.Runner.run
+export INVOKE_RUN_PTY=1

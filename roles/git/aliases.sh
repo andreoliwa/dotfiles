@@ -6,10 +6,10 @@ alias gaa='git add --all'
 alias gb='git branch'
 alias gba='git branch --all --verbose'
 
-alias gcd='git checkout develop 2>/dev/null || git checkout development'
+alias gcd='git checkout develop || git checkout development'
 
 alias gch='git-checkout-issue'
-alias gcm='git checkout master'
+alias gcm='git checkout master || git checkout main'
 alias gco='git checkout'
 alias gdm='git diff master'
 alias gl="git pull"

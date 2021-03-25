@@ -71,6 +71,7 @@ mac_homebrew_packages:
     - blueutil # https://github.com/toy/blueutil
     - svn # needed by font-ubuntu
     - moreutils # https://joeyh.name/code/moreutils/ with the sponge command
+    - pipgrip # needed by brew update-python-resources
   remove:
     - heroku/brew/heroku
     - highlight

@@ -13,11 +13,19 @@
     dest: "{{ dotfiles_user_home }}/.invoke.yaml"
     state: link
 
-- name: "invoke: Link home_tasks.py"
+- name: "invoke: Link home_tasks.py to user home"
   file:
     src: "{{ role_path }}/files/home_tasks.py"
     dest: "{{ dotfiles_user_home }}/home_tasks.py"
     state: link
+
+- name: "invoke: Link home_tasks.py to /usr/local"
+  file:
+    src: "{{ role_path }}/files/home_tasks.py"
+    dest: "/usr/local/home_tasks.py"
+    state: link
+  become: true
+  ignore_errors: yes
 
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"

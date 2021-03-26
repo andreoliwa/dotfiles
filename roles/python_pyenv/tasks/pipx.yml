@@ -10,6 +10,14 @@
   register: this_task
   changed_when: "'is already in PATH' not in this_task.stderr"
 
+- name: "pipx: Install completion on .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# https://github.com/pipxproject/pipx#install-pipx {mark} ----------------------------------------------------------------"
+    block: |
+      # Taken from "pipx completions" command
+      eval "$(register-python-argcomplete pipx)"
+
 - name: "pipx: Remove common packages"
   with_items: "{{ python3_pipx_modules['remove'] }}"
   command: "pipx uninstall {{ item }}"

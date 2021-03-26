@@ -25,7 +25,6 @@ export NVM_DIR="$HOME/.nvm"
 eval "$(direnv hook bash)"
 # https://github.com/direnv/direnv END ----------------------------------------------------------------
 
-
 # https://github.com/magicmonty/bash-git-prompt BEGIN ---------------------------------------------------
 # Quick start, show all details of a git repo
 if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
@@ -64,6 +63,11 @@ export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
     source "$HOME"/.cache/dotfiles/cached_script.sh
 # Bash completion / dotfiles END ----------------------------------------------------------------------
+
+# https://github.com/pipxproject/pipx#install-pipx BEGIN ----------------------------------------------------------------
+# Taken from "pipx completions" command
+eval "$(register-python-argcomplete pipx)"
+# https://github.com/pipxproject/pipx#install-pipx END ----------------------------------------------------------------
 
 # Add my private script toolbox as last on the PATH
 test -d "$HOME"/Code/toolbox/bin && export PATH="$PATH:$HOME/Code/toolbox/bin"

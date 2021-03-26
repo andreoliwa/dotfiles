@@ -45,6 +45,7 @@ _sandbox
 # This way, I can add my unofficial tasks to these files, without commiting them to Git.
 # http://docs.pyinvoke.org/en/latest/concepts/configuration.html
 _invoke*.py
+invoke*.py
 
 # sennder
 dev-tools.ini

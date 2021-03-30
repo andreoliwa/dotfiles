@@ -13,16 +13,16 @@
     dest: "{{ dotfiles_user_home }}/.invoke.yaml"
     state: link
 
-- name: "invoke: Link home_tasks.py to user home"
+- name: "invoke: Link invoke_home.py to user home"
   file:
-    src: "{{ role_path }}/files/home_tasks.py"
-    dest: "{{ dotfiles_user_home }}/home_tasks.py"
+    src: "{{ role_path }}/files/invoke_home.py"
+    dest: "{{ dotfiles_user_home }}/invoke_home.py"
     state: link
 
-- name: "invoke: Link home_tasks.py to /usr/local"
+- name: "invoke: Link invoke_home.py to /usr/local"
   file:
-    src: "{{ role_path }}/files/home_tasks.py"
-    dest: "/usr/local/home_tasks.py"
+    src: "{{ role_path }}/files/invoke_home.py"
+    dest: "/usr/local/invoke_home.py"
     state: link
   become: true
   ignore_errors: yes

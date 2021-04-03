@@ -77,7 +77,7 @@ repos:
     hooks:
       - id: bashate
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: 2.1.4
+    rev: 2.1.5
     hooks:
       - id: shellcheck
         # https://www.shellcheck.net/wiki/SC1071

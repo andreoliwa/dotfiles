@@ -1,3 +1,5 @@
+ci:
+  skip: [bashate, shellcheck]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
@@ -72,10 +74,10 @@ repos:
   #   rev: 6.0.1
   #   hooks:
   #     - id: beautysh
-  #- repo: https://github.com/openstack/bashate
-  #  rev: 2.0.0
-  #  hooks:
-  #    - id: bashate
+  - repo: https://github.com/openstack/bashate
+    rev: 2.0.0
+    hooks:
+      - id: bashate
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 2.1.5
     hooks:

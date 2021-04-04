@@ -1,3 +1,5 @@
+ci:
+  skip: [bashate, shellcheck]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
@@ -77,7 +79,7 @@ repos:
     hooks:
       - id: bashate
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: 2.1.4
+    rev: 2.1.5
     hooks:
       - id: shellcheck
         # https://www.shellcheck.net/wiki/SC1071

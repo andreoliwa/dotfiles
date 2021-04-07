@@ -121,7 +121,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
+      - move: "~/OneDrive/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -146,7 +146,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
+      - move: "~/OneDrive/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -158,7 +158,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Screenshots/{lastmodified.year:04}/{lastmodified.month:02}/"
+      - move: "~/OneDrive/New_Screenshots/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Camera_Roll/
     subfolders: true
@@ -170,7 +170,7 @@ rules:
           case_sensitive: false
       - LastModified
     actions:
-      - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.year:04}/{lastmodified.month:02}/"
+      - move: "~/OneDrive/Pictures/Camera_New/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
       - ~/OneDrive/Pictures/Classify/
       - ~/OneDrive/Pictures/Organize/

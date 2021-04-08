@@ -80,6 +80,9 @@ export HISTFILESIZE=100000
 # https://askubuntu.com/questions/67283/is-it-possible-to-make-writing-to-bash-history-immediate/67306#67306
 shopt -s histappend
 
+# https://jrnl.sh/en/stable/privacy-and-security/
+export HISTIGNORE="$HISTIGNORE:jrnl *"
+
 # Switch to a CLI editor
 export EDITOR=vim
 

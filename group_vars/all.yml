@@ -72,6 +72,7 @@ mac_homebrew_packages:
     - svn # needed by font-ubuntu
     - moreutils # https://joeyh.name/code/moreutils/ with the sponge command
     - pipgrip # needed by brew update-python-resources
+    - jrnl # https://jrnl.sh/
   remove:
     - heroku/brew/heroku
     - highlight
@@ -90,8 +91,8 @@ mac_homebrew_packages:
     - composer # https://getcomposer.org/
     - kettle # Pentaho Data Integration software https://community.hitachivantara.com/docs/DOC-1009931-downloads
     - s3cmd # https://s3tools.org/s3cmd
-  personal_laptop:
     - mosh # https://mosh.org/
+  personal_laptop:
     # TODO: this needs "brew cask install osxfuse" before:
     # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
   company_laptop:

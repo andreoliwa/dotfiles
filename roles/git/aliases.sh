@@ -7,7 +7,8 @@ alias gb='git branch'
 alias gba='git branch --all --verbose'
 
 alias gcd='git checkout develop || git checkout development'
-alias gcdm='git checkout develop || git checkout development || git checkout master || git checkout main'
+alias gd='git checkout develop || git checkout development || git checkout master || git checkout main'
+alias gm='git checkout master || git checkout main || git checkout develop || git checkout development'
 
 alias gch='git-checkout-issue'
 alias gcm='git checkout master || git checkout main'

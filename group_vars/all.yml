@@ -92,6 +92,10 @@ mac_homebrew_packages:
     - kettle # Pentaho Data Integration software https://community.hitachivantara.com/docs/DOC-1009931-downloads
     - s3cmd # https://s3tools.org/s3cmd
     - mosh # https://mosh.org/
+    # It didn't work on macOS https://github.com/awslabs/amazon-ecr-credential-helper#mac-os
+    # Error saving credentials: error storing credentials - err: exit status 1, out: `not implemented`
+    # I tried this config: https://github.com/awslabs/amazon-ecr-credential-helper#Configuration
+    - docker-credential-helper-ecr
   personal_laptop:
     # TODO: this needs "brew cask install osxfuse" before:
     # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/

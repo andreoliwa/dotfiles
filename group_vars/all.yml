@@ -73,6 +73,8 @@ mac_homebrew_packages:
     - moreutils # https://joeyh.name/code/moreutils/ with the sponge command
     - pipgrip # needed by brew update-python-resources
     - jrnl # https://jrnl.sh/
+    - ansible-lint # https://github.com/ansible-community/ansible-lint
+    - yamllint # https://github.com/adrienverge/yamllint
   remove:
     - heroku/brew/heroku
     - highlight
@@ -332,7 +334,6 @@ vscode_extensions:
     - mikestead.dotenv
     - ms-python.python
     - ms-python.vscode-pylance
-    - haaaad.ansible
     - zhouronghui.propertylist
     - bungcip.better-toml
     - jsynowiec.vscode-insertdatestring
@@ -348,11 +349,13 @@ vscode_extensions:
     - editorconfig.editorconfig
     - golang.go
     - daohong-emilio.yash # Yet another syntax highlighter for lex/yacc & flex/bison.
+    - zbr.vscode-ansible
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
     - crisward.riot-tag
     - vscoss.vscode-ansible
+    - haaaad.ansible # Incompatible with YAML extension
   personal_laptop:
     - matklad.rust-analyzer # https://rust-analyzer.github.io/
     - vscode-ext.sync-rsync

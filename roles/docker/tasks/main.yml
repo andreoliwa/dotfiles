@@ -1,2 +1,2 @@
 - import_tasks: osmc.yml
-  when: ansible_os_family == "OSMC"
+  when: server_type in ["pi"]

@@ -76,7 +76,10 @@ def main():
     parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
     parser.add_argument("--sudo", action="store_true", help="ask become password (required for some roles)")
     parser.add_argument(
-        "--remote", "-r", choices=["pi", "aws", "ocean"], help="setup remote servers (Raspberry Pi, AWS, Digital Ocean)"
+        "--remote",
+        "-r",
+        choices=["pi", "aws", "ocean", "hetzner"],
+        help="setup remote servers (Raspberry Pi, AWS, Digital Ocean, Hetzner)",
     )
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()

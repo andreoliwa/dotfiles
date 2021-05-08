@@ -10,7 +10,7 @@
 # https://github.com/smacke/ffsubsync
 - name: "ffsubsync: Install dependencies with apt"
   apt:
-    state: latest
+    state: present
     name:
       - build-essential
       - ffmpeg
@@ -32,7 +32,7 @@
 
 - name: "vidsub: Install dependencies with apt"
   apt:
-    state: latest
+    state: present
     name:
       - libffi-dev
       - libssl-dev

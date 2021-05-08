@@ -23,5 +23,11 @@ ansible_python_interpreter=/usr/bin/python
 [ocean]
 gotham
 
-[aws:vars]
+[ocean:vars]
+ansible_connection=ssh
+
+[hetzner]
+hetzner
+
+[hetzner:vars]
 ansible_connection=ssh

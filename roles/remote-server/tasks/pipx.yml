@@ -1,6 +1,6 @@
 - name: "pipx: Install dependencies"
   apt:
-    state: latest
+    state: present
     name:
       - python3-venv
   become: true

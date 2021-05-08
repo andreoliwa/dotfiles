@@ -1,5 +1,8 @@
 - name: Set up local development environment
   hosts: local
+  vars:
+    server_type: local
+    # Alternative: ansible_distribution == "MacOSX" (and something diferent for Linux)
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
     - { role: ansible, tags: ["ansible"] }

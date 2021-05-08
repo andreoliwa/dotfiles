@@ -10,7 +10,7 @@
 - name: "direnv: Install with apt"
   apt: name=direnv state=latest
   become: true
-  when: ansible_os_family == "OSMC"
+  when: server_type in ["pi"]
 
 # TODO: direnv is not yet available for RedHat: https://direnv.net/docs/installation.html#from-system-packages
 # - name: "direnv: Install with yum"

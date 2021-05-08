@@ -1,5 +1,8 @@
 - name: Set up the Digital Ocean instance
   hosts: ocean
+  vars:
+    server_type: ocean
+    # Alternative: ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean"
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
     - { role: git, tags: ["git"] }

@@ -1,5 +1,8 @@
 - name: Set up the Raspberry Pi
   hosts: pi
+  vars:
+    server_type: pi
+    # Alternative: ansible_os_family == "OSMC"
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
     - { role: git, tags: ["git"] }

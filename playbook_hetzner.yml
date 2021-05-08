@@ -1,10 +1,10 @@
-- name: Set up the AWS EC2 instance
-  hosts: aws
+- name: Set up the Hetzner instance
+  hosts: hetzner
   vars:
-    server_type: aws
-    # Alternative: ansible_distribution == "Amazon"
+    server_type: hetzner
+    # TODO Alternative: ?
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
     - { role: git, tags: ["git"] }
     - { role: bash, tags: ["bash"] }
-    - { role: remote-server, tags: ["remote", "aws"] }
+    - { role: remote-server, tags: ["remote", "hetzner"] }

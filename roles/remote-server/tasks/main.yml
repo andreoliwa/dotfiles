@@ -1,37 +1,40 @@
-- name: "Install apt packages"
-  apt: name="{{ apt_packages }}" state=latest
+- name: "Install apt packages (configured by YAML files under the group_vars/ dir)"
+  apt: name="{{ apt_packages }}" state=present
   become: true
   when:
-    - 'ansible_os_family == "OSMC" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")'
+    - server_type in ["pi", "ocean", "hetzner"]
     - "'apt_packages' | run_only_after"
 
 - import_tasks: osmc.yml
-  when: ansible_os_family == "OSMC"
+  when: server_type in ["pi"]
 
 - import_tasks: pipx.yml
-  when: ansible_os_family == "OSMC"
+  when: server_type in ["pi"]
 
 - import_tasks: video_subtitles.yml
-  when: ansible_os_family == "OSMC"
+  when: server_type in ["pi"]
 
 - name: "Create ~/OneDrive/Backup"
   file:
     state: directory
     path: ~/OneDrive/Backup
-  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
+    mode: 0644
+  when: server_type in ["aws", "ocean", "hetzner"]
 
 - name: Clone container-apps
   git:
     repo: https://github.com/andreoliwa/container-apps
+    version: master
     dest: ~/container-apps
     clone: yes
     update: yes
-  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
+  when: server_type in ["aws", "ocean", "hetzner"]
 
 - name: Clone container-apps-private
   git:
     repo: git@github.com:andreoliwa/container-apps-private.git
+    version: master
     dest: ~/container-apps-private
     clone: yes
     update: yes
-  when: ansible_os_family == "OSMC"
+  when: server_type in ["pi"]

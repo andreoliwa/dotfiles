@@ -8,9 +8,9 @@
 # To check the distribution on the local machine:
 # ansible -m setup localhost | rg 'distribution"'
 - import_tasks: link_files.yml
-  when: ansible_distribution == "MacOSX" # TODO: Or Linux
+  when: server_type in ["local"]
 - import_tasks: copy_files.yml
-  when: ansible_distribution in ("OSMC", "Amazon") or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
+  when: server_type in ["pi", "aws", "ocean", "hetzner"]
 
 # https://github.com/powerline/powerline
 # https://github.com/b-ryan/powerline-shell
@@ -66,11 +66,11 @@
     path: ~/.bashrc
     state: present
     line: 'export PATH="$HOME/.local/bin:$PATH"'
-  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean") or ansible_os_family == "OSMC"
+  when: server_type in ["aws", "pi", "ocean", "hetzner"]
 
 - name: "Add ~/container-apps-private/bin to PATH"
   lineinfile:
     path: ~/.bashrc
     state: present
     line: 'export PATH="$PATH:$HOME/container-apps-private/bin"'
-  when: ansible_os_family == "OSMC"
+  when: server_type in ["pi"]

@@ -75,6 +75,7 @@ mac_homebrew_packages:
     - jrnl # https://jrnl.sh/
     - ansible-lint # https://github.com/ansible-community/ansible-lint
     - yamllint # https://github.com/adrienverge/yamllint
+    - starship # https://github.com/starship/starship
   remove:
     - heroku/brew/heroku
     - highlight

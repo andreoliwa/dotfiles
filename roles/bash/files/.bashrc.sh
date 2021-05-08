@@ -13,9 +13,11 @@ test -f "$HOME"/container-apps/aliases.sh && \
 test -f "$HOME"/container-apps-private/aliases.sh && \
     source "$HOME"/container-apps-private/aliases.sh
 
-# Created with http://bashrcgenerator.com/
-PS1="\[\033[38;5;11m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\n\A \\$ \[$(tput sgr0)\]"
-export PS1
+# Solution to fix the following error messages:
+# Those functions are used by https://github.com/magicmonty/bash-git-prompt
+# -bash: setLastCommandState: command not found
+# -bash: setGitPrompt: command not found
+export PROMPT_COMMAND=
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -110,3 +112,6 @@ fi
 # Taken from 'brew info fzf' (and edited by an ansible role):
 # shellcheck source=/dev/null
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# https://github.com/starship/starship
+eval "$(starship init bash)"

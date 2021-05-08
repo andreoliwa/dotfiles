@@ -86,8 +86,8 @@ shopt -s histappend
 # https://jrnl.sh/en/stable/privacy-and-security/
 export HISTIGNORE="$HISTIGNORE:jrnl *"
 
-# Switch to a CLI editor
-export EDITOR=vim
+# Switch from a CLI editor to VSCode in wait mode
+export EDITOR='code --wait'
 
 # https://docs.brew.sh/Shell-Completion
 if type brew &>/dev/null; then

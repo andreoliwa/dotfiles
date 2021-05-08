@@ -19,9 +19,10 @@ test -f "$HOME"/container-apps-private/aliases.sh && \
 # -bash: setGitPrompt: command not found
 export PROMPT_COMMAND=
 
+# Turn off nvm for now; it slows down the initialization
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # https://github.com/direnv/direnv BEGIN ----------------------------------------------------------------
 eval "$(direnv hook bash)"

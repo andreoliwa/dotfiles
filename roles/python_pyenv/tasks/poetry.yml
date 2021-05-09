@@ -5,8 +5,8 @@
 
 - name: "poetry: Install globally"
   command: "python /tmp/get-poetry.py"
-  register: this_task
-  changed_when: "'Latest version already installed' not in this_task.stdout"
+  register: result
+  changed_when: "'Latest version already installed' not in result.stdout"
 
 - name: "Get brew prefix"
   command: "brew --prefix"
@@ -18,5 +18,5 @@
 
 - name: "poetry: Update"
   command: "poetry self update"
-  register: this_task
-  changed_when: "'You are using the latest version' not in this_task.stdout"
+  register: result
+  changed_when: "'You are using the latest version' not in result.stdout"

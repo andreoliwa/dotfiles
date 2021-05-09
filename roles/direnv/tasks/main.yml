@@ -5,23 +5,18 @@
 - name: "direnv: Uninstall with apt"
   apt: name=direnv state=absent
   become: true
-  when: ansible_os_family == "Debian"
-
-- name: "direnv: Uninstall with apt"
-  apt: name=direnv state=absent
-  become: true
-  when: ansible_os_family == "OSMC"
+  when: ansible_os_family in ("Debian", "OSMC")
 
 - name: "direnv: Add as asdf plugin"
   command: "asdf plugin-add direnv"
-  register: this_task
+  register: result
   args:
     creates: ~/.asdf/plugins/direnv
 
 - name: "direnv: Install latest with asdf"
   command: "asdf install direnv latest"
-  register: this_task
-  changed_when: "'is already installed' not in this_task.stdout"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
 
 - name: "direnv: Set global with asdf"
   command: "asdf global direnv latest"

@@ -9,9 +9,12 @@
     - { role: package_manager, tags: ["package_manager", "bootstrap"] }
     - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
 
-    # Tools
+    # asdf
     - { role: asdf, tags: ["asdf"] }
-    - { role: direnv, tags: ["direnv"] }
+    - { role: direnv, tags: ["asdf", "direnv"] }
+    - { role: pre-commit, tags: ["asdf", "pre-commit"] }
+
+    # Tools
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }
     - { role: browser, tags: ["browser"] }
     - { role: fzf, tags: ["fzf"] }

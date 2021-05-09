@@ -13,8 +13,8 @@
   command: "code --install-extension {{ item }} --force"
   with_items: "{{ vscode_extensions['common'] }}"
   when: vscode_extensions['common']
-  register: this_task
-  changed_when: "'is already installed' not in this_task.stdout"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
 
 - name: "VSCode: Remove"
   command: "code --uninstall-extension {{ item }}"

@@ -1,0 +1,20 @@
+# https://pre-commit.com/
+- name: "pre-commit: Uninstall with pipx"
+  command: "pipx uninstall pre-commit"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Nothing to uninstall for' not in result.stdout"
+
+- name: "pre-commit: Add as asdf plugin"
+  command: "asdf plugin-add pre-commit"
+  args:
+    creates: ~/.asdf/plugins/pre-commit
+
+- name: "pre-commit: Install latest with asdf"
+  command: "asdf install pre-commit latest"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
+
+- name: "pre-commit: Set global with asdf"
+  command: "asdf global pre-commit latest"

@@ -11,5 +11,5 @@
 
 - name: "pipx: Ensure path"
   command: "python3 -m pipx ensurepath"
-  register: this_task
-  changed_when: "'is already in PATH' not in this_task.stdout"
+  register: result
+  changed_when: "'is already in PATH' not in result.stdout"

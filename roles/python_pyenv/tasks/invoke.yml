@@ -30,9 +30,5 @@
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"
 
-- name: "invoke: Get brew prefix"
-  command: "brew --prefix"
-  register: brew_prefix
-
 - name: "invoke: Tab completion"
-  shell: "invoke --print-completion-script=bash > {{ brew_prefix.stdout }}/etc/bash_completion.d/invoke.bash-completion"
+  shell: "invoke --print-completion-script=bash > ~/.local/share/bash-completion/completions/invoke.bash-completion"

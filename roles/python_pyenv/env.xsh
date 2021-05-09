@@ -15,8 +15,5 @@ source ~/.pyenv/cache/init.xsh
 # https://stackoverflow.com/questions/50168647/multiprocessing-causes-python-to-crash-and-gives-an-error-may-have-been-in-progr/52230415#52230415
 $OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
 
-# https://github.com/sdispater/poetry#installation
-$PATH.append(p"~/.poetry/bin")
-
 # https://github.com/pipxproject/pipx#install-pipx
 $PATH.insert(0, p'~/.local/bin')

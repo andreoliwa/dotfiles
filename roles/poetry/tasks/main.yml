@@ -1,0 +1,23 @@
+- name: "poetry: Remove dir recommended by the docs"
+  file:
+    path: "~/.poetry"
+    state: absent
+
+- name: "poetry: Add as asdf plugin"
+  command: "asdf plugin-add poetry"
+  args:
+    creates: ~/.asdf/plugins/poetry
+
+- name: "poetry: Install latest with asdf"
+  command: "asdf install poetry latest"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
+
+- name: "poetry: Set global with asdf"
+  command: "asdf global poetry latest"
+
+# https://python-poetry.org/docs/#enable-tab-completion-for-bash-fish-or-zsh
+- name: "poetry: Tab completion"
+  shell: "poetry completions bash > ~/.local/share/bash-completion/completions/poetry.bash-completion"
+  args:
+    creates: ~/.local/share/bash-completion/completions/poetry.bash-completion

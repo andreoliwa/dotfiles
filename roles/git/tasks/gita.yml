@@ -7,14 +7,10 @@
     - "'Not installing to existing directory' not in result.stderr"
     - "'already seems to be installed' not in result.stdout"
 
-- name: "gita: Get brew prefix"
-  command: "brew --prefix"
-  register: brew_prefix
-
 - name: "gita: Tab completion"
   get_url:
     url: "https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.bash"
-    dest: "{{ brew_prefix.stdout }}/etc/bash_completion.d/gita.bash-completion"
+    dest: "~/.local/share/bash-completion/completions/gita.bash-completion"
 
 - name: "gita: Add dotfiles"
   command: "gita add {{ dotfiles_home }}"

@@ -18,10 +18,6 @@ eval "$(pyenv init - --no-rehash)"
 # https://stackoverflow.com/questions/50168647/multiprocessing-causes-python-to-crash-and-gives-an-error-may-have-been-in-progr/52230415#52230415
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
-# https://github.com/sdispater/poetry#installation
-# Poetry first, in case some clown decides to use it inside a virtualenv
-export PATH="$HOME/.poetry/bin:$PATH"
-
 # https://github.com/pipxproject/pipx#install-pipx
 export PATH="$HOME/.local/bin:/usr/local/sbin:$PATH"
 

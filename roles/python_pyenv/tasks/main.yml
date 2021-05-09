@@ -35,9 +35,6 @@
       # Not stable yet
       - "{{ latest_python_3_9.stdout }}"
 
-- name: "Install Poetry"
-  import_tasks: poetry.yml
-
 - name: "Install pipx"
   import_tasks: pipx.yml
 

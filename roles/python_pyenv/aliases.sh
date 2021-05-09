@@ -16,9 +16,3 @@ alias pfg="pip freeze | rg"
 alias py='python3'
 alias pv='pyenv version'
 alias pvs='pyenv versions --bare'
-
-alias p='poetry'
-alias px='poetry run'
-alias pp='poetry run python'
-alias ppp='poetry run python -m pip'
-alias pu='poetry update'

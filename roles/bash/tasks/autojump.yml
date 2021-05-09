@@ -2,7 +2,7 @@
 
 # https://github.com/wting/autojump#os-x
 - name: "autojump: Install with Homebrew"
-  homebrew: name=autojump state=latest
+  homebrew: name=autojump state=present
   when: ansible_os_family == "Darwin"
 
 - name: "autojump: Add content to .bashrc"

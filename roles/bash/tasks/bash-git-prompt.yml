@@ -4,6 +4,7 @@
     dest: "~/.bash-git-prompt"
     clone: yes
     depth: 1
+    version: master
 
 - name: "bash-git-prompt: Add content to .bashrc"
   blockinfile:

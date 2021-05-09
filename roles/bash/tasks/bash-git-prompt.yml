@@ -8,7 +8,7 @@
 - name: "bash-git-prompt: Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "# https://github.com/magicmonty/bash-git-prompt {mark} ---------------------------------------------------"
+    marker: "# ==================== {mark} https://github.com/magicmonty/bash-git-prompt"
     block: |
       # Quick start, show all details of a git repo
       if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then

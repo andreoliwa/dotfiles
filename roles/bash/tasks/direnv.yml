@@ -27,7 +27,7 @@
 - name: "direnv: Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "# https://github.com/direnv/direnv {mark} ----------------------------------------------------------------"
+    marker: "# ==================== {mark} https://github.com/direnv/direnv"
     block: |
       # https://github.com/asdf-community/asdf-direnv#setup
       eval "$(asdf exec direnv hook bash)"

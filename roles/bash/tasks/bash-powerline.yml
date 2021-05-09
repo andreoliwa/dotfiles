@@ -6,7 +6,7 @@
 - name: "bash-powerline: Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "# https://github.com/riobard/bash-powerline {mark} -------------------------------------------------------"
+    marker: "# ==================== {mark} https://github.com/riobard/bash-powerline"
     block: |
       # Super quick start, but it doesn't show an icon for stashed commits
       source "$HOME"/.bash-powerline.sh

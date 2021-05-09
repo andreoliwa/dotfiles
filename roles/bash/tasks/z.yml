@@ -7,7 +7,7 @@
 - name: "z: Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "# https://github.com/rupa/z {mark} -----------------------------------------------------------------------"
+    marker: "# ==================== {mark} https://github.com/rupa/z"
     block: |
       if [[ $OSTYPE == linux* ]]; then
           export _Z_NO_PROMPT_COMMAND=1

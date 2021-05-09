@@ -36,7 +36,7 @@
 - name: "Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "# Bash completion / dotfiles {mark} ----------------------------------------------------------------------"
+    marker: "# ==================== {mark} Bash completion / dotfiles"
     block: |
       # brew info bash-completion2
       export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"

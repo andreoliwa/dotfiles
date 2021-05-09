@@ -13,7 +13,7 @@
 - name: "pipx: Install completion on .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "# https://github.com/pipxproject/pipx#install-pipx {mark} ----------------------------------------------------------------"
+    marker: "# ==================== {mark} https://github.com/pipxproject/pipx#install-pipx"
     block: |
       # Taken from "pipx completions" command
       eval "$(register-python-argcomplete pipx)"

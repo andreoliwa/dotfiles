@@ -8,7 +8,7 @@
 - name: "autojump: Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
-    marker: "# https://github.com/junegunn/fzf/wiki/Examples#autojump {mark} ------------------------------------------"
+    marker: "# ==================== {mark} https://github.com/junegunn/fzf/wiki/Examples#autojump"
     block: |
       [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
       j() {

@@ -24,12 +24,12 @@ export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# https://github.com/direnv/direnv BEGIN ----------------------------------------------------------------
+# ==================== BEGIN https://github.com/direnv/direnv
 # https://github.com/asdf-community/asdf-direnv#setup
 eval "$(asdf exec direnv hook bash)"
-# https://github.com/direnv/direnv END ----------------------------------------------------------------
+# ==================== END https://github.com/direnv/direnv
 
-# https://github.com/magicmonty/bash-git-prompt BEGIN ---------------------------------------------------
+# ==================== BEGIN https://github.com/magicmonty/bash-git-prompt
 # Quick start, show all details of a git repo
 if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
     # Show a different prompt when there is an active SSH connection
@@ -39,9 +39,9 @@ if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
     # shellcheck source=/dev/null
     source "$HOME"/.bash-git-prompt/gitprompt.sh
 fi
-# https://github.com/magicmonty/bash-git-prompt END ---------------------------------------------------
+# ==================== END https://github.com/magicmonty/bash-git-prompt
 
-# https://github.com/junegunn/fzf/wiki/Examples#autojump BEGIN ------------------------------------------
+# ==================== BEGIN https://github.com/junegunn/fzf/wiki/Examples#autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 j() {
     if [[ "$#" -ne 0 ]]; then
@@ -53,9 +53,9 @@ j() {
 
 # https://github.com/wting/autojump#known-issues
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
-# https://github.com/junegunn/fzf/wiki/Examples#autojump END ------------------------------------------
+# ==================== END https://github.com/junegunn/fzf/wiki/Examples#autojump
 
-# Bash completion / dotfiles BEGIN ----------------------------------------------------------------------
+# ==================== BEGIN Bash completion / dotfiles
 # brew info bash-completion2
 export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
@@ -66,12 +66,12 @@ export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 # shellcheck source=/dev/null
 test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
     source "$HOME"/.cache/dotfiles/cached_script.sh
-# Bash completion / dotfiles END ----------------------------------------------------------------------
+# ==================== END Bash completion / dotfiles
 
-# https://github.com/pipxproject/pipx#install-pipx BEGIN ----------------------------------------------------------------
+# ==================== BEGIN https://github.com/pipxproject/pipx#install-pipx
 # Taken from "pipx completions" command
 eval "$(register-python-argcomplete pipx)"
-# https://github.com/pipxproject/pipx#install-pipx END ----------------------------------------------------------------
+# ==================== END https://github.com/pipxproject/pipx#install-pipx
 
 # Add my private script toolbox as last on the PATH
 test -d "$HOME"/Code/toolbox/bin && export PATH="$PATH:$HOME/Code/toolbox/bin"

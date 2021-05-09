@@ -24,6 +24,8 @@ if [[ -d "$HOME/.local/share/bash-completion/completions" ]]; then
     done
 fi
 
-# https://github.com/asdf-vm/asdf
+# ==================== BEGIN https://github.com/asdf-vm/asdf
 # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
-source $(brew --prefix asdf)/asdf.sh
+source $HOME/.asdf/asdf.sh
+source $HOME/.asdf/completions/asdf.bash
+# ==================== END https://github.com/asdf-vm/asdf

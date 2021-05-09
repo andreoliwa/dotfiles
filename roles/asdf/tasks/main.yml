@@ -1,0 +1,21 @@
+# https://asdf-vm.com/#/core-manage-asdf?id=dependencies
+- name: "asdf: Install dependencies with Homebrew"
+  homebrew:
+    name: ["coreutils", "curl", "git"]
+    state: present
+  when: ansible_os_family == "Darwin"
+
+- name: "asdf: Install with git"
+  git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: ~/.asdf
+    version: master
+
+- name: "asdf: Add content to .bash_profile"
+  blockinfile:
+    path: ~/.bash_profile
+    marker: "# ==================== {mark} https://github.com/asdf-vm/asdf"
+    block: |
+      # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
+      source $HOME/.asdf/asdf.sh
+      source $HOME/.asdf/completions/asdf.bash

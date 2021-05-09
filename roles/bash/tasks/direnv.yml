@@ -1,14 +1,14 @@
 - name: "direnv: Install with Homebrew"
-  homebrew: name=direnv state=latest
+  homebrew: name=direnv state=present
   when: ansible_os_family == "Darwin"
 
 - name: "direnv: Install with apt"
-  apt: name=direnv state=latest
+  apt: name=direnv state=present
   become: true
   when: ansible_os_family == "Debian"
 
 - name: "direnv: Install with apt"
-  apt: name=direnv state=latest
+  apt: name=direnv state=present
   become: true
   when: ansible_os_family == "OSMC"
 
@@ -22,10 +22,12 @@
   file:
     state: directory
     path: ~/.local/share/direnv/allow
+    mode: 0755
 
 - name: "direnv: Add content to .bashrc"
   blockinfile:
     path: ~/.bashrc
     marker: "# https://github.com/direnv/direnv {mark} ----------------------------------------------------------------"
     block: |
-      eval "$(direnv hook bash)"
+      # https://github.com/asdf-community/asdf-direnv#setup
+      eval "$(asdf exec direnv hook bash)"

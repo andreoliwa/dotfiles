@@ -20,8 +20,6 @@
 
 - import_tasks: bash-git-prompt.yml
 
-- import_tasks: direnv.yml
-
 - import_tasks: z.yml
   when: ansible_os_family in ("Debian", "OSMC")
 

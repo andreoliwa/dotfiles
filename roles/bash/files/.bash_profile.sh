@@ -29,3 +29,9 @@ fi
 source $HOME/.asdf/asdf.sh
 source $HOME/.asdf/completions/asdf.bash
 # ==================== END https://github.com/asdf-vm/asdf
+
+# ==================== BEGIN https://github.com/direnv/direnv
+# https://github.com/asdf-community/asdf-direnv#setup
+eval "$(asdf exec direnv hook bash)"
+direnv() { asdf exec direnv "$@"; }
+# ==================== END https://github.com/direnv/direnv

@@ -24,11 +24,6 @@ export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# ==================== BEGIN https://github.com/direnv/direnv
-# https://github.com/asdf-community/asdf-direnv#setup
-eval "$(asdf exec direnv hook bash)"
-# ==================== END https://github.com/direnv/direnv
-
 # ==================== BEGIN https://github.com/magicmonty/bash-git-prompt
 # Quick start, show all details of a git repo
 if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then

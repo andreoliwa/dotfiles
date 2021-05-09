@@ -5,6 +5,10 @@
     state: present
   when: ansible_os_family == "Darwin"
 
+- name: "asdf: Uninstall with Homebrew"
+  homebrew: name=asdf state=absent
+  when: ansible_os_family == "Darwin"
+
 - name: "asdf: Install with git"
   git:
     repo: https://github.com/asdf-vm/asdf.git

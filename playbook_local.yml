@@ -10,6 +10,8 @@
     - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
 
     # Tools
+    - { role: asdf, tags: ["asdf"] }
+    - { role: direnv, tags: ["direnv"] }
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }
     - { role: browser, tags: ["browser"] }
     - { role: fzf, tags: ["fzf"] }
@@ -20,7 +22,6 @@
     - { role: todoist, tags: ["todoist"] }
 
     # Languages
-    - { role: asdf, tags: ["asdf"] }
     - { role: python_pyenv, tags: ["python"] }
     - { role: docker, tags: ["docker"] }
     - {

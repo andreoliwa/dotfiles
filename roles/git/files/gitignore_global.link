@@ -49,3 +49,6 @@ invoke*.py
 
 # sennder
 dev-tools.ini
+
+# asdf
+.tool-versions

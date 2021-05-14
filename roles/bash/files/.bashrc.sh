@@ -9,9 +9,6 @@ test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/
 # shellcheck source=/dev/null
 test -f "$HOME"/container-apps/aliases.sh && \
     source "$HOME"/container-apps/aliases.sh
-# shellcheck source=/dev/null
-test -f "$HOME"/container-apps-private/aliases.sh && \
-    source "$HOME"/container-apps-private/aliases.sh
 
 # Solution to fix the following error messages:
 # Those functions are used by https://github.com/magicmonty/bash-git-prompt
@@ -89,6 +86,10 @@ export EDITOR='code --wait'
 # Taken from 'brew info fzf' (and edited by an ansible role):
 # shellcheck source=/dev/null
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# shellcheck source=/dev/null
+test -f "$HOME"/container-apps-private/aliases.sh && \
+    source "$HOME"/container-apps-private/aliases.sh
 
 # https://github.com/starship/starship
 eval "$(starship init bash)"

@@ -14,5 +14,6 @@ def _mydb_create(args):
     print(f"CREATE DATABASE {user_name};")
     print(f"GRANT ALL PRIVILEGES ON DATABASE {user_name} TO {user_name};")
     echo
-    psql_docker
+    cd ~/container-apps
+    invoke db-connect --psql
 aliases["mydb_create"] = _mydb_create

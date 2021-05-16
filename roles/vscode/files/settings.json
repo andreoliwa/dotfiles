@@ -113,5 +113,9 @@
   "python.analysis.extraPaths": [
     "/Users/aa/.local/pipx/venvs/invoke/lib/python3.8/site-packages",
     "/Users/waa/.local/pipx/venvs/invoke/lib/python3.8/site-packages"
+  ],
+  "yaml.customTags": [
+    "!encrypted/pkcs1-oaep scalar",
+    "!vault scalar"
   ]
 }

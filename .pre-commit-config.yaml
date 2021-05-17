@@ -2,13 +2,13 @@ ci:
   skip: [bashate, shellcheck]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: debug-statements
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.15.0
+    rev: v2.16.0
     hooks:
       - id: pyupgrade
   - repo: https://github.com/psf/black
@@ -87,7 +87,7 @@ repos:
         # https://www.shellcheck.net/wiki/SC1071
         args: ["-e", "SC1071"]
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v4.1.0
+    rev: v5.0.0
     hooks:
       - id: commitlint
         stages: [commit-msg]

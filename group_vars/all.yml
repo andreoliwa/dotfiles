@@ -133,7 +133,8 @@ mac_cask_packages:
     - appcleaner
     - the-unarchiver
     - authy # https://authy.com/
-    - keepassxc https://keepassxc.org/
+    - keepassxc # https://keepassxc.org/
+    - flameshot # https://github.com/flameshot-org/flameshot#installation
     # To open Meld even with the security warning: https://github.com/yousseb/meld/issues/19#issuecomment-541239058
     - meld # https://yousseb.github.io/meld/
     - rescuetime # https://www.rescuetime.com/
@@ -237,9 +238,9 @@ mac_mas_packages:
   remove:
     - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
     - 973134470 # Be Focused - Focus Timer https://itunes.apple.com/us/app/id973134470
+    - 526298438 # Lightshot Screenshot https://apps.apple.com/us/app/lightshot-screenshot/id526298438
   personal_laptop:
   company_laptop:
-    - 526298438 # Lightshot Screenshot https://apps.apple.com/us/app/lightshot-screenshot/id526298438
 
 ruby_global_gems:
   - lunchy

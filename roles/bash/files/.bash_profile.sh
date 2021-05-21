@@ -1,3 +1,9 @@
+# Suggestions made by pyenv init:
+# WARNING: `pyenv init -` no longer sets PATH.
+# Run `pyenv init` to see the necessary changes to make to your configuration.
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
 if [ -f "$HOME/.bashrc" ]; then
     source $HOME/.bashrc
 fi

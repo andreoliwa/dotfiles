@@ -8,8 +8,10 @@ export LANG="en_US.UTF-8"
 # Ansible Python tasks need this environment variable
 export PYENV_ROOT=~/.pyenv
 
-# pyenv must be found in the PATH, so "init" can work
-test -f ~/.pyenv/bin/pyenv && export PATH="$PATH:$HOME/.pyenv/bin"
+# Suggestions made by pyenv init:
+# WARNING: `pyenv init -` no longer sets PATH.
+# Run `pyenv init` to see the necessary changes to make to your configuration.
+eval "$(pyenv init --path)"
 eval "$(pyenv init - --no-rehash)"
 
 # flake8 was raising this error on requests.get(url):

@@ -192,7 +192,7 @@ else
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"Skype", nil, hs.layout.maximized, nil},
         {"App Store", nil, hs.layout.maximized, nil},
-        {"Toggl Track", nil, hs.layout.left70, true},
+        {"Toggl Track", nil, hs.layout.right70, false},
         {'Pritunl', 'Pritunl', hs.layout.right50, nil},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
     })

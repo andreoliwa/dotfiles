@@ -117,5 +117,8 @@
   "yaml.customTags": [
     "!encrypted/pkcs1-oaep scalar",
     "!vault scalar"
-  ]
+  ],
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

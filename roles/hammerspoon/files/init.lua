@@ -193,7 +193,7 @@ else
         {"Skype", nil, hs.layout.maximized, nil},
         {"App Store", nil, hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right70, false},
-        {'Pritunl', 'Pritunl', hs.layout.right50, nil},
+        {'AWS VPN Client', 'AWS VPN Client', hs.layout.right50, nil},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
     })
 end

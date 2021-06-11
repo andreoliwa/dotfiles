@@ -56,6 +56,10 @@ module.exports = {
         /pardot.com/,
         /sentry.io/,
         /gitlab.com/,
+        // AWS VPN Client; searching for GlifWebSignIn in the parameters didn't work
+        /accounts.google.com/,
+        /sli.do/,
+
         // EatFirst
         /eatfirst/,
         /zulip/,
@@ -64,6 +68,7 @@ module.exports = {
         /cloudflare/,
         /newrelic/,
         /terraform/,
+
         // B2BFG
         /makeeathappen/,
         /b2bfood.group/,
@@ -72,7 +77,6 @@ module.exports = {
         /caterdesk/,
         /orderin/,
         /algolia/,
-        /sli.do/,
       ],
       browser: "Brave Browser",
     },

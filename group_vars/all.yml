@@ -76,6 +76,7 @@ mac_homebrew_packages:
     - ansible-lint # https://github.com/ansible-community/ansible-lint
     - yamllint # https://github.com/adrienverge/yamllint
     - starship # https://github.com/starship/starship
+    - telnet
   remove:
     - heroku/brew/heroku
     - highlight
@@ -202,6 +203,7 @@ mac_cask_packages:
     - spotifree
     - toggl
     - tor-browser
+    - pritunl # VPN https://client.pritunl.com/#install
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
@@ -212,7 +214,7 @@ mac_cask_packages:
   company_laptop:
     - slack # https://slack.com/
     - bitwarden # https://bitwarden.com/
-    - pritunl # VPN https://client.pritunl.com/#install
+    - aws-vpn-client
 
 # APT packages that don't get installed by a role
 apt_packages:

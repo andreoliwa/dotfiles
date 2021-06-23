@@ -17,6 +17,14 @@ empty_folders: &empty
   - ~/Desktop/
   # - ~/Documents/Shared_Downloads/
 
+mobile_upload_folders: &mobile_upload
+  - ~/OneDrive/Pictures/Camera_Roll/
+  - ~/OneDrive/Pictures/Screenshots/
+  - ~/OneDrive/Pictures/Telegram/
+  - ~/OneDrive/Pictures/Whats_App_Animated_Gifs/
+  - ~/OneDrive/Pictures/Whats_App_Images/
+  - ~/OneDrive/Pictures/Whats_App_Video/
+
 rules:
   # Hack to call rename-slugify only once.
   # As of March 2020, the organize tool only finds *files* under directories...
@@ -108,7 +116,7 @@ rules:
     actions:
       - move: "~/OneDrive/Geld/Juridica/"
   - folders:
-      - ~/OneDrive/Pictures/Camera_Roll/
+      - *mobile_upload
       - *download
     subfolders: true
     filters:
@@ -123,7 +131,7 @@ rules:
     actions:
       - move: "~/OneDrive/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
-      - ~/OneDrive/Pictures/Camera_Roll/
+      - *mobile_upload
     subfolders: true
     filters:
       - filename:
@@ -148,7 +156,7 @@ rules:
     actions:
       - move: "~/OneDrive/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
-      - ~/OneDrive/Pictures/Camera_Roll/
+      - *mobile_upload
     subfolders: true
     filters:
       - filename:
@@ -160,7 +168,7 @@ rules:
     actions:
       - move: "~/OneDrive/New_Screenshots/{lastmodified.year:04}/{lastmodified.month:02}/"
   - folders:
-      - ~/OneDrive/Pictures/Camera_Roll/
+      - *mobile_upload
     subfolders: true
     filters:
       - filename:

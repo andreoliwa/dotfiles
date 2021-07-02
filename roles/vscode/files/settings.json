@@ -32,7 +32,6 @@
   "editor.minimap.enabled": false,
   "editor.renderWhitespace": "none",
   "workbench.colorTheme": "Default Light+",
-  "window.zoomLevel": 0,
   "python.pipenvPath": "",
   "python.formatting.blackPath": "~/.local/bin/black",
   "[json]": {

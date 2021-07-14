@@ -30,14 +30,13 @@ rules:
   # As of March 2020, the organize tool only finds *files* under directories...
   # it doesn't find directories, so I can't rename them
   - folders:
-      - ~/OneDrive
+      - ~/
     filters:
       - filename:
-          startswith: .keep
+          startswith: .bashrc
     actions:
       - shell: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
       - shell: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
-      # /Volumes/m3/backup/Pictures
       - shell: "find -f ~/Downloads -f ~/Desktop -f ~/Documents ~/OneDrive -mindepth 1 -type d -empty -print -delete"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run

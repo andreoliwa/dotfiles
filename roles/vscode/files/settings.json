@@ -79,8 +79,10 @@
     }
   ],
   "ansibleVaultInline.keyfile": "~/.config/dotfiles/vault_password.txt",
-  "editor.rulers": [80, 120],
-  "workbench.editor.enablePreview": false,
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.unusualLineTerminators": "auto",
   "python.languageServer": "Pylance",
   "python.showStartPage": false,
@@ -93,7 +95,7 @@
   },
   "diffEditor.renderSideBySide": true,
   "workbench.editorAssociations": {
-    "*.ipynb": "jupyter.notebook.ipynb"
+    "*.ipynb": "jupyter-notebook"
   },
   "todo-tree.general.tags": [
     "BUG",
@@ -116,5 +118,9 @@
   ],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
   }
 }

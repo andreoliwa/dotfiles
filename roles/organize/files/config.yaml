@@ -19,6 +19,8 @@ empty_folders: &empty
 
 mobile_upload_folders: &mobile_upload
   - ~/OneDrive/Pictures/Camera_Roll/
+  - ~/OneDrive/Pictures/Download/
+  - ~/OneDrive/Pictures/Facebook/
   - ~/OneDrive/Pictures/Screenshots/
   - ~/OneDrive/Pictures/Telegram/
   - ~/OneDrive/Pictures/Whats_App_Animated_Gifs/
@@ -150,6 +152,8 @@ rules:
             - "81"
             # Facebook Messenger
             - Received
+            # Facebook
+            - fb_img_
           case_sensitive: false
       - LastModified
     actions:

@@ -18,13 +18,17 @@ empty_folders: &empty
   # - ~/Documents/Shared_Downloads/
 
 mobile_upload_folders: &mobile_upload
+  - ~/OneDrive/Pictures/Camera Roll/
   - ~/OneDrive/Pictures/Camera_Roll/
   - ~/OneDrive/Pictures/Download/
   - ~/OneDrive/Pictures/Facebook/
   - ~/OneDrive/Pictures/Screenshots/
   - ~/OneDrive/Pictures/Telegram/
+  - ~/OneDrive/Pictures/WhatsApp Animated Gifs/
   - ~/OneDrive/Pictures/Whats_App_Animated_Gifs/
+  - ~/OneDrive/Pictures/WhatsApp Images/
   - ~/OneDrive/Pictures/Whats_App_Images/
+  - ~/OneDrive/Pictures/WhatsApp Video/
   - ~/OneDrive/Pictures/Whats_App_Video/
 
 rules:

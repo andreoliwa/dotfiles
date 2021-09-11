@@ -19,7 +19,7 @@ COLOR_LIGHT_GREEN = "\033[1;32m"
 COLOR_LIGHT_RED = "\033[1;31m"
 
 CONJURING_IGNORE_MODULES = os.environ.get("CONJURING_IGNORE_MODULES", "").split(",")
-M3_EVENTS = Path("/Volumes/m3/backup/Pictures/events")
+PICTURES_DIR = Path("~/OneDrive/Pictures/").expanduser()
 
 
 def join_pieces(*pieces: str):
@@ -27,9 +27,9 @@ def join_pieces(*pieces: str):
     return " ".join(piece for piece in pieces if piece.strip())
 
 
-def run_command(c: Context, *pieces: str, warn=False):
+def run_command(c: Context, *pieces: str, warn=False, hide=False):
     """Build command from pieces, ignoring empty strings."""
-    return c.run(join_pieces(*pieces), warn=warn)
+    return c.run(join_pieces(*pieces), warn=warn, hide=hide)
 
 
 def run_stdout(c: Context, *pieces: str, hide=True) -> str:
@@ -226,25 +226,42 @@ def jrnl_edit_last(c, journal=""):
 
 
 @task
-def m3(c, browse=False):
-    """Cleanup and backup pictures from the m3 hard.drive."""
-    for line in c.run(f"fd -a -uu -t d \\.picasaorig {M3_EVENTS}", pty=False).stdout.splitlines():
-        hidden_picasa_dir = Path(line)
-        with c.cd(hidden_picasa_dir.parent):
-            c.run("merge-dirs . .picasaoriginals/")
+def pix(c, browse=False):
+    """Cleanup pictures."""
+    c.run("fd -uu -0 -tf -i .DS_Store | xargs -0 rm -v")
+    c.run("fd -uu -0 -tf -i .nomedia | xargs -0 rm -v")
+    c.run("find . -mindepth 1 -type d -empty -print -delete")
 
-    year = 2006
-    while year <= 2021:
-        dirs = c.run(f"fd -t d {year} {M3_EVENTS} | sort -u").stdout.splitlines()
-        if dirs:
-            for dir_ in dirs:
-                c.run(f"du -sh '{dir_}'")
-                if browse:
-                    c.run(f"open '{dir_}'")
-            break
-        year += 1
+    # Unhide Picasa originals dir
+    for line in c.run("fd -uu -t d .picasaoriginals", pty=False).stdout.splitlines():
+        original_dir = Path(line)
+        c.run(f"mv {original_dir} {original_dir.parent}/Picasa_Originals")
 
-    c.run("df -h")
+    # Keep the original dir as the main dir and rename parent dir to "_Copy"
+    for line in c.run("fd -t d originals", pty=False).stdout.splitlines():
+        original_dir = Path(line)
+        c.run(f"mv {original_dir} {original_dir.parent}_Temp")
+        c.run(f"mv {original_dir.parent} {original_dir.parent}_Copy")
+        c.run(f"mv {original_dir.parent}_Temp {original_dir.parent}")
+
+    # Merge the copy dir with the main one
+    for line in run_command(c, "fd -a -uu -t d --color never _copy", str(PICTURES_DIR)).stdout.splitlines():
+        copy_dir = Path(line)
+        original_dir = Path(line.replace("_Copy", ""))
+        if original_dir.exists():
+            if browse:
+                c.run(f"open '{original_dir}'")
+            c.run(f"merge-dirs '{original_dir}' '{copy_dir}'")
+        else:
+            c.run(f"mv '{copy_dir}' '{original_dir}'")
+
+    # List dirs with _Copy files
+    copy_dirs = set()
+    for line in run_command(c, "fd -uu -t f --color never _copy", str(PICTURES_DIR), hide=True).stdout.splitlines():
+        copy_dirs.add(Path(line).parent)
+
+    for dir_ in sorted(copy_dirs):
+        print(dir_)
 
 
 @task

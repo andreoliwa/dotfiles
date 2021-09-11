@@ -15,7 +15,7 @@ slugify_folders: &slugify
 empty_folders: &empty
   - ~/Downloads/
   - ~/Desktop/
-  # - ~/Documents/Shared_Downloads/
+  - ~/Documents/Shared_Downloads/
 
 mobile_upload_folders: &mobile_upload
   - ~/OneDrive/Pictures/Camera Roll/

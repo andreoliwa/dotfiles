@@ -149,6 +149,7 @@ mac_cask_packages:
     # Backup/storage
     - dropbox
     - onedrive # https://onedrive.live.com/
+    - duplicity
     # Media/Music
     - spotify
     - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
@@ -184,7 +185,7 @@ mac_cask_packages:
     - insomnia # REST client
     - vagrant
     - virtualbox
-    # - spectacle # Warning: Unexpected method 'accessibility_access' called on Cask spectacle.
+    - spectacle # Replaced by hammerspoon
     - dissenter-browser
     - flux
     - freemind

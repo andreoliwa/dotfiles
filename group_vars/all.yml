@@ -123,6 +123,7 @@ mac_cask_packages:
     - finicky # https://github.com/johnste/finicky
     # Development
     - visual-studio-code
+    - docker-edge
     # Network
     - teamviewer
     - private-internet-access
@@ -136,6 +137,7 @@ mac_cask_packages:
     - authy # https://authy.com/
     - keepassxc # https://keepassxc.org/
     - flameshot # https://github.com/flameshot-org/flameshot#installation
+    - deepl
     # To open Meld even with the security warning: https://github.com/yousseb/meld/issues/19#issuecomment-541239058
     - meld # https://yousseb.github.io/meld/
     - rescuetime # https://www.rescuetime.com/
@@ -145,7 +147,7 @@ mac_cask_packages:
     - skype
     - signal
     # Video conferencing
-    - zoomus
+    - zoom
     # Backup/storage
     - dropbox
     - onedrive # https://onedrive.live.com/
@@ -155,14 +157,13 @@ mac_cask_packages:
     - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
     - beardedspice
     - android-file-transfer # https://www.android.com/filetransfer/
+    - vlc
+    - kap
     # Fonts
     - font-ubuntu
     - font-cousine
     - font-hack
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
-    - vlc
-    - docker-edge
-    - kap
   remove:
     # Images
     - imageoptim # optimizing images

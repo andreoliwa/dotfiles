@@ -12,11 +12,6 @@ slugify_folders: &slugify
   - ~/OneDrive/
   - ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
 
-empty_folders: &empty
-  - ~/Downloads/
-  - ~/Desktop/
-  - ~/Documents/Shared_Downloads/
-
 mobile_upload_folders: &mobile_upload
   - ~/OneDrive/Pictures/Camera Roll/
   - ~/OneDrive/Pictures/Camera_Roll/
@@ -196,11 +191,3 @@ rules:
       - move: "~/OneDrive/Pictures/New_Split/{lastmodified.year:04}/{lastmodified.month:02}/"
       # {lastmodified.year:04}-{lastmodified.month:02}-{lastmodified.day:02}/
   # https://organize.readthedocs.io/en/latest/page/actions.html#id9
-  - folders: *empty
-    subfolders: true
-    filters:
-      - python: |
-          return not path.name.startswith('.')
-    actions:
-      - echo: "Directory should be empty: {path}"
-      - shell: 'open "{basedir}"'

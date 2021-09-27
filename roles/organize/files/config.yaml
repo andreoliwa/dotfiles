@@ -25,6 +25,7 @@ mobile_upload_folders: &mobile_upload
   - ~/OneDrive/Pictures/Whats_App_Images/
   - ~/OneDrive/Pictures/WhatsApp Video/
   - ~/OneDrive/Pictures/Whats_App_Video/
+  - ~/OneDrive/Pictures/Samsung_Gallery/
 
 rules:
   # Hack to call rename-slugify only once.

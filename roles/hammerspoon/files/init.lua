@@ -180,7 +180,6 @@ else
         {"Brave Browser", "Brave – DD", layout_bottom50, nil},
         {"Brave Browser", "DevTools", layout_top50, nil},
 
-        {"Activity Monitor", nil, hs.layout.maximized, nil},
         {"Todoist", nil, layout_bottom50, nil},
         {"Bitwarden", nil, layout_bottom50, nil},
 
@@ -189,7 +188,7 @@ else
     })
     config_screen(laptop_screen, {
         {"Spotify", nil, hs.layout.maximized, false},
-        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, nil},
+        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, false},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"Skype", nil, hs.layout.maximized, nil},
@@ -197,6 +196,7 @@ else
         {"Toggl Track", nil, hs.layout.right70, false},
         {'AWS VPN Client', 'AWS VPN Client', hs.layout.right50, nil},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
+        {"Activity Monitor", nil, hs.layout.right50, nil},
     })
 end
 

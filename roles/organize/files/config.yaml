@@ -14,18 +14,14 @@ slugify_folders: &slugify
 
 mobile_upload_folders: &mobile_upload
   - ~/OneDrive/Pictures/Camera Roll/
-  - ~/OneDrive/Pictures/Camera_Roll/
   - ~/OneDrive/Pictures/Download/
   - ~/OneDrive/Pictures/Facebook/
   - ~/OneDrive/Pictures/Screenshots/
   - ~/OneDrive/Pictures/Telegram/
   - ~/OneDrive/Pictures/WhatsApp Animated Gifs/
-  - ~/OneDrive/Pictures/Whats_App_Animated_Gifs/
   - ~/OneDrive/Pictures/WhatsApp Images/
-  - ~/OneDrive/Pictures/Whats_App_Images/
   - ~/OneDrive/Pictures/WhatsApp Video/
-  - ~/OneDrive/Pictures/Whats_App_Video/
-  - ~/OneDrive/Pictures/Samsung_Gallery/
+  - ~/OneDrive/Pictures/Samsung Gallery/
 
 rules:
   # Hack to call rename-slugify only once.
@@ -42,7 +38,7 @@ rules:
       - shell: "find -f ~/Downloads -f ~/Desktop -f ~/Documents ~/OneDrive -mindepth 1 -type d -empty -print -delete"
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
-      - shell: "rename-slugify -x ~/OneDrive/Musicas_LuisAndreoli -x ~/OneDrive/Movies/ -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Notebook/ -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/OneDrive/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents"
+      - shell: "rename-slugify -x ~/OneDrive/Musicas_LuisAndreoli -x ~/OneDrive/Movies/ -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Notebook/ -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? -x '~/OneDrive/Pictures/Camera Roll/' -x '~/OneDrive/Pictures/Download/' -x '~/OneDrive/Pictures/Facebook/' -x '~/OneDrive/Pictures/Screenshots/' -x '~/OneDrive/Pictures/Telegram/' -x '~/OneDrive/Pictures/WhatsApp Animated Gifs/' -x '~/OneDrive/Pictures/WhatsApp Images/' -x '~/OneDrive/Pictures/WhatsApp Video/' -x '~/OneDrive/Pictures/Samsung Gallery/' --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents ~/OneDrive/"
   # TODO: This filter below doesn't work, nothing is found. Open a bug on organize?
   # - folders: *slugify
   #   subfolders: true
@@ -124,6 +120,7 @@ rules:
       - filename:
           contains:
             # WhatsApp
+            - -WA
             - _wa_
             - whats_app
             - whatsapp

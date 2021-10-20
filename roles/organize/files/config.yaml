@@ -39,14 +39,18 @@ rules:
       # Use this to debug:
       # cd ~/Code/python-clib && poetry run
       - shell: "rename-slugify -x ~/OneDrive/Musicas_LuisAndreoli -x ~/OneDrive/Movies/ -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Notebook/ -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? -x '~/OneDrive/Pictures/Camera Roll/' -x '~/OneDrive/Pictures/Download/' -x '~/OneDrive/Pictures/Facebook/' -x '~/OneDrive/Pictures/Screenshots/' -x '~/OneDrive/Pictures/Telegram/' -x '~/OneDrive/Pictures/WhatsApp Animated Gifs/' -x '~/OneDrive/Pictures/WhatsApp Images/' -x '~/OneDrive/Pictures/WhatsApp Video/' -x '~/OneDrive/Pictures/Samsung Gallery/' --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents ~/OneDrive/"
-  # TODO: This filter below doesn't work, nothing is found. Open a bug on organize?
+
+  # This works, but it got stuck during scanning, maybe because of how organize scans directories.
+  # Uncomment when fd or a faster method will be used to scan dirs: https://github.com/tfeldmann/organize/issues/84
   # - folders: *slugify
   #   subfolders: true
+  #   system_files: true
   #   filters:
   #     - filename:
   #         startswith: .DS_Store
   #   actions:
   #     - trash
+
   # Receipts
   - folders: *download
     filters:

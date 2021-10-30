@@ -77,6 +77,7 @@ mac_homebrew_packages:
     - yamllint # https://github.com/adrienverge/yamllint
     - starship # https://github.com/starship/starship
     - telnet
+    - duplicity
   remove:
     - heroku/brew/heroku
     - highlight
@@ -100,10 +101,6 @@ mac_homebrew_packages:
     # Error saving credentials: error storing credentials - err: exit status 1, out: `not implemented`
     # I tried this config: https://github.com/awslabs/amazon-ecr-credential-helper#Configuration
     - docker-credential-helper-ecr
-  personal_laptop:
-    # TODO: this needs "brew cask install osxfuse" before:
-    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
-  company_laptop:
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - helm # https://helm.sh/
     - git-secret # https://git-secret.io/installation
@@ -113,6 +110,10 @@ mac_homebrew_packages:
     - adoptopenjdk # dbeaver-community requires Java 8+
     - dbeaver-community
     - graphviz # https://www.graphviz.org/
+  personal_laptop:
+    # TODO: this needs "brew cask install osxfuse" before:
+    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
+  company_laptop:
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
@@ -151,7 +152,6 @@ mac_cask_packages:
     # Backup/storage
     - dropbox
     - onedrive # https://onedrive.live.com/
-    - duplicity
     # Media/Music
     - spotify
     - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
@@ -206,6 +206,8 @@ mac_cask_packages:
     - toggl
     - tor-browser
     - pritunl # VPN https://client.pritunl.com/#install
+    - bitwarden # https://bitwarden.com/
+    - aws-vpn-client
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
@@ -215,8 +217,6 @@ mac_cask_packages:
     - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
   company_laptop:
     - slack # https://slack.com/
-    - bitwarden # https://bitwarden.com/
-    - aws-vpn-client
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -275,16 +275,16 @@ python3_pipx_modules:
     - pgcli # https://github.com/dbcli/pgcli
     - tox # https://github.com/tox-dev/tox/
     - black # https://github.com/ambv/black
+    - isort # https://github.com/PyCQA/isort
   remove:
     - bumpversion # https://pypi.org/project/bumpversion/
     - twine # https://pypi.org/project/twine/
     - awscli # https://pypi.org/project/awscli/ Older version 1.18.*
+    - aws-shell # https://github.com/awslabs/aws-shell
   personal_laptop:
     - subliminal # https://pypi.org/project/subliminal/
     - youtube-dl # https://pypi.org/project/youtube_dl/
   company_laptop:
-    - aws-shell # https://github.com/awslabs/aws-shell
-    - "isort==4.3.21" # https://github.com/PyCQA/isort
 
 # Node utilities
 # TODO: common, remove, personal_laptop, company_laptop
@@ -313,8 +313,8 @@ npm_global_packages:
 
   # company_laptop:
   # TODO: I removed this manually with cd /usr/local/lib/node_modules; rm -rf - jira-cl # https://jiracli.com/
-  - aws-es-kibana
-  - codeowners # https://github.com/beaugunderson/codeowners
+  # - aws-es-kibana
+  # - codeowners # https://github.com/beaugunderson/codeowners
 
 # TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:
@@ -353,18 +353,18 @@ vscode_extensions:
     - editorconfig.editorconfig
     - golang.go
     - daohong-emilio.yash # Yet another syntax highlighter for lex/yacc & flex/bison.
-    - zbr.vscode-ansible
+    - redhat.ansible
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
     - crisward.riot-tag
     - vscoss.vscode-ansible
     - haaaad.ansible # Incompatible with YAML extension
+    - octref.vetur # Vue.js
   personal_laptop:
     - matklad.rust-analyzer # https://rust-analyzer.github.io/
     - vscode-ext.sync-rsync
   company_laptop:
-    - octref.vetur # Vue.js
 
 # Chrome extensions used on Brave.
 # They cannot be automatically installed, but I will at least list them here.
@@ -383,11 +383,11 @@ chrome_extensions:
     - https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
     - https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn # https://github.com/chitsaou/copy-as-markdown/
   remove:
+    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
+    - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
+    - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL
   personal_laptop:
     - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
     - https://chrome.google.com/webstore/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
   company_laptop:
-    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
-    - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
-    - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL

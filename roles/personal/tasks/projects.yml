@@ -63,3 +63,8 @@
   vars:
     repo: "git@github.com:andreoliwa/germanize-telegram.git"
     gita_group: personal
+
+- include_role: name=python_repo
+  vars:
+    repo: "git@github.com:andreoliwa/wiki-notes.git"
+    gita_group: personal

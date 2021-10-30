@@ -17,10 +17,12 @@
     repo: https://github.com/gpakosz/.tmux.git
     dest: "{{ dotfiles_user_home }}/.tmux"
 
-- name: Install tpm
+- name: Install tpm plugin (clone repo)
   git:
     repo: https://github.com/tmux-plugins/tpm
     dest: "{{ dotfiles_user_home }}/.tmux/plugins/tpm"
+    update: yes
+    force: yes
 
 - name: "Oh My Tmux: Symlink .tmux.conf"
   file:

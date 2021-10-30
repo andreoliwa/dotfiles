@@ -4,27 +4,32 @@
     bare: yes
   register: pyenv_versions
 
-- name: "Get installed version of Python 2.7 {{ PYENV_ROOT }} / {{ pyenv_root }}"
-  shell: "echo {{ pyenv_versions }} | grep -i -E '^2.7[0-9.]+$' | tail -n 1"
-  register: latest_python_2_7
+- name: "Get latest installed version of Python 3.10"
+  shell: "echo {{ pyenv_versions }} | egrep -i '^3.10.[0-9]+$' | tail -n 1"
+  register: latest_python_3_10
   changed_when: false
 
-- name: "Get installed version of Python 3.9"
-  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.9[0-9.]+$' | tail -n 1"
+- name: "Get latest installed version of Python 3.9"
+  shell: "echo {{ pyenv_versions }} | egrep -i '^3.9.[0-9]+$' | tail -n 1"
   register: latest_python_3_9
   changed_when: false
 
-- name: "Get installed version of Python 3.8"
-  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.8[0-9.]+$' | tail -n 1"
+- name: "Get latest installed version of Python 3.8"
+  shell: "echo {{ pyenv_versions }} | egrep -i '^3.8.[0-9]+$' | tail -n 1"
   register: latest_python_3_8
   changed_when: false
 
-- name: "Get installed version of Python 3.7"
-  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.7[0-9.]+$' | tail -n 1"
+- name: "Get latest installed version of Python 3.7"
+  shell: "echo {{ pyenv_versions }} | egrep -i '^3.7.[0-9]+$' | tail -n 1"
   register: latest_python_3_7
   changed_when: false
 
-- name: "Get installed version of Python 3.6"
-  shell: "echo {{ pyenv_versions }} | grep -i -E '^3.6[0-9.]+$' | tail -n 1"
+- name: "Get latest installed version of Python 3.6"
+  shell: "echo {{ pyenv_versions }} | egrep -i '^3.6.[0-9]+$' | tail -n 1"
   register: latest_python_3_6
+  changed_when: false
+
+- name: "Get latest installed version of Python 2.7 {{ PYENV_ROOT }} / {{ pyenv_root }}"
+  shell: "echo {{ pyenv_versions }} | egrep -i '^2.7.[0-9]+$' | tail -n 1"
+  register: latest_python_2_7
   changed_when: false

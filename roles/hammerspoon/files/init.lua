@@ -55,8 +55,11 @@ end
 
 -- The two external monitors have the same name (HP E241i), so I have to use the UUID instead
 -- If the external monitors are off, fallback to other screens
+-- http://www.hammerspoon.org/docs/hs.screen.html#find
 local laptop_screen = 'Built-in Retina Display'
-local wide_curved_screen = hs.screen.find('DELL U3415W')
+
+-- Wide screen name is "LEN T34w-20"; I had to remove the "-20" for string.match() to find the screen
+local wide_curved_screen = hs.screen.find('LEN T34w')
 
 local horizontal_screen = nil
 local vertical_screen = nil
@@ -118,17 +121,20 @@ end
 
 if wide_curved_screen ~= nil then
     config_screen(wide_curved_screen, {
+        -- Left
         {"iTerm2", nil, hs.layout.left50, nil},
         {"Preview", nil, hs.layout.left50, nil},
         {"Finder", nil, hs.layout.left50, nil},
         {"Brave Browser", nil, hs.layout.left50, nil},
         {"zoom.us", 'Zoom', hs.layout.left50, nil},
 
+        -- Right
         {"PyCharm", nil, hs.layout.right50, nil},
         {"Code", nil, hs.layout.right50, nil},
         {"App Store", nil, hs.layout.right50, nil},
         {"Hammerspoon", "Hammerspoon Console", hs.layout.right50, nil},
         {"Activity Monitor", nil, hs.layout.right50, nil},
+        {"Notes", nil, hs.layout.right50, nil},
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized, nil},

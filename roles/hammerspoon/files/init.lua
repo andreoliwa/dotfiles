@@ -127,6 +127,7 @@ if wide_curved_screen ~= nil then
         {"Finder", nil, hs.layout.left50, nil},
         {"Brave Browser", nil, hs.layout.left50, nil},
         {"zoom.us", 'Zoom', hs.layout.left50, nil},
+        {"Slack", nil, hs.layout.left50, nil},
 
         -- Right
         {"PyCharm", nil, hs.layout.right50, nil},
@@ -135,6 +136,10 @@ if wide_curved_screen ~= nil then
         {"Hammerspoon", "Hammerspoon Console", hs.layout.right50, nil},
         {"Activity Monitor", nil, hs.layout.right50, nil},
         {"Notes", nil, hs.layout.right50, nil},
+        {"Brave Browser Dev", nil, hs.layout.right50, nil},
+
+        -- Full
+        {"VLC", nil, hs.layout.maximized, false},
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized, nil},
@@ -143,10 +148,7 @@ if wide_curved_screen ~= nil then
         {"DeepL", nil, hs.layout.maximized, false},
         {"Signal", nil, hs.layout.maximized, false},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
-        {"Slack", nil, hs.layout.maximized, nil},
-        {"Brave Browser Dev", nil, hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right30, false},
-        {"VLC", nil, hs.layout.maximized, false},
         {"Spotify", nil, hs.layout.maximized, false},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},

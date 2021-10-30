@@ -217,6 +217,8 @@ mac_cask_packages:
     - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
   company_laptop:
     - slack # https://slack.com/
+    - homebrew/cask-drivers/logitech-options
+    - logitech-g-hub # http://logitechg.com/support/g305
 
 # APT packages that don't get installed by a role
 apt_packages:

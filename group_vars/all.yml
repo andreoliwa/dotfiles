@@ -164,6 +164,7 @@ mac_cask_packages:
     - font-cousine
     - font-hack
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
+    - apppolice # https://github.com/AppPolice/AppPolice
   remove:
     # Images
     - imageoptim # optimizing images

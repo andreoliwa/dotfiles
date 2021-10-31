@@ -165,6 +165,7 @@ mac_cask_packages:
     - font-hack
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - apppolice # https://github.com/AppPolice/AppPolice
+    - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
   remove:
     # Images
     - imageoptim # optimizing images
@@ -218,7 +219,6 @@ mac_cask_packages:
     - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
   company_laptop:
     - slack # https://slack.com/
-    - homebrew/cask-drivers/logitech-options
     - logitech-g-hub # http://logitechg.com/support/g305
 
 # APT packages that don't get installed by a role

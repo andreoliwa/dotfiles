@@ -37,6 +37,10 @@ module.exports = {
       // Work URLs
       // Match any part of the URL with the regexes below
       match: [
+        // Wolt
+        /wolt/,
+        /creditornot/,
+
         // sennder
         /sennder/,
         /atlassian/,

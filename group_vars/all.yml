@@ -166,6 +166,18 @@ mac_cask_packages:
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - apppolice # https://github.com/AppPolice/AppPolice
     - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
+    - pinentry-mac
+  personal_laptop:
+    - hp-easy-start # https://support.hp.com/
+    - dupeguru # https://dupeguru.voltaicideas.net/
+    - ccleaner # https://www.ccleaner.com/ccleaner-mac
+    - grandperspective # https://grandperspectiv.sourceforge.io/
+    - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
+    - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
+  company_laptop:
+    - slack # https://slack.com/
+    - logitech-g-hub # http://logitechg.com/support/g305
+    - tunnelblick
   remove:
     # Images
     - imageoptim # optimizing images
@@ -210,16 +222,6 @@ mac_cask_packages:
     - pritunl # VPN https://client.pritunl.com/#install
     - bitwarden # https://bitwarden.com/
     - aws-vpn-client
-  personal_laptop:
-    - hp-easy-start # https://support.hp.com/
-    - dupeguru # https://dupeguru.voltaicideas.net/
-    - ccleaner # https://www.ccleaner.com/ccleaner-mac
-    - grandperspective # https://grandperspectiv.sourceforge.io/
-    - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
-    - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
-  company_laptop:
-    - slack # https://slack.com/
-    - logitech-g-hub # http://logitechg.com/support/g305
 
 # APT packages that don't get installed by a role
 apt_packages:

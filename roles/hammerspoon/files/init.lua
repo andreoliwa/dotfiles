@@ -127,7 +127,6 @@ if wide_curved_screen ~= nil then
         {"Finder", nil, hs.layout.left50, nil},
         {"Brave Browser", nil, hs.layout.left50, nil},
         {"Brave Browser Dev", nil, hs.layout.left50, nil},
-        {"zoom.us", 'Zoom', hs.layout.left50, nil},
         {"Slack", nil, hs.layout.left50, nil},
 
         -- Right
@@ -138,6 +137,7 @@ if wide_curved_screen ~= nil then
         {"Notes", nil, hs.layout.right50, nil},
 
         -- Full
+        {"zoom.us", 'Zoom', hs.layout.maximized, nil},
         {"VLC", nil, hs.layout.maximized, false},
     })
     config_screen(laptop_screen, {

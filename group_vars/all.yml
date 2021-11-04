@@ -78,6 +78,14 @@ mac_homebrew_packages:
     - starship # https://github.com/starship/starship
     - telnet
     - duplicity
+  personal_laptop:
+    # TODO: this needs "brew cask install osxfuse" before:
+    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
+  company_laptop:
+    - kubectl
+    - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
+    - aws-iam-authenticator # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
+    - kubectx # https://github.com/ahmetb/kubectx#installation
   remove:
     - heroku/brew/heroku
     - highlight
@@ -101,7 +109,6 @@ mac_homebrew_packages:
     # Error saving credentials: error storing credentials - err: exit status 1, out: `not implemented`
     # I tried this config: https://github.com/awslabs/amazon-ecr-credential-helper#Configuration
     - docker-credential-helper-ecr
-    - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - helm # https://helm.sh/
     - git-secret # https://git-secret.io/installation
     - mailhog # https://github.com/mailhog/MailHog/
@@ -110,10 +117,6 @@ mac_homebrew_packages:
     - adoptopenjdk # dbeaver-community requires Java 8+
     - dbeaver-community
     - graphviz # https://www.graphviz.org/
-  personal_laptop:
-    # TODO: this needs "brew cask install osxfuse" before:
-    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
-  company_laptop:
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
@@ -178,6 +181,7 @@ mac_cask_packages:
     - slack # https://slack.com/
     - logitech-g-hub # http://logitechg.com/support/g305
     - tunnelblick
+    - aws-vault # https://github.com/99designs/aws-vault#installing
   remove:
     # Images
     - imageoptim # optimizing images

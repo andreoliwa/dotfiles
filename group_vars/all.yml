@@ -78,6 +78,7 @@ mac_homebrew_packages:
     - starship # https://github.com/starship/starship
     - telnet
     - duplicity
+    - pinentry-mac
   personal_laptop:
     # TODO: this needs "brew cask install osxfuse" before:
     # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
@@ -169,7 +170,6 @@ mac_cask_packages:
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - apppolice # https://github.com/AppPolice/AppPolice
     - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
-    - pinentry-mac
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
@@ -182,6 +182,8 @@ mac_cask_packages:
     - logitech-g-hub # http://logitechg.com/support/g305
     - tunnelblick
     - aws-vault # https://github.com/99designs/aws-vault#installing
+    - datagrip # https://www.jetbrains.com/datagrip/
+    - intellij-idea # https://www.jetbrains.com/idea/
   remove:
     # Images
     - imageoptim # optimizing images

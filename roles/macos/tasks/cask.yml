@@ -37,6 +37,9 @@
     state: present
   with_items: "{{ mac_cask_packages['company_laptop'] }}"
   when: ansible_env.COMPANY_LAPTOP and mac_cask_packages['company_laptop']
+  # This package is failing:
+  # localhost failed | item: aws-vault | msg: Error: It seems there is already a Binary at '/usr/local/bin/aws-vault'.
+  ignore_errors: yes
 
 - name: "Cask: Remove on company_laptop"
   homebrew_cask:

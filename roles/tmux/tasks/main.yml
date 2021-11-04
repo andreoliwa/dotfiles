@@ -17,7 +17,13 @@
     repo: https://github.com/gpakosz/.tmux.git
     dest: "{{ dotfiles_user_home }}/.tmux"
 
-- name: Install tpm plugin (clone repo)
+# https://www.memoryhole.net/~kyle/extract_url/
+- name: Install extract_url (needed by https://github.com/tmux-plugins/tmux-urlview)
+  homebrew:
+    name: extract_url
+    state: latest
+
+- name: "Install tpm (tmux plugin manager) on {{ dotfiles_user_home }}/.tmux/plugins/tpm"
   git:
     repo: https://github.com/tmux-plugins/tpm
     dest: "{{ dotfiles_user_home }}/.tmux/plugins/tpm"
@@ -35,6 +41,9 @@
     src: "{{ role_path }}/files/oh-my-tmux-local.conf"
     dest: "{{ dotfiles_user_home }}/.tmux.conf.local"
     state: link
+
+- name: "Reload TMUX environment: tmux source-file ~/.tmux.conf"
+  command: "tmux source-file ~/.tmux.conf"
 # - name: Symlink .tmux.conf
 #   file:
 #     src: "{{ role_path }}/files/tmux.conf"

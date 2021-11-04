@@ -248,12 +248,12 @@ mac_mas_packages:
     - 409203825 # Numbers https://itunes.apple.com/us/app/id409203825
     - 585829637 # Todoist https://itunes.apple.com/us/app/id585829637
     - 973134470 # Be Focused - Focus Timer https://apps.apple.com/us/app/be-focused-focus-timer/id973134470
+  personal_laptop:
+  company_laptop:
   remove:
     - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
     - 973134470 # Be Focused - Focus Timer https://itunes.apple.com/us/app/id973134470
     - 526298438 # Lightshot Screenshot https://apps.apple.com/us/app/lightshot-screenshot/id526298438
-  personal_laptop:
-  company_laptop:
 
 ruby_global_gems:
   - lunchy
@@ -285,15 +285,16 @@ python3_pipx_modules:
     - tox # https://github.com/tox-dev/tox/
     - black # https://github.com/ambv/black
     - isort # https://github.com/PyCQA/isort
+  personal_laptop:
+    - subliminal # https://pypi.org/project/subliminal/
+    - youtube-dl # https://pypi.org/project/youtube_dl/
+  company_laptop:
+    - pipenv # https://github.com/pypa/pipenv
   remove:
     - bumpversion # https://pypi.org/project/bumpversion/
     - twine # https://pypi.org/project/twine/
     - awscli # https://pypi.org/project/awscli/ Older version 1.18.*
     - aws-shell # https://github.com/awslabs/aws-shell
-  personal_laptop:
-    - subliminal # https://pypi.org/project/subliminal/
-    - youtube-dl # https://pypi.org/project/youtube_dl/
-  company_laptop:
 
 # Node utilities
 # TODO: common, remove, personal_laptop, company_laptop
@@ -363,6 +364,10 @@ vscode_extensions:
     - golang.go
     - daohong-emilio.yash # Yet another syntax highlighter for lex/yacc & flex/bison.
     - redhat.ansible
+  personal_laptop:
+    - matklad.rust-analyzer # https://rust-analyzer.github.io/
+    - vscode-ext.sync-rsync
+  company_laptop:
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client
@@ -370,10 +375,6 @@ vscode_extensions:
     - vscoss.vscode-ansible
     - haaaad.ansible # Incompatible with YAML extension
     - octref.vetur # Vue.js
-  personal_laptop:
-    - matklad.rust-analyzer # https://rust-analyzer.github.io/
-    - vscode-ext.sync-rsync
-  company_laptop:
 
 # Chrome extensions used on Brave.
 # They cannot be automatically installed, but I will at least list them here.
@@ -391,12 +392,13 @@ chrome_extensions:
     - https://chrome.google.com/webstore/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd
     - https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
     - https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn # https://github.com/chitsaou/copy-as-markdown/
-  remove:
-    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
-    - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
-    - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL
+    - https://chrome.google.com/webstore/detail/rescuetime-for-chrome-and/bdakmnplckeopfghnlpocafcepegjeap/related
   personal_laptop:
     - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
     - https://chrome.google.com/webstore/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
   company_laptop:
+  remove:
+    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
+    - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
+    - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL

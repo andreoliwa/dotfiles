@@ -370,6 +370,7 @@ vscode_extensions:
     - matklad.rust-analyzer # https://rust-analyzer.github.io/
     - vscode-ext.sync-rsync
   company_laptop:
+    - redhat.vscode-xml # https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

@@ -40,6 +40,7 @@ module.exports = {
         // Wolt
         /wolt/,
         /creditornot/,
+        /planitpoker/,
 
         // sennder
         /sennder/,

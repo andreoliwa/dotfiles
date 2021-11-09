@@ -87,6 +87,7 @@ mac_homebrew_packages:
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - aws-iam-authenticator # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
     - kubectx # https://github.com/ahmetb/kubectx#installation
+    - libsodium
   remove:
     - heroku/brew/heroku
     - highlight

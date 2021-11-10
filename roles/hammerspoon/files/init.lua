@@ -128,9 +128,6 @@ if wide_curved_screen ~= nil then
         {"Brave Browser", nil, hs.layout.left50, nil},
         {"Brave Browser Dev", nil, hs.layout.left50, nil},
         {"Slack", nil, hs.layout.left50, nil},
-        {"Telegram", nil, hs.layout.left30, false},
-        {"WhatsApp", nil, hs.layout.left30, false},
-        {"Signal", nil, hs.layout.left30, false},
 
         -- Right
         {"PyCharm", nil, hs.layout.right50, nil},
@@ -153,6 +150,9 @@ if wide_curved_screen ~= nil then
         {"Activity Monitor", nil, hs.layout.right70, nil},
         {"Hammerspoon", "Hammerspoon Console", layout_bottom50, nil},
         {"Speedtest", nil, hs.layout.left50, nil},
+        {"Telegram", nil, hs.layout.maximized, false},
+        {"WhatsApp", nil, hs.layout.maximized, false},
+        {"Signal", nil, hs.layout.maximized, false},
     })
 else
     config_screen(horizontal_screen, {

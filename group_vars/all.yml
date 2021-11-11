@@ -88,6 +88,7 @@ mac_homebrew_packages:
     - aws-iam-authenticator # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
     - kubectx # https://github.com/ahmetb/kubectx#installation
     - libsodium
+    - vault # Hashicorp https://www.vaultproject.io/
   remove:
     - heroku/brew/heroku
     - highlight
@@ -185,6 +186,7 @@ mac_cask_packages:
     - aws-vault # https://github.com/99designs/aws-vault#installing
     - datagrip # https://www.jetbrains.com/datagrip/
     - intellij-idea # https://www.jetbrains.com/idea/
+    - postman # https://www.postman.com/
   remove:
     # Images
     - imageoptim # optimizing images

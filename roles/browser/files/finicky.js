@@ -41,6 +41,7 @@ module.exports = {
         /wolt/,
         /creditornot/,
         /planitpoker/,
+        /liveshare/,
 
         // sennder
         /sennder/,

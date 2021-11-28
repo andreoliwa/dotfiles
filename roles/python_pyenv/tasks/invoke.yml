@@ -27,6 +27,12 @@
   become: true
   ignore_errors: yes
 
+- name: "invoke: Link invoke_root_work.py"
+  file:
+    src: "{{ project_root }}/toolbox/src/invoke_root_work.py"
+    dest: "{{ dotfiles_user_home }}/_invoke_root_work.py"
+    state: link
+
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"
 

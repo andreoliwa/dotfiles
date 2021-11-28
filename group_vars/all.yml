@@ -13,18 +13,23 @@ project_root: "~/Code"
 
 backup_dir: "~/OneDrive/Backup/{{ ansible_hostname }}"
 
-# Name used in commit messages
-full_name: Augusto W. Andreoli
-# Git
-# Github username
-git_user: andreoliwa
-# If you use github, this should be the same as the email
-#  used on Github
-git_email: andreoliwa@gmail.com
+github_username: andreoliwa
 
-# GPG Key ID used to sign git commits
-# See https://github.com/pstadler/keybase-gpg-github setup instructions
-git_signing_key: 6F84DBFC
+git_personal:
+  # Name used in commit messages
+  user_name: W. Augusto Andreoli
+  # If you use GitHub, this should be the same as the email used on Github
+  user_email: andreoliwa@gmail.com
+  # GPG Key ID used to sign git commits
+  # See https://github.com/pstadler/keybase-gpg-github setup instructions
+  # To see all keys:
+  # gpg --list-secret-keys --keyid-format LONG
+  user_signingkey: B9CAD8F36F84DBFC
+
+git_company:
+  user_name: Augusto Andreoli
+  user_email: augusto.andreoli@wolt.com
+  user_signingkey: 897562523E09FEE8
 
 # Vim
 

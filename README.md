@@ -46,9 +46,9 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
   cd ~/dotfiles
   ```
 - Update the following variables in `group_vars/local` (at a minimum)
-  - `full_name`: Your name, which will be attached to commit messages, e.g. "Steven Loria"
-  - `git_user`: Your Github username.
-  - `git_email`: Your git email address.
+  - `git_personal.user_name`: Your name, which will be attached to commit messages, e.g. "Steven Loria"
+  - `github_username`: Your Github username.
+  - `git_personal.user_email`: Your git email address.
 - Optional, but recommended: Update `group_vars/local` with the programs you want installed by [homebrew][], [homebrew-cask][], and npm.
   - `mac_homebrew_packages`: Utilities that don't get installed by the roles.
   - `mac_cask_packages`: Mac Apps you want installed with [homebrew-cask][].

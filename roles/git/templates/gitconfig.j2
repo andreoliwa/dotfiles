@@ -1,9 +1,9 @@
 [hub]
         protocol = https
 [user]
-        name = {{ full_name }}
-        email = {{ git_email }}
-        signingkey = {{ git_signing_key }}
+        name = {{ git_personal.user_name }}
+        email = {{ git_personal.user_email }}
+        signingkey = {{ git_personal.user_signingkey }}
 {% if ansible_os_family == 'Darwin' %}
 [credential]
         helper = osxkeychain
@@ -100,8 +100,8 @@
         default = simple
         followTags = true
 [github]
-        user = {{ git_user }}
-{% if git_signing_key %}
+        user = {{ github_username }}
+{% if git_personal.user_signingkey %}
 [commit]
         gpgsign = true
 {% endif %}

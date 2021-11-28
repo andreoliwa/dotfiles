@@ -1,5 +1,4 @@
-git
-===
+# git
 
 Installs and configures git.
 
@@ -7,7 +6,7 @@ Installs and configures git.
 
 Follow the instructions [here](https://github.com/pstadler/keybase-gpg-github) to create a GPG on keybase and set it up to use with GitHub.
 
-Then, in `group_vars/local`, set `git_signing_key` to the ID of the GPG key you use to sign commits.
+Then, in `group_vars/all.yml`, set `git_personal.user_signingkey` to the ID of the GPG key you use to sign commits.
 
 ```bash
 $ gpg --list-secret-keys
@@ -19,16 +18,18 @@ $ gpg --list-secret-keys
 ```
 
 ```yaml
-# In group_vars/local
+# In group_vars/all.yml
 
-git_signing_key: E870EE00
+git_personal:
+  user_signingkey: E870EE00
 ```
 
-If you do **not** wish to sign commits with GPG, just set `git_signing_key` to a blank variable.
+If you do **not** wish to sign commits with GPG, just set `git_personal.user_signingkey` to a blank variable.
 
 ```yaml
 # No GPG signing
-# In group_vars/local
+# In group_vars/all.yml
 
-git_signing_key:
+git_personal:
+  user_signingkey:
 ```

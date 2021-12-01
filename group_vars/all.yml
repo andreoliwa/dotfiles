@@ -192,6 +192,7 @@ mac_cask_packages:
     - datagrip # https://www.jetbrains.com/datagrip/
     - intellij-idea # https://www.jetbrains.com/idea/
     - postman # https://www.postman.com/
+    - google-chrome
   remove:
     # Images
     - imageoptim # optimizing images

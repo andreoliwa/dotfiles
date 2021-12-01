@@ -375,11 +375,13 @@ vscode_extensions:
     - golang.go
     - daohong-emilio.yash # Yet another syntax highlighter for lex/yacc & flex/bison.
     - redhat.ansible
+    - yzhang.markdown-all-in-one
   personal_laptop:
     - matklad.rust-analyzer # https://rust-analyzer.github.io/
     - vscode-ext.sync-rsync
   company_laptop:
     - redhat.vscode-xml # https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml
+    - jebbs.plantuml
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

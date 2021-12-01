@@ -123,5 +123,8 @@
     "default": "right",
     "jupyter-notebook": "left"
   },
-  "redhat.telemetry.enabled": true
+  "redhat.telemetry.enabled": true,
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+  "plantuml.render": "Local",
+  "plantuml.server": "http://localhost:8080"
 }

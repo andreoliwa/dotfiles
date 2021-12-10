@@ -126,5 +126,7 @@
   "redhat.telemetry.enabled": true,
   "extensions.autoUpdate": "onlyEnabledExtensions",
   "plantuml.render": "Local",
-  "plantuml.server": "http://localhost:8080"
+  "plantuml.server": "http://localhost:8080",
+  "screencastMode.onlyKeyboardShortcuts": true,
+  "screencastMode.keyboardShortcutsFormat": "commandWithGroupAndKeys"
 }

@@ -79,7 +79,6 @@ mac_homebrew_packages:
     - pipgrip # needed by brew update-python-resources
     - jrnl # https://jrnl.sh/
     - ansible-lint # https://github.com/ansible-community/ansible-lint
-    - yamllint # https://github.com/adrienverge/yamllint
     - starship # https://github.com/starship/starship
     - telnet
     - duplicity
@@ -96,6 +95,7 @@ mac_homebrew_packages:
     - libsodium
     - vault # Hashicorp https://www.vaultproject.io/
     - k9s # https://k9scli.io/
+    - actionlint # https://github.com/rhysd/actionlint
   remove:
     - heroku/brew/heroku
     - highlight
@@ -298,6 +298,7 @@ python3_pipx_modules:
     - tox # https://github.com/tox-dev/tox/
     - black # https://github.com/ambv/black
     - isort # https://github.com/PyCQA/isort
+    - yamllint # https://github.com/adrienverge/yamllint
   personal_laptop:
     - subliminal # https://pypi.org/project/subliminal/
     - youtube-dl # https://pypi.org/project/youtube_dl/

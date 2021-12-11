@@ -76,3 +76,6 @@ function docker_tty {
     $cmd
 }
 alias docker-tty="docker_tty"
+
+# TODO: move to the "kubernetes" role once I start using it (e.g.: remove unused google-cloud-sdk)
+alias k=kubectl

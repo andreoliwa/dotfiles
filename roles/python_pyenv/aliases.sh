@@ -17,4 +17,5 @@ alias py='python3'
 alias pv='pyenv version'
 alias pvs='pyenv versions --bare'
 
+alias i='invoke'
 alias il='invoke --list'

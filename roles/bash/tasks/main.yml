@@ -47,6 +47,30 @@
       test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
           source "$HOME"/.cache/dotfiles/cached_script.sh
 
+- name: "complete_alias: Copy script from https://github.com/cykerway/complete-alias"
+  get_url:
+    url: "https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias"
+    dest: "~/.local/share/bash-completion/completions/complete_alias.bash-completion"
+
+- name: "complete_alias: Add aliases to script"
+  blockinfile:
+    path: "~/.local/share/bash-completion/completions/complete_alias.bash-completion"
+    marker: "# ==================== {mark} My aliases"
+    block: |
+      complete -F _complete_alias d
+      complete -F _complete_alias dc
+      complete -F _complete_alias dk
+      complete -F _complete_alias g
+      complete -F _complete_alias gb
+      complete -F _complete_alias gco
+      complete -F _complete_alias gl
+      complete -F _complete_alias gp
+      complete -F _complete_alias gs
+      complete -F _complete_alias gst
+      complete -F _complete_alias i
+      complete -F _complete_alias k
+      complete -F _complete_alias p
+
 - name: "dotfiles-cache-shell-scripts: Install PyYAML"
   command: "python3 -m pip install pyyaml"
   when:

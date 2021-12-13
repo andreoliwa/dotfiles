@@ -1,7 +1,5 @@
 # https://organize.readthedocs.io/en/latest/page/config.html#configuration
-download_folders: &download
-  - ~/Downloads/
-  - ~/Documents/Shared_Downloads/
+move_folders: &move
   - ~/OneDrive/Documents/Mayan_Staging/Deutsch
   - ~/OneDrive/Documents/Mayan_Staging/Portugues
 
@@ -52,18 +50,18 @@ rules:
   #     - trash
 
   # Receipts
-  - folders: *download
+  - folders: *move
     filters:
       - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann|Penny|Budni|LPG Biomarkt|Nanu-Nana|Tiger Deutschland)"
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Companies/{filecontent.store}/Receipt/"
   # Invoices
-  - folders: *download
+  - folders: *move
     filters:
       - filecontent: "(Rechnung)"
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Deutsch/Type_Invoice/"
-  - folders: *download
+  - folders: *move
     filters:
       - filename:
           contains:
@@ -76,7 +74,7 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Cabinets/Investimentos/"
-  - folders: *download
+  - folders: *move
     filters:
       - filename:
           startswith:
@@ -86,7 +84,7 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Cabinets/Investimentos/"
-  - folders: *download
+  - folders: *move
     filters:
       - filename:
           contains:
@@ -96,7 +94,7 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Geld/Sparkasse/"
-  - folders: *download
+  - folders: *move
     filters:
       - filename:
           contains:
@@ -107,7 +105,7 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Geld/Contas_Alisson/"
-  - folders: *download
+  - folders: *move
     filters:
       - filename:
           startswith:
@@ -118,7 +116,7 @@ rules:
       - move: "~/OneDrive/Geld/Juridica/"
   - folders:
       - *mobile_upload
-      - *download
+      - *move
     subfolders: true
     filters:
       - filename:

@@ -134,7 +134,7 @@ if wide_curved_screen ~= nil then
         {"Code", nil, hs.layout.right50, nil},
         {"App Store", nil, hs.layout.right50, nil},
         {"Notes", nil, hs.layout.right50, nil},
-        {"zoom.us", 'Zoom', hs.layout.right70, nil},
+        {"zoom.us", 'Zoom', hs.layout.right50, nil},
 
         -- Full
         {"VLC", nil, hs.layout.maximized, false},
@@ -147,6 +147,10 @@ if wide_curved_screen ~= nil then
         {"Spotify", nil, hs.layout.maximized, false},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
+        {"zoom.us", "zoom floating video window", hs.layout.left50, nil},
+        {"zoom.us", "zoom share statusbar window", hs.layout.right50, nil},
+        {"zoom.us", "zoom share toolbar window", hs.layout.right70, nil},
+
         {"Activity Monitor", nil, hs.layout.right70, nil},
         {"Hammerspoon", "Hammerspoon Console", layout_bottom50, nil},
         {"Speedtest", nil, hs.layout.left50, nil},

@@ -222,7 +222,6 @@ mac_cask_packages:
     - dissenter-browser
     - flux
     - freemind
-    - google-chrome
     # - google-cloud-sdk # Error: Cask 'google-cloud-sdk' is unreadable: undefined method `undent' for #<String:0x00007fec9300cfa8>
     - iina
     - java8

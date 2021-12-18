@@ -61,7 +61,6 @@
   "files.insertFinalNewline": true,
   "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
   "python.envFile": "${workspaceFolder}/.envrc",
-  "python.venvPath": "~/Library/Caches/pypoetry/virtualenvs",
   "explorer.confirmDelete": false,
   "editor.fontSize": 13,
   "githubIssues.queries": [
@@ -128,5 +127,9 @@
   "plantuml.render": "Local",
   "plantuml.server": "http://localhost:8080",
   "screencastMode.onlyKeyboardShortcuts": true,
-  "screencastMode.keyboardShortcutsFormat": "commandWithGroupAndKeys"
+  "screencastMode.keyboardShortcutsFormat": "commandWithGroupAndKeys",
+  "python.venvFolders": [
+    "~/.local/pipx/venvs/",
+    "~/Library/Caches/pypoetry/virtualenvs"
+  ]
 }

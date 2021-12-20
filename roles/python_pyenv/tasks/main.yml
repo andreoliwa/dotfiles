@@ -41,6 +41,12 @@
 - name: "Install Invoke"
   import_tasks: invoke.yml
 
+- name: "Install Conjuring"
+  import_tasks: invoke-conjuring.yml
+
+- name: "Install Conjuring (Private)"
+  import_tasks: invoke-conjuring-private.yml
+
 - name: "pipx: Upgrade all packages (pipx upgrade-all --verbose)"
   command: "pipx upgrade-all --verbose"
   register: result

@@ -38,11 +38,10 @@ _sandbox
 .xmark.*
 .scratch
 
-# Ignore certain invoke files
-# This way, I can add my unofficial tasks to these files, without commiting them to Git.
+# Ignore my Conjuring invoke files
+# This way, I can add my unofficial tasks in every project, without commiting them to Git.
 # http://docs.pyinvoke.org/en/latest/concepts/configuration.html
-# _invoke*.py
-# invoke*.py
+conjuring*.py
 
 # sennder
 dev-tools.ini

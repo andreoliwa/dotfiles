@@ -1,0 +1,40 @@
+# https://github.com/andreoliwa/conjuring
+- name: "conjuring: Clone"
+  git:
+    repo: git@github.com:andreoliwa/conjuring.git
+    dest: "{{ project_root }}/conjuring"
+  ignore_errors: yes
+
+- name: "invoke-conjuring: Default home dir tasks"
+  blockinfile:
+    path: ~/tasks.py
+    create: yes
+    marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring"
+    block: |
+      from conjuring.spells.default import *
+
+- name: "invoke-conjuring: Default /usr/local tasks"
+  blockinfile:
+    path: "/usr/local/tasks.py"
+    create: yes
+    marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring"
+    block: |
+      from conjuring.spells.default import *
+  become: true
+  ignore_errors: yes
+
+# TODO: hack to install a Poetry package as editable until https://github.com/python-poetry/poetry-core/pull/182 is merged
+- name: "conjuring: Rename pyproject.toml"
+  command: "mv pyproject.toml _pyproject.toml"
+  args:
+    chdir: "{{ project_root }}/conjuring/"
+  ignore_errors: yes
+- name: "conjuring: Inject"
+  command: "pipx inject -e invoke ."
+  args:
+    chdir: "{{ project_root }}/conjuring/"
+- name: "conjuring: Restore pyproject.toml"
+  shell: "mv _pyproject.toml pyproject.toml"
+  args:
+    chdir: "{{ project_root }}/conjuring/"
+  ignore_errors: yes

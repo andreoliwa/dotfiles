@@ -78,10 +78,7 @@
     }
   ],
   "ansibleVaultInline.keyfile": "~/.config/dotfiles/vault_password.txt",
-  "editor.rulers": [
-    80,
-    120
-  ],
+  "editor.rulers": [80, 120],
   "editor.unusualLineTerminators": "auto",
   "python.languageServer": "Pylance",
   "python.showStartPage": false,
@@ -108,13 +105,9 @@
   "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
   "python.analysis.typeCheckingMode": "basic",
   "python.analysis.extraPaths": [
-    "/Users/aa/.local/pipx/venvs/invoke/lib/python3.8/site-packages",
-    "/Users/waa/.local/pipx/venvs/invoke/lib/python3.8/site-packages"
+    "/Users/aa/.local/pipx/venvs/invoke/lib/python3.8/site-packages"
   ],
-  "yaml.customTags": [
-    "!encrypted/pkcs1-oaep scalar",
-    "!vault scalar"
-  ],
+  "yaml.customTags": ["!encrypted/pkcs1-oaep scalar", "!vault scalar"],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

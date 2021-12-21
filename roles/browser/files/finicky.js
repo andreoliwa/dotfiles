@@ -44,6 +44,8 @@ module.exports = {
         /liveshare/,
         /wo.lt/,
         /vipps/,
+        /docs.google.com/,
+        /drive.google.com/,
 
         // sennder
         /sennder/,

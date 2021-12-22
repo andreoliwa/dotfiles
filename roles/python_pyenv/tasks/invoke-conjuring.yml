@@ -5,9 +5,18 @@
     dest: "{{ project_root }}/conjuring"
   ignore_errors: yes
 
+- name: "invoke-conjuring: Config file"
+  blockinfile:
+    path: ~/.invoke.yaml
+    create: yes
+    marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring"
+    block: |
+      tasks:
+        collection_name: conjuring_summon
+
 - name: "invoke-conjuring: Default home dir tasks"
   blockinfile:
-    path: ~/tasks.py
+    path: ~/conjuring_summon.py
     create: yes
     marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring"
     block: |
@@ -15,7 +24,7 @@
 
 - name: "invoke-conjuring: Default /usr/local tasks"
   blockinfile:
-    path: "/usr/local/tasks.py"
+    path: "/usr/local/conjuring_summon.py"
     create: yes
     marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring"
     block: |

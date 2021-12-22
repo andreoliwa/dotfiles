@@ -41,7 +41,7 @@ _sandbox
 # Ignore my Conjuring invoke files
 # This way, I can add my unofficial tasks in every project, without commiting them to Git.
 # http://docs.pyinvoke.org/en/latest/concepts/configuration.html
-conjuring*.py
+conjuring_*.py
 
 # sennder
 dev-tools.ini

@@ -44,7 +44,7 @@ mac_homebrew_packages:
     - bash-completion2 # https://github.com/scop/bash-completion
     - curl
     - jq # https://github.com/stedolan/jq
-    - python-yq # https://github.com/kislyuk/yq#installation
+    - yq # https://github.com/mikefarah/yq
     - wget
     - terminal-notifier
     - htop-osx
@@ -129,6 +129,7 @@ mac_homebrew_packages:
     - adoptopenjdk # dbeaver-community requires Java 8+
     - dbeaver-community
     - graphviz # https://www.graphviz.org/
+    - python-yq # https://github.com/kislyuk/yq#installation
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:

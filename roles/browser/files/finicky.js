@@ -46,6 +46,7 @@ module.exports = {
         /vipps/,
         /docs.google.com/,
         /drive.google.com/,
+        /retrium.com/,
 
         // sennder
         /sennder/,

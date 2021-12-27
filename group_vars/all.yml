@@ -301,6 +301,7 @@ python3_pipx_modules:
     - black # https://github.com/ambv/black
     - isort # https://github.com/PyCQA/isort
     - yamllint # https://github.com/adrienverge/yamllint
+    - commitizen # https://github.com/commitizen-tools/commitizen
   personal_laptop:
     - subliminal # https://pypi.org/project/subliminal/
     - youtube-dl # https://pypi.org/project/youtube_dl/
@@ -324,9 +325,6 @@ npm_global_packages:
 
   # Conventional commits and semantic release
   - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
-  - "@commitlint/cli" # https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/cli
-  - "@commitlint/config-conventional"
-  # TODO: remove - commitizen # https://github.com/commitizen/cz-cli
   - semantic-release-cli # https://github.com/semantic-release/cli
 
   # Sentry
@@ -337,10 +335,12 @@ npm_global_packages:
   - remark-preset-lint-recommended # https://github.com/remarkjs/remark-lint#cli
   - remark-preset-lint-markdown-style-guide # https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide
 
-  # company_laptop:
-  # TODO: I removed this manually with cd /usr/local/lib/node_modules; rm -rf - jira-cl # https://jiracli.com/
-  # - aws-es-kibana
-  # - codeowners # https://github.com/beaugunderson/codeowners
+npm_global_packages_remove: # TODO: packages to remove
+  - aws-es-kibana
+  - codeowners # https://github.com/beaugunderson/codeowners
+  - "@commitlint/cli" # https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/cli
+  - "@commitlint/config-conventional"
+  - commitizen # https://github.com/commitizen/cz-cli
 
 # TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:

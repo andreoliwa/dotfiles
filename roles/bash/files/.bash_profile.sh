@@ -30,6 +30,11 @@ if [[ -d "$HOME/.local/share/bash-completion/completions" ]]; then
     done
 fi
 
+# Copied from:
+# brew info openjdk@11
+# TODO: use https://github.com/halcyon/asdf-java instead
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+
 # ==================== BEGIN https://github.com/asdf-vm/asdf
 # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
 source $HOME/.asdf/asdf.sh

@@ -47,6 +47,10 @@ module.exports = {
         /docs.google.com/,
         /drive.google.com/,
         /retrium.com/,
+        /ktlint/,
+        /java.com/,
+        /java.net/,
+        /jooq.org/,
 
         // sennder
         /sennder/,

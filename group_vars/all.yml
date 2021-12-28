@@ -98,6 +98,7 @@ mac_homebrew_packages:
     - vault # Hashicorp https://www.vaultproject.io/
     - k9s # https://k9scli.io/
     - actionlint # https://github.com/rhysd/actionlint
+    - ktlint # https://github.com/pinterest/ktlint
   remove:
     - heroku/brew/heroku
     - highlight

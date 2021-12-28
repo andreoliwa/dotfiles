@@ -98,7 +98,6 @@ mac_homebrew_packages:
     - vault # Hashicorp https://www.vaultproject.io/
     - k9s # https://k9scli.io/
     - actionlint # https://github.com/rhysd/actionlint
-    - ktlint # https://github.com/pinterest/ktlint
   remove:
     - heroku/brew/heroku
     - highlight
@@ -127,8 +126,7 @@ mac_homebrew_packages:
     - mailhog # https://github.com/mailhog/MailHog/
     - gdal
     - librdkafka
-    - adoptopenjdk # dbeaver-community requires Java 8+
-    - dbeaver-community
+    - dbeaver-community # Requires Java 8+
     - graphviz # https://www.graphviz.org/
     - python-yq # https://github.com/kislyuk/yq#installation
 

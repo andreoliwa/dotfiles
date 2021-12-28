@@ -13,6 +13,7 @@
     - { role: asdf, tags: ["asdf"] }
     - { role: direnv, tags: ["asdf", "direnv"] }
     - { role: poetry, tags: ["asdf", "poetry"] }
+    - { role: java, tags: ["asdf", "java"] }
 
     # Tools
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }

@@ -1,0 +1,35 @@
+- name: "java: Uninstall Homebrew packages that can be installed with asdf"
+  homebrew:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - ktlint # https://github.com/pinterest/ktlint
+    - openjdk@11
+    - openjdk
+    - adoptopenjdk
+
+- name: "java: Add as asdf plugin"
+  command: "asdf plugin-add java"
+  args:
+    creates: ~/.asdf/plugins/java
+
+- name: "java: Install openjdk-11.0.2 with asdf"
+  command: "asdf install java openjdk-11.0.2"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
+
+- name: "java: Set global with asdf"
+  command: "asdf global java openjdk-11.0.2"
+
+- name: "ktlint: Add as asdf plugin"
+  command: "asdf plugin-add ktlint"
+  args:
+    creates: ~/.asdf/plugins/ktlint
+
+- name: "ktlint: Install latest with asdf"
+  command: "asdf install ktlint latest"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
+
+- name: "ktlint: Set global with asdf"
+  command: "asdf global ktlint latest"

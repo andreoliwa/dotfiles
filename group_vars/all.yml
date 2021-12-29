@@ -197,6 +197,7 @@ mac_cask_packages:
     - intellij-idea # https://www.jetbrains.com/idea/
     - postman # https://www.postman.com/
     - google-chrome
+    - jetbrains-toolbox # https://www.jetbrains.com/toolbox-app/
   remove:
     # Images
     - imageoptim # optimizing images

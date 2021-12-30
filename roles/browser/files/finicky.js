@@ -51,6 +51,7 @@ module.exports = {
         /java.com/,
         /java.net/,
         /jooq.org/,
+        /postman.com/,
 
         // sennder
         /sennder/,

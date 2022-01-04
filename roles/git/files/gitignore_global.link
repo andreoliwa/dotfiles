@@ -35,6 +35,9 @@ docs/_build
 # Sandbox for notes, throwaway scripts, etc.
 _sandbox
 
+# Ignore Git itself, so fd doesn't search it by default
+.git/
+
 .xmark.*
 .scratch
 

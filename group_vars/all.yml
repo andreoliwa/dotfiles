@@ -98,6 +98,7 @@ mac_homebrew_packages:
     - vault # Hashicorp https://www.vaultproject.io/
     - k9s # https://k9scli.io/
     - actionlint # https://github.com/rhysd/actionlint
+    - protobuf # https://github.com/protocolbuffers/protobuf
   remove:
     - heroku/brew/heroku
     - highlight
@@ -386,7 +387,8 @@ vscode_extensions:
     - vscode-ext.sync-rsync
   company_laptop:
     - redhat.vscode-xml # https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml
-    - jebbs.plantuml
+    - jebbs.plantuml # https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml
+    - zxh404.vscode-proto3 # https://marketplace.visualstudio.com/items?itemName=zxh404.vscode-proto3
   remove:
     - felixfbecker.php-intellisense
     - bmewburn.vscode-intelephense-client

@@ -72,8 +72,6 @@ module.exports = {
         /pardot.com/,
         /sentry.io/,
         /gitlab.com/,
-        // AWS VPN Client; searching for GlifWebSignIn in the parameters didn't work
-        /accounts.google.com/,
         /sli.do/,
 
         // EatFirst

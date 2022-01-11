@@ -22,7 +22,8 @@
     "*.drawio": "xml",
     "**/.ssh/config": "shellscript",
     "hosts": "ini",
-    "Makefile*": "makefile"
+    "Makefile*": "makefile",
+    "*.jrnl": "markdown"
   },
   "diffEditor.ignoreTrimWhitespace": true,
   "extensions.ignoreRecommendations": false,
@@ -125,5 +126,9 @@
     "~/.local/pipx/venvs/",
     "~/Library/Caches/pypoetry/virtualenvs"
   ],
-  "git.inputValidationSubjectLength": 69
+  "git.inputValidationSubjectLength": 69,
+  "search.smartCase": true,
+  "search.useGlobalIgnoreFiles": true,
+  "search.showLineNumbers": true,
+  "search.collapseResults": "auto"
 }

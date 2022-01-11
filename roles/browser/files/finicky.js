@@ -52,6 +52,7 @@ module.exports = {
         /java.net/,
         /jooq.org/,
         /postman.com/,
+        /snowflake.com/,
 
         // sennder
         /sennder/,

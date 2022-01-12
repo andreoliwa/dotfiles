@@ -43,6 +43,7 @@ mac_homebrew_packages:
     - bash
     - bash-completion2 # https://github.com/scop/bash-completion
     - curl
+    - rg # https://github.com/BurntSushi/ripgrep Install with Brew to get shell completion
     - jq # https://github.com/stedolan/jq
     - yq # https://github.com/mikefarah/yq
     - wget
@@ -345,12 +346,9 @@ npm_global_packages_remove: # TODO: packages to remove
 
 # TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:
-  # https://github.com/nabijaczleweli/cargo-update
-  - { pkg: cargo-update, bin: cargo-install-update }
-  # https://github.com/ogham/exa
-  - { pkg: exa, bin: exa }
-  # https://github.com/BurntSushi/ripgrep
-  - { pkg: ripgrep, bin: rg }
+  - { pkg: cargo-update, bin: cargo-install-update } # https://github.com/nabijaczleweli/cargo-update
+  - { pkg: exa, bin: exa } # https://github.com/ogham/exa
+  # - { pkg: ripgrep, bin: rg } # https://github.com/BurntSushi/ripgrep
 
 rust_git_repos:
   - { bin: csv-query, git: https://github.com/jaysonsantos/csv-query-rs }

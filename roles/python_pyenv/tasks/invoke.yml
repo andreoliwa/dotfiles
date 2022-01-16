@@ -7,6 +7,9 @@
     - "'Not installing to existing directory' not in result.stderr"
     - "'already seems to be installed' not in result.stdout"
 
+- name: "invoke: Inject pudb"
+  command: "pipx inject invoke pudb"
+
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"
 

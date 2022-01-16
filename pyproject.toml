@@ -32,6 +32,6 @@ pylint = {optional = true, version = "*"}
 lint = [ "pylint",]
 
 [tool.poetry.dev-dependencies]
-ipdb = "*"
+pudb = "*"
 ipython = "*"
 pylint = "*"

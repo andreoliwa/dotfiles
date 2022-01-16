@@ -22,7 +22,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export PATH="$HOME/.local/bin:/usr/local/sbin:$PATH"
 
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONBREAKPOINT
-export PYTHONBREAKPOINT=ipdb.set_trace
+export PYTHONBREAKPOINT=pudb.set_trace
 
 # Echo all commands in all tasks by default (like 'make' does)
 # http://docs.pyinvoke.org/en/stable/concepts/configuration.html#basic-rules

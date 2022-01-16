@@ -61,7 +61,7 @@ module.exports = {
         /datadog/,
         /aws/,
         /awsapps.com/,
-        /amazon/,
+        /amazon.com/,
         /bitwarden/,
         /thoughtworks/,
         /martinfowler/,

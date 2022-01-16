@@ -29,7 +29,6 @@
         dfc = "!dfc() { git df $1^ $1; }; dfc"
 
         please = push --force-with-lease
-        publish = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
         # publish current branch
         publish = "!f() { git push -u ${1:-origin} $(git rev-parse --abbrev-ref HEAD); }; f"
         # Alias to use gitup on gita: gita super up
@@ -44,9 +43,8 @@
         h = log --graph --decorate --oneline --abbrev-commit
 
         # https://martinheinz.dev/blog/43
-        graph = log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) \
-        - %C(bold cyan)%aD%C(dim white) \
-        - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
+        # Python's ConfigParser can't read multiline strings with \ and -
+        graph = log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) %C(bold cyan)%aD%C(dim white) %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
 
         issues = !hub browse -- issues
         url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"

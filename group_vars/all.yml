@@ -97,9 +97,10 @@ mac_homebrew_packages:
     - kubectx # https://github.com/ahmetb/kubectx#installation
     - libsodium
     - vault # Hashicorp https://www.vaultproject.io/
-    - k9s # https://k9scli.io/
+    - k9s # https://github.com/derailed/k9s
     - actionlint # https://github.com/rhysd/actionlint
     - protobuf # https://github.com/protocolbuffers/protobuf
+    - kubie # https://github.com/sbstp/kubie
   remove:
     - heroku/brew/heroku
     - highlight
@@ -200,6 +201,7 @@ mac_cask_packages:
     - postman # https://www.postman.com/
     - google-chrome
     - jetbrains-toolbox # https://www.jetbrains.com/toolbox-app/
+    - lens # https://github.com/lensapp/lens
   remove:
     # Images
     - imageoptim # optimizing images

@@ -10,24 +10,6 @@ test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/
 test -f "$HOME"/container-apps/aliases.sh && \
     source "$HOME"/container-apps/aliases.sh
 
-# Solution to fix the following error messages:
-# Those functions are used by https://github.com/magicmonty/bash-git-prompt
-# -bash: setLastCommandState: command not found
-# -bash: setGitPrompt: command not found
-export PROMPT_COMMAND=
-
-# ==================== BEGIN https://github.com/magicmonty/bash-git-prompt
-# Quick start, show all details of a git repo
-if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
-    # Show a different prompt when there is an active SSH connection
-    test -n "$SSH_CONNECTION" && export GIT_PROMPT_THEME=Evermeet_Ubuntu
-
-    # GIT_PROMPT_ONLY_IN_REPO=1
-    # shellcheck source=/dev/null
-    source "$HOME"/.bash-git-prompt/gitprompt.sh
-fi
-# ==================== END https://github.com/magicmonty/bash-git-prompt
-
 # ==================== BEGIN https://github.com/junegunn/fzf/wiki/Examples#autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 j() {

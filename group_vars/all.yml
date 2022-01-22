@@ -275,9 +275,13 @@ mac_mas_packages:
     - 526298438 # Lightshot Screenshot https://apps.apple.com/us/app/lightshot-screenshot/id526298438
 
 ruby_global_gems:
-  - lunchy
-  - travis
-  - jekyll # https://jekyllrb.com/
+  common:
+  personal_laptop:
+  company_laptop:
+  remove:
+    - lunchy
+    - travis
+    - jekyll # https://jekyllrb.com/ # Used by https://github.com/andreoliwa/online-cv
 
 # Python versions to install with pyenv and set as global
 # Especially useful when using tox
@@ -318,33 +322,35 @@ python3_pipx_modules:
     - aws-shell # https://github.com/awslabs/aws-shell
 
 # Node utilities
-# TODO: common, remove, personal_laptop, company_laptop
 npm_global_packages:
-  - webpack
-  - eslint
-  - eslint-config-airbnb
-  - eslint-plugin-react
-  - babel-eslint
-  - np
+  common:
+  personal_laptop:
+  company_laptop:
+  remove:
+    - webpack
+    - eslint
+    - eslint-config-airbnb
+    - eslint-plugin-react
+    - babel-eslint
+    - np
 
-  # Conventional commits and semantic release
-  - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
-  - semantic-release-cli # https://github.com/semantic-release/cli
+    # Conventional commits and semantic release
+    - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
+    - semantic-release-cli # https://github.com/semantic-release/cli
 
-  # Sentry
-  - "@sentry/cli" # https://github.com/getsentry/sentry-cli
+    # Sentry
+    - "@sentry/cli" # https://github.com/getsentry/sentry-cli
 
-  # MarkDown linter
-  - remark-cli # https://github.com/remarkjs/remark/tree/master/packages/remark-cli
-  - remark-preset-lint-recommended # https://github.com/remarkjs/remark-lint#cli
-  - remark-preset-lint-markdown-style-guide # https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide
+    # MarkDown linter
+    - remark-cli # https://github.com/remarkjs/remark/tree/master/packages/remark-cli
+    - remark-preset-lint-recommended # https://github.com/remarkjs/remark-lint#cli
+    - remark-preset-lint-markdown-style-guide # https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide
 
-npm_global_packages_remove: # TODO: packages to remove
-  - aws-es-kibana
-  - codeowners # https://github.com/beaugunderson/codeowners
-  - "@commitlint/cli" # https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/cli
-  - "@commitlint/config-conventional"
-  - commitizen # https://github.com/commitizen/cz-cli
+    - aws-es-kibana
+    - codeowners # https://github.com/beaugunderson/codeowners
+    - "@commitlint/cli" # https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/cli
+    - "@commitlint/config-conventional"
+    - commitizen # https://github.com/commitizen/cz-cli
 
 # TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:

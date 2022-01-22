@@ -1,10 +1,50 @@
-- name: Install ruby with Homebrew
-  homebrew: name=ruby state=present
+- name: Uninstall Ruby with Homebrew
+  homebrew:
+    name: ruby
+    state: absent
   when: ansible_os_family == "Darwin"
 
-- name: Install global ruby gems
-  gem: name={{item}} state=present
-  with_items: '{{ruby_global_gems}}'
+# TODO: Install ruby with asdf when needed
 
-# TODO: Install rvm
+- name: "Ruby: Install common"
+  gem:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ ruby_global_gems['common'] }}"
+  when: ruby_global_gems['common']
+
+- name: "Ruby: Remove"
+  gem:
+    name: "{{ item }}"
+    state: absent
+  when: ruby_global_gems['remove']
+  with_items: "{{ ruby_global_gems['remove'] }}"
+
+- name: "Ruby: Install on personal_laptop"
+  gem:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ ruby_global_gems['personal_laptop'] }}"
+  when: not ansible_env.COMPANY_LAPTOP and ruby_global_gems['personal_laptop']
+
+- name: "Ruby: Remove on personal_laptop"
+  gem:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ ruby_global_gems['company_laptop'] }}"
+  when: not ansible_env.COMPANY_LAPTOP and ruby_global_gems['company_laptop']
+
+- name: "Ruby: Install on company_laptop"
+  gem:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ ruby_global_gems['company_laptop'] }}"
+  when: ansible_env.COMPANY_LAPTOP and ruby_global_gems['company_laptop']
+
+- name: "Ruby: Remove on company_laptop"
+  gem:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ ruby_global_gems['personal_laptop'] }}"
+  when: ansible_env.COMPANY_LAPTOP and ruby_global_gems['personal_laptop']
 # TODO: Fedora and Debian

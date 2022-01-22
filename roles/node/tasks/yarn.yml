@@ -1,0 +1,17 @@
+- name: Uninstall yarn with homebrew
+  homebrew:
+    name: yarn
+    state: absent
+
+- name: "yarn: Add as asdf plugin"
+  command: "asdf plugin-add yarn"
+  args:
+    creates: ~/.asdf/plugins/yarn
+
+- name: "yarn: Install latest with asdf"
+  command: "asdf install yarn latest"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
+
+- name: "yarn: Set global with asdf"
+  command: "asdf global yarn latest"

@@ -1,6 +1,10 @@
 npm_global_packages:
-  - jshint
-  - eslint
-  - webpack
-  - tldr
-  - surge
+  common:
+    - jshint
+    - eslint
+    - webpack
+    - tldr
+    - surge
+  personal_laptop:
+  company_laptop:
+  remove:

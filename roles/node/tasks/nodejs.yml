@@ -1,0 +1,17 @@
+- name: Uninstall node and npm with homebrew
+  homebrew:
+    name: node
+    state: absent
+
+- name: "nodejs: Add as asdf plugin"
+  command: "asdf plugin-add nodejs"
+  args:
+    creates: ~/.asdf/plugins/nodejs
+
+- name: "nodejs: Install latest with asdf"
+  command: "asdf install nodejs latest"
+  register: result
+  changed_when: "'is already installed' not in result.stdout"
+
+- name: "nodejs: Set global with asdf"
+  command: "asdf global nodejs latest"

@@ -62,7 +62,6 @@ module.exports = {
         /aws/,
         /awsapps.com/,
         /amazon.com/,
-        /bitwarden/,
         /thoughtworks/,
         /martinfowler/,
         /salesforce/,

@@ -87,6 +87,7 @@ mac_homebrew_packages:
     - cheat # https://github.com/cheat/cheat
     - remake # https://bashdb.sourceforge.io/remake
     - git-extras # https://github.com/tj/git-extras
+    - bitwarden-cli # https://bitwarden.com/
   personal_laptop:
     # TODO: this needs "brew cask install osxfuse" before:
     # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
@@ -184,6 +185,7 @@ mac_cask_packages:
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - apppolice # https://github.com/AppPolice/AppPolice
     - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
+    - bitwarden # https://bitwarden.com/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
@@ -243,7 +245,6 @@ mac_cask_packages:
     - toggl
     - tor-browser
     - pritunl # VPN https://client.pritunl.com/#install
-    - bitwarden # https://bitwarden.com/
     - aws-vpn-client
 
 # APT packages that don't get installed by a role
@@ -408,6 +409,7 @@ vscode_extensions:
 # TODO: open all extensions on the proper browser, so they can be manually installed
 chrome_extensions:
   common:
+    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
     - https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd
     - https://chrome.google.com/webstore/detail/todoist-for-chrome/jldhpllghnbhlbpcmnajkpdmadaolakh
     - https://chrome.google.com/webstore/detail/todoist-for-gmail/clgenfnodoocmhnlnpknojdbjjnmecff
@@ -426,6 +428,5 @@ chrome_extensions:
     - https://chrome.google.com/webstore/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
   company_laptop:
   remove:
-    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
     - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
     - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL

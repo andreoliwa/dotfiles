@@ -306,6 +306,8 @@ python3_pipx_modules:
     - keyring # https://pypi.org/project/keyring/
     - organize-tool # https://github.com/tfeldmann/organize
     - pgcli # https://github.com/dbcli/pgcli
+    - litecli # SQLite CLI https://github.com/dbcli/litecli
+    - sqlite-utils # https://github.com/simonw/sqlite-utils
     - tox # https://github.com/tox-dev/tox/
     - black # https://github.com/ambv/black
     - isort # https://github.com/PyCQA/isort

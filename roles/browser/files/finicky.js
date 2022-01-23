@@ -1,3 +1,4 @@
+// https://github.com/johnste/finicky
 module.exports = {
   // Using the unstable browser for personal purposes, and the stable one for work
   defaultBrowser: "Brave Browser Dev",

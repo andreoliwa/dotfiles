@@ -5,6 +5,12 @@
     dest: "{{ project_root }}/conjuring-private"
   ignore_errors: yes
 
+- name: "invoke-conjuring-wolt: Clone"
+  git:
+    repo: git@github.com:andreoliwa/conjuring-wolt.git
+    dest: "{{ project_root }}/conjuring-wolt"
+  ignore_errors: yes
+
 - name: "invoke-conjuring-private: Default work tasks"
   blockinfile:
     path: ~/conjuring_work.py
@@ -12,7 +18,7 @@
     marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring-private"
     block: |
       from conjuring_private.sennder import *
-      from conjuring_private.wolt import *
+      from conjuring_wolt import *
       from conjuring_private.black_magic import *
 
 - name: "invoke-conjuring-private: Default Todoist tasks"
@@ -23,18 +29,12 @@
     block: |
       from conjuring_private.todoist import *
 
-# TODO: hack to install a Poetry package as editable until https://github.com/python-poetry/poetry-core/pull/182 is merged
-- name: "invoke-conjuring-private: Rename pyproject.toml"
-  command: "mv pyproject.toml _pyproject.toml"
-  args:
-    chdir: "{{ project_root }}/conjuring-private/"
-  ignore_errors: yes
 - name: "invoke-conjuring-private: Inject"
   command: "pipx inject -e invoke ."
   args:
     chdir: "{{ project_root }}/conjuring-private/"
-- name: "invoke-conjuring-private: Restore pyproject.toml"
-  shell: "mv _pyproject.toml pyproject.toml"
+
+- name: "invoke-conjuring-wolt: Inject"
+  command: "pipx inject -e invoke ."
   args:
-    chdir: "{{ project_root }}/conjuring-private/"
-  ignore_errors: yes
+    chdir: "{{ project_root }}/conjuring-wolt/"

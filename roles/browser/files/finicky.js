@@ -54,6 +54,7 @@ module.exports = {
         /jooq.org/,
         /postman.com/,
         /snowflake.com/,
+        /maven/,
 
         // sennder
         /sennder/,

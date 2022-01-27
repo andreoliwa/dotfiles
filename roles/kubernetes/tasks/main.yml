@@ -1,2 +1,37 @@
-- import_tasks: mac.yml
-  when: ansible_os_family == "Darwin"
+- name: "k8s: install kubectl"
+  homebrew:
+    name: kubectl
+    state: latest
+
+- name: "k8s: install kubernetes-cli"
+  homebrew:
+    name: kubernetes-cli
+    state: latest
+
+- name: "k8s: install https://github.com/ahmetb/kubectx#installation"
+  homebrew:
+    name: kubectx
+    state: latest
+
+- name: "k8s: install https://github.com/derailed/k9s"
+  homebrew:
+    name: k9s
+    state: latest
+
+- name: "k8s: install https://github.com/sbstp/kubie"
+  homebrew:
+    name: kubie
+    state: latest
+
+- name: "k8s: install https://github.com/kubernetes-sigs/krew/"
+  homebrew:
+    name: krew
+    state: latest
+
+- name: "k8s: install https://github.com/zegl/kube-score"
+  command: "kubectl krew install score"
+
+- name: "k8s: install https://github.com/instrumenta/kubeval"
+  homebrew:
+    name: instrumenta/instrumenta/kubeval
+    state: latest

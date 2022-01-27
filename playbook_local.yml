@@ -41,6 +41,7 @@
     - { role: rust, tags: ["rust"] }
     - { role: node, tags: ["node"] }
     - { role: ruby, tags: ["ruby"] }
+    - { role: kubernetes, tags: ["kubernetes", "k8s"] }
 
     # Personal and last
     - { role: organize, tags: ["organize"] }

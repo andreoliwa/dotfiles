@@ -13,7 +13,7 @@
     src: "{{ ssh_temp_dir.path }}/ssh_config_fragments"
     dest: ~/.ssh/config
     mode: "0600"
-    # TODO: Remove temp dir and use decrypt when this is solved: https://github.com/ansible/ansible/issues/65450
+    # TODO fix: remove temp dir and use decrypt when this is solved: https://github.com/ansible/ansible/issues/65450
     # decrypt: yes
     # validate: /usr/sbin/sshd -t -f %s
 

@@ -25,4 +25,4 @@
     name: zerotier-one
   become: true
 
-  # TODO: [Fails to connect on boot · Issue #728 · zerotier/ZeroTierOne](https://github.com/zerotier/ZeroTierOne/issues/728)
+  # TODO fix: zerotier Fails to connect on boot https://github.com/zerotier/ZeroTierOne/issues/728

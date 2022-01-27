@@ -1,5 +1,5 @@
 # Install the latest general collection
-# TODO remove this when there is a new version after 1.3.1 (maybe Jan 4th): https://github.com/ansible-collections/community.general/releases/
+# TODO fix: remove this when there is a new version after 1.3.1 (maybe Jan 4th): https://github.com/ansible-collections/community.general/releases/
 # https://github.com/ansible-collections/community.general/issues/1524#issuecomment-749226927
 - name: "Cask: Install latest community.general collection from Git"
   # https://docs.ansible.com/ansible/latest/user_guide/collections_using.html#installing-a-collection-from-a-git-repository

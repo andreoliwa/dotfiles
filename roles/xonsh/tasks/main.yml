@@ -2,11 +2,11 @@
 
 - name: Link xonshrc file
   file:
-    src: "{{ role_path }}/files/.xonshrc.xsh.link"  # Use the .xsh extension to force syntax highlighting on VSCode
+    src: "{{ role_path }}/files/.xonshrc.xsh.link" # Use the .xsh extension to force syntax highlighting on VSCode
     dest: "{{ dotfiles_user_home }}/.xonshrc"
     state: link
 
-# TODO Find a better way than running the playbook again
+# TODO fix: find a better way than running the playbook again
 - name: "Location of xonsh executable (this will fail on the first time, run the playbook again and it works)"
   command: which xonsh
   register: which_xonsh
@@ -14,7 +14,7 @@
 
 - name: Add xonsh to /etc/shells
   lineinfile:
-    regexp: 'xonsh'
+    regexp: "xonsh"
     line: "{{ which_xonsh.stdout }}"
     dest: /etc/shells
     state: present

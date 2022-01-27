@@ -4,7 +4,7 @@
     state: absent
   when: ansible_os_family == "Darwin"
 
-# TODO: Install ruby with asdf when needed
+# TODO feat: install Ruby with asdf when needed
 
 - name: "Ruby: Install common"
   gem:
@@ -47,4 +47,3 @@
     state: absent
   with_items: "{{ ruby_global_gems['personal_laptop'] }}"
   when: ansible_env.COMPANY_LAPTOP and ruby_global_gems['personal_laptop']
-# TODO: Fedora and Debian

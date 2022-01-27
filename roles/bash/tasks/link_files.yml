@@ -16,7 +16,7 @@
 
 - name: "Link .inputrc"
   file:
-    src: "{{ role_path }}/files/.inputrc.sh"
+    src: "{{ role_path }}/files/.inputrc"
     dest: ~/.inputrc
     state: link
     force: yes

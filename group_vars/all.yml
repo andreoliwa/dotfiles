@@ -89,7 +89,7 @@ mac_homebrew_packages:
     - bitwarden-cli # https://bitwarden.com/
     - jmespath/jmespath/jp # https://github.com/jmespath/jp
   personal_laptop:
-    # TODO: this needs "brew cask install osxfuse" before:
+    # TODO fix: ntfs-3g needs "brew cask install osxfuse" before:
     # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
   company_laptop:
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
@@ -353,11 +353,9 @@ npm_global_packages:
     - "@commitlint/config-conventional"
     - commitizen # https://github.com/commitizen/cz-cli
 
-# TODO: common, remove, personal_laptop, company_laptop
 rust_binaries:
   - { pkg: cargo-update, bin: cargo-install-update } # https://github.com/nabijaczleweli/cargo-update
   - { pkg: exa, bin: exa } # https://github.com/ogham/exa
-  # - { pkg: ripgrep, bin: rg } # https://github.com/BurntSushi/ripgrep
 
 rust_git_repos:
   - { bin: csv-query, git: https://github.com/jaysonsantos/csv-query-rs }
@@ -406,7 +404,7 @@ vscode_extensions:
 
 # Chrome extensions used on Brave.
 # They cannot be automatically installed, but I will at least list them here.
-# TODO: open all extensions on the proper browser, so they can be manually installed
+# TODO feat: open all extensions on the proper browser, so they can be manually installed
 chrome_extensions:
   common:
     - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb

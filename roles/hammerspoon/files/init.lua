@@ -183,9 +183,8 @@ else
         {"Brave Browser Dev", "Brave Dev – Torrent", layout_bottom50, nil},
 
         -- Work profiles
-        -- TODO: find a better way to configure apps/windows here in this script,
-        --   because the order of these layout tables is important;
-        --   they are applied in the order they appear
+        -- TODO feat: find a better way to configure apps/windows here in this script, because the order
+        --   of these layout tables is important; they are applied in the order they appear
         {"Brave Browser", "JIRA", layout_top70, nil},
         {"Brave Browser", "Google Sheets", layout_top70, nil},
         {"Brave Browser", "Figma", layout_top70, nil},

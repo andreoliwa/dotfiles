@@ -12,7 +12,7 @@
   command: "lsb_release -sc"
   register: release_name
 
-# TODO use lineinfile, this is duplicating sources
+# TODO fix: use lineinfile, this is duplicating sources
 # - name: "Brave: Add to apt sources"
 #   shell: 'echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ {{ release_name.stdout }} main" | sudo tee -a /etc/apt/sources.list.d/brave-browser-release-{{ release_name.stdout }}.list'
 

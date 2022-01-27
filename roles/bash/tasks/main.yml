@@ -8,7 +8,7 @@
 # To check the distribution on the local machine:
 # ansible -m setup localhost | rg 'distribution"'
 - import_tasks: link_files.yml
-  when: ansible_distribution == "MacOSX" # TODO: Or Linux
+  when: ansible_distribution == "MacOSX" # TODO fix: link files on Linux too
 - import_tasks: copy_files.yml
   when: ansible_distribution in ("OSMC", "Amazon") or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
 

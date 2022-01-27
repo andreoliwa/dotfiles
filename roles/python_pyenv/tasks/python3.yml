@@ -18,7 +18,7 @@
   shell: "pyenv install --list | egrep -i ' 3.9.[0-9.abrc]+$' | tail -n 1 | xargs"
   register: latest_python_3_9
   changed_when: false
-# TODO: if latest_python_3_9.stdout is empty, show warning "run pyenv in another terminal"
+# TODO feat: if latest_python_3_9.stdout is empty, show warning "run pyenv in another terminal"
 
 - name: "Install Python 3.9 version {{ latest_python_3_9.stdout }}"
   pyenv:

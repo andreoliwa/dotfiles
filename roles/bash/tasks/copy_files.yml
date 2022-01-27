@@ -23,7 +23,7 @@
 
 - name: "Copy .inputrc file"
   copy:
-    src: "{{ role_path }}/files/.inputrc.sh"
+    src: "{{ role_path }}/files/.inputrc"
     dest: ~/.inputrc
     mode: "0600"
     force: yes

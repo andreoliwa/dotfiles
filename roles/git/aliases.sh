@@ -25,7 +25,7 @@ alias gstl='git stash list'
 alias gstp='git stash pop'
 
 alias gwip="git add -A && git ls-files --deleted -z |
-            xargs git rm && git commit -m '__wip__'"
+xargs git rm && git commit -m '__wip__'"
 
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 alias gu="gitup . && git delete-merged-branches && git delete-squashed-branches"

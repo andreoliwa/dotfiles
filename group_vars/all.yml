@@ -62,7 +62,6 @@ mac_homebrew_packages:
     # For repeating commands
     - watch
     - fd # https://github.com/sharkdp/fd
-    - terraform # https://www.terraform.io
     - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
     - nmap
     - ipcalc
@@ -130,6 +129,7 @@ mac_homebrew_packages:
     - dbeaver-community # Requires Java 8+
     - graphviz # https://www.graphviz.org/
     - python-yq # https://github.com/kislyuk/yq#installation
+    - terraform # https://www.terraform.io
 
 # Mac Apps to be installed with homebrew-cask
 mac_cask_packages:
@@ -377,7 +377,6 @@ vscode_extensions:
     - jsynowiec.vscode-insertdatestring
     - ms-azuretools.vscode-docker
     - wolfmah.ansible-vault-inline
-    - hashicorp.terraform
     - redhat.vscode-yaml
     - grapecity.gc-excelviewer
     - vscode-org-mode.org-mode
@@ -403,6 +402,7 @@ vscode_extensions:
     - vscoss.vscode-ansible
     - haaaad.ansible # Incompatible with YAML extension
     - octref.vetur # Vue.js
+    - hashicorp.terraform
 
 # Chrome extensions used on Brave.
 # They cannot be automatically installed, but I will at least list them here.

@@ -1,10 +1,4 @@
 #!/bin/bash
-echo '# Remove all containers'
-echo 'docker ps -q -a | xargs docker rm -f'
-echo
-echo '# Remove only the desired containers'
-echo "docker ps -a | grep -e _postgresql | awk '{print \$1}' | xargs docker rm -f"
-echo
 echo '# Remove all images'
 echo 'docker images -q -a | xargs docker rmi -f'
 echo
@@ -40,7 +34,7 @@ $UNUSED_COMMAND
 echo
 echo -e "Cleanup command:\n$CLEANUP_COMMAND"
 echo "Press any key to run them, or Ctrl-C to quit."
-read
+read -r
 
 docker pull zzrot/docker-clean
 $CLEANUP_COMMAND

@@ -56,6 +56,7 @@ module.exports = {
         /snowflake.com/,
         /maven/,
         /kube/,
+        /kafka/,
 
         // sennder
         /sennder/,

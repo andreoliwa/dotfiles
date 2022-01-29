@@ -1,3 +1,4 @@
+# TODO: fix: move backup tasks from Ansible to Invoke
 - name: "Stop all containers"
   shell: "docker ps -q | xargs docker stop"
   # No containers might be running

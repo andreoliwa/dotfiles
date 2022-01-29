@@ -8,9 +8,6 @@
     name: "{{ mac_homebrew_packages['remove'] }}"
     state: absent
 
-- name: "Brew: upgrade"
-  command: brew upgrade
-
 - name: "Brew: Install on personal_laptop"
   homebrew:
     name: "{{ mac_homebrew_packages['personal_laptop'] }}"

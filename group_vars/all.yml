@@ -88,6 +88,7 @@ mac_homebrew_packages:
     - git-extras # https://github.com/tj/git-extras
     - bitwarden-cli # https://bitwarden.com/
     - jmespath/jmespath/jp # https://github.com/jmespath/jp
+    - topgrade # https://github.com/r-darwish/topgrade
   personal_laptop:
     # TODO fix: ntfs-3g needs "brew cask install osxfuse" before:
     # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/

@@ -39,7 +39,3 @@
   ignore_errors: yes
   with_items: "{{ mac_mas_packages['personal_laptop'] }}"
   when: ansible_env.COMPANY_LAPTOP and mac_mas_packages['personal_laptop']
-
-- name: "Mac App Store: Upgrade all"
-  command: "mas upgrade"
-  ignore_errors: yes

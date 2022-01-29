@@ -36,7 +36,7 @@
     gita_group: oss
 
 # https://github.com/andreoliwa/python-clib
-# Editable mode (-e) not working anymore with pipx, since I removed setup.py:
+# TODO: fix: editable mode (-e) not working anymore with pipx, since I removed setup.py:
 # ERROR: File "setup.py" not found. Directory cannot be installed in editable mode: /Users/aa/Code/python-clib
 # (A "pyproject.toml" file was found, but editable mode currently requires a setup.py based build.)
 - name: "clib: Install with: pipx install {{ project_root }}/python-clib/"

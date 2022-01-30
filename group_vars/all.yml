@@ -184,6 +184,7 @@ mac_cask_packages:
     - apppolice # https://github.com/AppPolice/AppPolice
     - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
     - bitwarden # https://bitwarden.com/
+    - raindropio # https://raindrop.io/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
@@ -228,7 +229,7 @@ mac_cask_packages:
     - dissenter-browser
     - flux
     - freemind
-    # - google-cloud-sdk # Error: Cask 'google-cloud-sdk' is unreadable: undefined method `undent' for #<String:0x00007fec9300cfa8>
+    - google-cloud-sdk
     - iina
     - java8
     - jumpcut
@@ -236,7 +237,6 @@ mac_cask_packages:
     - macterm
     - mia-for-gmail
     - musixmatch
-    - raindropio
     - selfcontrol
     - simbl
     - spotifree
@@ -421,6 +421,7 @@ chrome_extensions:
     - https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
     - https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn # https://github.com/chitsaou/copy-as-markdown/
     - https://chrome.google.com/webstore/detail/rescuetime-for-chrome-and/bdakmnplckeopfghnlpocafcepegjeap/related
+    - https://chrome.google.com/webstore/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien
   personal_laptop:
     - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde

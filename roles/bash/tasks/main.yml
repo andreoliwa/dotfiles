@@ -26,10 +26,10 @@
 - import_tasks: autojump.yml
   when: ansible_os_family == "Darwin"
 
-- name: "Create local bash completions dir: ~/.local/share/bash-completion/completions"
+- name: "Create local bash completions dir"
   file:
     state: directory
-    path: ~/.local/share/bash-completion/completions
+    path: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions"
 
 - name: "Add content to .bashrc"
   blockinfile:
@@ -50,11 +50,11 @@
 - name: "complete_alias: Copy script from https://github.com/cykerway/complete-alias"
   get_url:
     url: "https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias"
-    dest: "~/.local/share/bash-completion/completions/complete_alias.bash-completion"
+    dest: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/complete_alias.bash-completion"
 
 - name: "complete_alias: Add aliases to script"
   blockinfile:
-    path: "~/.local/share/bash-completion/completions/complete_alias.bash-completion"
+    path: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/complete_alias.bash-completion"
     marker: "# ==================== {mark} My aliases"
     block: |
       complete -F _complete_alias d

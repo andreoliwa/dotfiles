@@ -7,10 +7,10 @@
     - "'Not installing to existing directory' not in result.stderr"
     - "'already seems to be installed' not in result.stdout"
 
-- name: "gita: Tab completion"
+- name: "gita: Bash completion"
   get_url:
     url: "https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.bash"
-    dest: "~/.local/share/bash-completion/completions/gita.bash-completion"
+    dest: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/gita.bash-completion"
 
 - name: "gita: Add dotfiles"
   command: "gita add {{ dotfiles_home }}"

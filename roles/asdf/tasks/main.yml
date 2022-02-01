@@ -21,5 +21,7 @@
     marker: "# ==================== {mark} https://github.com/asdf-vm/asdf"
     block: |
       # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
-      source $HOME/.asdf/asdf.sh
-      source $HOME/.asdf/completions/asdf.bash
+      # shellcheck disable=SC1091
+      source "$HOME/.asdf/asdf.sh"
+      # shellcheck disable=SC1091
+      source "$HOME/.asdf/completions/asdf.bash"

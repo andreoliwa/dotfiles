@@ -13,5 +13,5 @@
 - name: "invoke: Inject ipdb"
   command: "pipx inject invoke ipdb"
 
-- name: "invoke: Tab completion"
-  shell: "invoke --print-completion-script=bash > ~/.local/share/bash-completion/completions/invoke.bash-completion"
+- name: "invoke: Bash completion"
+  shell: "invoke --print-completion-script=bash > {{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/invoke.bash-completion"

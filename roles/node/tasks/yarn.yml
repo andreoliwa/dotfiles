@@ -15,3 +15,9 @@
 
 - name: "yarn: Set global with asdf"
   command: "asdf global yarn latest"
+
+# https://github.com/dsifford/yarn-completion
+- name: "yarn: Bash completion"
+  get_url:
+    url: "https://raw.githubusercontent.com/dsifford/yarn-completion/master/yarn-completion.bash"
+    dest: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/yarn-completion.bash"

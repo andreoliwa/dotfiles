@@ -17,7 +17,7 @@
   command: "asdf global poetry latest"
 
 # https://python-poetry.org/docs/#enable-tab-completion-for-bash-fish-or-zsh
-- name: "poetry: Tab completion"
-  shell: "poetry completions bash > ~/.local/share/bash-completion/completions/poetry.bash-completion"
+- name: "poetry: Bash completion"
+  shell: "poetry completions bash > {{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/poetry.bash-completion"
   args:
-    creates: ~/.local/share/bash-completion/completions/poetry.bash-completion
+    creates: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/poetry.bash-completion"

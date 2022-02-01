@@ -59,6 +59,7 @@ module.exports = {
         /maven/,
         /kube/,
         /kafka/,
+        /protocol-buffers/,
 
         // sennder
         /sennder/,

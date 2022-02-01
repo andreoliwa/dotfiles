@@ -39,7 +39,9 @@ module.exports = {
       // Match any part of the URL with the regexes below
       match: [
         // Wolt
-        /wolt/,
+        /ops.wolt/,
+        /@wolt/,
+        /k.wolt.com/,
         /creditornot/,
         /planitpoker/,
         /liveshare/,

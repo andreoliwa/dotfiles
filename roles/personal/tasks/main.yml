@@ -4,8 +4,5 @@
 
 - import_tasks: projects.yml
 
-- import_tasks: vault_sennder.yml
-  # when: ansible_env.COMPANY_LAPTOP
-
 - import_tasks: vault_personal.yml
-  when: not ansible_env.COMPANY_LAPTOP
+  # when: not ansible_env.COMPANY_LAPTOP

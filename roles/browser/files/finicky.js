@@ -57,8 +57,11 @@ module.exports = {
         /postman.com/,
         /snowflake.com/,
         /maven/,
+        /mvn/,
+        /gradle/,
         /kube/,
         /kafka/,
+        /apache/,
         /protocol-buffers/,
 
         // sennder

@@ -41,18 +41,3 @@
 - name: "Install Python 3.7 version {{ latest_python_3_7.stdout }}"
   pyenv:
     version: "{{ latest_python_3_7.stdout }}"
-
-- name: "Get latest Python 3.6"
-  shell: "pyenv install --list | egrep -i ' 3.6[0-9.]+$' | tail -n 1 | xargs"
-  register: latest_python_3_6
-  changed_when: false
-
-# https://github.com/pyenv/pyenv/wiki/Common-build-problems
-# https://yasar-yy.medium.com/installing-openssl-library-on-macos-catalina-6777a2e238a6
-- name: "Install Python 3.6 version {{ latest_python_3_6.stdout }}; if this fails because of openssl, start a new terminal tab"
-  # Python cannot be installed on Mac OS 11.0.1 pyenv · Issue #1737 · pyenv/pyenv
-  # https://github.com/pyenv/pyenv/issues/1737#issuecomment-765724815
-  environment:
-    CFLAGS: -Wno-implicit-function-declaration
-  pyenv:
-    version: "{{ latest_python_3_6.stdout }}"

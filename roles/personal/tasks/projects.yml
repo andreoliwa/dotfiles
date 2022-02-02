@@ -8,7 +8,7 @@
   include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/nitpick.git"
-    python_version: "{{ latest_python_3_6.stdout }}"
+    python_version: "{{ latest_python_3_7.stdout }}"
     gita_group: oss
 
 - include_role: name=python_repo
@@ -26,7 +26,7 @@
 - include_role: name=python_repo
   vars:
     repo: "git@github.com:andreoliwa/dontforget.git"
-    python_version: "{{ latest_python_3_8.stdout }}"
+    python_version: "{{ latest_python_3_9.stdout }}"
     gita_group: oss
 
 - include_role: name=python_repo

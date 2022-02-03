@@ -50,6 +50,7 @@ module.exports = {
         /docs.google.com/,
         /drive.google.com/,
         /retrium.com/,
+        /kotlin/,
         /ktlint/,
         /java.com/,
         /java.net/,

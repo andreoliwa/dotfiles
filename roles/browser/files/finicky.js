@@ -38,6 +38,8 @@ module.exports = {
       // Work URLs
       // Match any part of the URL with the regexes below
       match: [
+        /localhost/,
+
         // Wolt
         /ops.wolt/,
         /@wolt/,

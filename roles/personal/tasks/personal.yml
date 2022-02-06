@@ -1,0 +1,30 @@
+- name: "personal: Copy .mrconfig"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/vault.mrconfig"
+    dest: ~/.mrconfig
+    mode: "0600"
+    backup: yes
+
+- name: "personal: Checkout repos"
+  ansible.builtin.command: "mr checkout"
+  args:
+    chdir: ~/
+  register: mr_checkout
+- debug: var=mr_checkout.stdout
+
+- name: "personal: Link dontforget dir"
+  file:
+    src: ~/OneDrive/Apps/dontforget/config.yaml
+    dest: "~/Library/Application Support/dontforget/config.yaml"
+    state: link
+
+- name: "personal: Create Node-RED flows directory"
+  file:
+    state: directory
+    path: "{{ dotfiles_home }}/roles/node-red/var/config"
+
+- name: "personal: Copy Node-RED flows"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/vault-node-red-flows.json"
+    dest: "{{ dotfiles_home }}/roles/node-red/var/config/node-red-flows.json"
+  ignore_errors: true

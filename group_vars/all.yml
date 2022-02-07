@@ -154,7 +154,6 @@ mac_cask_packages:
     - appcleaner
     - the-unarchiver
     - authy # https://authy.com/
-    - keepassxc # https://keepassxc.org/
     - flameshot # https://github.com/flameshot-org/flameshot#installation
     - deepl
     # To open Meld even with the security warning: https://github.com/yousseb/meld/issues/19#issuecomment-541239058
@@ -245,6 +244,7 @@ mac_cask_packages:
     - tor-browser
     - pritunl # VPN https://client.pritunl.com/#install
     - aws-vpn-client
+    - keepassxc # https://keepassxc.org/
 
 # APT packages that don't get installed by a role
 apt_packages:
@@ -411,7 +411,6 @@ vscode_extensions:
 chrome_extensions:
   common:
     - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
-    - https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd
     - https://chrome.google.com/webstore/detail/todoist-for-chrome/jldhpllghnbhlbpcmnajkpdmadaolakh
     - https://chrome.google.com/webstore/detail/todoist-for-gmail/clgenfnodoocmhnlnpknojdbjjnmecff
     - https://chrome.google.com/webstore/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn
@@ -432,3 +431,4 @@ chrome_extensions:
   remove:
     - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
     - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL
+    - https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd

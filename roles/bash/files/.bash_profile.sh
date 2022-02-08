@@ -35,11 +35,6 @@ if [[ -d "$BASH_COMPLETION_USER_DIR/completions" ]]; then
     done
 fi
 
-# ssh-agent single sign-on configuration, agent forwarding, the agent protocol.
-# https://www.ssh.com/academy/ssh/agent
-# This is needed to load other SSH keys apart from the default "id_rsa"
-eval "$(ssh-agent -s)" > /dev/null
-
 # ==================== BEGIN https://github.com/asdf-vm/asdf
 # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
 # shellcheck disable=SC1091

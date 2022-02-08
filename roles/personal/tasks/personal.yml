@@ -3,7 +3,6 @@
     src: "{{ role_path }}/files/vault.mrconfig"
     dest: ~/.mrconfig
     mode: "0600"
-    backup: yes
 
 - name: "personal: Checkout repos"
   ansible.builtin.command: "mr checkout"

@@ -63,9 +63,10 @@ module.exports = {
         /mvn/,
         /gradle/,
         /kube/,
-        /kafka/,
+        /kaf/,
         /apache/,
         /protocol-buffers/,
+        /confluentinc/,
 
         // sennder
         /sennder/,

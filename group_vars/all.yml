@@ -168,7 +168,6 @@ mac_cask_packages:
     - zoom
     # Backup/storage
     - dropbox
-    - onedrive # https://onedrive.live.com/
     # Media/Music
     - spotify
     - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
@@ -192,6 +191,7 @@ mac_cask_packages:
     - grandperspective # https://grandperspectiv.sourceforge.io/
     - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
     - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
+    - onedrive # https://onedrive.live.com/
   company_laptop:
     - slack # https://slack.com/
     - logitech-g-hub # http://logitechg.com/support/g305
@@ -203,6 +203,7 @@ mac_cask_packages:
     - google-chrome
     - jetbrains-toolbox # https://www.jetbrains.com/toolbox-app/
     - lens # https://github.com/lensapp/lens
+    - microsoft-office # https://products.office.com/mac/microsoft-office-for-mac/
   remove:
     # Images
     - imageoptim # optimizing images

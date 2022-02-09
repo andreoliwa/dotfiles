@@ -1,69 +1,104 @@
 # https://organize.readthedocs.io/en/latest/page/config.html#configuration
 move_folders: &move
-  - ~/OneDrive/Documents/Mayan_Staging/Deutsch
-  - ~/OneDrive/Documents/Mayan_Staging/Portugues
+  - path: ~/OneDrive/Documents/Mayan_Staging/Deutsch
+    ignore_errors: true
+  - path: ~/OneDrive/Documents/Mayan_Staging/Portugues
+    ignore_errors: true
 
 slugify_folders: &slugify
-  - ~/Documents
-  - ~/Downloads/
-  - ~/Desktop/
-  - ~/OneDrive/
-  - ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
+  - path: ~/Documents
+    ignore_errors: true
+  - path: ~/Downloads/
+    ignore_errors: true
+  - path: ~/Desktop/
+    ignore_errors: true
+  - path: ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
+    ignore_errors: true
+  - path: ~/OneDrive/
+    ignore_errors: true
 
 mobile_upload_folders: &mobile_upload
-  - ~/OneDrive/Pictures/Camera Roll/
-  - ~/OneDrive/Pictures/Download/
-  - ~/OneDrive/Pictures/Facebook/
-  - ~/OneDrive/Pictures/Screenshots/
-  - ~/OneDrive/Pictures/Telegram/
-  - ~/OneDrive/Pictures/WhatsApp Animated Gifs/
-  - ~/OneDrive/Pictures/WhatsApp Images/
-  - ~/OneDrive/Pictures/WhatsApp Video/
-  - ~/OneDrive/Pictures/Samsung Gallery/
+  - path: ~/OneDrive/Pictures/Camera Roll/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/Download/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/Facebook/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/Screenshots/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/Telegram/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/WhatsApp Animated Gifs/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/WhatsApp Images/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/WhatsApp Video/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/Samsung Gallery/
+    ignore_errors: true
 
 rules:
-  # Hack to call rename-slugify only once.
-  # As of March 2020, the organize tool only finds *files* under directories...
-  # it doesn't find directories, so I can't rename them
-  - folders:
-      - ~/
+  - name: "Remove some hidden files and then remove empty dirs"
+    locations: ~/
     filters:
-      - filename:
-          startswith: .bashrc
+      - name:
+          # TODO fix: symbolic link is not detected by filters.name.startswith
+          startswith: .bash_history
     actions:
-      - shell: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
-      - shell: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
-      - shell: "find -f ~/Downloads -f ~/Desktop -f ~/Documents ~/OneDrive -mindepth 1 -type d -empty -print -delete"
-      # Use this to debug:
-      # cd ~/Code/python-clib && poetry run
-      - shell: "rename-slugify -x ~/OneDrive/Bluecoins -x ~/OneDrive/Musicas_LuisAndreoli -x ~/OneDrive/Movies/ -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Code/ -x ~/Documents/Notebook/ -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? -x '~/OneDrive/Pictures/Camera Roll/' -x '~/OneDrive/Pictures/Download/' -x '~/OneDrive/Pictures/Facebook/' -x '~/OneDrive/Pictures/Screenshots/' -x '~/OneDrive/Pictures/Telegram/' -x '~/OneDrive/Pictures/WhatsApp Animated Gifs/' -x '~/OneDrive/Pictures/WhatsApp Images/' -x '~/OneDrive/Pictures/WhatsApp Video/' -x '~/OneDrive/Pictures/Samsung Gallery/' -x ~/OneDrive/Documents/Nati_Wa/Site_Natalie --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents ~/OneDrive/"
+      # TODO: fix: the `shell` action in v2.0.5 not working as before (v1.10.1) https://github.com/tfeldmann/organize/issues/174
+      - shell:
+          cmd: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
+          ignore_errors: true
+      - echo: "{shell.output}"
+      - shell:
+          cmd: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
+          ignore_errors: true
+      - echo: "{shell.output}"
+      - shell:
+          cmd: "find -f ~/Downloads -f ~/Desktop -f ~/Documents ~/OneDrive -mindepth 1 -type d -empty -print -delete"
+          ignore_errors: true
+      - echo: "{shell.output}"
 
-  # This works, but it got stuck during scanning, maybe because of how organize scans directories.
-  # Uncomment when fd or a faster method will be used to scan dirs: https://github.com/tfeldmann/organize/issues/84
-  # - folders: *slugify
+  # - name: "Delete .DS_Store (fd/find is still way faster, but it was dismissed: https://github.com/tfeldmann/organize/issues/84)"
+  #   locations:
+  #     # "system_files" moved to "system_exclude_files" in version 2.0: https://github.com/tfeldmann/organize/issues/166
+  #     # TODO fix: can't use anchors when using system_exclude_files; "path" should accept str | List[str]
+  #     # - path: *slugify
+  #     - path: ~/Documents
+  #       system_exclude_files: []
+  #     - path: ~/Downloads/
+  #       system_exclude_files: []
+  #     - path: ~/Desktop/
+  #       system_exclude_files: []
+  #     - path: ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
+  #       system_exclude_files: []
+  #     - path: ~/OneDrive/
+  #       system_exclude_files: []
   #   subfolders: true
-  #   system_files: true
   #   filters:
-  #     - filename:
+  #     - name:
   #         startswith: .DS_Store
   #   actions:
   #     - trash
 
-  # Receipts
-  - folders: *move
+  - name: Receipts
+    locations: *move
     filters:
       - filecontent: "(?P<store>REWE|Kaufland|Lidl|Aldi|EDEKA|Rossmann|Penny|Budni|LPG Biomarkt|Nanu-Nana|Tiger Deutschland)"
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Companies/{filecontent.store}/Receipt/"
-  # Invoices
-  - folders: *move
+
+  - name: Invoices
+    locations: *move
     filters:
       - filecontent: "(Rechnung)"
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Deutsch/Type_Invoice/"
-  - folders: *move
+
+  - name: Investimentos 1
+    locations: *move
     filters:
-      - filename:
+      - name:
           contains:
             - extrato
             - tesouro
@@ -74,9 +109,11 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Cabinets/Investimentos/"
-  - folders: *move
+
+  - name: Investimentos 2
+    locations: *move
     filters:
-      - filename:
+      - name:
           startswith:
             - clear
             - monetus
@@ -84,9 +121,11 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Documents/Mayan_Staging/Cabinets/Investimentos/"
-  - folders: *move
+
+  - name: Sparkasse
+    locations: *move
     filters:
-      - filename:
+      - name:
           contains:
             - Umsatz
             - Ums_Mt
@@ -94,9 +133,11 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Geld/Sparkasse/"
-  - folders: *move
+
+  - name: Miami Gardens
+    locations: *move
     filters:
-      - filename:
+      - name:
           contains:
             - riema
             - miami gardens
@@ -105,21 +146,25 @@ rules:
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Geld/Contas_Alisson/"
-  - folders: *move
+
+  - name: Juridica
+    locations: *move
     filters:
-      - filename:
+      - name:
           startswith:
             - gps_
             - progresso_
           case_sensitive: false
     actions:
       - move: "~/OneDrive/Geld/Juridica/"
-  - folders:
+
+  - name: WhatsApp
+    locations:
       - *mobile_upload
       - *move
     subfolders: true
     filters:
-      - filename:
+      - name:
           contains:
             # WhatsApp
             - -WA
@@ -127,14 +172,18 @@ rules:
             - whats_app
             - whatsapp
           case_sensitive: false
-      - LastModified
+      - lastmodified:
+          years: 1
+          mode: newer
     actions:
-      - move: "~/OneDrive/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
-  - folders:
+      - move: "~/OneDrive/New_Chat/{lastmodified.strftime('%Y/%m')}/"
+
+  - name: Telegram, Facebook
+    locations:
       - *mobile_upload
     subfolders: true
     filters:
-      - filename:
+      - name:
           startswith:
             # Telegram
             - "1_"
@@ -154,40 +203,71 @@ rules:
             # Facebook
             - fb_img_
           case_sensitive: false
-      - LastModified
+      - lastmodified:
+          years: 1
+          mode: newer
     actions:
-      - move: "~/OneDrive/New_Chat/{lastmodified.year:04}/{lastmodified.month:02}/"
-  - folders:
+      - move: "~/OneDrive/New_Chat/{lastmodified.strftime('%Y/%m')}/"
+
+  - name: Screenshots
+    locations:
       - *mobile_upload
     subfolders: true
     filters:
-      - filename:
+      - name:
           startswith:
             - Screenshot_
             - Temp_File_For_Share
           case_sensitive: false
-      - LastModified
+      - lastmodified:
+          years: 1
+          mode: newer
     actions:
-      - move: "~/OneDrive/New_Screenshots/{lastmodified.year:04}/{lastmodified.month:02}/"
-  - folders:
+      - move: "~/OneDrive/New_Screenshots/{lastmodified.strftime('%Y/%m')}/"
+
+  - name: Camera
+    locations:
       - *mobile_upload
     subfolders: true
     filters:
-      - filename:
+      - name:
           startswith:
             - P_
-            - 20
+            - "20"
           case_sensitive: false
-      - LastModified
+      - lastmodified:
+          years: 1
+          mode: newer
     actions:
-      - move: "~/OneDrive/Pictures/Camera_New/{lastmodified.year:04}/{lastmodified.month:02}/"
-  - folders:
-      - ~/OneDrive/Pictures/Classify/
-      - ~/OneDrive/Pictures/Organize/
+      - move: "~/OneDrive/Pictures/Camera_New/{lastmodified.strftime('%Y/%m')}/"
+
+  - name: "Classify/organize pictures in year/month subdirectories"
+    locations:
+      - path: ~/OneDrive/Pictures/Classify/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Organize/
+        ignore_errors: true
     subfolders: true
     filters:
-      - LastModified
+      - lastmodified:
+          years: 1
+          mode: newer
     actions:
-      - move: "~/OneDrive/Pictures/New_Split/{lastmodified.year:04}/{lastmodified.month:02}/"
-      # {lastmodified.year:04}-{lastmodified.month:02}-{lastmodified.day:02}/
-  # https://organize.readthedocs.io/en/latest/page/actions.html#id9
+      - move: "~/OneDrive/Pictures/New_Split/{lastmodified.strftime('%Y/%m')}/"
+
+  # As of March 2020, the organize tool only finds *files* under directories...
+  # it doesn't find directories, so I can't rename them
+  - name: "Hack to call rename-slugify only once, after everything"
+    locations: ~/
+    filters:
+      - name:
+          # TODO fix: symbolic link is not detected by filters.name.startswith
+          startswith: .bash_history
+    actions:
+      # Use this to debug:
+      # cd ~/Code/python-clib && poetry run
+      # TODO: fix: the `shell` action in v2.0.5 not working as before (v1.10.1) https://github.com/tfeldmann/organize/issues/174
+      - shell:
+          cmd: "rename-slugify -n -x ~/OneDrive/Bluecoins -x ~/OneDrive/Musicas_LuisAndreoli -x ~/OneDrive/Movies/ -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Code/ -x ~/Documents/Notebook/ -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? -x '~/OneDrive/Pictures/Camera Roll/' -x '~/OneDrive/Pictures/Download/' -x '~/OneDrive/Pictures/Facebook/' -x '~/OneDrive/Pictures/Screenshots/' -x '~/OneDrive/Pictures/Telegram/' -x '~/OneDrive/Pictures/WhatsApp Animated Gifs/' -x '~/OneDrive/Pictures/WhatsApp Images/' -x '~/OneDrive/Pictures/WhatsApp Video/' -x '~/OneDrive/Pictures/Samsung Gallery/' -x ~/OneDrive/Documents/Nati_Wa/Site_Natalie --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents ~/OneDrive/"
+          ignore_errors: true
+      - echo: "{shell.output}"

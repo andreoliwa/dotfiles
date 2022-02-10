@@ -6,16 +6,11 @@ move_folders: &move
     ignore_errors: true
 
 slugify_folders: &slugify
-  - path: ~/Documents
-    ignore_errors: true
-  - path: ~/Downloads/
-    ignore_errors: true
-  - path: ~/Desktop/
-    ignore_errors: true
-  - path: ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
-    ignore_errors: true
-  - path: ~/OneDrive/
-    ignore_errors: true
+  - ~/Documents
+  - ~/Downloads/
+  - ~/Desktop/
+  - ~/Library/Mobile Documents/com~apple~QuickTimePlayerX/Documents
+  - ~/OneDrive/
 
 mobile_upload_folders: &mobile_upload
   - path: ~/OneDrive/Pictures/Camera Roll/
@@ -38,32 +33,12 @@ mobile_upload_folders: &mobile_upload
     ignore_errors: true
 
 rules:
-  - name: "Remove some hidden files and then remove empty dirs"
-    locations: ~/
-    filters:
-      - name:
-          # TODO fix: symbolic link is not detected by filters.name.startswith
-          startswith: .bash_history
-    actions:
-      # TODO: fix: the `shell` action in v2.0.5 not working as before (v1.10.1) https://github.com/tfeldmann/organize/issues/174
-      - shell:
-          cmd: "fd -uu -0 -tf -i .DS_Store ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
-          ignore_errors: true
-      - echo: "{shell.output}"
-      - shell:
-          cmd: "fd -uu -0 -tf -i .nomedia ~/Downloads ~/Desktop ~/OneDrive ~/Documents | xargs -0 rm -v"
-          ignore_errors: true
-      - echo: "{shell.output}"
-      - shell:
-          cmd: "find -f ~/Downloads -f ~/Desktop -f ~/Documents ~/OneDrive -mindepth 1 -type d -empty -print -delete"
-          ignore_errors: true
-      - echo: "{shell.output}"
-
-  # - name: "Delete .DS_Store (fd/find is still way faster, but it was dismissed: https://github.com/tfeldmann/organize/issues/84)"
+  # - name: "Delete .DS_Store"
   #   locations:
   #     # "system_files" moved to "system_exclude_files" in version 2.0: https://github.com/tfeldmann/organize/issues/166
-  #     # TODO fix: can't use anchors when using system_exclude_files; "path" should accept str | List[str]
+  #     # can't use aliases when using system_exclude_files; "path" should accept str | List[str] https://github.com/tfeldmann/organize/issues/179
   #     # - path: *slugify
+  #     #   system_exclude_files: []
   #     - path: ~/Documents
   #       system_exclude_files: []
   #     - path: ~/Downloads/
@@ -74,10 +49,10 @@ rules:
   #       system_exclude_files: []
   #     - path: ~/OneDrive/
   #       system_exclude_files: []
+  #   # fd/find is still way faster, but it was dismissed: https://github.com/tfeldmann/organize/issues/84
   #   subfolders: true
   #   filters:
-  #     - name:
-  #         startswith: .DS_Store
+  #     - name: .DS_Store
   #   actions:
   #     - trash
 
@@ -254,20 +229,3 @@ rules:
           mode: newer
     actions:
       - move: "~/OneDrive/Pictures/New_Split/{lastmodified.strftime('%Y/%m')}/"
-
-  # As of March 2020, the organize tool only finds *files* under directories...
-  # it doesn't find directories, so I can't rename them
-  - name: "Hack to call rename-slugify only once, after everything"
-    locations: ~/
-    filters:
-      - name:
-          # TODO fix: symbolic link is not detected by filters.name.startswith
-          startswith: .bash_history
-    actions:
-      # Use this to debug:
-      # cd ~/Code/python-clib && poetry run
-      # TODO: fix: the `shell` action in v2.0.5 not working as before (v1.10.1) https://github.com/tfeldmann/organize/issues/174
-      - shell:
-          cmd: "rename-slugify -n -x ~/OneDrive/Bluecoins -x ~/OneDrive/Musicas_LuisAndreoli -x ~/OneDrive/Movies/ -x ~/OneDrive/Documents/Nati_Wa/Finanças -x ~/Documents/Code/ -x ~/Documents/Notebook/ -x ~/OneDrive/Books/ -x ~/OneDrive/Backup/ -x ~/OneDrive/Apps/ -x ~/OneDrive/Code/ -x ~/OneDrive/Icon? -x '~/OneDrive/Pictures/Camera Roll/' -x '~/OneDrive/Pictures/Download/' -x '~/OneDrive/Pictures/Facebook/' -x '~/OneDrive/Pictures/Screenshots/' -x '~/OneDrive/Pictures/Telegram/' -x '~/OneDrive/Pictures/WhatsApp Animated Gifs/' -x '~/OneDrive/Pictures/WhatsApp Images/' -x '~/OneDrive/Pictures/WhatsApp Video/' -x '~/OneDrive/Pictures/Samsung Gallery/' -x ~/OneDrive/Documents/Nati_Wa/Site_Natalie --yes ~/Documents ~/Downloads/ ~/Desktop/ ~/Library/Mobile\\ Documents/com~apple~QuickTimePlayerX/Documents ~/OneDrive/"
-          ignore_errors: true
-      - echo: "{shell.output}"

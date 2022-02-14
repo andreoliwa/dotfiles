@@ -100,6 +100,7 @@ mac_homebrew_packages:
     - vault # Hashicorp https://www.vaultproject.io/
     - actionlint # https://github.com/rhysd/actionlint
     - protobuf # https://github.com/protocolbuffers/protobuf
+    - gradle-completion # https://github.com/gradle/gradle-completion
   remove:
     - heroku/brew/heroku
     - highlight

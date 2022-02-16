@@ -205,6 +205,7 @@ mac_cask_packages:
     - jetbrains-toolbox # https://www.jetbrains.com/toolbox-app/
     - lens # https://github.com/lensapp/lens
     - microsoft-office # https://products.office.com/mac/microsoft-office-for-mac/
+    - cloudflare-warp # VPN client https://cloudflarewarp.com/
   remove:
     # Images
     - imageoptim # optimizing images

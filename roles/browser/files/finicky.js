@@ -57,6 +57,7 @@ module.exports = {
         /java.com/,
         /java.net/,
         /jooq.org/,
+        /spring/, // Not the season of the year, but the Java framework
         /postman.com/,
         /snowflake.com/,
         /maven/,

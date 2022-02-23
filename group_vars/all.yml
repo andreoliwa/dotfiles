@@ -185,6 +185,7 @@ mac_cask_packages:
     - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
     - bitwarden # https://bitwarden.com/
     - raindropio # https://raindrop.io/
+    - raycast # https://raycast.app/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/

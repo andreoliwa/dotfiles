@@ -4,7 +4,7 @@
     state: present
   with_items: "{{ mac_cask_packages['common'] }}"
 
-- name: "Cask: Remove"
+- name: "Cask: Remove common"
   homebrew_cask:
     name: "{{ item }}"
     state: absent

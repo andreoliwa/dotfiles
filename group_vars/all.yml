@@ -183,7 +183,6 @@ mac_cask_packages:
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
     - apppolice # https://github.com/AppPolice/AppPolice
     - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
-    - bitwarden # https://bitwarden.com/
     - raindropio # https://raindrop.io/
     - raycast # https://raycast.app/
   personal_laptop:

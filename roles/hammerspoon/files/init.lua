@@ -13,7 +13,7 @@ hs.console.clearConsole()
 -- http://www.hammerspoon.org/docs/hs.network.configuration.html#open
 computer_name = hs.network.configuration.open():computerName()
 print('Computer name: ' .. computer_name)
-work = string.match(computer_name, 'mac13')
+work = string.match(computer_name, 'mac16')
 if work then
     print('This is the work laptop')
 end
@@ -63,8 +63,10 @@ local wide_curved_screen = hs.screen.find('LEN T34w')
 
 local horizontal_screen = nil
 local vertical_screen = nil
-local horizontal_screens = {'E65B6F7D-7840-00EF-1990-CF2EF44F5BFC', '565E033B-3870-00DF-A63A-1F5160E08F52', 'E225737C-8F00-0D95-82AF-6FBF32B14368', 'DELL U2719DC', 'D359FA2C-C508-12BD-FBA7-B3C511A4E7F5'}
-local vertical_screens = {'7B9820D5-4E5D-A176-973E-790B87B2F4FA', '4198EDAA-340A-0A10-CCA4-3216126A10C8', '5689A5C1-5CF9-118D-8400-DF34508D2985', 'E1421D32-3481-3E59-B4B0-8CCEFC9F1FA1'}
+
+-- Can be UUIDs or names; copy/paste from HammerSpoon console
+local horizontal_screens = {'LEN T34w-20'}
+local vertical_screens = {}
 
 for index, screen_id in ipairs(horizontal_screens) do
     horizontal_screen = hs.screen.find(screen_id)

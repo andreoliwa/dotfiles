@@ -43,6 +43,7 @@ module.exports = {
         // Wolt
         /ops.wolt/,
         /@wolt/,
+        /woltapp/,
         /k.wolt.com/,
         /creditornot/,
         /planitpoker/,

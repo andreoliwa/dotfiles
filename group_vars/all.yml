@@ -167,8 +167,6 @@ mac_cask_packages:
     - signal
     # Video conferencing
     - zoom
-    # Backup/storage
-    - dropbox
     # Media/Music
     - spotify
     - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
@@ -185,6 +183,7 @@ mac_cask_packages:
     - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
     - raindropio # https://raindrop.io/
     - raycast # https://raycast.app/
+    - gnucash # https://gnucash.org/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
@@ -207,7 +206,7 @@ mac_cask_packages:
     - microsoft-office # https://products.office.com/mac/microsoft-office-for-mac/
     - cloudflare-warp # VPN client https://cloudflarewarp.com/
   remove:
-    # Images
+    - dropbox
     - imageoptim # optimizing images
     - deckset
     - epic

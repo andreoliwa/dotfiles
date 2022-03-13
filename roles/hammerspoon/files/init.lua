@@ -134,6 +134,7 @@ if wide_curved_screen ~= nil then
         {"WhatsApp", nil, hs.layout.left50, false},
         {"Signal", nil, hs.layout.left50, false},
         {"Bitwarden", nil, hs.layout.left30, nil},
+        {"Gnucash", nil, hs.layout.left50, nil},
 
         -- Right
         {"PyCharm", nil, hs.layout.right50, nil},
@@ -235,3 +236,23 @@ apply_window_layout()
 -- Newsflash: it doesn't work. ;)
 -- http://www.hammerspoon.org/docs/hs.screen.watcher.html
 hs.screen.watcher.new(apply_window_layout)
+
+function monitor_app_events(app_name, event_type, app_object)
+    if app_name == 'Preview' then
+        print(app_name)
+        print(event_type)
+        print(app_object)
+        --if event_type == hs.application.watcher.activated then
+       --    print(app_name .. ' opened')
+       --end
+       --if event_type == hs.application.watcher.deactivated then
+       --    print(app_name .. ' closed')
+       --end
+    end
+end
+
+-- https://nikhilism.com/post/2021/useful-hammerspoon-tips/
+-- https://www.hammerspoon.org/docs/hs.application.watcher.html
+print('Starting app watcher')
+local my_watch = hs.application.watcher.new(monitor_app_events)
+my_watch:start()

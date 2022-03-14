@@ -87,7 +87,6 @@ module.exports = {
         /jetbrains.com/,
         /pardot.com/,
         /sentry.io/,
-        /gitlab.com/,
         /sli.do/,
 
         // EatFirst

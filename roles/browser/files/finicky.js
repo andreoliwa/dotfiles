@@ -69,6 +69,7 @@ module.exports = {
         /apache/,
         /protocol-buffers/,
         /confluentinc/,
+        /jenkins/,
 
         // sennder
         /sennder/,

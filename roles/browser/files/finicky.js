@@ -49,6 +49,7 @@ module.exports = {
         /planitpoker/,
         /liveshare/,
         /wo.lt/,
+        /woltapi/,
         /vipps/,
         /docs.google.com/,
         /drive.google.com/,
@@ -70,6 +71,7 @@ module.exports = {
         /protocol-buffers/,
         /confluentinc/,
         /jenkins/,
+        /grafana/,
 
         // sennder
         /sennder/,

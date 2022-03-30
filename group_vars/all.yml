@@ -315,9 +315,9 @@ python3_pipx_modules:
     - isort # https://github.com/PyCQA/isort
     - yamllint # https://github.com/adrienverge/yamllint
     - commitizen # https://github.com/commitizen-tools/commitizen
+    - youtube-dl # https://pypi.org/project/youtube_dl/
   personal_laptop:
     - subliminal # https://pypi.org/project/subliminal/
-    - youtube-dl # https://pypi.org/project/youtube_dl/
   company_laptop:
     - pipenv # https://github.com/pypa/pipenv
   remove:

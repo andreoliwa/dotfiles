@@ -57,6 +57,7 @@ module.exports = {
         /kotlin/,
         /ktlint/,
         /java.com/,
+        /baeldung/,
         /java.net/,
         /jooq.org/,
         /spring/, // Not the season of the year, but the Java framework

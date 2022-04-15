@@ -10,30 +10,43 @@
 hs.window.animationDuration = 0
 hs.console.clearConsole()
 
+local debug = false
+print('Debugging? ' .. tostring(debug))
+
+function debug_print(message)
+    if debug then
+       print(message)
+    end
+end
+
 -- http://www.hammerspoon.org/docs/hs.network.configuration.html#open
-computer_name = hs.network.configuration.open():computerName()
-print('Computer name: ' .. computer_name)
-work = string.match(computer_name, 'mac16')
-if work then
-    print('This is the work laptop')
+if debug then
+    computer_name = hs.network.configuration.open():computerName()
+    debug_print('Computer name: ' .. computer_name)
+    work = string.match(computer_name, 'mac16')
+    if work then
+        debug_print('This is the work laptop')
+    end
 end
 
 -- Reload config with function key
 -- http://www.hammerspoon.org/docs/hs.hotkey.html#bind
 hs.hotkey.bind(nil, 'f15', 'Config reloaded', hs.reload, nil, nil)
 
--- http://www.hammerspoon.org/docs/hs.screen.html#allScreens
-for index, screen in pairs(hs.screen.allScreens()) do
-    print('Screen #' .. index .. ': UUID: ' .. screen:getUUID() .. ' ' .. tostring(screen))
-end
+if debug then
+    -- http://www.hammerspoon.org/docs/hs.screen.html#allScreens
+    for index, screen in pairs(hs.screen.allScreens()) do
+        debug_print('Screen #' .. index .. ': UUID: ' .. screen:getUUID() .. ' ' .. tostring(screen))
+    end
 
--- After v0.9.79, hs.configdir now contains the target of the symbolic link (~/.hammerspoon/init.lua)
-print('hs.configdir = ' .. hs.configdir)
+    -- After v0.9.79, hs.configdir now contains the target of the symbolic link (~/.hammerspoon/init.lua)
+    debug_print('hs.configdir = ' .. hs.configdir)
+end
 
 -- Change the relative path to load spoons
 -- https://github.com/Hammerspoon/hammerspoon/blob/master/SPOONS.md#loading-a-spoon
 package.path = package.path .. ";" .. hs.configdir .. "/../../../../.hammerspoon/Spoons/?.spoon/init.lua"
-print('package.path = ' .. package.path)
+debug_print('package.path = ' .. package.path)
 
 -- https://github.com/scottwhudson/Lunette
 hs.loadSpoon("Lunette")
@@ -45,11 +58,13 @@ spoon.Lunette:bindHotkeys()
 
 -- http://www.hammerspoon.org/docs/hs.application.html#runningApplications
 hs.application.enableSpotlightForNameSearches(true)
-for i, app in pairs(hs.application.runningApplications()) do
-    print('App #' .. i .. ': ' .. tostring(app))
+if debug then
+    for i, app in pairs(hs.application.runningApplications()) do
+        debug_print('App #' .. i .. ': ' .. tostring(app))
 
-    for j, window in pairs(app:allWindows()) do
-        print('    Window #' .. j .. ': ' .. tostring(window))
+        for j, window in pairs(app:allWindows()) do
+            debug_print('    Window #' .. j .. ': ' .. tostring(window))
+        end
     end
 end
 
@@ -133,7 +148,7 @@ if wide_curved_screen ~= nil then
         {"Telegram", nil, hs.layout.left50, false},
         {"WhatsApp", nil, hs.layout.left50, false},
         {"Signal", nil, hs.layout.left50, false},
-        {"Bitwarden", nil, hs.layout.left30, nil},
+        {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
 
         -- Right
@@ -148,7 +163,7 @@ if wide_curved_screen ~= nil then
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized, nil},
-        {"DeepL", nil, hs.layout.maximized, false},
+        {"DeepL", nil, layout_top50, false},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right50, false},
         {"Spotify", nil, hs.layout.left50, false},
@@ -159,8 +174,9 @@ if wide_curved_screen ~= nil then
         {"zoom.us", "zoom share toolbar window", hs.layout.right70, nil},
 
         {"Activity Monitor", nil, hs.layout.right70, nil},
-        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, nil},
+        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, debug},
         {"Speedtest", nil, hs.layout.left50, nil},
+        {"Logseq", nil, hs.layout.left50, false},
     })
 else
     config_screen(horizontal_screen, {
@@ -204,7 +220,7 @@ else
     })
     config_screen(laptop_screen, {
         {"Spotify", nil, hs.layout.maximized, false},
-        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, false},
+        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, debug},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"Skype", nil, hs.layout.maximized, nil},
@@ -220,7 +236,7 @@ end
 function compare_window_title(actual_window_title, expected_window_title)
     local found = string.match(actual_window_title, expected_window_title)
     if found ~= nil then
-        print('  Found this: ' .. expected_window_title .. ' in this existing window title: ' .. actual_window_title)
+        debug_print('  Found this: ' .. expected_window_title .. ' in this existing window title: ' .. actual_window_title)
     end
     return found
 end
@@ -239,20 +255,20 @@ hs.screen.watcher.new(apply_window_layout)
 
 function monitor_app_events(app_name, event_type, app_object)
     if app_name == 'Preview' then
-        print(app_name)
-        print(event_type)
-        print(app_object)
+        debug_print(app_name)
+        debug_print(event_type)
+        debug_print(app_object)
         --if event_type == hs.application.watcher.activated then
-       --    print(app_name .. ' opened')
+       --    debug_print(app_name .. ' opened')
        --end
        --if event_type == hs.application.watcher.deactivated then
-       --    print(app_name .. ' closed')
+       --    debug_print(app_name .. ' closed')
        --end
     end
 end
 
 -- https://nikhilism.com/post/2021/useful-hammerspoon-tips/
 -- https://www.hammerspoon.org/docs/hs.application.watcher.html
-print('Starting app watcher')
+debug_print('Starting app watcher')
 local my_watch = hs.application.watcher.new(monitor_app_events)
 my_watch:start()

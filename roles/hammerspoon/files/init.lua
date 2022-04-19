@@ -177,6 +177,8 @@ if wide_curved_screen ~= nil then
         {"Hammerspoon", "Hammerspoon Console", layout_bottom50, debug},
         {"Speedtest", nil, hs.layout.left50, nil},
         {"Logseq", nil, hs.layout.left50, false},
+        {"Todoist", nil, hs.layout.right70, false},
+        {"Docker Desktop", nil, layout_top50, nil},
     })
 else
     config_screen(horizontal_screen, {

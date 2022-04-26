@@ -120,16 +120,23 @@ function config_screen(screen, apps)
         table.insert(window_layout, config)
 
         if show_app ~= nil and app_name ~= nil then
-            app = hs.application.find(app_name)
-            if app ~= nil then
+            -- The return can be hs.application or hs.window (or maybe more things)
+            -- http://www.hammerspoon.org/docs/hs.application.html#find
+            app_or_window = hs.application.find(app_name)
+
+            if app_or_window ~= nil then
                 -- Uncomment this to find and activate the application window (layout only works on visible/activated windows)
-                -- app:activate()
+                -- app_or_window:activate()
                 if show_app then
                     -- http://www.hammerspoon.org/docs/hs.application.html#unhide
-                    app:unhide()
+                    app_or_window:unhide()
                 else
                     -- http://www.hammerspoon.org/docs/hs.application.html#hide
-                    app:hide()
+                    -- A window doesn't have the hide() method and raises:
+                    -- method 'hide' is not callable (a nil value)
+                    if app_or_window.hide ~= nil then
+                        app_or_window:hide()
+                    end
                 end
             end
         end

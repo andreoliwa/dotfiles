@@ -45,6 +45,7 @@ module.exports = {
         /@wolt/,
         /woltapp/,
         /k.wolt.com/,
+        /looker.wolt.com/,
         /creditornot/,
         /planitpoker/,
         /liveshare/,

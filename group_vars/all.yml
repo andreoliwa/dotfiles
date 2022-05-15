@@ -184,6 +184,7 @@ mac_cask_packages:
     - raindropio # https://raindrop.io/
     - raycast # https://raycast.app/
     - gnucash # https://gnucash.org/
+    - fujitsu-scansnap-home # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
     - dupeguru # https://dupeguru.voltaicideas.net/

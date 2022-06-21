@@ -63,7 +63,11 @@ module.exports = {
         /jooq.org/,
         /spring/, // Not the season of the year, but the Java framework
         /postman.com/,
+
         /snowflake.com/,
+        /AccountChooser/,
+        /GlifWebSignIn/, // Snowflake OAuth login with https://accounts.google.com/AccountChooser/signinchooser
+
         /maven/,
         /mvn/,
         /gradle/,

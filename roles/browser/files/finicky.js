@@ -65,6 +65,7 @@ module.exports = {
         /postman.com/,
 
         /snowflake.com/,
+        /accounts.google.com/,
         /AccountChooser/,
         /GlifWebSignIn/, // Snowflake OAuth login with https://accounts.google.com/AccountChooser/signinchooser
 
@@ -78,9 +79,10 @@ module.exports = {
         /confluentinc/,
         /jenkins/,
         /grafana/,
+        /smartrecruiters.com/,
+        /google.zoom/,
 
         // sennder
-        /sennder/,
         /atlassian/,
         /slack/,
         /datadog/,

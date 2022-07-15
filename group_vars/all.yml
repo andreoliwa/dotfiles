@@ -198,7 +198,6 @@ mac_cask_packages:
     - logitech-g-hub # http://logitechg.com/support/g305
     - tunnelblick
     - aws-vault # https://github.com/99designs/aws-vault#installing
-    - datagrip # https://www.jetbrains.com/datagrip/
     - intellij-idea # https://www.jetbrains.com/idea/
     - postman # https://www.postman.com/
     - google-chrome
@@ -248,6 +247,7 @@ mac_cask_packages:
     - pritunl # VPN https://client.pritunl.com/#install
     - aws-vpn-client
     - keepassxc # https://keepassxc.org/
+    - datagrip # https://www.jetbrains.com/datagrip/
 
 # APT packages that don't get installed by a role
 apt_packages:

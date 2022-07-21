@@ -81,6 +81,8 @@ module.exports = {
         /grafana/,
         /smartrecruiters.com/,
         /google.zoom/,
+        /finaro/,
+        /credorax/,
 
         // sennder
         /atlassian/,

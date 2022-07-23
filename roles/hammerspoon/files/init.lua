@@ -160,6 +160,7 @@ if wide_curved_screen ~= nil then
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
         {"Logseq", nil, layout_center_left, false},
+        {"Authy Desktop", nil, layout_center_left, true},
 
         -- Right
         {"PyCharm", nil, hs.layout.right50, nil},
@@ -283,3 +284,15 @@ end
 debug_print('Starting app watcher')
 local my_watch = hs.application.watcher.new(monitor_app_events)
 my_watch:start()
+
+function reposition_stubborn_windows(window, app_name, event)
+    debug_print(window)
+    debug_print(app_name)
+    debug_print(event)
+    apply_window_layout()
+end
+
+-- Reposition all stubborn apps that don't save their last window positions
+-- https://www.hammerspoon.org/docs/hs.window.filter.html#subscribe
+wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Preview'}
+wf_stubborn_apps:subscribe(hs.window.filter.windowCreated, reposition_stubborn_windows)

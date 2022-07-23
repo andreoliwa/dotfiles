@@ -63,7 +63,7 @@ if debug then
         debug_print('App #' .. i .. ': ' .. tostring(app))
 
         for j, window in pairs(app:allWindows()) do
-            debug_print('    Window #' .. j .. ': ' .. tostring(window))
+            debug_print('    Window #' .. j .. ': ' .. tostring(window) .. ' - Geometry: ' .. tostring(window:frame()))
         end
     end
 end
@@ -109,6 +109,8 @@ layout_top30 = hs.geometry.rect(0, 0, 1, 0.30)
 layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)
 layout_top70 = hs.geometry.rect(0, 0, 1, 0.7)
 layout_bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
+layout_center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
+layout_center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
 
 local window_layout = {}
 
@@ -157,6 +159,7 @@ if wide_curved_screen ~= nil then
         {"Signal", nil, hs.layout.left50, false},
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
+        {"Logseq", nil, layout_center_left, false},
 
         -- Right
         {"PyCharm", nil, hs.layout.right50, nil},
@@ -183,7 +186,6 @@ if wide_curved_screen ~= nil then
         {"Activity Monitor", nil, hs.layout.right70, nil},
         {"Hammerspoon", "Hammerspoon Console", layout_bottom50, debug},
         {"Speedtest", nil, hs.layout.left50, nil},
-        {"Logseq", nil, hs.layout.left50, false},
         {"Todoist", nil, hs.layout.right70, false},
         {"Docker Desktop", nil, layout_top50, nil},
     })

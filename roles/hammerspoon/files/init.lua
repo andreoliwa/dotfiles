@@ -105,10 +105,12 @@ end
 
 -- Default layouts: http://www.hammerspoon.org/docs/hs.layout.html
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
+-- x, y, width, height, all ranging from 0 to 1
 layout_top30 = hs.geometry.rect(0, 0, 1, 0.30)
 layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)
 layout_top70 = hs.geometry.rect(0, 0, 1, 0.7)
 layout_bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
+layout_left_20_to_50 = hs.geometry.rect(0.20, 0, 0.30, 1)
 layout_center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
 layout_center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
 
@@ -152,14 +154,14 @@ if wide_curved_screen ~= nil then
         {"Preview", nil, hs.layout.left50, nil},
         {"Finder", nil, hs.layout.left50, nil},
         {"Brave Browser", nil, hs.layout.left50, nil},
-        {"Brave Browser Dev", nil, hs.layout.left50, nil},
+        {"Brave Browser Beta", nil, hs.layout.left50, nil},
         {"Slack", nil, hs.layout.left50, nil},
         {"Telegram", nil, hs.layout.left50, false},
         {"WhatsApp", nil, hs.layout.left50, false},
         {"Signal", nil, hs.layout.left50, false},
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
-        {"Logseq", nil, layout_center_left, false},
+        {"Logseq", nil, layout_left_20_to_50, false},
         {"Authy Desktop", nil, layout_center_left, true},
 
         -- Right
@@ -196,7 +198,7 @@ else
         {"Code", nil, hs.layout.maximized, nil},
         {"Brave Browser", nil, hs.layout.maximized, nil},
         {"Slack", nil, hs.layout.maximized, nil},
-        {"Brave Browser Dev", "Brave Dev – WAA", hs.layout.maximized, nil},
+        {"Brave Browser Beta", "Brave Beta – WAA", hs.layout.maximized, nil},
         {"PyCharm", nil, hs.layout.maximized, nil},
         {"VLC", nil, hs.layout.maximized, false},
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
@@ -211,8 +213,8 @@ else
         {"Signal", nil, layout_top30, false},
         {"Preview", nil, hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru", layout_top50, nil},
-        {"Brave Browser Dev", "Brave Dev – Regina", layout_top50, nil},
-        {"Brave Browser Dev", "Brave Dev – Torrent", layout_bottom50, nil},
+        {"Brave Browser Beta", "Brave Beta – Regina", layout_top50, nil},
+        {"Brave Browser Beta", "Brave Beta – Torrent", layout_bottom50, nil},
 
         -- Work profiles
         -- TODO feat: find a better way to configure apps/windows here in this script, because the order

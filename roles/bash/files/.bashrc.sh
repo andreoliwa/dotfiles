@@ -59,6 +59,9 @@ export HISTIGNORE="$HISTIGNORE:jrnl *"
 # Switch from a CLI editor to VSCode in wait mode
 export EDITOR='code --wait'
 
+# To avoid the message: feh ERROR: Can't open X display. It *is* running, yeah?
+export DISPLAY=:0.0
+
 # https://github.com/junegunn/fzf
 # Taken from 'brew info fzf' (and edited by an ansible role):
 # shellcheck source=/dev/null

@@ -23,7 +23,13 @@ mobile_upload_folders: &mobile_upload
     ignore_errors: true
   - path: ~/OneDrive/Pictures/Telegram/
     ignore_errors: true
+  - path: ~/OneDrive/Pictures/Telegram Images/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/Telegram Video/
+    ignore_errors: true
   - path: ~/OneDrive/Pictures/WhatsApp Animated Gifs/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/WhatsApp Documents/
     ignore_errors: true
   - path: ~/OneDrive/Pictures/WhatsApp Images/
     ignore_errors: true

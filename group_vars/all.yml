@@ -62,7 +62,7 @@ mac_homebrew_packages:
     # For repeating commands
     - watch
     - fd # https://github.com/sharkdp/fd
-    - postgres # https://www.postgresql.org/ Needed by pgcli and other packages
+    - postgresql@14 # https://www.postgresql.org/ Needed by pgcli and other packages
     - nmap
     - ipcalc
     - github/gh/gh # GitHub CLI https://github.com/cli/cli
@@ -90,13 +90,14 @@ mac_homebrew_packages:
     - jmespath/jmespath/jp # https://github.com/jmespath/jp
     - topgrade # https://github.com/r-darwish/topgrade
     - mr # https://myrepos.branchable.com/
+    - libsodium # can't be removed from personal_laptop, required by ffmpeg and zeromq
   personal_laptop:
-    # TODO fix: ntfs-3g needs "brew cask install osxfuse" before:
-    # - ntfs-3g # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
+    # TODO fix: needs "brew cask install osxfuse" before:
+    # - gromgit/fuse/sshfs-mac
+    # - gromgit/fuse/ntfs-3g-mac # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
   company_laptop:
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - aws-iam-authenticator # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
-    - libsodium
     - vault # Hashicorp https://www.vaultproject.io/
     - actionlint # https://github.com/rhysd/actionlint
     - protobuf # https://github.com/protocolbuffers/protobuf
@@ -394,7 +395,7 @@ vscode_extensions:
     - redhat.ansible
     # - yzhang.markdown-all-in-one # This extension somehow disables Prettier on file save for .md files
   personal_laptop:
-    - matklad.rust-analyzer # https://rust-analyzer.github.io/
+    - rust-lang.rust-analyzer # https://github.com/rust-lang/rust-analyzer
     - vscode-ext.sync-rsync
   company_laptop:
     - redhat.vscode-xml # https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml

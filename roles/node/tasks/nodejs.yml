@@ -2,6 +2,8 @@
   homebrew:
     name: node
     state: absent
+  # Refusing to uninstall /usr/local/Cellar/node/18.8.0\nbecause it is required by bitwarden-cli
+  ignore_errors: true
 
 - name: "nodejs: Add as asdf plugin"
   command: "asdf plugin-add nodejs"

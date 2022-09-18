@@ -19,6 +19,16 @@ function debug_print(message)
     end
 end
 
+-- Because this stupid language doesn't have a proper ternary operator
+-- https://stackoverflow.com/questions/5525817/inline-conditions-in-lua-a-b-yes-no
+function ternary(condition, true_value, false_value)
+    if condition then return true_value else return false_value end
+end
+
+local working = hs.application.find('slack') ~= nil
+-- Hide app when working, keep its current visibility state when not working
+local hide_when_working = ternary(working, false, nil)
+
 -- http://www.hammerspoon.org/docs/hs.network.configuration.html#open
 if debug then
     computer_name = hs.network.configuration.open():computerName()
@@ -111,6 +121,7 @@ layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)
 layout_top70 = hs.geometry.rect(0, 0, 1, 0.7)
 layout_bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
 layout_left_20_to_50 = hs.geometry.rect(0.20, 0, 0.30, 1)
+layout_left_70 = hs.geometry.rect(0, 0, 0.70, 1)
 layout_center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
 layout_center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
 
@@ -156,12 +167,12 @@ if wide_curved_screen ~= nil then
         {"Brave Browser", nil, hs.layout.left50, nil},
         {"Brave Browser Beta", nil, hs.layout.left50, nil},
         {"Slack", nil, hs.layout.left50, nil},
-        {"Telegram", nil, hs.layout.left50, false},
-        {"WhatsApp", nil, hs.layout.left50, false},
-        {"Signal", nil, hs.layout.left50, false},
+        {"Telegram", nil, hs.layout.left50, hide_when_working},
+        {"WhatsApp", nil, hs.layout.left50, hide_when_working},
+        {"Signal", nil, hs.layout.left50, hide_when_working},
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
-        {"Logseq", nil, layout_left_20_to_50, false},
+        {"Logseq", nil, layout_left_20_to_50, hide_when_working},
         {"Authy Desktop", nil, layout_center_left, true},
 
         -- Right
@@ -172,14 +183,14 @@ if wide_curved_screen ~= nil then
         {"zoom.us", 'Zoom', hs.layout.right50, nil},
 
         -- Full
-        {"VLC", nil, hs.layout.maximized, false},
+        {"VLC", nil, hs.layout.maximized, hide_when_working},
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized, nil},
-        {"DeepL", nil, layout_top50, false},
+        {"DeepL", nil, layout_top50, hide_when_working},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
-        {"Toggl Track", nil, hs.layout.right50, false},
-        {"Spotify", nil, hs.layout.left50, false},
+        {"Toggl Track", nil, hs.layout.right50, hide_when_working},
+        {"Spotify", nil, layout_left_70, hide_when_working},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"zoom.us", "zoom floating video window", hs.layout.left50, nil},
@@ -189,7 +200,7 @@ if wide_curved_screen ~= nil then
         {"Activity Monitor", nil, hs.layout.right70, nil},
         {"Hammerspoon", "Hammerspoon Console", layout_bottom50, debug},
         {"Speedtest", nil, hs.layout.left50, nil},
-        {"Todoist", nil, hs.layout.right70, false},
+        {"Todoist", nil, hs.layout.right70, hide_when_working},
         {"Docker Desktop", nil, layout_top50, nil},
     })
 else

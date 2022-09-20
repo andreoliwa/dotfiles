@@ -54,7 +54,7 @@ export HISTFILESIZE=100000
 shopt -s histappend
 
 # https://jrnl.sh/en/stable/privacy-and-security/
-export HISTIGNORE="$HISTIGNORE:jrnl *"
+export HISTIGNORE="$HISTIGNORE:jrnl"
 
 # Switch from a CLI editor to VSCode in wait mode
 export EDITOR='code --wait'

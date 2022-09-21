@@ -44,8 +44,7 @@ module.exports = {
         /ops.wolt/,
         /@wolt/,
         /woltapp/,
-        /k.wolt.com/,
-        /looker.wolt.com/,
+        /wolt./,
         /creditornot/,
         /planitpoker/,
         /liveshare/,
@@ -63,6 +62,7 @@ module.exports = {
         /jooq.org/,
         /spring/, // Not the season of the year, but the Java framework
         /postman.com/,
+        /jfrog/,
 
         /snowflake.com/,
         /accounts.google.com/,

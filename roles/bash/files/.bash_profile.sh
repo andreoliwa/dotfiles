@@ -35,6 +35,14 @@ if [[ -d "$BASH_COMPLETION_USER_DIR/completions" ]]; then
     done
 fi
 
+# https://github.com/tiangolo/typer installs completion files in this directory
+if [[ -d "$HOME/.bash_completions/" ]]; then
+    for COMPLETION in "$HOME/.bash_completions/"*; do
+        # shellcheck source=/dev/null
+        [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+    done
+fi
+
 # ==================== BEGIN https://github.com/asdf-vm/asdf
 # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
 # shellcheck disable=SC1091

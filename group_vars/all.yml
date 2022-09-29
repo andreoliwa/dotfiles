@@ -91,10 +91,10 @@ mac_homebrew_packages:
     - topgrade # https://github.com/r-darwish/topgrade
     - mr # https://myrepos.branchable.com/
     - libsodium # can't be removed from personal_laptop, required by ffmpeg and zeromq
+    # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
+    - gromgit/fuse/sshfs-mac
   personal_laptop:
-    # TODO fix: needs "brew cask install osxfuse" before:
-    # - gromgit/fuse/sshfs-mac
-    # - gromgit/fuse/ntfs-3g-mac # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
+    - gromgit/fuse/ntfs-3g-mac # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
   company_laptop:
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - aws-iam-authenticator # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
@@ -191,7 +191,7 @@ mac_cask_packages:
     - dupeguru # https://dupeguru.voltaicideas.net/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - grandperspective # https://grandperspectiv.sourceforge.io/
-    - osxfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
+    - macfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
     - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
     - onedrive # https://onedrive.live.com/
   company_laptop:

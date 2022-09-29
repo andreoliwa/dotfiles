@@ -116,14 +116,16 @@ end
 -- Default layouts: http://www.hammerspoon.org/docs/hs.layout.html
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
 -- x, y, width, height, all ranging from 0 to 1
-layout_top30 = hs.geometry.rect(0, 0, 1, 0.30)
-layout_top50 = hs.geometry.rect(0, 0, 1, 0.5)
-layout_top70 = hs.geometry.rect(0, 0, 1, 0.7)
-layout_bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
-layout_left_20_to_50 = hs.geometry.rect(0.20, 0, 0.30, 1)
-layout_left_70 = hs.geometry.rect(0, 0, 0.70, 1)
-layout_center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
-layout_center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
+hs.layout.top30 = hs.geometry.rect(0, 0, 1, 0.30)
+hs.layout.top50 = hs.geometry.rect(0, 0, 1, 0.5)
+hs.layout.top70 = hs.geometry.rect(0, 0, 1, 0.7)
+hs.layout.bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
+hs.layout.left_20_to_50 = hs.geometry.rect(0.20, 0, 0.30, 1)
+hs.layout.left_70 = hs.geometry.rect(0, 0, 0.70, 1)
+hs.layout.center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
+hs.layout.center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
+hs.layout.right50_top = hs.geometry.rect(0.5, 0, 0.5, 0.5)
+hs.layout.right50_bottom = hs.geometry.rect(0.5, 0.5, 0.5, 0.5)
 
 local window_layout = {}
 
@@ -163,7 +165,10 @@ if wide_curved_screen ~= nil then
         -- Left
         {"iTerm2", nil, hs.layout.left50, nil},
         {"Preview", nil, hs.layout.left50, nil},
-        {"Finder", nil, hs.layout.left50, nil},
+
+        {"Finder", nil, hs.layout.right50_top, nil},
+        {"Finder", "todo", hs.layout.right50_bottom, nil},
+
         {"Brave Browser", nil, hs.layout.left50, nil},
         {"Brave Browser Beta", nil, hs.layout.left50, nil},
         {"Slack", nil, hs.layout.left50, nil},
@@ -172,8 +177,8 @@ if wide_curved_screen ~= nil then
         {"Signal", nil, hs.layout.left50, hide_when_working},
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
-        {"Logseq", nil, layout_left_20_to_50, hide_when_working},
-        {"Authy Desktop", nil, layout_center_left, true},
+        {"Logseq", nil, hs.layout.left_20_to_50, hide_when_working},
+        {"Authy Desktop", nil, hs.layout.center_left, true},
 
         -- Right
         {"PyCharm", nil, hs.layout.right50, nil},
@@ -187,10 +192,10 @@ if wide_curved_screen ~= nil then
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized, nil},
-        {"DeepL", nil, layout_top50, hide_when_working},
+        {"DeepL", nil, hs.layout.top50, hide_when_working},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right50, hide_when_working},
-        {"Spotify", nil, layout_left_70, hide_when_working},
+        {"Spotify", nil, hs.layout.left_70, hide_when_working},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"zoom.us", "zoom floating video window", hs.layout.left50, nil},
@@ -198,14 +203,14 @@ if wide_curved_screen ~= nil then
         {"zoom.us", "zoom share toolbar window", hs.layout.right70, nil},
 
         {"Activity Monitor", nil, hs.layout.right70, nil},
-        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, debug},
+        {"Hammerspoon", "Hammerspoon Console", hs.layout.bottom50, debug},
         {"Speedtest", nil, hs.layout.left50, nil},
         {"Todoist", nil, hs.layout.right70, hide_when_working},
-        {"Docker Desktop", nil, layout_top50, nil},
+        {"Docker Desktop", nil, hs.layout.top50, nil},
     })
 else
     config_screen(horizontal_screen, {
-        {"Finder", nil, layout_top50, nil},
+        {"Finder", nil, hs.layout.top50, nil},
         {"Code", nil, hs.layout.maximized, nil},
         {"Brave Browser", nil, hs.layout.maximized, nil},
         {"Slack", nil, hs.layout.maximized, nil},
@@ -218,34 +223,34 @@ else
     })
     config_screen(vertical_screen, {
         {"iTerm2", nil, hs.layout.maximized, nil},
-        {"Telegram", nil, layout_bottom50, false},
-        {"WhatsApp", nil, layout_top50, false},
-        {"DeepL", nil, layout_top50, false},
-        {"Signal", nil, layout_top30, false},
+        {"Telegram", nil, hs.layout.bottom50, false},
+        {"WhatsApp", nil, hs.layout.top50, false},
+        {"DeepL", nil, hs.layout.top50, false},
+        {"Signal", nil, hs.layout.top30, false},
         {"Preview", nil, hs.layout.maximized, nil},
-        {"dupeGuru", "dupeGuru", layout_top50, nil},
-        {"Brave Browser Beta", "Brave Beta – Regina", layout_top50, nil},
-        {"Brave Browser Beta", "Brave Beta – Torrent", layout_bottom50, nil},
+        {"dupeGuru", "dupeGuru", hs.layout.top50, nil},
+        {"Brave Browser Beta", "Brave Beta – Regina", hs.layout.top50, nil},
+        {"Brave Browser Beta", "Brave Beta – Torrent", hs.layout.bottom50, nil},
 
         -- Work profiles
         -- TODO feat: find a better way to configure apps/windows here in this script, because the order
         --   of these layout tables is important; they are applied in the order they appear
-        {"Brave Browser", "JIRA", layout_top70, nil},
-        {"Brave Browser", "Google Sheets", layout_top70, nil},
-        {"Brave Browser", "Figma", layout_top70, nil},
-        {"Brave Browser", "Brave – Finance", layout_top50, nil},
-        {"Brave Browser", "Brave – DD", layout_bottom50, nil},
-        {"Brave Browser", "DevTools", layout_top50, nil},
+        {"Brave Browser", "JIRA", hs.layout.top70, nil},
+        {"Brave Browser", "Google Sheets", hs.layout.top70, nil},
+        {"Brave Browser", "Figma", hs.layout.top70, nil},
+        {"Brave Browser", "Brave – Finance", hs.layout.top50, nil},
+        {"Brave Browser", "Brave – DD", hs.layout.bottom50, nil},
+        {"Brave Browser", "DevTools", hs.layout.top50, nil},
 
-        {"Todoist", nil, layout_bottom50, nil},
-        {"Bitwarden", nil, layout_bottom50, nil},
+        {"Todoist", nil, hs.layout.bottom50, nil},
+        {"Bitwarden", nil, hs.layout.bottom50, nil},
 
-        {"PyCharm", "Debug -", layout_top50, nil},
-        {"PyCharm", "Run -", layout_bottom50, nil},
+        {"PyCharm", "Debug -", hs.layout.top50, nil},
+        {"PyCharm", "Run -", hs.layout.bottom50, nil},
     })
     config_screen(laptop_screen, {
         {"Spotify", nil, hs.layout.maximized, false},
-        {"Hammerspoon", "Hammerspoon Console", layout_bottom50, debug},
+        {"Hammerspoon", "Hammerspoon Console", hs.layout.bottom50, debug},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"Skype", nil, hs.layout.maximized, nil},

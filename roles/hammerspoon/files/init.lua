@@ -312,5 +312,5 @@ end
 
 -- Reposition all stubborn apps that don't save their last window positions
 -- https://www.hammerspoon.org/docs/hs.window.filter.html#subscribe
-wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Preview'}
+wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Preview', 'Logseq'}
 wf_stubborn_apps:subscribe(hs.window.filter.windowCreated, reposition_stubborn_windows)

@@ -144,7 +144,7 @@ mac_cask_packages:
     - finicky # https://github.com/johnste/finicky
     # Development
     - visual-studio-code
-    - docker-edge
+    - docker
     # Network
     - teamviewer
     - private-internet-access

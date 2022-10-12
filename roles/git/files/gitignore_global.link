@@ -33,7 +33,7 @@ docs/_build
 .ipynb_checkpoints
 
 # Sandbox for notes, throwaway scripts, etc.
-_sandbox
+*sandbox*
 
 # Ignore Git itself, so fd doesn't search it by default
 .git/

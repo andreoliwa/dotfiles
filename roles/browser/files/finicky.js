@@ -63,6 +63,8 @@ module.exports = {
         /spring/, // Not the season of the year, but the Java framework
         /postman.com/,
         /jfrog/,
+        /doordash/,
+        /okta/,
 
         /snowflake.com/,
         /accounts.google.com/,

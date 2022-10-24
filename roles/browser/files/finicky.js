@@ -65,6 +65,7 @@ module.exports = {
         /jfrog/,
         /doordash/,
         /okta/,
+        /cuckooworkout/,
 
         /snowflake.com/,
         /accounts.google.com/,

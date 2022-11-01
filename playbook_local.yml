@@ -11,11 +11,11 @@
 
     # asdf
     - { role: asdf, tags: ["asdf"] }
-    - { role: direnv, tags: ["asdf", "direnv"] }
     - { role: poetry, tags: ["asdf", "poetry"] }
     - { role: java, tags: ["asdf", "java"] }
 
     # Tools
+    - { role: direnv, tags: ["direnv"] }
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }
     - { role: browser, tags: ["browser"] }
     - { role: fzf, tags: ["fzf"] }

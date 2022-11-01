@@ -73,3 +73,8 @@ test -f "$HOME"/container-apps-private/aliases.sh && \
 
 # https://github.com/starship/starship
 eval "$(starship init bash)"
+
+# ==================== BEGIN https://github.com/direnv/direnv
+# https://direnv.net/docs/hook.html#bash
+eval "$(direnv hook bash)"
+# ==================== END https://github.com/direnv/direnv

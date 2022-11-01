@@ -4,7 +4,8 @@
 # WARNING: `pyenv init -` no longer sets PATH.
 # Run `pyenv init` to see the necessary changes to make to your configuration.
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # shellcheck disable=SC1091
 test -f "$HOME/.bashrc" && source "${HOME}/.bashrc"
@@ -50,9 +51,3 @@ source "$HOME/.asdf/asdf.sh"
 # shellcheck disable=SC1091
 source "$HOME/.asdf/completions/asdf.bash"
 # ==================== END https://github.com/asdf-vm/asdf
-
-# ==================== BEGIN https://github.com/direnv/direnv
-# https://github.com/asdf-community/asdf-direnv#setup
-eval "$(asdf exec direnv hook bash)"
-direnv() { asdf exec direnv "$@"; }
-# ==================== END https://github.com/direnv/direnv

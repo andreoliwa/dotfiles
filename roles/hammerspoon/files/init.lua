@@ -121,7 +121,6 @@ hs.layout.top50 = hs.geometry.rect(0, 0, 1, 0.5)
 hs.layout.top70 = hs.geometry.rect(0, 0, 1, 0.7)
 hs.layout.bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
 hs.layout.left_20_to_50 = hs.geometry.rect(0.20, 0, 0.30, 1)
-hs.layout.left_70 = hs.geometry.rect(0, 0, 0.70, 1)
 hs.layout.center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
 hs.layout.center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
 hs.layout.right50_top = hs.geometry.rect(0.5, 0, 0.5, 0.5)
@@ -186,23 +185,23 @@ if wide_curved_screen ~= nil then
         {"App Store", nil, hs.layout.right50, nil},
         {"Notes", nil, hs.layout.right50, nil},
         {"zoom.us", 'Zoom', hs.layout.right50, nil},
+        {"Activity Monitor", nil, hs.layout.right30, nil},
+        {"DeepL", nil, hs.layout.right50_top, hide_when_working},
 
         -- Full
         {"VLC", nil, hs.layout.maximized, hide_when_working},
     })
     config_screen(laptop_screen, {
         {"Skype", nil, hs.layout.maximized, nil},
-        {"DeepL", nil, hs.layout.top50, hide_when_working},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right50, hide_when_working},
-        {"Spotify", nil, hs.layout.left_70, hide_when_working},
+        {"Spotify", nil, hs.layout.left70, hide_when_working},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"zoom.us", "zoom floating video window", hs.layout.left50, nil},
         {"zoom.us", "zoom share statusbar window", hs.layout.right50, nil},
         {"zoom.us", "zoom share toolbar window", hs.layout.right70, nil},
 
-        {"Activity Monitor", nil, hs.layout.right70, nil},
         {"Hammerspoon", "Hammerspoon Console", hs.layout.bottom50, debug},
         {"Speedtest", nil, hs.layout.left50, nil},
         {"Todoist", nil, hs.layout.right70, hide_when_working},

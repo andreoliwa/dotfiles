@@ -38,7 +38,10 @@ module.exports = {
       // Work URLs
       // Match any part of the URL with the regexes below
       match: [
+        // TODO: is there a way to match handlers conditionally? e.g.: only when Slack is open
         /localhost/,
+        /127.0.0.1/,
+        /0.0.0.0/,
 
         // Wolt
         /ops.wolt/,
@@ -138,7 +141,7 @@ module.exports = {
     },
     // Work parameters on the query string
     {
-      match: ({ url }) => url.search.includes(["sennder", "eatfirst"]),
+      match: ({ url }) => url.search.includes(["wolt", "sennder", "eatfirst"]),
       browser: "Brave Browser",
     },
     // Work apps

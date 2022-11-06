@@ -120,7 +120,7 @@ hs.layout.top30 = hs.geometry.rect(0, 0, 1, 0.30)
 hs.layout.top50 = hs.geometry.rect(0, 0, 1, 0.5)
 hs.layout.top70 = hs.geometry.rect(0, 0, 1, 0.7)
 hs.layout.bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
-hs.layout.left_20_to_50 = hs.geometry.rect(0.20, 0, 0.30, 1)
+hs.layout.middle_left40 = hs.geometry.rect(0.10, 0, 0.40, 1)
 hs.layout.center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
 hs.layout.center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
 hs.layout.right50_top = hs.geometry.rect(0.5, 0, 0.5, 0.5)
@@ -176,7 +176,7 @@ if wide_curved_screen ~= nil then
         {"Signal", nil, hs.layout.left50, hide_when_working},
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
-        {"Logseq", nil, hs.layout.left_20_to_50, hide_when_working},
+        {"Logseq", nil, hs.layout.middle_left40, hide_when_working},
         {"Authy Desktop", nil, hs.layout.center_left, true},
 
         -- Right

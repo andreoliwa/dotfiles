@@ -21,7 +21,8 @@ j() {
 }
 
 # https://github.com/wting/autojump#known-issues
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
+# https://superuser.com/questions/1158739/prompt-command-to-reload-from-bash-history
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a; history -r"
 # ==================== END https://github.com/junegunn/fzf/wiki/Examples#autojump
 
 # ==================== BEGIN Bash completion / dotfiles
@@ -47,8 +48,8 @@ test -d "$HOME"/Code/toolbox/bin && export PATH="$PATH:$HOME/Code/toolbox/bin"
 
 # Increase Bash history size
 # https://unix.stackexchange.com/questions/20861/is-there-a-way-to-set-the-size-of-the-history-list-in-bash-to-more-than-5000-lin#20925
-export HISTSIZE=100000
-export HISTFILESIZE=100000
+export HISTSIZE=30000
+export HISTFILESIZE=1000000
 
 # https://askubuntu.com/questions/67283/is-it-possible-to-make-writing-to-bash-history-immediate/67306#67306
 shopt -s histappend

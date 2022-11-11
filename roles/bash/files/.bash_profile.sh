@@ -51,3 +51,6 @@ source "$HOME/.asdf/asdf.sh"
 # shellcheck disable=SC1091
 source "$HOME/.asdf/completions/asdf.bash"
 # ==================== END https://github.com/asdf-vm/asdf
+
+# https://discussions.apple.com/thread/251000125
+ulimit -n 1024

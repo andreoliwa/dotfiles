@@ -19,3 +19,4 @@ alias pvs='pyenv versions --bare'
 
 alias i='invoke'
 alias il='invoke --list'
+alias ih='invoke --help'

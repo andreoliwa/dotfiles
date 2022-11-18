@@ -102,6 +102,7 @@ mac_homebrew_packages:
     - actionlint # https://github.com/rhysd/actionlint
     - protobuf # https://github.com/protocolbuffers/protobuf
     - gradle-completion # https://github.com/gradle/gradle-completion
+    - goreleaser/tap/goreleaser # https://github.com/goreleaser/goreleaser
   remove:
     - heroku/brew/heroku
     - highlight

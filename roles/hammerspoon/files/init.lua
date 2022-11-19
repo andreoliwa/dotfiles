@@ -166,7 +166,9 @@ if wide_curved_screen ~= nil then
         {"Preview", nil, hs.layout.left50, nil},
 
         {"Finder", nil, hs.layout.right50_top, nil},
-        {"Finder", "todo", hs.layout.right50_bottom, nil},
+        {"Finder", "consume", hs.layout.right50_bottom, nil},
+        {"Finder", "inbox", hs.layout.right50_bottom, nil},
+        {"Finder", "import", hs.layout.right50_bottom, nil},
 
         {"Brave Browser", nil, hs.layout.left50, nil},
         {"Brave Browser Beta", nil, hs.layout.left50, nil},
@@ -206,6 +208,8 @@ if wide_curved_screen ~= nil then
         {"Speedtest", nil, hs.layout.left50, nil},
         {"Todoist", nil, hs.layout.right70, hide_when_working},
         {"Docker Desktop", nil, hs.layout.top50, nil},
+        {"ScanSnap Home", nil, hs.geometry.rect(0.42, 0.23, 0.5, 0.5), nil},
+        {nil, hs.window.find('- Scan'), hs.layout.right70, nil},
     })
 else
     config_screen(horizontal_screen, {
@@ -311,5 +315,5 @@ end
 
 -- Reposition all stubborn apps that don't save their last window positions
 -- https://www.hammerspoon.org/docs/hs.window.filter.html#subscribe
-wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Preview', 'Logseq'}
+wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Preview', 'Logseq', 'ScanSnap Home'}
 wf_stubborn_apps:subscribe(hs.window.filter.windowCreated, reposition_stubborn_windows)

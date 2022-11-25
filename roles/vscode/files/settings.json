@@ -130,5 +130,8 @@
   "git.inputValidationSubjectLength": 69,
   "search.smartCase": true,
   "search.useGlobalIgnoreFiles": true,
-  "search.showLineNumbers": true
+  "search.showLineNumbers": true,
+  "[python]": {
+    "editor.formatOnType": true
+  }
 }

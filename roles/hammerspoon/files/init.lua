@@ -163,6 +163,7 @@ if wide_curved_screen ~= nil then
     config_screen(wide_curved_screen, {
         -- Left
         {"iTerm2", nil, hs.layout.left50, nil},
+        {"Terminal", nil, hs.layout.left50, nil},
         {"Preview", nil, hs.layout.left50, nil},
 
         {"Finder", nil, hs.layout.right50_top, nil},

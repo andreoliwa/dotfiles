@@ -151,7 +151,6 @@ mac_cask_packages:
     - private-internet-access
     - zerotier-one # https://www.zerotier.com/download.shtml
     # Utilities
-    - toggl-track
     - iterm2
     - keepingyouawake # maintained caffeinate wrapper
     - appcleaner
@@ -245,6 +244,7 @@ mac_cask_packages:
     - simbl
     - spotifree
     - toggl
+    - toggl-track # Deprecated, now there is a macOS native app https://github.com/toggl-open-source/toggldesktop
     - tor-browser
     - pritunl # VPN https://client.pritunl.com/#install
     - aws-vpn-client
@@ -275,6 +275,7 @@ mac_mas_packages:
     - 973134470 # Be Focused - Focus Timer https://apps.apple.com/us/app/be-focused-focus-timer/id973134470
     # To enable biometric unlock, Bitwarden has to be installed from the App Store, not from a cask
     - 1352778147 # Bitwarden https://itunes.apple.com/us/app/id1352778147
+    - 1291898086 # Toggl Track https://apps.apple.com/us/app/toggl-track-hours-time-log/id1291898086
   personal_laptop:
   company_laptop:
   remove:

@@ -39,8 +39,9 @@
   pyenv:
     subcommand: global
     versions:
-      - "{{ latest_python_3_9.stdout }}"
+      - "{{ latest_python_3_11.stdout }}"
       - "{{ latest_python_3_10.stdout }}"
+      - "{{ latest_python_3_9.stdout }}"
       - "{{ latest_python_3_8.stdout }}"
       - "{{ latest_python_3_7.stdout }}"
       - "{{ latest_python_2_7.stdout }}"

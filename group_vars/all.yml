@@ -207,6 +207,8 @@ mac_cask_packages:
     - microsoft-office # https://products.office.com/mac/microsoft-office-for-mac/
     - cloudflare-warp # VPN client https://cloudflarewarp.com/
     - virtualbox # https://www.virtualbox.org/
+    - findutils # https://www.gnu.org/software/findutils/
+    - mongodb-compass # https://www.mongodb.com/products/compass
   remove:
     - dropbox
     - imageoptim # optimizing images

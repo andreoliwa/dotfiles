@@ -186,9 +186,9 @@ mac_cask_packages:
     - raycast # https://raycast.app/
     - gnucash # https://gnucash.org/
     - fujitsu-scansnap-home # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
+    - dupeguru # https://dupeguru.voltaicideas.net/
   personal_laptop:
     - hp-easy-start # https://support.hp.com/
-    - dupeguru # https://dupeguru.voltaicideas.net/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - grandperspective # https://grandperspectiv.sourceforge.io/
     - macfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/

@@ -210,6 +210,7 @@ mac_cask_packages:
     - virtualbox # https://www.virtualbox.org/
     - findutils # https://www.gnu.org/software/findutils/
     - mongodb-compass # https://www.mongodb.com/products/compass
+    - insomnia # REST client
   remove:
     - dropbox
     - imageoptim # optimizing images
@@ -229,7 +230,6 @@ mac_cask_packages:
     - dashlane # https://www.dashlane.com/
     - gmail-notifier
     - zulip
-    - insomnia # REST client
     - vagrant
     - spectacle # Replaced by hammerspoon
     - dissenter-browser

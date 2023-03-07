@@ -24,7 +24,8 @@ Icon
 .ropeproject
 .autoxsh
 .envrc
-.env.local
+# .env.local, .env.dev, .env.prod...
+.env.*
 
 ### Python ###
 .venv

@@ -104,6 +104,7 @@ mac_homebrew_packages:
     - protobuf # https://github.com/protocolbuffers/protobuf
     - gradle-completion # https://github.com/gradle/gradle-completion
     - goreleaser/tap/goreleaser # https://github.com/goreleaser/goreleaser
+    - mike-engel/jwt-cli/jwt-cli # https://github.com/mike-engel/jwt-cli
   remove:
     - heroku/brew/heroku
     - highlight

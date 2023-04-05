@@ -176,7 +176,6 @@ if wide_curved_screen ~= nil then
         {"Slack", nil, hs.layout.left50, nil},
         {"Telegram", nil, hs.layout.left50, hide_when_working},
         {"WhatsApp", nil, hs.layout.left50, hide_when_working},
-        {"Signal", nil, hs.layout.left50, hide_when_working},
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
         {"Logseq", nil, hs.geometry.rect(0.075, 0, 0.425, 1), hide_when_working}, -- middle left 42,5%
@@ -195,6 +194,7 @@ if wide_curved_screen ~= nil then
         {"VLC", nil, hs.layout.maximized, hide_when_working},
     })
     config_screen(laptop_screen, {
+        {"Signal", nil, hs.layout.maximized, hide_when_working},
         {"Skype", nil, hs.layout.maximized, nil},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right50, hide_when_working},

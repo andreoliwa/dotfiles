@@ -131,8 +131,9 @@
   "search.smartCase": true,
   "search.useGlobalIgnoreFiles": true,
   "search.showLineNumbers": true,
-"editor.detectIndentation": false,
-"[python]": {
+  "editor.detectIndentation": false,
+  "[python]": {
     "editor.formatOnType": true
-}
+  },
+  "rewrap.wrappingColumn": 140
 }

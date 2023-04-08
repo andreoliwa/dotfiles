@@ -212,6 +212,10 @@ mac_cask_packages:
     - findutils # https://www.gnu.org/software/findutils/
     - mongodb-compass # https://www.mongodb.com/products/compass
     - insomnia # REST client
+    - calibre # https://calibre-ebook.com/
+    - kindle # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
+    - kindle-previewer # https://www.amazon.com/Kindle-Previewer/b?ie=UTF8&node=21381691011
+    - send-to-kindle # https://www.amazon.com/gp/sendtokindle/mac
   remove:
     - dropbox
     - imageoptim # optimizing images

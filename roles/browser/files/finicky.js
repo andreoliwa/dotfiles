@@ -55,7 +55,7 @@ var workURLs = [
   /atlassian/,
   /slack/,
   /datadog/,
-  /aws/,
+  /aws.com/,
   /awsapps.com/,
   /amazon.com/,
   /thoughtworks/,

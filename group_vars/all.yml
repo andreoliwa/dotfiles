@@ -19,7 +19,7 @@ git_personal:
   # Name used in commit messages
   user_name: W. Augusto Andreoli
   # If you use GitHub, this should be the same as the email used on Github
-  user_email: andreoliwa@gmail.com
+  user_email: andreoliwa@proton.me
   # GPG Key ID used to sign git commits
   # See https://github.com/pstadler/keybase-gpg-github setup instructions
   # To see all keys:

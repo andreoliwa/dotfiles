@@ -178,7 +178,8 @@ if wide_curved_screen ~= nil then
         {"WhatsApp", nil, hs.layout.left50, hide_when_working},
         {"Bitwarden", nil, hs.layout.left30, false},
         {"Gnucash", nil, hs.layout.left50, nil},
-        {"Logseq", nil, hs.geometry.rect(0.075, 0, 0.425, 1), hide_when_working}, -- middle left 42,5%
+        -- {"Logseq", nil, hs.geometry.rect(0.075, 0, 0.425, 1), hide_when_working}, -- middle left 42,5%
+        {"Logseq", nil, hs.layout.left50, hide_when_working},
         {"Authy Desktop", nil, hs.layout.center_left, true},
 
         -- Right

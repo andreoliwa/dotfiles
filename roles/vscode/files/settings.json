@@ -22,7 +22,7 @@
     "*.drawio": "xml",
     "**/.ssh/config": "shellscript",
     "hosts": "ini",
-    "*.mrconfig": "ini",
+    "*.mrconfig*": "ini",
     "Makefile*": "makefile",
     "*.jrnl": "markdown"
   },

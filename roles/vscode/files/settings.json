@@ -24,7 +24,8 @@
     "hosts": "ini",
     "*.mrconfig*": "ini",
     "Makefile*": "makefile",
-    "*.jrnl": "markdown"
+    "*.jrnl": "markdown",
+    "*.json5": "jsonc"
   },
   "diffEditor.ignoreTrimWhitespace": true,
   "extensions.ignoreRecommendations": false,

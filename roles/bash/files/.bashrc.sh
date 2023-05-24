@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Uncomment to debug
+# set -x
+
+start_time=$(gdate +%s.%6N)
+
 # Load environment variables and aliases; some files should exist,
 # you will get a warning to remind you to create them
 # shellcheck source=/dev/null
@@ -79,3 +84,7 @@ eval "$(starship init bash)"
 # https://direnv.net/docs/hook.html#bash
 eval "$(direnv hook bash)"
 # ==================== END https://github.com/direnv/direnv
+
+end_time=$(gdate +%s.%6N)
+execution_time=$(echo "$end_time - $start_time" | bc)
+printf "Elapsed time: %.6f seconds\n" "$execution_time"

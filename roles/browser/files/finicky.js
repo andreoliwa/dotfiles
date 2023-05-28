@@ -1,5 +1,5 @@
 // TODO: is there a way to match handlers conditionally? e.g.: only when Slack is open
-const isSlackOpen = true;
+const isSlackOpen = false;
 
 // Work URLs
 // Match any part of the URL with the regexes below
@@ -24,7 +24,6 @@ var workURLs = [
   /baeldung/,
   /java.net/,
   /jooq.org/,
-  /spring/, // Not the season of the year, but the Java framework
   /postman.com/,
   /jfrog/,
   /doordash/,

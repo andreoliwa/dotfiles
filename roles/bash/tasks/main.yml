@@ -68,6 +68,8 @@
       complete -F _complete_alias gs
       complete -F _complete_alias gst
       complete -F _complete_alias i
+      complete -F _complete_alias ih
+      complete -F _complete_alias ir
       complete -F _complete_alias k
       complete -F _complete_alias p
 

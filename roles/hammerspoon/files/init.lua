@@ -199,7 +199,7 @@ if wide_curved_screen ~= nil then
         {"Skype", nil, hs.layout.maximized, nil},
         {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
         {"Toggl Track", nil, hs.layout.right50, hide_when_working},
-        {"Spotify", nil, hs.layout.left70, hide_when_working},
+        {"Spotify", nil, hs.layout.right70, hide_when_working},
         {"TeamViewer", nil, hs.layout.maximized, nil},
         {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
         {"zoom.us", "zoom floating video window", hs.layout.left50, nil},

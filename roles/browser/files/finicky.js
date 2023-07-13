@@ -30,6 +30,7 @@ var workURLs = [
   /okta/,
   /cuckooworkout/,
   /daas/,
+  /oreilly/,
 
   /snowflake.com/,
   /accounts.google.com/,

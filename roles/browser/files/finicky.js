@@ -31,12 +31,10 @@ var workURLs = [
   /cuckooworkout/,
   /daas/,
   /oreilly/,
-
   /snowflake.com/,
   /accounts.google.com/,
   /AccountChooser/,
   /GlifWebSignIn/, // Snowflake OAuth login with https://accounts.google.com/AccountChooser/signinchooser
-
   /maven/,
   /mvn/,
   /gradle/,
@@ -50,6 +48,7 @@ var workURLs = [
   /google.zoom/,
   /finaro/,
   /credorax/,
+  /adp.com/,
 
   // sennder
   /atlassian/,

@@ -25,6 +25,7 @@ function ternary(condition, true_value, false_value)
     if condition then return true_value else return false_value end
 end
 
+local at_the_office = string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
 local working = hs.application.find('slack') ~= nil
 -- Hide app when working, keep its current visibility state when not working
 local hide_when_working = ternary(working, false, nil)
@@ -83,34 +84,33 @@ end
 -- http://www.hammerspoon.org/docs/hs.screen.html#find
 local laptop_screen = 'Built-in Retina Display'
 
--- Wide screen name is "LEN T34w-20"; I had to remove the "-20" for string.match() to find the screen
-local wide_curved_screen = hs.screen.find('LEN T34w')
+-- Can be UUIDs or names; copy/paste from HammerSpoon console
+-- Wide screen name is 'LEN T34w-20'; the dash has to be escaped with %
+local wide_screen = nil
+local wide_screens = {'LEN T34w%-20',}
+for index, screen_id in ipairs(wide_screens) do
+    wide_screen = hs.screen.find(screen_id)
+    if wide_screen ~= nil then
+        break
+    end
+end
 
 local horizontal_screen = nil
-local vertical_screen = nil
-
--- Can be UUIDs or names; copy/paste from HammerSpoon console
-local horizontal_screens = {'LEN T34w-20'}
-local vertical_screens = {}
-
+local horizontal_screens = {'DELL P3223DE',}
 for index, screen_id in ipairs(horizontal_screens) do
     horizontal_screen = hs.screen.find(screen_id)
     if horizontal_screen ~= nil then
         break
     end
 end
-if horizontal_screen == nil then
-    horizontal_screen = laptop_screen
-end
 
+local vertical_screen = nil
+local vertical_screens = {}
 for index, screen_id in ipairs(vertical_screens) do
     vertical_screen = hs.screen.find(screen_id)
     if vertical_screen ~= nil then
         break
     end
-end
-if vertical_screen == nil then
-    vertical_screen = horizontal_screen
 end
 
 -- Default layouts: http://www.hammerspoon.org/docs/hs.layout.html
@@ -128,92 +128,113 @@ hs.layout.right50_bottom = hs.geometry.rect(0.5, 0.5, 0.5, 0.5)
 
 local window_layout = {}
 
-function config_screen(screen, apps)
-    for index, tuple in pairs(apps) do
-        local app_name = tuple[1]
-        local config = {app_name, tuple[2], screen, tuple[3], nil, nil}
-        local show_app = tuple[4]
-        table.insert(window_layout, config)
+function display_app(app_name, is_visible)
+    if app_name ~= nil and is_visible ~= nil then
+        -- The return can be hs.application or hs.window (or maybe more things)
+        -- http://www.hammerspoon.org/docs/hs.application.html#find
+        app_or_window = hs.application.find(app_name)
 
-        if show_app ~= nil and app_name ~= nil then
-            -- The return can be hs.application or hs.window (or maybe more things)
-            -- http://www.hammerspoon.org/docs/hs.application.html#find
-            app_or_window = hs.application.find(app_name)
-
-            if app_or_window ~= nil then
-                -- Uncomment this to find and activate the application window (layout only works on visible/activated windows)
-                -- app_or_window:activate()
-                if show_app then
-                    -- http://www.hammerspoon.org/docs/hs.application.html#unhide
-                    app_or_window:unhide()
-                else
-                    -- http://www.hammerspoon.org/docs/hs.application.html#hide
-                    -- A window doesn't have the hide() method and raises:
-                    -- method 'hide' is not callable (a nil value)
-                    if app_or_window.hide ~= nil then
-                        app_or_window:hide()
-                    end
+        if app_or_window ~= nil then
+            -- Uncomment this to find and activate the application window (layout only works on visible/activated windows)
+            -- app_or_window:activate()
+            if is_visible then
+                -- http://www.hammerspoon.org/docs/hs.application.html#unhide
+                app_or_window:unhide()
+            else
+                -- http://www.hammerspoon.org/docs/hs.application.html#hide
+                -- A window doesn't have the hide() method and raises:
+                -- method 'hide' is not callable (a nil value)
+                if app_or_window.hide ~= nil then
+                    app_or_window:hide()
                 end
             end
         end
     end
 end
 
-if wide_curved_screen ~= nil then
-    config_screen(wide_curved_screen, {
-        -- Left
-        {"iTerm2", nil, hs.layout.left50, nil},
-        {"Terminal", nil, hs.layout.left50, nil},
-        {"Preview", nil, hs.layout.left50, nil},
+function add_to_window_layout(app_name, window_title, screen, layout)
+    local config = {app_name, window_title, screen, layout, nil, nil}
+    table.insert(window_layout, config)
+end
 
-        {"Finder", nil, hs.layout.right50_top, nil},
-        {"Finder", "consume", hs.layout.right50_bottom, nil},
-        {"Finder", "inbox", hs.layout.right50_bottom, nil},
-        {"Finder", "import", hs.layout.right50_bottom, nil},
+function config_screen(screen, apps)
+    for index, tuple in pairs(apps) do
+        local app_name, window_title, layout, is_visible = table.unpack(tuple)
+        add_to_window_layout(app_name, window_title, screen, layout)
+        display_app(app_name, is_visible)
+    end
+end
 
-        {"Brave Browser", nil, hs.layout.left50, nil},
-        {"Brave Browser Beta", nil, hs.layout.left50, nil},
-        {"Slack", nil, hs.layout.left50, nil},
-        {"Telegram", nil, hs.layout.left50, hide_when_working},
-        {"WhatsApp", nil, hs.layout.left50, hide_when_working},
-        {"Bitwarden", nil, hs.layout.left30, false},
-        {"Gnucash", nil, hs.layout.left50, nil},
-        -- {"Logseq", nil, hs.geometry.rect(0.075, 0, 0.425, 1), hide_when_working}, -- middle left 42,5%
-        {"Logseq", nil, hs.layout.left50, hide_when_working},
-        {"Authy Desktop", nil, hs.layout.center_left, true},
+function config_app(app_name, window_title, is_visible, screen_condition_layout_list)
+    if window_title == "" then
+        window_title = nil
+    end
 
-        -- Right
-        {"PyCharm", nil, hs.layout.right50, nil},
-        {"Code", nil, hs.layout.right50, nil},
-        {"App Store", nil, hs.layout.right50, nil},
-        {"Notes", nil, hs.layout.right50, nil},
-        {"zoom.us", 'Zoom', hs.layout.right50, nil},
-        {"Activity Monitor", nil, hs.layout.right30, nil},
-        {"DeepL", nil, hs.layout.right50_top, hide_when_working},
+    display_app(app_name, is_visible)
 
-        -- Full
-        {"VLC", nil, hs.layout.maximized, hide_when_working},
-    })
-    config_screen(laptop_screen, {
-        {"Signal", nil, hs.layout.maximized, hide_when_working},
-        {"Skype", nil, hs.layout.maximized, nil},
-        {nil, hs.window.find('YouTube'), hs.layout.maximized, nil},
-        {"Toggl Track", nil, hs.layout.right50, hide_when_working},
-        {"Spotify", nil, hs.layout.right70, hide_when_working},
-        {"TeamViewer", nil, hs.layout.maximized, nil},
-        {"zoom.us", 'Zoom Meeting', hs.layout.maximized, nil},
-        {"zoom.us", "zoom floating video window", hs.layout.left50, nil},
-        {"zoom.us", "zoom share statusbar window", hs.layout.right50, nil},
-        {"zoom.us", "zoom share toolbar window", hs.layout.right70, nil},
+    local found = false
+    for index, sl_tuple in pairs(screen_condition_layout_list) do
+        local screen, condition, layout = table.unpack(sl_tuple)
+        if screen ~= nil and condition then
+            add_to_window_layout(app_name, window_title, screen, layout)
+            found = true
+            break
+        end
+    end
 
-        {"Hammerspoon", "Hammerspoon Console", hs.layout.bottom50, debug},
-        {"Speedtest", nil, hs.layout.left50, nil},
-        {"Todoist", nil, hs.layout.right70, hide_when_working},
-        {"Docker Desktop", nil, hs.layout.top50, nil},
-        {"ScanSnap Home", nil, hs.geometry.rect(0.42, 0.23, 0.5, 0.5), nil},
-        {nil, hs.window.find('- Scan'), hs.layout.right70, nil},
-    })
-else
+    -- If a layout could not be set due to the conditions above,
+    -- fallback to maximise the window on the laptop screen
+    if not found then
+        add_to_window_layout(app_name, window_title, laptop_screen, hs.layout.maximized)
+    end
+end
+
+-- If possible, keep apps sorted with the "Sort Lines Ascending" VSCode command, in order to find them easily.
+-- The sort order of the entries is important, though.
+-- Use window_title = '' so the entry with no title appears first.
+config_app('Activity Monitor', '', nil, {{wide_screen, true, hs.layout.right30}, {horizontal_screen, true, hs.layout.right50}})
+config_app('App Store', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right50}})
+config_app('Authy Desktop', '', true, {{wide_screen, true, hs.layout.center_left}, {horizontal_screen, true, hs.layout.center_left}})
+config_app('Bitwarden', '', false, {{wide_screen, true, hs.layout.left30}, {horizontal_screen, true, hs.layout.left30}})
+config_app('Brave Browser Beta', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
+config_app('Brave Browser', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
+config_app('Code', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('DeepL', '', hide_when_working, {{wide_screen, true, hs.layout.right50_top}, {horizontal_screen, true, hs.layout.right50_top}})
+config_app('Docker Desktop', nil, nil, {{laptop_screen, true, hs.layout.top50}})
+config_app('Finder', '', nil, {{wide_screen, true, hs.layout.right50_top}, {horizontal_screen, true, hs.layout.right50_top}})
+config_app('Finder', 'consume', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
+config_app('Finder', 'import', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
+config_app('Finder', 'inbox', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
+config_app('Gnucash', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
+config_app('Hammerspoon', 'Hammerspoon Console', debug, {{laptop_screen, true, hs.layout.bottom50}})
+config_app('iTerm2', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
+config_app('Logseq', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})
+config_app('Notes', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right50}})
+config_app('Preview', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
+config_app('PyCharm', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('ScanSnap Home', nil, nil, {{laptop_screen, true, hs.geometry.rect(0.42, 0.23, 0.5, 0.5)}})
+config_app('Signal', nil, hide_when_working, {{laptop_screen, true, hs.layout.maximized}})
+config_app('Skype', nil, nil, {{laptop_screen, true, hs.layout.maximized}})
+config_app('Slack', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
+config_app('Speedtest', nil, nil, {{laptop_screen, true, hs.layout.left50}})
+config_app('Spotify', nil, hide_when_working, {{laptop_screen, true, hs.layout.right70}})
+config_app('TeamViewer', nil, nil, {{laptop_screen, true, hs.layout.maximized}})
+config_app('Telegram', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
+config_app('Terminal', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
+config_app('Todoist', nil, hide_when_working, {{laptop_screen, true, hs.layout.right70}})
+config_app('Toggl Track', nil, hide_when_working, {{laptop_screen, true, hs.layout.left50}})
+config_app('VLC', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.maximized}, {horizontal_screen, not at_the_office, hs.layout.maximized}})
+config_app('WhatsApp', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})
+config_app('zoom.us', 'Zoom Meeting', nil, {{laptop_screen, true, hs.layout.maximized}})
+config_app('zoom.us', 'Zoom', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('zoom.us', 'zoom floating video window', nil, {{laptop_screen, true, hs.layout.left50}})
+config_app('zoom.us', 'zoom share statusbar window', nil, {{laptop_screen, true, hs.layout.right50}})
+config_app('zoom.us', 'zoom share toolbar window', nil, {{laptop_screen, true, hs.layout.right70}})
+config_app(nil, hs.window.find('- Scan'), nil, {{laptop_screen, true, hs.layout.right70}})
+config_app(nil, hs.window.find('YouTube'), nil, {{laptop_screen, true, hs.layout.maximized}})
+
+-- TODO: I don't use a vertical screen anymore for some time; convert these other layouts on demand
+if false and wide_screen == nil then
     config_screen(horizontal_screen, {
         {"Finder", nil, hs.layout.top50, nil},
         {"Code", nil, hs.layout.maximized, nil},

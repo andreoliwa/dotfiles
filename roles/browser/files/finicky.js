@@ -39,6 +39,7 @@ var workURLs = [
   /mvn/,
   /gradle/,
   /kube/,
+  /k8s/,
   /apache/,
   /protocol-buffers/,
   /confluentinc/,

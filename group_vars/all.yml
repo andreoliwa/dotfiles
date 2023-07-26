@@ -216,6 +216,7 @@ mac_cask_packages:
     - kindle # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
     - kindle-previewer # https://www.amazon.com/Kindle-Previewer/b?ie=UTF8&node=21381691011
     - send-to-kindle # https://www.amazon.com/gp/sendtokindle/mac
+    - minikube # https://github.com/kubernetes/minikube
   remove:
     - dropbox
     - imageoptim # optimizing images

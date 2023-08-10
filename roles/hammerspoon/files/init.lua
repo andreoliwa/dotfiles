@@ -192,6 +192,7 @@ end
 -- If possible, keep apps sorted with the "Sort Lines Ascending" VSCode command, in order to find them easily.
 -- The sort order of the entries is important, though.
 -- Use window_title = '' so the entry with no title appears first.
+config_app('', hs.window.find('YouTube'), nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('Activity Monitor', '', nil, {{wide_screen, true, hs.layout.right30}, {horizontal_screen, true, hs.layout.right50}})
 config_app('App Store', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right50}})
 config_app('Authy Desktop', '', true, {{wide_screen, true, hs.layout.center_left}, {horizontal_screen, true, hs.layout.center_left}})
@@ -212,6 +213,7 @@ config_app('Logseq', '', hide_when_working, {{wide_screen, not at_the_office, hs
 config_app('Notes', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right50}})
 config_app('Preview', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('PyCharm', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('ScanSnap Home', hs.window.find('- Scan'), nil, {{laptop_screen, true, hs.layout.right70}})
 config_app('ScanSnap Home', nil, nil, {{laptop_screen, true, hs.geometry.rect(0.42, 0.23, 0.5, 0.5)}})
 config_app('Signal', nil, hide_when_working, {{laptop_screen, true, hs.layout.maximized}})
 config_app('Skype', nil, nil, {{laptop_screen, true, hs.layout.maximized}})
@@ -225,13 +227,11 @@ config_app('Todoist', nil, hide_when_working, {{laptop_screen, true, hs.layout.r
 config_app('Toggl Track', nil, hide_when_working, {{laptop_screen, true, hs.layout.left50}})
 config_app('VLC', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.maximized}, {horizontal_screen, not at_the_office, hs.layout.maximized}})
 config_app('WhatsApp', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})
-config_app('zoom.us', 'Zoom Meeting', nil, {{laptop_screen, true, hs.layout.maximized}})
-config_app('zoom.us', 'Zoom', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
 config_app('zoom.us', 'zoom floating video window', nil, {{laptop_screen, true, hs.layout.left50}})
+config_app('zoom.us', 'Zoom Meeting', nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('zoom.us', 'zoom share statusbar window', nil, {{laptop_screen, true, hs.layout.right50}})
 config_app('zoom.us', 'zoom share toolbar window', nil, {{laptop_screen, true, hs.layout.right70}})
-config_app(nil, hs.window.find('- Scan'), nil, {{laptop_screen, true, hs.layout.right70}})
-config_app(nil, hs.window.find('YouTube'), nil, {{laptop_screen, true, hs.layout.maximized}})
+config_app('zoom.us', 'Zoom', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
 
 -- TODO: I don't use a vertical screen anymore for some time; convert these other layouts on demand
 if false and wide_screen == nil then

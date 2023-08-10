@@ -141,5 +141,6 @@
   "diffEditor.codeLens": true,
   "diffEditor.experimental.collapseUnchangedRegions": true,
   "diffEditor.experimental.showMoves": true,
-  "diffEditor.experimental.useVersion2": true
+  "diffEditor.experimental.useVersion2": true,
+  "application.shellEnvironmentResolutionTimeout": 15
 }

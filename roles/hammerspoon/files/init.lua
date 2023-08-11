@@ -290,6 +290,10 @@ end
 
 -- http://www.hammerspoon.org/docs/hs.layout.html#apply
 function compare_window_title(actual_window_title, expected_window_title)
+    if actual_window_title == nil or expected_window_title == nil then
+        return false
+    end
+
     local found = string.match(actual_window_title, expected_window_title)
     if found ~= nil then
         debug_print('  Found this: ' .. expected_window_title .. ' in this existing window title: ' .. actual_window_title)

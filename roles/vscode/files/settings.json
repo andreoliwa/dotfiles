@@ -139,8 +139,14 @@
   "rewrap.wrappingColumn": 140,
   "editor.inlineSuggest.enabled": true,
   "diffEditor.codeLens": true,
-  "diffEditor.experimental.collapseUnchangedRegions": true,
+  "diffEditor.hideUnchangedRegions.enabled": true,
   "diffEditor.experimental.showMoves": true,
   "diffEditor.experimental.useVersion2": true,
-  "application.shellEnvironmentResolutionTimeout": 15
+  "application.shellEnvironmentResolutionTimeout": 15,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false
+  }
 }

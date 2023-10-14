@@ -192,9 +192,9 @@ mac_cask_packages:
     - macfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
     - onedrive # https://onedrive.live.com/
     - dropbox
-  personal_laptop:
-    - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - grandperspective # https://grandperspectiv.sourceforge.io/
+    - ccleaner # https://www.ccleaner.com/ccleaner-mac
+  personal_laptop:
     - transmission-remote-gui # https://github.com/transmission-remote-gui/transgui
   company_laptop:
     - slack # https://slack.com/

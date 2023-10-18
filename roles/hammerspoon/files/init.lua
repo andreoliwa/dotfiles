@@ -96,7 +96,7 @@ for index, screen_id in ipairs(wide_screens) do
 end
 
 local horizontal_screen = nil
-local horizontal_screens = {'DELL P3223DE',}
+local horizontal_screens = {'DELL',}
 for index, screen_id in ipairs(horizontal_screens) do
     horizontal_screen = hs.screen.find(screen_id)
     if horizontal_screen ~= nil then

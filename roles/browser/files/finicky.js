@@ -8,7 +8,7 @@ var workURLs = [
   /ops.wolt/,
   /@wolt/,
   /woltapp/,
-  /wolt./,
+  /wolt\./,
   /creditornot/,
   /planitpoker/,
   /liveshare/,

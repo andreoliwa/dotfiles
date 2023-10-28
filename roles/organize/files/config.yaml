@@ -15,7 +15,11 @@ slugify_folders: &slugify
 mobile_upload_folders: &mobile_upload
   - path: ~/OneDrive/Pictures/Camera Roll/
     ignore_errors: true
+  - path: ~/OneDrive/Pictures/Documents/
+    ignore_errors: true
   - path: ~/OneDrive/Pictures/Download/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/Instagram/
     ignore_errors: true
   - path: ~/OneDrive/Pictures/Screenshots/
     ignore_errors: true
@@ -144,6 +148,8 @@ rules:
             - _wa_
             - whats_app
             - whatsapp
+            - DSC_
+            - VID_
           case_sensitive: false
       - lastmodified
     actions:
@@ -177,6 +183,7 @@ rules:
             - "7"
             - "8"
             - "9"
+            - IMG_
             # Facebook Messenger
             - Received
             # Facebook

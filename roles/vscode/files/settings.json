@@ -30,7 +30,6 @@
   "diffEditor.ignoreTrimWhitespace": true,
   "extensions.ignoreRecommendations": false,
   "breadcrumbs.enabled": true,
-  "workbench.activityBar.visible": true,
   "workbench.statusBar.visible": true,
   "editor.minimap.enabled": false,
   "editor.renderWhitespace": "none",
@@ -148,5 +147,6 @@
     "plaintext": true,
     "markdown": true,
     "scminput": false
-  }
+  },
+  "workbench.activityBar.location": "top"
 }

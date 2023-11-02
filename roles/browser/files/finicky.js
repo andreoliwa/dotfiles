@@ -50,6 +50,7 @@ var workURLs = [
   /finaro/,
   /credorax/,
   /adp.com/,
+  /workday/,
 
   // sennder
   /atlassian/,

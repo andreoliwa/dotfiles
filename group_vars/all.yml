@@ -147,7 +147,7 @@ mac_cask_packages:
     - finicky # https://github.com/johnste/finicky
     # Development
     - visual-studio-code
-    - docker
+    - orbstack # https://github.com/orbstack/orbstack?tab=readme-ov-file
     # Network
     - teamviewer
     - private-internet-access
@@ -260,6 +260,7 @@ mac_cask_packages:
     - datagrip # https://www.jetbrains.com/datagrip/
     - brave-browser-dev # https://brave.com/download-dev/
     - hp-easy-start # https://support.hp.com/
+    - docker # replaced by orbstack
 
 # APT packages that don't get installed by a role
 apt_packages:

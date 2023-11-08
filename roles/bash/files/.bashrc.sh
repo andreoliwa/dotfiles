@@ -48,6 +48,9 @@ test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
 eval "$(register-python-argcomplete pipx)"
 # ==================== END https://github.com/pipxproject/pipx#install-pipx
 
+# Add Golang bin directory to the PATH
+test -d "$HOME"/go/bin && export PATH="$PATH:$HOME/go/bin"
+
 # Add my private script toolbox as last on the PATH
 test -d "$HOME"/Code/toolbox/bin && export PATH="$PATH:$HOME/Code/toolbox/bin"
 

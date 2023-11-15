@@ -414,8 +414,10 @@ npm_global_packages:
 rust_binaries:
   # keep-sorted start
   - { pkg: cargo-update, bin: cargo-install-update } # https://github.com/nabijaczleweli/cargo-update
-  - { pkg: exa, bin: exa } # https://github.com/ogham/exa
+  - { pkg: eza, bin: eza } # https://github.com/eza-community/eza
   # keep-sorted end
+  # TODO remove:
+  # - { pkg: exa, bin: exa } # https://github.com/ogham/exa
 
 rust_git_repos:
   # keep-sorted start

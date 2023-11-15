@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
-alias ls=exa
-alias tree='exa --tree'
+alias ls=eza
+alias tree='eza --tree'

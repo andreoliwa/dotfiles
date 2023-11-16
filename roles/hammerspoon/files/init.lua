@@ -203,7 +203,7 @@ config_app('Code', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal
 config_app('DeepL', '', hide_when_working, {{wide_screen, true, hs.layout.right50_top}, {horizontal_screen, true, hs.layout.right50_top}})
 config_app('Docker Desktop', nil, nil, {{laptop_screen, true, hs.layout.top50}})
 config_app('Finder', '', nil, {{wide_screen, true, hs.layout.right50_top}, {horizontal_screen, true, hs.layout.right50_top}})
-config_app('Finder', 'consume', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
+config_app('Finder', 'consume-into-paperless', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
 config_app('Finder', 'import', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
 config_app('Finder', 'inbox', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
 config_app('Gnucash', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})

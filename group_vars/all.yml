@@ -56,6 +56,7 @@ mac_homebrew_packages:
     - duplicity
     - dust # https://lib.rs/crates/du-dust
     - fd # https://github.com/sharkdp/fd
+    - fx # https://github.com/antonmedv/fx
     - git-extras # https://github.com/tj/git-extras
     - github/gh/gh # GitHub CLI https://github.com/cli/cli
     - go # https://golang.org
@@ -415,6 +416,7 @@ rust_binaries:
   # keep-sorted start
   - { pkg: cargo-update, bin: cargo-install-update } # https://github.com/nabijaczleweli/cargo-update
   - { pkg: eza, bin: eza } # https://github.com/eza-community/eza
+  - { pkg: tailspin, bin: tailspin } # https://github.com/bensadeh/tailspin
   # keep-sorted end
   # TODO remove:
   # - { pkg: exa, bin: exa } # https://github.com/ogham/exa

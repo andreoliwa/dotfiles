@@ -10,7 +10,7 @@
 - import_tasks: link_files.yml
   when: ansible_distribution == "MacOSX" # TODO fix: link files on Linux too
 - import_tasks: copy_files.yml
-  when: ansible_distribution in ("OSMC", "Amazon") or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
+  when: ansible_distribution in ("OSMC", "Amazon") or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner"))
 
 # https://github.com/powerline/powerline
 # https://github.com/b-ryan/powerline-shell
@@ -21,7 +21,7 @@
 - import_tasks: bash-git-prompt.yml
 
 - import_tasks: z.yml
-  when: ansible_os_family in ("Debian", "OSMC")
+  when: ansible_os_family in ("Debian", "OSMC") and ansible_system_vendor is defined and ansible_system_vendor not in ("DigitalOcean", "Hetzner")
 
 - import_tasks: autojump.yml
   when: ansible_os_family == "Darwin"
@@ -36,6 +36,8 @@
     path: ~/.bashrc
     marker: "# ==================== {mark} Bash completion / dotfiles"
     block: |
+      export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
+
       # brew info bash-completion2
       export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
       [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
@@ -77,20 +79,20 @@
   command: "python3 -m pip install pyyaml"
   when:
     - ansible_distribution not in ("OSMC", "Amazon")
-    - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"
+    - ansible_system_vendor is not defined or ansible_system_vendor not in ("DigitalOcean", "Hetzner")
 
 - name: "dotfiles-cache-shell-scripts: Create cached script that will be sourced on .bashrc"
   command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
   when:
     - ansible_distribution not in ("OSMC", "Amazon")
-    - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"
+    - ansible_system_vendor is not defined or ansible_system_vendor not in ("DigitalOcean", "Hetzner")
 
 - name: "Add .local/bin to PATH"
   lineinfile:
     path: ~/.bashrc
     state: present
     line: 'export PATH="$HOME/.local/bin:$PATH"'
-  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean") or ansible_os_family == "OSMC"
+  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner")) or ansible_os_family == "OSMC"
 
 - name: "Add ~/container-apps-private/bin to PATH"
   lineinfile:

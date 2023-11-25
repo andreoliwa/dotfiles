@@ -53,6 +53,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="run an Ansible playbook to setup a similar dev machine in multiple operating systems"
     )
+    parser.add_argument("--dry", action="store_true", help="dry-run mode")
     parser.add_argument("--task", "-t", dest="task", metavar="START_AT_TASK", help="start the playbook at this task")
     parser.add_argument("--debug", "-d", action="store_true", help="debug mode")
     parser.add_argument("--galaxy", "-g", action="store_true", help="install Ansible Galaxy roles")
@@ -76,7 +77,10 @@ def main():
     parser.add_argument("--verbose", "-v", action="count", help="verbose mode (-v, -vv, -vvv...)")
     parser.add_argument("--sudo", action="store_true", help="ask become password (required for some roles)")
     parser.add_argument(
-        "--remote", "-r", choices=["pi", "aws", "ocean"], help="setup remote servers (Raspberry Pi, AWS, Digital Ocean)"
+        "--remote",
+        "-r",
+        choices=["pi", "aws", "ocean", "hetzner"],
+        help="setup remote servers (Raspberry Pi, AWS, DigitalOcean, Hetzner Cloud)",
     )
     parser.add_argument("tag", nargs="*", help="ansible role tag")
     args = parser.parse_args()
@@ -116,6 +120,10 @@ def main():
     # otherwise it fails with error: "The following modules failed to execute: setup"
     if not args.remote:
         command_parts.append("-e ansible_python_interpreter={}".format(get_python()))
+
+    if args.dry:
+        # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_checkmode.html#using-check-mode
+        command_parts.append("--check")
 
     command_parts.extend(
         [

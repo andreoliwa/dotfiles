@@ -25,3 +25,14 @@ gotham
 
 [aws:vars]
 ansible_connection=ssh
+
+[hetzner]
+rlyeh
+
+[hetzner:vars]
+# Hetzner doesn't have /usr/bin/python, only /usr/bin/python3.
+# Set Python explicity to avoid the following error after copying some files to the remote host:
+# "Platform unknown on host rlyeh is using the discovered Python interpreter at /usr/bin/python,
+# but future installation of another Python interpreter could change the meaning of that path.
+# See https://docs.ansible.com/ansible-core/2.15/reference_appendices/interpreter_discovery.html for more information."
+ansible_python_interpreter=/usr/bin/python3

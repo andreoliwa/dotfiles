@@ -13,4 +13,4 @@
     marker: "# ==================== {mark} https://github.com/direnv/direnv"
     block: |
       # https://direnv.net/docs/hook.html#bash
-      eval "$(direnv hook bash)"
+      command -v direnv >/dev/null && eval "$(direnv hook bash)"

@@ -5,7 +5,7 @@
 # Run `pyenv init` to see the necessary changes to make to your configuration.
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+command -v pyenv >/dev/null && eval "$(pyenv init -)"
 
 # shellcheck disable=SC1091
 test -f "$HOME/.bashrc" && source "${HOME}/.bashrc"
@@ -28,7 +28,6 @@ fi
 
 # Where should I install my own local completions?
 # https://github.com/scop/bash-completion/blob/master/README.md#faq
-export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
 if [[ -d "$BASH_COMPLETION_USER_DIR/completions" ]]; then
     for COMPLETION in "$BASH_COMPLETION_USER_DIR/completions/"*; do
         # shellcheck source=/dev/null
@@ -47,9 +46,9 @@ fi
 # ==================== BEGIN https://github.com/asdf-vm/asdf
 # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
 # shellcheck disable=SC1091
-source "$HOME/.asdf/asdf.sh"
+test -e "$HOME/.asdf/asdf.sh" && source "$HOME/.asdf/asdf.sh"
 # shellcheck disable=SC1091
-source "$HOME/.asdf/completions/asdf.bash"
+test -e "$HOME/.asdf/completions/asdf.bash" && source "$HOME/.asdf/completions/asdf.bash"
 # ==================== END https://github.com/asdf-vm/asdf
 
 # https://discussions.apple.com/thread/251000125

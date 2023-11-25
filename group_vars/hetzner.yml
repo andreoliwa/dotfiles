@@ -1,0 +1,9 @@
+# APT packages that don't get installed by a role
+apt_packages:
+  - docker.io
+  - docker-compose
+  # https://caddyserver.com/docs/install#debian-ubuntu-raspbian
+  - debian-keyring
+  - debian-archive-keyring
+  - apt-transport-https
+  - caddy

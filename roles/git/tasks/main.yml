@@ -8,4 +8,4 @@
 - import_tasks: gitconfig.yml
   when:
     - ansible_distribution not in ("Amazon", "OSMC")
-    - ansible_system_vendor is not defined or ansible_system_vendor != "DigitalOcean"
+    - ansible_system_vendor is not defined or ansible_system_vendor not in ("DigitalOcean", "Hetzner")

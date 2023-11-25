@@ -16,7 +16,7 @@
     marker: "# ==================== {mark} https://github.com/pipxproject/pipx#install-pipx"
     block: |
       # Taken from "pipx completions" command
-      eval "$(register-python-argcomplete pipx)"
+      command -v register-python-argcomplete >/dev/null && eval "$(register-python-argcomplete pipx)"
 
 - name: "pipx: Remove common packages"
   with_items: "{{ python3_pipx_modules['remove'] }}"

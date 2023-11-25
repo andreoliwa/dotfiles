@@ -1,9 +1,21 @@
+- import_tasks: caddy_install.yml
+  when: ansible_system_vendor == "Hetzner"
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
 - name: "Install apt packages"
-  apt: name="{{ apt_packages }}" state=latest
+  apt:
+    update_cache: yes
+    name: "{{ apt_packages }}"
+    state: latest
   become: true
   when:
-    - 'ansible_os_family == "OSMC" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")'
+    - 'ansible_os_family == "OSMC" or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner"))'
     - "'apt_packages' | run_only_after"
+  register: remote_apt_packages
+- debug: var=remote_apt_packages
+
+- import_tasks: caddy.yml
+  when: ansible_system_vendor == "Hetzner"
 
 - import_tasks: osmc.yml
   when: ansible_os_family == "OSMC"
@@ -18,7 +30,7 @@
   file:
     state: directory
     path: ~/OneDrive/Backup
-  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
+  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner"))
 
 - name: Clone container-apps
   git:
@@ -26,7 +38,7 @@
     dest: ~/container-apps
     clone: yes
     update: yes
-  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor == "DigitalOcean")
+  when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner"))
 
 - name: Clone container-apps-private
   git:

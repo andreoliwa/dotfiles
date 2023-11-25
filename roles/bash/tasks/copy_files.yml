@@ -1,3 +1,7 @@
+# https://stackoverflow.com/questions/15330775/what-does-gdate-mean-in-this-shell-script
+- name: "Link GNU gdate if not found"
+  shell: "command -v gdate || sudo ln -s $(which date) /bin/gdate"
+
 - name: "Copy private local variables"
   copy:
     src: ~/.config/dotfiles/local.env

@@ -1,4 +1,4 @@
-- import_tasks: caddy_install.yml
+- import_tasks: apt_sources.yml
   when: ansible_system_vendor == "Hetzner"
 
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html

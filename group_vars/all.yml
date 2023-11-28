@@ -156,6 +156,7 @@ mac_cask_packages:
     # Browsers
     - brave-browser # https://brave.com/
     - brave-browser-beta # https://brave.com/download-beta/
+    - caddy # https://caddyserver.com/ to be able to format Caddyfile on VSCode
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - deepl
     - dropbox

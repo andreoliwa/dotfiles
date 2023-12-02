@@ -59,6 +59,7 @@
     path: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/complete_alias.bash-completion"
     marker: "# ==================== {mark} My aliases"
     block: |
+      # keep-sorted start
       complete -F _complete_alias d
       complete -F _complete_alias dc
       complete -F _complete_alias dk
@@ -74,6 +75,8 @@
       complete -F _complete_alias ir
       complete -F _complete_alias k
       complete -F _complete_alias p
+      complete -F _complete_alias rsync-default
+      # keep-sorted end
 
 - name: "dotfiles-cache-shell-scripts: Install PyYAML"
   command: "python3 -m pip install pyyaml"
@@ -99,4 +102,4 @@
     path: ~/.bashrc
     state: present
     line: 'export PATH="$PATH:$HOME/container-apps-private/bin"'
-  when: ansible_os_family == "OSMC"
+  when: ansible_os_family == "OSMC" or ansible_system_vendor == "Hetzner"

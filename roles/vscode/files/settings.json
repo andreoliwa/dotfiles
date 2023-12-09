@@ -27,7 +27,7 @@
   "workbench.colorTheme": "Default Light+",
   "python.pipenvPath": "",
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "git.enableCommitSigning": true,
   "git.showPushSuccessNotification": true,

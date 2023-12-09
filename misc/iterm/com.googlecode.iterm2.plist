@@ -852,6 +852,8 @@
 	<true/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>2</integer>
+	<key>PasteTabToStringTabStopSize</key>
+	<integer>4</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>

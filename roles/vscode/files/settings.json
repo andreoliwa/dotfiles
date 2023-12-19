@@ -127,5 +127,9 @@
     "markdown": true,
     "scminput": false
   },
-  "workbench.activityBar.location": "top"
+  "workbench.activityBar.location": "top",
+  "ruff.interpreter": ["/Users/aa/.local/pipx/venvs/ruff/bin/python3"],
+  "semanticdiff.defaultDiffViewer": true,
+  "semanticdiff.closeOriginalTab": true,
+  "semanticdiff.diff.compareMovedCode": true
 }

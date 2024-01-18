@@ -130,5 +130,6 @@
   "ruff.interpreter": ["/Users/aa/.local/pipx/venvs/ruff/bin/python3"],
   "semanticdiff.defaultDiffViewer": true,
   "semanticdiff.closeOriginalTab": true,
-  "semanticdiff.diff.compareMovedCode": true
+  "semanticdiff.diff.compareMovedCode": true,
+  "debug.allowBreakpointsEverywhere": true
 }

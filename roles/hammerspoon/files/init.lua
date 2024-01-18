@@ -1,5 +1,4 @@
 -- https://www.tutorialspoint.com/lua/
-
 -- Documentation: http://www.hammerspoon.org/
 -- Code: https://github.com/Hammerspoon/hammerspoon
 -- Examples:
@@ -25,7 +24,7 @@ function ternary(condition, true_value, false_value)
     if condition then return true_value else return false_value end
 end
 
-local at_the_office = string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
+local at_the_office = false -- string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
 local working = hs.application.find('slack') ~= nil
 -- Hide app when working, keep its current visibility state when not working
 local hide_when_working = ternary(working, false, nil)
@@ -189,14 +188,14 @@ function config_app(app_name, window_title, is_visible, screen_condition_layout_
     end
 end
 
--- If possible, keep apps sorted with the "Sort Lines Ascending" VSCode command, in order to find them easily.
--- The sort order of the entries is important, though.
+-- The sort order of the entries is important; in case of issues, remove from the sorted block
+-- keep-sorted start case=no
 -- Use window_title = '' so the entry with no title appears first.
 config_app('', hs.window.find('YouTube'), nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('Activity Monitor', '', nil, {{wide_screen, true, hs.layout.right30}, {horizontal_screen, true, hs.layout.right50}})
 config_app('App Store', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right50}})
 config_app('Authy Desktop', '', true, {{wide_screen, true, hs.layout.center_left}, {horizontal_screen, true, hs.layout.center_left}})
-config_app('Bitwarden', '', false, {{wide_screen, true, hs.layout.left30}, {horizontal_screen, true, hs.layout.left30}})
+config_app('Bitwarden', '', false, {{wide_screen, true, hs.layout.right30}, {horizontal_screen, true, hs.layout.right30}})
 config_app('Brave Browser Beta', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
 config_app('Brave Browser', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
 config_app('Code', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
@@ -213,6 +212,7 @@ config_app('Logseq', '', hide_when_working, {{wide_screen, not at_the_office, hs
 config_app('Notes', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right50}})
 config_app('Preview', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('PyCharm', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('RustRover-EAP', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
 config_app('ScanSnap Home', hs.window.find('- Scan'), nil, {{laptop_screen, true, hs.layout.right70}})
 config_app('ScanSnap Home', nil, nil, {{laptop_screen, true, hs.geometry.rect(0.42, 0.23, 0.5, 0.5)}})
 config_app('Signal', nil, hide_when_working, {{laptop_screen, true, hs.layout.maximized}})
@@ -232,6 +232,7 @@ config_app('zoom.us', 'Zoom Meeting', nil, {{laptop_screen, true, hs.layout.maxi
 config_app('zoom.us', 'zoom share statusbar window', nil, {{laptop_screen, true, hs.layout.right50}})
 config_app('zoom.us', 'zoom share toolbar window', nil, {{laptop_screen, true, hs.layout.right70}})
 config_app('zoom.us', 'Zoom', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+-- keep-sorted end
 
 -- TODO: I don't use a vertical screen anymore for some time; convert these other layouts on demand
 if false and wide_screen == nil then

@@ -31,7 +31,7 @@ def run_only_after(task_identifier, expected_minutes=60):
     return True
 
 
-class FilterModule(object):
+class FilterModule:
     """Ansible filter plugin.
 
     `Plugin examples <https://github.com/ansible/ansible/blob/devel/lib/ansible/plugins/filter/core.py>`_.

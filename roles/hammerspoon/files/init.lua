@@ -24,7 +24,26 @@ function ternary(condition, true_value, false_value)
     if condition then return true_value else return false_value end
 end
 
-local at_the_office = false -- string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
+local networks = hs.wifi.availableNetworks()
+debug_print('WiFi available:')
+for i, network in ipairs(networks) do
+    debug_print(i, network)
+end
+local interfaces = hs.wifi.interfaces()
+debug_print('WiFi interfaces:')
+for i, interface in ipairs(interfaces) do
+    debug_print(i, interface)
+end
+local currentNetwork = hs.wifi.currentNetwork()
+if currentNetwork then
+    debug_print('WiFi network: ' .. currentNetwork)
+else
+    debug_print('WiFi network: Not connected')
+end
+
+-- TODO: hs.wifi not showing current network in Sonoma 14.2.1
+-- https://github.com/Hammerspoon/hammerspoon/issues/3591
+local at_the_office = true -- string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
 local working = hs.application.find('slack') ~= nil
 -- Hide app when working, keep its current visibility state when not working
 local hide_when_working = ternary(working, false, nil)
@@ -86,7 +105,7 @@ local laptop_screen = 'Built-in Retina Display'
 -- Can be UUIDs or names; copy/paste from HammerSpoon console
 -- Wide screen name is 'LEN T34w-20'; the dash has to be escaped with %
 local wide_screen = nil
-local wide_screens = {'LEN T34w%-20',}
+local wide_screens = {'LEN T34w%-20','T34w%-30'}
 for index, screen_id in ipairs(wide_screens) do
     wide_screen = hs.screen.find(screen_id)
     if wide_screen ~= nil then

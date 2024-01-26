@@ -43,7 +43,7 @@ end
 
 -- TODO: hs.wifi not showing current network in Sonoma 14.2.1
 -- https://github.com/Hammerspoon/hammerspoon/issues/3591
-local at_the_office = true -- string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
+local at_the_office = false -- string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
 local working = hs.application.find('slack') ~= nil
 -- Hide app when working, keep its current visibility state when not working
 local hide_when_working = ternary(working, false, nil)

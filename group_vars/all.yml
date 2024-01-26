@@ -213,7 +213,6 @@ mac_cask_packages:
     - findutils # https://www.gnu.org/software/findutils/
     - google-chrome
     - insomnia # REST client
-    - intellij-idea # https://www.jetbrains.com/idea/
     - jetbrains-toolbox # https://www.jetbrains.com/toolbox-app/
     - kindle # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
     - kindle-previewer # https://www.amazon.com/Kindle-Previewer/b?ie=UTF8&node=21381691011
@@ -247,6 +246,7 @@ mac_cask_packages:
     - hp-easy-start # https://support.hp.com/
     - iina
     - imageoptim # optimizing images
+    - intellij-idea # https://www.jetbrains.com/idea/
     - intellij-idea-ce # https://www.jetbrains.com/idea/ IntelliJ IDEA Community Edition
     - itau # https://www.itau.com.br/computador/
     - java8

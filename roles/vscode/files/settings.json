@@ -119,7 +119,6 @@
   "editor.inlineSuggest.enabled": true,
   "diffEditor.codeLens": true,
   "diffEditor.hideUnchangedRegions.enabled": true,
-  "diffEditor.experimental.showMoves": true,
   "application.shellEnvironmentResolutionTimeout": 15,
   "github.copilot.enable": {
     "*": true,

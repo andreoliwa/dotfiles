@@ -416,6 +416,7 @@ npm_global_packages:
 rust_binaries:
   # keep-sorted start
   - { pkg: cargo-update, bin: cargo-install-update } # https://github.com/nabijaczleweli/cargo-update
+  - { pkg: cargo-workspaces } # https://crates.io/crates/cargo-workspaces
   - { pkg: eza, bin: eza } # https://github.com/eza-community/eza
   - { pkg: tailspin, bin: tailspin } # https://github.com/bensadeh/tailspin
   # keep-sorted end
@@ -424,7 +425,6 @@ rust_binaries:
 
 rust_git_repos:
   # keep-sorted start
-  - { bin: csv-query, git: https://github.com/jaysonsantos/csv-query-rs }
   - { bin: toml, git: https://github.com/gnprice/toml-cli }
   # keep-sorted end
 

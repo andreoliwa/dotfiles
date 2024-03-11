@@ -9,6 +9,11 @@
 hs.window.animationDuration = 0
 hs.console.clearConsole()
 
+-- hs.wifi not showing current network in Sonoma 14.2.1
+-- Workaround: https://github.com/Hammerspoon/hammerspoon/issues/3537#issuecomment-1743870568
+-- See also https://github.com/Hammerspoon/hammerspoon/issues/3591#issuecomment-1988453778
+print(hs.location.get())
+
 local debug = false
 print('Debugging? ' .. tostring(debug))
 
@@ -41,9 +46,7 @@ else
     debug_print('WiFi network: Not connected')
 end
 
--- TODO: hs.wifi not showing current network in Sonoma 14.2.1
--- https://github.com/Hammerspoon/hammerspoon/issues/3591
-local at_the_office = false -- string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
+local at_the_office = string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
 local working = hs.application.find('slack') ~= nil
 -- Hide app when working, keep its current visibility state when not working
 local hide_when_working = ternary(working, false, nil)

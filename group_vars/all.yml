@@ -38,6 +38,15 @@ git_company:
 vim_install_plugins: no
 
 # Utilities that don't get installed by a role
+mac_homebrew_taps:
+  common:
+    # keep-sorted start
+    - jmespath/jmespath # https://github.com/jmespath/jp
+    - gromgit/fuse # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
+    - goreleaser/tap # https://github.com/goreleaser/goreleaser
+    - mike-engel/jwt-cli # https://github.com/mike-engel/jwt-cli
+    # keep-sorted end
+
 mac_homebrew_packages:
   common:
     # keep-sorted start
@@ -47,6 +56,7 @@ mac_homebrew_packages:
     - bash-completion2 # https://github.com/scop/bash-completion
     - bitwarden-cli # https://bitwarden.com/
     - blueutil # https://github.com/toy/blueutil
+    - caddy # https://caddyserver.com/ to be able to format Caddyfile on VSCode
     - cheat # https://github.com/cheat/cheat
     - colordiff # https://www.colordiff.org/
     - coreutils # https://www.gnu.org/software/coreutils
@@ -58,11 +68,10 @@ mac_homebrew_packages:
     - fd # https://github.com/sharkdp/fd
     - fx # https://github.com/antonmedv/fx
     - git-extras # https://github.com/tj/git-extras
-    - github/gh/gh # GitHub CLI https://github.com/cli/cli
+    - homebrew/core/gh # GitHub CLI https://github.com/cli/cli
     - go # https://golang.org
     - gpg
-    # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
-    - gromgit/fuse/sshfs-mac
+    - gromgit/fuse/sshfs-mac # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
     - htop-osx
     - httpie
     - ipcalc
@@ -156,7 +165,6 @@ mac_cask_packages:
     # Browsers
     - brave-browser # https://brave.com/
     - brave-browser-beta # https://brave.com/download-beta/
-    - caddy # https://caddyserver.com/ to be able to format Caddyfile on VSCode
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - deepl
     - dropbox
@@ -171,7 +179,7 @@ mac_cask_packages:
     - fujitsu-scansnap-home # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
     - gnucash # https://gnucash.org/
     - grandperspective # https://grandperspectiv.sourceforge.io/
-    - homebrew/cask-drivers/logitech-options # MX Keys for Mac external keyboard
+    - logitech-options # MX Keys for Mac external keyboard
     # Utilities
     - iterm2
     - kap
@@ -181,7 +189,7 @@ mac_cask_packages:
     - meld # https://yousseb.github.io/meld/
     - onedrive # https://onedrive.live.com/
     - orbstack # https://github.com/orbstack/orbstack?tab=readme-ov-file
-    - private-internet-access
+    # - private-internet-access # TODO: failing with error "Failed to unquarantine app bundle"
     - raindropio # https://raindrop.io/
     - raycast # https://raycast.app/
     - rescuetime # https://www.rescuetime.com/

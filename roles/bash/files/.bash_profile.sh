@@ -57,3 +57,5 @@ source ~/.orbstack/shell/init.bash 2>/dev/null || :
 
 # https://discussions.apple.com/thread/251000125
 ulimit -n 1024
+
+eval "$(/opt/homebrew/bin/brew shellenv)"

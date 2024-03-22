@@ -41,7 +41,7 @@ def get_python():
     """Get the Python interpreter used by ansible."""
     ansible_python_interpreter = shell(
         "ansible --version | grep 'ansible python' |"
-        + r" sed -E -e 's#/site.+##g' -e 's#.+ (/usr)#\1#g' -e 's#/lib/#/bin/#g'",
+        + r" sed -E -e 's#/site.+##g' -e 's#.+ (/opt)#\1#g' -e 's#.+ (/usr)#\1#g' -e 's#/lib/#/bin/#g'",
         return_lines=True,
     )[0]
     print("Using this Python interpreter:", ansible_python_interpreter)

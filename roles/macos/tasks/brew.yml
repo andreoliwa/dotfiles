@@ -1,33 +1,49 @@
+# Install each package separately to avoid failing the entire task if one package fails to install
+- name: "Brew: Tap common"
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ mac_homebrew_taps['common'] }}"
+
 - name: "Brew: Install common"
-  homebrew:
-    name: "{{ mac_homebrew_packages['common'] }}"
-    state: latest
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ mac_homebrew_packages['common'] }}"
 
 - name: "Brew: Remove"
-  homebrew:
-    name: "{{ mac_homebrew_packages['remove'] }}"
+  community.general.homebrew:
+    name: "{{ item }}"
     state: absent
+  loop: "{{ mac_homebrew_packages['remove'] }}"
+  ignore_errors: true
 
 - name: "Brew: Install on personal_laptop"
-  homebrew:
-    name: "{{ mac_homebrew_packages['personal_laptop'] }}"
+  community.general.homebrew:
+    name: "{{ item }}"
     state: latest
+  loop: "{{ mac_homebrew_packages['personal_laptop'] }}"
   when: not ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['personal_laptop']
 
 - name: "Brew: Remove on personal_laptop"
-  homebrew:
-    name: "{{ mac_homebrew_packages['company_laptop'] }}"
+  community.general.homebrew:
+    name: "{{ item }}"
     state: absent
+  loop: "{{ mac_homebrew_packages['company_laptop'] }}"
   when: not ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['company_laptop']
+  ignore_errors: true
 
 - name: "Brew: Install on company_laptop"
-  homebrew:
-    name: "{{ mac_homebrew_packages['company_laptop'] }}"
-    state: latest
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ mac_homebrew_packages['company_laptop'] }}"
   when: ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['company_laptop']
 
 - name: "Brew: Remove on company_laptop"
-  homebrew:
-    name: "{{ mac_homebrew_packages['personal_laptop'] }}"
+  community.general.homebrew:
+    name: "{{ item }}"
     state: absent
+  loop: "{{ mac_homebrew_packages['personal_laptop'] }}"
   when: ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['personal_laptop']
+  ignore_errors: true

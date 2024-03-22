@@ -12,7 +12,7 @@
     clone: yes
     depth: 1
     version: master
-  when: ansible_system_vendor in ("DigitalOcean", "Hetzner")
+  when: ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner")
 
 - name: "bash-git-prompt: Add content to .bashrc"
   blockinfile:
@@ -27,4 +27,4 @@
           # shellcheck source=/dev/null
           source "$HOME"/.bash-git-prompt/gitprompt.sh
       fi
-  when: ansible_system_vendor in ("DigitalOcean", "Hetzner")
+  when: ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner")

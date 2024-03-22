@@ -39,9 +39,9 @@
       export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
 
       # brew info bash-completion2
-      export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-      [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
-          source "/usr/local/etc/profile.d/bash_completion.sh"
+      export BASH_COMPLETION_COMPAT_DIR="/opt/homebrew/etc/bash_completion.d"
+      [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && \
+          source "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
       # Source all scripts. To regenerate this .sh file, run:
       # dotfiles-cache-shell-scripts bash
@@ -78,8 +78,9 @@
       complete -F _complete_alias rsync-default
       # keep-sorted end
 
+# --break-system-packages to allow installing PyYAML globally on M3 Pro
 - name: "dotfiles-cache-shell-scripts: Install PyYAML"
-  command: "python3 -m pip install pyyaml"
+  command: "python3 -m pip install pyyaml --break-system-packages"
   when:
     - ansible_distribution not in ("OSMC", "Amazon")
     - ansible_system_vendor is not defined or ansible_system_vendor not in ("DigitalOcean", "Hetzner")
@@ -102,4 +103,4 @@
     path: ~/.bashrc
     state: present
     line: 'export PATH="$PATH:$HOME/container-apps-private/bin"'
-  when: ansible_os_family == "OSMC" or ansible_system_vendor == "Hetzner"
+  when: ansible_os_family == "OSMC" or (ansible_system_vendor is defined and ansible_system_vendor == "Hetzner")

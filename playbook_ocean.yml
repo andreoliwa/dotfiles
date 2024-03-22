@@ -1,4 +1,4 @@
-- name: Set up the Digital Ocean instance
+- name: Set up the DigitalOcean instance
   hosts: ocean
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags

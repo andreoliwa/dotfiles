@@ -35,3 +35,9 @@
   homebrew:
     name: instrumenta/instrumenta/kubeval
     state: latest
+  # Error: Invalid formula: /usr/local/Homebrew/Library/Taps/instrumenta/homebrew-instrumenta/Formula/kubeval.rb
+  # kubeval: wrong number of arguments (given 1, expected 0)
+  # Error: Invalid formula: /usr/local/Homebrew/Library/Taps/instrumenta/homebrew-instrumenta/Formula/conftest.rb
+  # conftest: wrong number of arguments (given 1, expected 0)
+  # Error: Cannot tap instrumenta/instrumenta: invalid syntax in tap!
+  ignore_errors: true

@@ -22,6 +22,6 @@
     block: |
       # https://asdf-vm.com/#/core-manage-asdf?id=add-to-your-shell
       # shellcheck disable=SC1091
-      source "$HOME/.asdf/asdf.sh"
+      test -e "$HOME/.asdf/asdf.sh" && source "$HOME/.asdf/asdf.sh"
       # shellcheck disable=SC1091
-      source "$HOME/.asdf/completions/asdf.bash"
+      test -e "$HOME/.asdf/completions/asdf.bash" && source "$HOME/.asdf/completions/asdf.bash"

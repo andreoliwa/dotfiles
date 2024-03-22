@@ -1,14 +1,5 @@
 {
-  "python.linting.enabled": true,
   "editor.formatOnSave": true,
-  "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--line-length", "120"],
-  "python.linting.pylintEnabled": false,
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": [
-    "--ignore=D107,D202,D203,D401,E203,E402,E501,W503",
-    "--max-line-length=120"
-  ],
   "workbench.startupEditor": "newUntitledFile",
   "explorer.confirmDragAndDrop": false,
   "git.autofetch": true,
@@ -22,22 +13,21 @@
     "*.drawio": "xml",
     "**/.ssh/config": "shellscript",
     "hosts": "ini",
-    "*.mrconfig": "ini",
+    "*.mrconfig*": "ini",
     "Makefile*": "makefile",
-    "*.jrnl": "markdown"
+    "*.jrnl": "markdown",
+    "*.json5": "jsonc"
   },
   "diffEditor.ignoreTrimWhitespace": true,
   "extensions.ignoreRecommendations": false,
   "breadcrumbs.enabled": true,
-  "workbench.activityBar.visible": true,
   "workbench.statusBar.visible": true,
   "editor.minimap.enabled": false,
   "editor.renderWhitespace": "none",
   "workbench.colorTheme": "Default Light+",
   "python.pipenvPath": "",
-  "python.formatting.blackPath": "~/.local/bin/black",
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "git.enableCommitSigning": true,
   "git.showPushSuccessNotification": true,
@@ -45,7 +35,6 @@
   "editor.multiCursorModifier": "alt",
   "git.postCommitCommand": "sync",
   "todo-tree.tree.flat": true,
-  "todo-tree.tree.grouped": true,
   "todo-tree.tree.hideIconsWhenGroupedByTag": true,
   "todo-tree.ripgrep.ripgrep": "~/.cargo/bin/rg",
   "todo-tree.tree.showCountsInTree": true,
@@ -54,10 +43,9 @@
   "todo-tree.filtering.excludedWorkspaces": ["node_modules/*"],
   "todo-tree.filtering.excludeGlobs": ["**/node_modules/*"],
   "todo-tree.highlights.enabled": true,
-  "todo-tree.tree.showScanModeButton": false,
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
@@ -83,11 +71,9 @@
   "editor.rulers": [80, 120],
   "editor.unusualLineTerminators": "auto",
   "python.languageServer": "Pylance",
-  "python.showStartPage": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "sync-rsync.onSaveIndividual": true,
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -106,9 +92,7 @@
   ],
   "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
   "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.extraPaths": [
-    "/Users/aa/.local/pipx/venvs/invoke/lib/python3.8/site-packages"
-  ],
+  "python.analysis.extraPaths": [],
   "yaml.customTags": ["!encrypted/pkcs1-oaep scalar", "!vault scalar"],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -119,10 +103,6 @@
   },
   "redhat.telemetry.enabled": true,
   "extensions.autoUpdate": "onlyEnabledExtensions",
-  "plantuml.render": "Local",
-  "plantuml.server": "http://localhost:8080",
-  "screencastMode.onlyKeyboardShortcuts": true,
-  "screencastMode.keyboardShortcutsFormat": "commandWithGroupAndKeys",
   "python.venvFolders": [
     "~/.local/pipx/venvs/",
     "~/Library/Caches/pypoetry/virtualenvs"
@@ -130,5 +110,25 @@
   "git.inputValidationSubjectLength": 69,
   "search.smartCase": true,
   "search.useGlobalIgnoreFiles": true,
-  "search.showLineNumbers": true
+  "search.showLineNumbers": true,
+  "editor.detectIndentation": false,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "rewrap.wrappingColumn": 140,
+  "editor.inlineSuggest.enabled": true,
+  "diffEditor.codeLens": true,
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "application.shellEnvironmentResolutionTimeout": 15,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false
+  },
+  "ruff.interpreter": ["/Users/aa/.local/pipx/venvs/ruff/bin/python3"],
+  "semanticdiff.defaultDiffViewer": true,
+  "semanticdiff.closeOriginalTab": true,
+  "semanticdiff.diff.compareMovedCode": true,
+  "debug.allowBreakpointsEverywhere": true
 }

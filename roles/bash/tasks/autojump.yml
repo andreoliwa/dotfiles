@@ -20,4 +20,5 @@
       }
 
       # https://github.com/wting/autojump#known-issues
-      export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
+      # https://superuser.com/questions/1158739/prompt-command-to-reload-from-bash-history
+      export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a; history -r"

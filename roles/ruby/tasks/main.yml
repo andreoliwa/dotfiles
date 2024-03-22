@@ -3,6 +3,8 @@
     name: ruby
     state: absent
   when: ansible_os_family == "Darwin"
+  # Refusing to uninstall /usr/local/Cellar/ruby/3.1.2_1\nbecause it is required by vim
+  ignore_errors: true
 
 # TODO feat: install Ruby with asdf when needed
 

@@ -3,3 +3,28 @@
   file:
     path: "{{ dotfiles_user_home }}/.bash-git-prompt"
     state: absent
+  when: ansible_os_family == "Darwin"
+
+- name: "bash-git-prompt: Git clone"
+  git:
+    repo: "https://github.com/magicmonty/bash-git-prompt.git"
+    dest: "~/.bash-git-prompt"
+    clone: yes
+    depth: 1
+    version: master
+  when: ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner")
+
+- name: "bash-git-prompt: Add content to .bashrc"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# ==================== {mark} https://github.com/magicmonty/bash-git-prompt"
+    block: |
+      # Quick start, show all details of a git repo
+      if [ -f "$HOME"/.bash-git-prompt/gitprompt.sh ]; then
+          # Show a different prompt when there is an active SSH connection
+          test -n "$SSH_CONNECTION" && export GIT_PROMPT_THEME=Evermeet_Ubuntu
+          # GIT_PROMPT_ONLY_IN_REPO=1
+          # shellcheck source=/dev/null
+          source "$HOME"/.bash-git-prompt/gitprompt.sh
+      fi
+  when: ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner")

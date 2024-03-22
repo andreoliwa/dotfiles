@@ -1,31 +1,16 @@
-- name: "direnv: Uninstall with Homebrew"
-  homebrew: name=direnv state=absent
+- name: "direnv: Install with Homebrew"
+  homebrew: name=direnv state=latest
   when: ansible_os_family == "Darwin"
 
-- name: "direnv: Uninstall with apt"
-  apt: name=direnv state=absent
+- name: "direnv: Install with apt"
+  apt: name=direnv state=latest
   become: true
   when: ansible_os_family in ("Debian", "OSMC")
 
-- name: "direnv: Add as asdf plugin"
-  command: "asdf plugin-add direnv"
-  register: result
-  args:
-    creates: ~/.asdf/plugins/direnv
-
-- name: "direnv: Install latest with asdf"
-  command: "asdf install direnv latest"
-  register: result
-  changed_when: "'is already installed' not in result.stdout"
-
-- name: "direnv: Set global with asdf"
-  command: "asdf global direnv latest"
-
-- name: "direnv: Add content to .bash_profile"
+- name: "direnv: Add content to .bashrc"
   blockinfile:
-    path: ~/.bash_profile
+    path: ~/.bashrc
     marker: "# ==================== {mark} https://github.com/direnv/direnv"
     block: |
-      # https://github.com/asdf-community/asdf-direnv#setup
-      eval "$(asdf exec direnv hook bash)"
-      direnv() { asdf exec direnv "$@"; }
+      # https://direnv.net/docs/hook.html#bash
+      command -v direnv >/dev/null && eval "$(direnv hook bash)"

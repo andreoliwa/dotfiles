@@ -24,6 +24,7 @@ Icon
 .ropeproject
 .autoxsh
 .envrc
+.env*local
 
 ### Python ###
 .venv
@@ -33,7 +34,7 @@ docs/_build
 .ipynb_checkpoints
 
 # Sandbox for notes, throwaway scripts, etc.
-_sandbox
+*sandbox*
 
 # Ignore Git itself, so fd doesn't search it by default
 .git/
@@ -58,6 +59,10 @@ dev-tools.ini
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
+
+################################################################################
+# BEGIN https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+################################################################################
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -136,3 +141,7 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+################################################################################
+# END https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+################################################################################

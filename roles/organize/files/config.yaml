@@ -15,15 +15,17 @@ slugify_folders: &slugify
 mobile_upload_folders: &mobile_upload
   - path: ~/OneDrive/Pictures/Camera Roll/
     ignore_errors: true
+  - path: ~/OneDrive/Pictures/Documents/
+    ignore_errors: true
   - path: ~/OneDrive/Pictures/Download/
     ignore_errors: true
-  - path: ~/OneDrive/Pictures/Facebook/
+  - path: ~/OneDrive/Pictures/Instagram/
     ignore_errors: true
   - path: ~/OneDrive/Pictures/Screenshots/
     ignore_errors: true
-  - path: ~/OneDrive/Pictures/Telegram/
-    ignore_errors: true
   - path: ~/OneDrive/Pictures/WhatsApp Animated Gifs/
+    ignore_errors: true
+  - path: ~/OneDrive/Pictures/WhatsApp Documents/
     ignore_errors: true
   - path: ~/OneDrive/Pictures/WhatsApp Images/
     ignore_errors: true
@@ -146,53 +148,69 @@ rules:
             - _wa_
             - whats_app
             - whatsapp
+            - DSC_
+            - VID_
           case_sensitive: false
-      - lastmodified:
-          years: 1
-          mode: newer
+      - lastmodified
     actions:
       - move: "~/OneDrive/New_Chat/{lastmodified.strftime('%Y/%m')}/"
 
   - name: Telegram, Facebook
     locations:
-      - *mobile_upload
+      - path: ~/OneDrive/Pictures/Telegram/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Telegram Images/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Telegram_Images/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Telegram Video/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Telegram_Video/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Facebook/
+        ignore_errors: true
     subfolders: true
     filters:
       - name:
           startswith:
             # Telegram
-            - "1_"
-            - "2_"
-            - "3_"
-            - "4_"
-            - "5_"
-            - "22"
-            - "23"
-            - "42"
-            - "70"
-            - "71"
-            - "80"
-            - "81"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+            - "9"
+            - IMG_
             # Facebook Messenger
             - Received
             # Facebook
             - fb_img_
           case_sensitive: false
-      - lastmodified:
-          years: 1
-          mode: newer
+      - lastmodified
     actions:
       - move: "~/OneDrive/New_Chat/{lastmodified.strftime('%Y/%m')}/"
 
   - name: Screenshots
     locations:
       - *mobile_upload
+      - path: ~/OneDrive/Pictures/Fitdays/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Xrecorder0/
+        ignore_errors: true
+      - path: ~/OneDrive/Pictures/Video_Frames/
+        ignore_errors: true
     subfolders: true
     filters:
       - name:
           startswith:
             - Screenshot_
             - Temp_File_For_Share
+            - Fitdays_
+            - Xrecorder_
+            - img_
           case_sensitive: false
       - lastmodified:
           years: 1

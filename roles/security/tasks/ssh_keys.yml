@@ -10,7 +10,8 @@
     dest: "~/.ssh/id_rsa.pub"
     mode: "0600"
 
-# https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent
-- name: "Add identity"
-  command: "ssh-add -K ~/.ssh/id_rsa"
-  when: ansible_os_family == "Darwin"
+# TODO: needs password on the first run, so this step is useless
+# # https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent
+# - name: "Add identity"
+#   command: "ssh-add --apple-use-keychain ~/.ssh/id_rsa"
+#   when: ansible_os_family == "Darwin"

@@ -1,0 +1,11 @@
+# APT packages that don't get installed by a role
+apt_packages:
+  - docker.io
+  - docker-compose
+  # caddy dependencies start: https://caddyserver.com/docs/install#debian-ubuntu-raspbian
+  - debian-keyring
+  - debian-archive-keyring
+  - apt-transport-https
+  - caddy # TODO: Build and install the binary with caddy-security instead
+  # caddy dependencies end: https://caddyserver.com/docs/install#debian-ubuntu-raspbian
+  - fd-find # https://github.com/sharkdp/fd

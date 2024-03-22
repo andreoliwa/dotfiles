@@ -1,0 +1,11 @@
+# https://caddyserver.com/docs/install#debian-ubuntu-raspbian
+- name: "Caddy: Configure APT key"
+  shell: "curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg"
+  args:
+    creates: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+  when: ansible_system_vendor == "Hetzner"
+
+- name: "Caddy: Configure APT sources"
+  shell: "curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list"
+  args:
+    creates: /etc/apt/sources.list.d/caddy-stable.list

@@ -13,13 +13,14 @@
   args:
     creates: ~/.asdf/plugins/java
 
-- name: "java: Install openjdk-11.0.2 with asdf"
-  command: "asdf install java openjdk-11.0.2"
+# openjdk-11.0.2 doesn't exist anymore
+- name: "java: Install openjdk-17.0.2 with asdf"
+  command: "asdf install java openjdk-17.0.2"
   register: result
   changed_when: "'is already installed' not in result.stdout"
 
 - name: "java: Set global with asdf"
-  command: "asdf global java openjdk-11.0.2"
+  command: "asdf global java openjdk-17.0.2"
 
 - name: "ktlint: Add as asdf plugin"
   command: "asdf plugin-add ktlint"

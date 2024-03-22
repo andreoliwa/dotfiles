@@ -1,0 +1,17 @@
+- name: "Caddy: copy Caddyfile"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/vault_Caddyfile"
+    dest: /etc/caddy/Caddyfile
+    mode: "0666"
+    force: yes
+
+- name: "Caddy: copy users.json"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/vault_users.json"
+    dest: /var/lib/caddy/users.json
+    mode: "0666"
+    force: yes
+
+- name: "Caddy: restart server"
+  command: "service caddy restart"
+  become: true

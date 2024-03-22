@@ -41,9 +41,9 @@ vim_install_plugins: no
 mac_homebrew_taps:
   common:
     # keep-sorted start
-    - jmespath/jmespath # https://github.com/jmespath/jp
-    - gromgit/fuse # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
     - goreleaser/tap # https://github.com/goreleaser/goreleaser
+    - gromgit/fuse # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
+    - jmespath/jmespath # https://github.com/jmespath/jp
     - mike-engel/jwt-cli # https://github.com/mike-engel/jwt-cli
     # keep-sorted end
 
@@ -68,10 +68,10 @@ mac_homebrew_packages:
     - fd # https://github.com/sharkdp/fd
     - fx # https://github.com/antonmedv/fx
     - git-extras # https://github.com/tj/git-extras
-    - homebrew/core/gh # GitHub CLI https://github.com/cli/cli
     - go # https://golang.org
     - gpg
     - gromgit/fuse/sshfs-mac # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
+    - homebrew/core/gh # GitHub CLI https://github.com/cli/cli
     - htop-osx
     - httpie
     - ipcalc
@@ -179,11 +179,11 @@ mac_cask_packages:
     - fujitsu-scansnap-home # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
     - gnucash # https://gnucash.org/
     - grandperspective # https://grandperspectiv.sourceforge.io/
-    - logitech-options # MX Keys for Mac external keyboard
     # Utilities
     - iterm2
     - kap
     - keepingyouawake # maintained caffeinate wrapper
+    - logitech-options # MX Keys for Mac external keyboard
     - macfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
     # To open Meld even with the security warning: https://github.com/yousseb/meld/issues/19#issuecomment-541239058
     - meld # https://yousseb.github.io/meld/

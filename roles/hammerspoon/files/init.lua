@@ -47,6 +47,7 @@ else
 end
 
 local at_the_office = string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
+debug_print('At the office: ' .. tostring(at_the_office))
 local working = hs.application.find('slack') ~= nil
 -- Hide app when working, keep its current visibility state when not working
 local hide_when_working = ternary(working, false, nil)
@@ -106,9 +107,10 @@ end
 local laptop_screen = 'Built-in Retina Display'
 
 -- Can be UUIDs or names; copy/paste from HammerSpoon console
+-- Partial name matching works, don't need to use the full name of the monitor
 -- Wide screen name is 'LEN T34w-20'; the dash has to be escaped with %
 local wide_screen = nil
-local wide_screens = {'LEN T34w%-20','T34w%-30'}
+local wide_screens = {'34w%-20','34w%-30'}
 for index, screen_id in ipairs(wide_screens) do
     wide_screen = hs.screen.find(screen_id)
     if wide_screen ~= nil then
@@ -365,5 +367,6 @@ end
 
 -- Reposition all stubborn apps that don't save their last window positions
 -- https://www.hammerspoon.org/docs/hs.window.filter.html#subscribe
-wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Preview', 'Logseq', 'ScanSnap Home'}
+-- 'Preview' windows are not being moved for some reason
+wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Logseq', 'ScanSnap Home'}
 wf_stubborn_apps:subscribe(hs.window.filter.windowCreated, reposition_stubborn_windows)

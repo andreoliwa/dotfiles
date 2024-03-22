@@ -51,6 +51,7 @@ var workURLs = [
   /credorax/,
   /adp.com/,
   /workday/,
+  /chime.aws/,
 
   // sennder
   /atlassian/,

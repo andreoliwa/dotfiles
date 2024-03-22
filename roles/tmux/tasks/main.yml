@@ -22,10 +22,6 @@
   homebrew:
     name: extract_url
     state: latest
-    # To fix the error:
-    # Parser.c: loadable library and perl binaries are mismatched (got handshake key 0xc500080, needed 0xc400080)
-    # Found in https://github.com/Homebrew/homebrew-core/issues/76371#issuecomment-830757796
-    install_options: build-from-source
 
 - name: "Install tpm (tmux plugin manager) on {{ dotfiles_user_home }}/.tmux/plugins/tpm"
   git:

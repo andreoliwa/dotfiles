@@ -9,7 +9,7 @@
 
 - name: "gita: Bash completion"
   get_url:
-    url: "https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.bash"
+    url: "https://raw.githubusercontent.com/nosarthur/gita/master/auto-completion/bash/.gita-completion.bash"
     dest: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/gita.bash-completion"
 
 - name: "gita: Add dotfiles"

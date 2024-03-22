@@ -37,7 +37,6 @@
         tags: ["vscode"],
         when: ansible_os_family != "Darwin",
       }
-    - { role: vscode, tags: ["vscode"] }
     - { role: rust, tags: ["rust"] }
     - { role: node, tags: ["node"] }
     - { role: ruby, tags: ["ruby"] }

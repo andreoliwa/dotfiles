@@ -29,11 +29,6 @@
     block: |
       from conjuring_private.todoist import *
 
-- name: "invoke-conjuring-private: Inject"
-  command: "pipx inject -e invoke ."
-  args:
-    chdir: "{{ project_root }}/conjuring-private/"
-
 - name: "invoke-conjuring-wolt: Inject"
   command: "pipx inject -e invoke ."
   args:

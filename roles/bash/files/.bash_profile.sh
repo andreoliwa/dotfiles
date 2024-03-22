@@ -51,5 +51,9 @@ test -e "$HOME/.asdf/asdf.sh" && source "$HOME/.asdf/asdf.sh"
 test -e "$HOME/.asdf/completions/asdf.bash" && source "$HOME/.asdf/completions/asdf.bash"
 # ==================== END https://github.com/asdf-vm/asdf
 
+# Added by OrbStack: command-line tools and integration
+# shellcheck source=/dev/null
+source ~/.orbstack/shell/init.bash 2>/dev/null || :
+
 # https://discussions.apple.com/thread/251000125
 ulimit -n 1024

@@ -165,7 +165,6 @@ mac_cask_packages:
     - apppolice # https://github.com/AppPolice/AppPolice
     - authy # https://authy.com/
     - beardedspice
-    # Browsers
     - brave-browser # https://brave.com/
     - brave-browser-beta # https://brave.com/download-beta/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
@@ -177,12 +176,10 @@ mac_cask_packages:
     - font-cousine
     - font-hack
     - font-jetbrains-mono # https://www.jetbrains.com/lp/mono/
-    # Fonts
     - font-ubuntu
     - fujitsu-scansnap-home # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
     - gnucash # https://gnucash.org/
     - grandperspective # https://grandperspectiv.sourceforge.io/
-    # Utilities
     - iterm2
     - kap
     - keepingyouawake # maintained caffeinate wrapper
@@ -198,18 +195,15 @@ mac_cask_packages:
     - rescuetime # https://www.rescuetime.com/
     - signal
     - skype
-    # Media/Music
     - spotify
     - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
-    # Network
     - teamviewer
-    # Chat
     - telegram
     - the-unarchiver
-    # Development
     - visual-studio-code
     - vlc
     - whatsapp
+    - xquartz # https://www.xquartz.org/
     - zerotier-one # https://www.zerotier.com/download.shtml
     # Video conferencing
     - zoom

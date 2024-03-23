@@ -4,7 +4,7 @@
 
 - name: Add Homebrew bash to /etc/shells
   lineinfile:
-    line: /usr/local/bin/bash
+    line: "{{ mac_homebrew_prefix }}/bin/bash"
     dest: /etc/shells
     state: present
   become: true
@@ -13,7 +13,7 @@
   when: ansible_os_family == "Darwin"
 
 - name: Change default shell to Homebrew bash
-  command: "chsh -s /usr/local/bin/bash"
+  command: "chsh -s {{ mac_homebrew_prefix }}/bin/bash"
   tags: [bootstrap]
   when: ansible_os_family == "Darwin"
 

@@ -37,6 +37,9 @@ git_company:
 # :PlugInstall while in vim.
 vim_install_plugins: no
 
+# The prefix has changed from /usr/local some time ago; check with "brew --prefix"
+mac_homebrew_prefix: /opt/homebrew
+
 # Utilities that don't get installed by a role
 mac_homebrew_taps:
   common:

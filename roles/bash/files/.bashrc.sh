@@ -34,9 +34,9 @@ export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a; history 
 export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
 
 # brew info bash-completion2
-export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && \
-    source "/usr/local/etc/profile.d/bash_completion.sh"
+export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && \
+    source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 
 # Source all scripts. To regenerate this .sh file, run:
 # dotfiles-cache-shell-scripts bash

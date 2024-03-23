@@ -111,7 +111,7 @@
         program = gpg2
 {% elif ansible_os_family == 'Darwin' %}
         # https://stackoverflow.com/questions/36941533/git-hub-desktop-on-mac-error-cannot-run-gpg-no-such-file-or-directory/37261769#37261769
-        program = /usr/local/bin/gpg
+        program = {{ mac_homebrew_prefix }}/bin/gpg
 {% endif %}
 
 [rerere]

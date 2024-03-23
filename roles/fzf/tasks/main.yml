@@ -1,5 +1,6 @@
 - name: "fzf: Install with Homebrew"
   homebrew: name=fzf state=latest
 
+# Command taken from "brew info fzf"
 - name: "fzf: Enable fuzzy auto-completion and key bindings (will edit .bashrc)"
-  command: "/usr/local/opt/fzf/install"
+  command: "{{ mac_homebrew_prefix }}/opt/fzf/install"

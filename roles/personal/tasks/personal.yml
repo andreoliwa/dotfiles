@@ -9,12 +9,18 @@
   args:
     chdir: ~/
   register: mr_checkout
+  ignore_errors: true
 - debug: var=mr_checkout.stdout
+
+- name: "Create dontforget dir"
+  file:
+    state: directory
+    path: ~/Library/Application Support/dontforget
 
 - name: "personal: Link dontforget dir"
   file:
-    src: ~/OneDrive/Apps/dontforget/config.yaml
-    dest: "~/Library/Application Support/dontforget/config.yaml"
+    src: ~/Dropbox/Apps/dontforget/config.yaml
+    dest: ~/Library/Application Support/dontforget/config.yaml
     state: link
 
 - name: "personal: Create Node-RED flows directory"

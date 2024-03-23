@@ -4,6 +4,11 @@
     bare: yes
   register: pyenv_versions
 
+- name: "Get latest installed version of Python 3.12"
+  shell: "echo {{ pyenv_versions }} | egrep -i '^3.12.[0-9]+$' | tail -n 1"
+  register: latest_python_3_12
+  changed_when: false
+
 - name: "Get latest installed version of Python 3.11"
   shell: "echo {{ pyenv_versions }} | egrep -i '^3.11.[0-9]+$' | tail -n 1"
   register: latest_python_3_11

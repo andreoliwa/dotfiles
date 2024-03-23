@@ -15,3 +15,32 @@
 
 - name: "invoke: Bash completion"
   shell: "invoke --print-completion-script=bash > {{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/invoke.bash-completion"
+
+# https://github.com/andreoliwa/conjuring
+- name: "conjuring: Clone"
+  git:
+    repo: git@github.com:andreoliwa/conjuring.git
+    dest: "{{ project_root }}/conjuring"
+
+- name: "conjuring: Inject"
+  command: "pipx inject -e invoke . --include-deps"
+  args:
+    chdir: "{{ project_root }}/conjuring/"
+
+# https://github.com/andreoliwa/conjuring-private
+- name: "conjuring-private: Clone"
+  git:
+    repo: git@github.com:andreoliwa/conjuring-private.git
+    dest: "{{ project_root }}/conjuring-private"
+  ignore_errors: yes
+
+- name: "conjuring-private: Default Todoist tasks"
+  blockinfile:
+    path: "{{ project_root }}/todoist/conjuring_todoist.py"
+    create: yes
+    marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring-private"
+    block: |
+      from conjuring_private.todoist import *
+
+- name: "conjuring: Init"
+  command: "conjuring init -d {{ project_root }}/conjuring-private/ --force"

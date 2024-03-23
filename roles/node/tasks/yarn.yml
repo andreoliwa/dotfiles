@@ -8,13 +8,19 @@
   args:
     creates: ~/.asdf/plugins/yarn
 
-- name: "yarn: Install latest with asdf"
-  command: "asdf install yarn latest"
-  register: result
-  changed_when: "'is already installed' not in result.stdout"
+# TODO installation is failing with:
+# Resolving github.com (github.com)... 140.82.121.4
+# Connecting to github.com (github.com)|140.82.121.4|:443... connected.
+# HTTP request sent, awaiting response... 404 Not Found
+# 2024-03-23 01:11:31 ERROR 404: Not Found.
 
-- name: "yarn: Set global with asdf"
-  command: "asdf global yarn latest"
+# - name: "yarn: Install latest with asdf"
+#   command: "asdf install yarn latest"
+#   register: result
+#   changed_when: "'is already installed' not in result.stdout"
+
+# - name: "yarn: Set global with asdf"
+#   command: "asdf global yarn latest"
 
 # https://github.com/dsifford/yarn-completion
 - name: "yarn: Bash completion"

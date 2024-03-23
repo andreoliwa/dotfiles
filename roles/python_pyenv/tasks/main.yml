@@ -52,11 +52,5 @@
 - name: "Install Invoke"
   import_tasks: invoke.yml
 
-- name: "Install Conjuring"
-  import_tasks: invoke-conjuring.yml
-
-- name: "Install Conjuring (Private)"
-  import_tasks: invoke-conjuring-private.yml
-
 - name: "Install JetBrains PyCharm"
   import_tasks: pycharm.yml

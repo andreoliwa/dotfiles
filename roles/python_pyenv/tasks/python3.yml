@@ -5,6 +5,15 @@
     executable: pip3
   when: ansible_os_family != "Darwin"
 
+- name: "Get latest Python 3.12"
+  shell: "pyenv install --list | egrep -i ' 3.12.[0-9.abrc]+$' | tail -n 1 | xargs"
+  register: latest_python_3_12
+  changed_when: false
+
+- name: "Install Python 3.12 version {{ latest_python_3_12.stdout }}"
+  pyenv:
+    version: "{{ latest_python_3_12.stdout }}"
+
 - name: "Get latest Python 3.11"
   shell: "pyenv install --list | egrep -i ' 3.11.[0-9.abrc]+$' | tail -n 1 | xargs"
   register: latest_python_3_11

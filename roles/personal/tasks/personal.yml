@@ -23,6 +23,16 @@
     dest: ~/Library/Application Support/dontforget/config.yaml
     state: link
 
+- name: "Install daily-grind"
+  ansible.builtin.command: "pipx install -e ."
+  args:
+    chdir: "{{ project_root }}/daily-grind"
+
+- name: "Install dontforget"
+  ansible.builtin.command: "make install"
+  args:
+    chdir: "{{ project_root }}/dontforget"
+
 - name: "personal: Create Node-RED flows directory"
   file:
     state: directory

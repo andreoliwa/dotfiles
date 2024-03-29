@@ -9,3 +9,5 @@ if [ -n "$(which eza)" ]; then
     alias ls=eza
     alias tree='eza --tree'
 fi
+
+export PATH="$PATH:$HOME/Library/Application Support/JetBrains/Toolbox/scripts"

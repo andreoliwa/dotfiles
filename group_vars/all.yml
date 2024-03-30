@@ -53,6 +53,7 @@ mac_homebrew_taps:
 mac_homebrew_packages:
   common:
     # keep-sorted start
+    - 7zip # https://7-zip.org
     - ansible-lint # https://github.com/ansible-community/ansible-lint
     - asciinema # https://github.com/asciinema/asciinema
     - bash
@@ -69,6 +70,7 @@ mac_homebrew_packages:
     - duplicity
     - dust # https://lib.rs/crates/du-dust
     - fd # https://github.com/sharkdp/fd
+    - feh # https://feh.finalrewind.org/
     - fx # https://github.com/antonmedv/fx
     - git-extras # https://github.com/tj/git-extras
     - go # https://golang.org

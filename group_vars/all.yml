@@ -73,6 +73,7 @@ mac_homebrew_packages:
     - feh # https://feh.finalrewind.org/
     - fx # https://github.com/antonmedv/fx
     - git-extras # https://github.com/tj/git-extras
+    - gnu-tar # https://www.gnu.org/software/tar/
     - go # https://golang.org
     - gpg
     - gromgit/fuse/sshfs-mac # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first

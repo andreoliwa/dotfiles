@@ -12,6 +12,8 @@ test -f "$HOME/.bashrc" && source "${HOME}/.bashrc"
 # shellcheck disable=SC1091
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # https://docs.brew.sh/Shell-Completion
 if type brew &>/dev/null; then
     HOMEBREW_PREFIX="$(brew --prefix)"
@@ -58,4 +60,26 @@ source ~/.orbstack/shell/init.bash 2>/dev/null || :
 # https://discussions.apple.com/thread/251000125
 ulimit -n 1024
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# ==================== BEGIN https://github.com/junegunn/fzf/wiki/Examples#autojump
+# shellcheck source=/dev/null
+[ -f "$HOMEBREW_PREFIX"/etc/profile.d/autojump.sh ] && source "$HOMEBREW_PREFIX"/etc/profile.d/autojump.sh
+
+# https://github.com/junegunn/fzf/wiki/Examples#autojump
+# Using eza instead of exa
+j() {
+    local preview_cmd="ls {2..}"
+    if command -v eza &> /dev/null; then
+        preview_cmd="eza -l {2}"
+    fi
+
+    if [[ $# -eq 0 ]]; then
+        cd "$(autojump -s | sort -k1gr | awk -F : '$1 ~ /[0-9]/ && $2 ~ /^\s*\// {print $1 $2}' | fzf --height 40% --reverse --inline-info --preview "$preview_cmd" --preview-window down:50% | cut -d$'\t' -f2- | sed 's/^\s*//')" || return
+    else
+        cd "$(autojump "$@")" || return
+    fi
+}
+
+# https://github.com/wting/autojump#known-issues
+# https://superuser.com/questions/1158739/prompt-command-to-reload-from-bash-history
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a; history -r"
+# ==================== END https://github.com/junegunn/fzf/wiki/Examples#autojump

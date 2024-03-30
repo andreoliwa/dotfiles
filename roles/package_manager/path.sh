@@ -2,6 +2,6 @@
 
 # Add Homebrew to the Linux PATH
 if [[ $OSTYPE == linux* ]]; then
-    PATH="$PATH:$(brew --prefix)/bin"
+    PATH="$PATH:$HOMEBREW_PREFIX/bin"
     export PATH
 fi

@@ -39,15 +39,14 @@
       export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
 
       # brew info bash-completion2
-      export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
-      [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && \
-          source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+      export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
+      # shellcheck source=/dev/null
+      [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 
       # Source all scripts. To regenerate this .sh file, run:
       # dotfiles-cache-shell-scripts bash
       # shellcheck source=/dev/null
-      test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
-          source "$HOME"/.cache/dotfiles/cached_script.sh
+      test -f "$HOME"/.cache/dotfiles/cached_script.sh && source "$HOME"/.cache/dotfiles/cached_script.sh
 
 - name: "complete_alias: Copy script from https://github.com/cykerway/complete-alias"
   get_url:

@@ -15,34 +15,18 @@ test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/
 test -f "$HOME"/container-apps/aliases.sh && \
     source "$HOME"/container-apps/aliases.sh
 
-# ==================== BEGIN https://github.com/junegunn/fzf/wiki/Examples#autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-j() {
-    if [[ "$#" -ne 0 ]]; then
-        cd "$(autojump "$@")" || return
-        return
-    fi
-    cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)" || exit
-}
-
-# https://github.com/wting/autojump#known-issues
-# https://superuser.com/questions/1158739/prompt-command-to-reload-from-bash-history
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a; history -r"
-# ==================== END https://github.com/junegunn/fzf/wiki/Examples#autojump
-
 # ==================== BEGIN Bash completion / dotfiles
 export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
 
 # brew info bash-completion2
-export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
-[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && \
-    source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
+# shellcheck source=/dev/null
+[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 
 # Source all scripts. To regenerate this .sh file, run:
 # dotfiles-cache-shell-scripts bash
 # shellcheck source=/dev/null
-test -f "$HOME"/.cache/dotfiles/cached_script.sh && \
-    source "$HOME"/.cache/dotfiles/cached_script.sh
+test -f "$HOME"/.cache/dotfiles/cached_script.sh && source "$HOME"/.cache/dotfiles/cached_script.sh
 # ==================== END Bash completion / dotfiles
 
 # ==================== BEGIN https://github.com/pipxproject/pipx#install-pipx

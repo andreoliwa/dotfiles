@@ -1,7 +1,6 @@
 - name: "Link docker.bash-completion"
   file:
     src: "/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion"
-    # Destination should have been $(brew --prefix), which usually points to /usr/local
     dest: "{{ mac_homebrew_prefix }}/etc/bash_completion.d/docker.bash-completion"
     state: link
     force: yes
@@ -10,7 +9,6 @@
 - name: "Link docker-compose.bash-completion"
   file:
     src: "/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion"
-    # Destination should have been $(brew --prefix), which usually points to /usr/local
     dest: "{{ mac_homebrew_prefix }}/etc/bash_completion.d/docker-compose.bash-completion"
     state: link
     force: yes

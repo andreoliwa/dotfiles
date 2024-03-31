@@ -43,3 +43,18 @@
     src: "{{ role_path }}/files/vault-node-red-flows.json"
     dest: "{{ dotfiles_home }}/roles/node-red/var/config/node-red-flows.json"
   ignore_errors: true
+
+- name: "Install python-clib"
+  ansible.builtin.command: "make install"
+  args:
+    chdir: "{{ project_root }}/python-clib"
+
+- name: "Install featsio/fts-telegram"
+  ansible.builtin.command: "pipx install -e ."
+  args:
+    chdir: "{{ project_root }}/featsio/fts-telegram"
+
+- name: "Install logseq-doctor"
+  ansible.builtin.command: "make pipx-install"
+  args:
+    chdir: "{{ project_root }}/logseq-doctor"

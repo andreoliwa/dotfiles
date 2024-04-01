@@ -71,6 +71,7 @@ mac_homebrew_packages:
     - dust # https://lib.rs/crates/du-dust
     - fd # https://github.com/sharkdp/fd
     - feh # https://feh.finalrewind.org/
+    - ffmpeg # https://ffmpeg.org/ needed by openai-whisper
     - fx # https://github.com/antonmedv/fx
     - git-extras # https://github.com/tj/git-extras
     - gnu-tar # https://www.gnu.org/software/tar/
@@ -193,7 +194,7 @@ mac_cask_packages:
     - macfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
     # To open Meld even with the security warning: https://github.com/yousseb/meld/issues/19#issuecomment-541239058
     - meld # https://yousseb.github.io/meld/
-    - onedrive # https://onedrive.live.com/
+    - microsoft-office # https://www.microsoft.com/en-us/microsoft-365/mac/microsoft-365-for-mac/
     - orbstack # https://github.com/orbstack/orbstack?tab=readme-ov-file
     # - private-internet-access # TODO: failing with error "Failed to unquarantine app bundle"
     - raindropio # https://raindrop.io/
@@ -269,6 +270,7 @@ mac_cask_packages:
     - musixmatch
     - ngrok
     - notion
+    - onedrive # https://onedrive.live.com/ removed because of Error: Cask 'microsoft-office' conflicts with 'onedrive'.
     - pdfsam-basic
     - powershell # https://github.com/PowerShell/PowerShell
     - pritunl # VPN https://client.pritunl.com/#install

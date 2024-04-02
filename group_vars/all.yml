@@ -186,6 +186,7 @@ mac_cask_packages:
     - gnucash # https://gnucash.org/
     - grandperspective # https://grandperspectiv.sourceforge.io/
     - homebrew/cask-versions/whatsapp-legacy # Because the new Mac app doesn't let me select and copy multiple text messages
+    - imagemagick # https://imagemagick.org/
     - iterm2
     - kap
     - keepingyouawake # maintained caffeinate wrapper

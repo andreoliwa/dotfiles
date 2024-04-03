@@ -205,6 +205,7 @@ mac_cask_packages:
     - skype
     - spotify
     - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
+    - syncthing # https://syncthing.net/
     - teamviewer
     - telegram
     - the-unarchiver

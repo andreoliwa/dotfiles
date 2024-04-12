@@ -83,7 +83,21 @@ debug_print('package.path = ' .. package.path)
 
 -- https://github.com/scottwhudson/Lunette
 hs.loadSpoon("Lunette")
-spoon.Lunette:bindHotkeys()
+customBindings = {
+    topLeft = {
+        {{"alt", "cmd"}, "U"},
+    },
+    topRight = {
+        {{"alt", "cmd"}, "I"},
+    },
+    bottomLeft = {
+        {{"alt", "cmd"}, "J"},
+    },
+    bottomRight = {
+        {{"alt", "cmd"}, "K"},
+    },
+}
+spoon.Lunette:bindHotkeys(customBindings)
 
 -- http://www.hammerspoon.org/docs/hs.application.html#find
 -- To find an application, run this on the console:

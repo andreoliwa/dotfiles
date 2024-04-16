@@ -88,4 +88,5 @@ execution_time=$(echo "$end_time - $start_time" | bc)
 
 # shellcheck source=/dev/null
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash)"
+# https://docs.atuin.sh/configuration/key-binding/#disable-up-arrow
+eval "$(atuin init bash --disable-up-arrow)"

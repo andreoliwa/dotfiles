@@ -8,27 +8,3 @@
     dest: ~/.config/dotfiles/local.env
     mode: "0600"
     force: yes
-
-- name: "Copy .bash_profile file"
-  copy:
-    src: "{{ role_path }}/files/.bash_profile.sh"
-    dest: ~/.bash_profile
-    mode: "0600"
-    force: yes
-    follow: false
-
-- name: "Copy .bashrc file"
-  copy:
-    src: "{{ role_path }}/files/.bashrc.sh"
-    dest: ~/.bashrc
-    mode: "0600"
-    force: yes
-    follow: false
-
-- name: "Copy .inputrc file"
-  copy:
-    src: "{{ role_path }}/files/.inputrc"
-    dest: ~/.inputrc
-    mode: "0600"
-    force: yes
-    follow: false

@@ -1,27 +1,3 @@
-- name: "Link .bash_profile"
-  file:
-    src: "{{ role_path }}/files/.bash_profile.sh"
-    dest: ~/.bash_profile
-    state: link
-    force: yes
-    follow: false
-
-- name: "Link .bashrc"
-  file:
-    src: "{{ role_path }}/files/.bashrc.sh"
-    dest: ~/.bashrc
-    state: link
-    force: yes
-    follow: false
-
-- name: "Link .inputrc"
-  file:
-    src: "{{ role_path }}/files/.inputrc"
-    dest: ~/.inputrc
-    state: link
-    force: yes
-    follow: false
-
 - name: "Link dotfiles-bash-completion.sh"
   file:
     src: "{{ role_path }}/files/dotfiles-bash-completion.sh"

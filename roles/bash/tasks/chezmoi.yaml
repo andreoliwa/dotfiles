@@ -1,0 +1,11 @@
+# https://github.com/twpayne/chezmoi
+
+# https://www.chezmoi.io/install/#__tabbed_1_2
+- name: "chezmoi: Install with Homebrew"
+  homebrew:
+    name: "chezmoi"
+    state: present
+
+# https://www.chezmoi.io/reference/commands/init/
+- name: "chezmoi: Init on {{ dotfiles_home }}"
+  command: "chezmoi init --source {{ dotfiles_home }}"

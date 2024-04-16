@@ -1,0 +1,10 @@
+# https://docs.atuin.sh/guide/installation/
+- name: "atuin: Download installation script"
+  get_url:
+    url: "https://setup.atuin.sh" # curl --proto '=https' --tlsv1.2 -sSf
+    dest: "/tmp/setup-atuin.sh"
+
+- name: "atuin: Run installation script"
+  command: "bash /tmp/setup-atuin.sh"
+  register: setup_atuin_output
+- debug: var=setup_atuin_output.stdout_lines

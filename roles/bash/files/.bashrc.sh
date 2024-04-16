@@ -85,3 +85,7 @@ execution_time=$(echo "$end_time - $start_time" | bc)
 #   ANSIBLE_DEBUG=1 dotfiles-setup -r hetzner
 # Ensure the remote shell produces no output for non-interactive sessions.
 [[ $OSTYPE == darwin* ]] && printf "Elapsed time: %.6f seconds\n" "$execution_time"
+
+# shellcheck source=/dev/null
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash)"

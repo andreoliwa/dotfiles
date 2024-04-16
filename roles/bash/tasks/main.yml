@@ -12,6 +12,8 @@
 - import_tasks: copy_files.yml
   when: ansible_distribution in ("OSMC", "Amazon") or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner"))
 
+- import_tasks: atuin.yaml
+
 # https://github.com/powerline/powerline
 # https://github.com/b-ryan/powerline-shell
 # They are both slow and ugly (maybe a font needs to be configured).

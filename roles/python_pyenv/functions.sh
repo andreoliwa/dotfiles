@@ -2,13 +2,13 @@
 
 # Remove python compiled byte-code in either current directory or in a
 # list of specified directories
-function pyclean {
+function cleanpy {
     find . -type f -name '*.py[co]' -delete
     find . -type d -name '__pycache__' -delete
 }
 
 # Clear distribution files
-function pyclean_dist {
+function cleanpy_dist {
     find . -type d \( -name '*.egg-info' -or -name 'pip-wheel-metadata' -or -name 'dist' \) -print0 | xargs -0 rm -rvf
 }
 

@@ -2,3 +2,4 @@
 alias pc="pycharm-cli"
 alias sd-make='make -f ~/Code/toolbox/Makefile.sennder'
 alias ft='invoke logseq.find-task'
+alias fq='invoke logseq.rg'

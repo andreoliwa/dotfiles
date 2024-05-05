@@ -173,8 +173,8 @@ mac_cask_packages:
     - brave-browser-beta # https://brave.com/download-beta/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - cyberduck # https://cyberduck.io/
-    - deepl
-    - dropbox
+    - deepl # https://www.deepl.com/translator
+    - dropbox # https://www.dropbox.com/
     - dupeguru # https://dupeguru.voltaicideas.net/
     - finicky # https://github.com/johnste/finicky
     - flameshot # https://github.com/flameshot-org/flameshot#installation
@@ -187,7 +187,7 @@ mac_cask_packages:
     - grandperspective # https://grandperspectiv.sourceforge.io/
     - homebrew/cask-versions/whatsapp-legacy # Because the new Mac app doesn't let me select and copy multiple text messages
     - imagemagick # https://imagemagick.org/
-    - iterm2
+    - iterm2 # https://iterm2.com/
     - kap
     - keepingyouawake # maintained caffeinate wrapper
     - logitech-options # MX Keys for Mac external keyboard
@@ -209,6 +209,7 @@ mac_cask_packages:
     - teamviewer
     - telegram
     - the-unarchiver
+    - tor-browser # https://www.torproject.org/
     - visual-studio-code
     - vlc
     - xquartz # https://www.xquartz.org/
@@ -366,6 +367,7 @@ python3_pipx_modules:
     - keyring # https://pypi.org/project/keyring/
     - kubernetes-validate # https://github.com/willthames/kubernetes-validate
     - litecli # SQLite CLI https://github.com/dbcli/litecli
+    - maturin # https://github.com/PyO3/maturin
     - mkdocs # https://github.com/mkdocs/mkdocs
     - mycli # https://github.com/dbcli/mycli
     - openai-whisper # https://github.com/openai/whisper

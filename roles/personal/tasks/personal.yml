@@ -23,6 +23,11 @@
     dest: ~/Library/Application Support/dontforget/config.yaml
     state: link
 
+- name: "Install nitpick"
+  ansible.builtin.command: "pipx install -e ."
+  args:
+    chdir: "{{ project_root }}/nitpick"
+
 - name: "Install daily-grind"
   ansible.builtin.command: "pipx install -e ."
   args:

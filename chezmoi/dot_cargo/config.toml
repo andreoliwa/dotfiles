@@ -1,0 +1,7 @@
+# https://stackoverflow.com/questions/74452311/pyo3-getting-started-example-not-building-on-macos/77382609#77382609
+
+[target.x86_64-apple-darwin]
+rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]
+
+[target.aarch64-apple-darwin]
+rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]

@@ -17,3 +17,8 @@
 
 - name: "nodejs: Set global with asdf"
   command: "asdf global nodejs latest"
+
+- name: "nodejs: Add pnpm as asdf plugin"
+  command: "asdf plugin-add pnpm"
+  args:
+    creates: ~/.asdf/plugins/pnpm

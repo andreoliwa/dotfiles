@@ -132,6 +132,11 @@ module.exports = {
   ],
   handlers: [
     {
+      // Add this query string parameter to a work URL to open it in the personal browser
+      match: ({ url }) => url.search.includes(["personal"]),
+      browser: "Brave Browser Beta",
+    },
+    {
       match: workURLs,
       browser: "Brave Browser",
     },

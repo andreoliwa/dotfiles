@@ -1,0 +1,12 @@
+# https://github.com/mkdocs/mkdocs
+- name: "mkdocs: Install with pipx"
+  ansible.builtin.command: "pipx install mkdocs"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
+
+# https://squidfunk.github.io/mkdocs-material/reference/images/#lightbox
+- name: "mkdocs: Inject glightbox plugin"
+  ansible.builtin.command: "pipx inject mkdocs mkdocs-glightbox"

@@ -368,7 +368,6 @@ python3_pipx_modules:
     - kubernetes-validate # https://github.com/willthames/kubernetes-validate
     - litecli # SQLite CLI https://github.com/dbcli/litecli
     - maturin # https://github.com/PyO3/maturin
-    - mkdocs # https://github.com/mkdocs/mkdocs
     - mycli # https://github.com/dbcli/mycli
     - openai-whisper # https://github.com/openai/whisper
     - organize-tool # https://github.com/tfeldmann/organize

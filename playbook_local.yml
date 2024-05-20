@@ -30,6 +30,7 @@
     - { role: pre-commit, tags: ["asdf", "pre-commit"] }
     - { role: tmux, tags: ["tmux"] }
     - { role: gita, tags: ["gita", "git"] }
+    - { role: mkdocs, tags: ["mkdocs", "docs"] }
 
     - { role: docker, tags: ["docker"] }
     - {

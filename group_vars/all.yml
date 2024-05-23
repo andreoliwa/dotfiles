@@ -100,6 +100,7 @@ mac_homebrew_packages:
     - speedtest-cli # https://github.com/sivel/speedtest-cli
     - starship # https://github.com/starship/starship
     - svn # needed by font-ubuntu
+    - swig # https://www.swig.org/ needed to build the Python cryptography package pykcs11 https://pypi.org/project/PyKCS11/
     - telnet
     - terminal-notifier
     # User-contributed docs for Unix commands

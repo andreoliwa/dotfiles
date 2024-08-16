@@ -53,6 +53,7 @@ var workURLs = [
   /workday/,
   /chime.aws/,
   /figma/,
+  /phrase.com/,
 
   // sennder
   /atlassian/,

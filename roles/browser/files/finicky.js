@@ -139,6 +139,10 @@ module.exports = {
       browser: "Brave Browser Beta",
     },
     {
+      match: [/doordash.team/],
+      browser: "Google Chrome",
+    },
+    {
       match: workURLs,
       browser: "Brave Browser",
     },

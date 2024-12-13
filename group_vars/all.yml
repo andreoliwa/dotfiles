@@ -499,30 +499,31 @@ vscode_extensions:
 chrome_extensions:
   common:
     # keep-sorted start
-    - https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
-    - https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn # https://github.com/chitsaou/copy-as-markdown/
-    - https://chrome.google.com/webstore/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen
-    - https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc
-    - https://chrome.google.com/webstore/detail/mate-translate-%E2%80%93-translat/ihmgiclibbndffejedjimfjmfoabpcke
-    - https://chrome.google.com/webstore/detail/private-internet-access/jplnlifepflhkbkgonidnobkakhmpnmh
-    - https://chrome.google.com/webstore/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd
-    - https://chrome.google.com/webstore/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien
-    - https://chrome.google.com/webstore/detail/rescuetime-for-chrome-and/bdakmnplckeopfghnlpocafcepegjeap/related
-    - https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
-    - https://chrome.google.com/webstore/detail/todoist-for-chrome/jldhpllghnbhlbpcmnajkpdmadaolakh
-    - https://chrome.google.com/webstore/detail/todoist-for-gmail/clgenfnodoocmhnlnpknojdbjjnmecff
-    - https://chrome.google.com/webstore/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn
+    - https://chromewebstore.google.com/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
+    - https://chromewebstore.google.com/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn # https://github.com/chitsaou/copy-as-markdown/
+    - https://chromewebstore.google.com/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen
+    - https://chromewebstore.google.com/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc
+    - https://chromewebstore.google.com/detail/mate-translate-%E2%80%93-translat/ihmgiclibbndffejedjimfjmfoabpcke
+    - https://chromewebstore.google.com/detail/private-internet-access/jplnlifepflhkbkgonidnobkakhmpnmh
+    - https://chromewebstore.google.com/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd
+    - https://chromewebstore.google.com/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien
+    - https://chromewebstore.google.com/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf
+    - https://chromewebstore.google.com/detail/rescuetime-for-chrome-and/bdakmnplckeopfghnlpocafcepegjeap/related
+    - https://chromewebstore.google.com/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg
+    - https://chromewebstore.google.com/detail/todoist-for-chrome/jldhpllghnbhlbpcmnajkpdmadaolakh
+    - https://chromewebstore.google.com/detail/todoist-for-gmail/clgenfnodoocmhnlnpknojdbjjnmecff
+    - https://chromewebstore.google.com/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn
     # keep-sorted end
   personal_laptop:
     # keep-sorted start
-    - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
-    - https://chrome.google.com/webstore/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
-    - https://chrome.google.com/webstore/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
+    - https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
+    - https://chromewebstore.google.com/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
+    - https://chromewebstore.google.com/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
     # keep-sorted end
   company_laptop:
   remove:
     # keep-sorted start
-    - https://chrome.google.com/webstore/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL
-    - https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd
-    - https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
+    - https://chromewebstore.google.com/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff # GraphQL
+    - https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd
+    - https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd # https://github.com/vuejs/vue-devtools
     # keep-sorted end

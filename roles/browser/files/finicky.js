@@ -54,6 +54,7 @@ var workURLs = [
   /chime.aws/,
   /figma/,
   /phrase.com/,
+  /tailscale/,
 
   // sennder
   /atlassian/,
@@ -139,12 +140,8 @@ module.exports = {
       browser: "Brave Browser Beta",
     },
     {
-      match: [/doordash.team/],
-      browser: "Google Chrome",
-    },
-    {
       match: workURLs,
-      browser: "Brave Browser",
+      browser: "Google Chrome",
     },
     {
       match: finicky.matchDomains([
@@ -155,12 +152,12 @@ module.exports = {
         /.*atlassian\.(com|net)$/,
         /.*atl-paas.net/,
       ]),
-      browser: "Brave Browser",
+      browser: "Google Chrome",
     },
     // Work parameters on the query string
     {
       match: ({ url }) => url.search.includes(["wolt", "sennder", "eatfirst"]),
-      browser: "Brave Browser",
+      browser: "Google Chrome",
     },
     // Work apps
     {
@@ -168,7 +165,7 @@ module.exports = {
       // https://github.com/johnste/finicky#advanced-usage
       // https://github.com/johnste/finicky/wiki/Configuration#parameters
       match: ({ opener }) => opener.bundleId === "com.tinyspeck.slackmacgap",
-      browser: "Brave Browser",
+      browser: "Google Chrome",
     },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-spotify-links-in-spotify-app

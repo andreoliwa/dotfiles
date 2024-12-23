@@ -1,0 +1,4 @@
+# https://github.com/spf13/cobra-cli/blob/main/README.md#configuring-the-cobra-generator
+author: W Augusto Andreoli <andreoliwa@sent.com>
+license: MIT
+useViper: false

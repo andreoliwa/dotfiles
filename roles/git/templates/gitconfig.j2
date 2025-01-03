@@ -49,7 +49,8 @@
         issues = !hub browse -- issues
         url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
         # Copy current branch name to clipboard (macOS only)
-        cb = "!git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
+        # Commenting this because I'm not using it and it breaks git-filter-repo
+        #cb = "!git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
 
         remote-branches = "!f() { git ls-remote --heads ${1:origin} | sed 's?.*refs/heads/??'; }; f "
 
@@ -116,3 +117,5 @@
 
 [rerere]
         enabled = true
+[init]
+	defaultBranch = master

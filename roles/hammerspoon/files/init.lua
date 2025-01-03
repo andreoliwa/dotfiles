@@ -258,7 +258,7 @@ config_app('Signal', nil, hide_when_working, {{wide_screen, not at_the_office, h
 config_app('Skype', nil, nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('Slack', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
 config_app('Speedtest', nil, nil, {{laptop_screen, true, hs.layout.left50}})
-config_app('Spotify', nil, hide_when_working, {{laptop_screen, true, hs.layout.maximized}})
+config_app('Spotify', nil, hide_when_working, {{laptop_screen, true, hs.layout.right50}})
 config_app('TeamViewer', nil, nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('Telegram', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('Terminal', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})

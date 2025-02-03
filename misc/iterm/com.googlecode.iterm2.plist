@@ -434,13 +434,6 @@
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x2d-0x40000</key>
-				<dict>
-					<key>Action</key>
-					<integer>11</integer>
-					<key>Text</key>
-					<string>0x1f</string>
-				</dict>
 				<key>0x44-0x120000</key>
 				<dict>
 					<key>Action</key>

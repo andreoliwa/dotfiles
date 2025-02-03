@@ -1,5 +1,5 @@
 // TODO: is there a way to match handlers conditionally? e.g.: only when Slack is open
-const isSlackOpen = false;
+const isSlackOpen = true;
 
 // Work URLs
 // Match any part of the URL with the regexes below
@@ -94,8 +94,8 @@ var workURLs = [
 ];
 
 if (isSlackOpen) {
-  // Local URLs
-  workURLs.push(/localhost/, /127.0.0.1/, /0.0.0.0/);
+  // Local URLs, GitHub
+  workURLs.push(/localhost/, /127.0.0.1/, /0.0.0.0/, /github.com/);
 }
 
 // https://github.com/johnste/finicky

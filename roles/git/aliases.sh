@@ -29,7 +29,7 @@ xargs git rm && git commit -m '__wip__'"
 
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 alias gu="invoke git.tidy-up"
-alias gcmu='gcm; gu'
+alias gmu='gcm; gu'
 
 alias ghc='gh pr checkout'
 

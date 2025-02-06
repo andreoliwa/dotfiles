@@ -55,6 +55,7 @@ var workURLs = [
   /figma/,
   /phrase.com/,
   /tailscale/,
+  /copilot/,
 
   // sennder
   /atlassian/,

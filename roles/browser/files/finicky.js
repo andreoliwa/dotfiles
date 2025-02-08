@@ -1,5 +1,7 @@
 // TODO: is there a way to match handlers conditionally? e.g.: only when Slack is open
-const isSlackOpen = true;
+const today = new Date();
+const dayOfWeek = today.getDay();
+const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
 
 // Work URLs
 // Match any part of the URL with the regexes below
@@ -94,7 +96,7 @@ var workURLs = [
   /algolia/,
 ];
 
-if (isSlackOpen) {
+if (!isWeekend) {
   // Local URLs, GitHub
   workURLs.push(/localhost/, /127.0.0.1/, /0.0.0.0/, /github.com/);
 }

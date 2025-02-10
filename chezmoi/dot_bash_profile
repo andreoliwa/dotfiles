@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Let Homebrew modify the PATH before everything else, so tools like pyenv can be first in the PATH.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Suggestions made by pyenv init:
 # WARNING: `pyenv init -` no longer sets PATH.
 # Run `pyenv init` to see the necessary changes to make to your configuration.
@@ -11,8 +14,6 @@ command -v pyenv >/dev/null && eval "$(pyenv init -)"
 test -f "$HOME/.bashrc" && source "${HOME}/.bashrc"
 # shellcheck disable=SC1091
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # https://docs.brew.sh/Shell-Completion
 if type brew &>/dev/null; then

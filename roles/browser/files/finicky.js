@@ -58,6 +58,7 @@ var workURLs = [
   /phrase.com/,
   /tailscale/,
   /copilot/,
+  /event.on24.com/,
 
   // sennder
   /atlassian/,
@@ -98,7 +99,14 @@ var workURLs = [
 
 if (!isWeekend) {
   // Local URLs, GitHub
-  workURLs.push(/localhost/, /127.0.0.1/, /0.0.0.0/, /github.com/);
+  workURLs.push(
+    /localhost/,
+    /127.0.0.1/,
+    /0.0.0.0/,
+    /github.com/,
+    /go.dev/,
+    /golang/
+  );
 }
 
 // https://github.com/johnste/finicky

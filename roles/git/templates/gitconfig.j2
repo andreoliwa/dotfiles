@@ -119,3 +119,7 @@
         enabled = true
 [init]
 	defaultBranch = master
+
+# Use SSH instead of HTTPS for private repos: https://go.dev/doc/faq#git_https
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/

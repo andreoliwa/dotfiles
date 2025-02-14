@@ -69,3 +69,6 @@ roles_galaxy/
 
 # Redmine
 roles/redmine/themes/
+
+# Ansible
+.ansible/

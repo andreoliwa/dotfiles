@@ -59,6 +59,7 @@ var workURLs = [
   /tailscale/,
   /copilot/,
   /event.on24.com/,
+  /kreya/,
 
   // sennder
   /atlassian/,

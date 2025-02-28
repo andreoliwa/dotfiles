@@ -60,6 +60,7 @@ var workURLs = [
   /copilot/,
   /event.on24.com/,
   /kreya/,
+  /scalyr/,
 
   // sennder
   /atlassian/,

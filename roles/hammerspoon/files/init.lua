@@ -387,5 +387,5 @@ end
 -- Reposition all stubborn apps that don't save their last window positions
 -- https://www.hammerspoon.org/docs/hs.window.filter.html#subscribe
 -- 'Preview' windows are not being moved for some reason
-wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'Logseq', 'ScanSnap Home'}
+wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'ScanSnap Home'}
 wf_stubborn_apps:subscribe(hs.window.filter.windowCreated, reposition_stubborn_windows)

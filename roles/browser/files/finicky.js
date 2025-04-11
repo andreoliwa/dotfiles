@@ -61,6 +61,7 @@ var workURLs = [
   /event.on24.com/,
   /kreya/,
   /scalyr/,
+  /cursor./,
 
   // sennder
   /atlassian/,

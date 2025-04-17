@@ -1,0 +1,17 @@
+- name: "Go: Install with Homebrew"
+  homebrew:
+    name: go
+    state: present
+
+- name: "Asdf: Add golangci-lint plugin"
+  ansible.builtin.command: "asdf plugin add golangci-lint https://github.com/hypnoglow/asdf-golangci-lint.git"
+  args:
+    creates: ~/.asdf/plugins/golangci-lint
+
+- name: "Go: Install golangci-lint versions 1 and 2"
+  ansible.builtin.command: "asdf install golangci-lint {{ item }}"
+  loop:
+    - 1.64.8
+    - 2.1.2
+  args:
+    creates: ~/.asdf/installs/golangci-lint/{{ item }}/

@@ -431,7 +431,7 @@ npm_global_packages:
 
 rust_binaries:
   # keep-sorted start
-  - { pkg: cargo-update, bin: cargo-install-update } # https://github.com/nabijaczleweli/cargo-update
+  - { pkg: cargo-update } # https://github.com/nabijaczleweli/cargo-update
   - { pkg: cargo-workspaces } # https://crates.io/crates/cargo-workspaces
   - { pkg: eza, bin: eza } # https://github.com/eza-community/eza
   - { pkg: tailspin, bin: tailspin } # https://github.com/bensadeh/tailspin

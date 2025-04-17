@@ -1,4 +1,4 @@
-- name: "java: Uninstall Homebrew packages that can be installed with asdf"
+- name: "Java: Uninstall Homebrew packages that can be installed with asdf"
   homebrew:
     name: "{{ item }}"
     state: absent
@@ -8,29 +8,29 @@
     - openjdk
     - adoptopenjdk
 
-- name: "java: Add as asdf plugin"
-  command: "asdf plugin-add java"
+- name: "Java: Add as asdf plugin"
+  ansible.builtin.command: "asdf plugin-add java"
   args:
     creates: ~/.asdf/plugins/java
 
 # openjdk-11.0.2 doesn't exist anymore
-- name: "java: Install openjdk-17.0.2 with asdf"
-  command: "asdf install java openjdk-17.0.2"
+- name: "Java: Install openjdk-17.0.2 with asdf"
+  ansible.builtin.command: "asdf install java openjdk-17.0.2"
   register: result
   changed_when: "'is already installed' not in result.stdout"
 
-- name: "java: Set global with asdf"
-  command: "asdf global java openjdk-17.0.2"
+- name: "Java: Set global with asdf"
+  ansible.builtin.command: "asdf global java openjdk-17.0.2"
 
-- name: "ktlint: Add as asdf plugin"
-  command: "asdf plugin-add ktlint"
+- name: "Ktlint: Add as asdf plugin"
+  ansible.builtin.command: "asdf plugin-add ktlint"
   args:
     creates: ~/.asdf/plugins/ktlint
 
-- name: "ktlint: Install latest with asdf"
-  command: "asdf install ktlint latest"
+- name: "Ktlint: Install latest with asdf"
+  ansible.builtin.command: "asdf install ktlint latest"
   register: result
   changed_when: "'is already installed' not in result.stdout"
 
-- name: "ktlint: Set global with asdf"
-  command: "asdf global ktlint latest"
+- name: "Ktlint: Set global with asdf"
+  ansible.builtin.command: "asdf global ktlint latest"

@@ -62,6 +62,8 @@ var workURLs = [
   /kreya/,
   /scalyr/,
   /cursor./,
+  /chatgpt/,
+  /jira/,
 
   // sennder
   /atlassian/,

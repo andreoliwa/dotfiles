@@ -273,7 +273,7 @@ config_app('zoom.us', 'zoom floating video window', nil, {{laptop_screen, true, 
 config_app('zoom.us', 'Zoom Meeting', nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('zoom.us', 'zoom share statusbar window', nil, {{laptop_screen, true, hs.layout.right50}})
 config_app('zoom.us', 'zoom share toolbar window', nil, {{laptop_screen, true, hs.layout.right70}})
-config_app('zoom.us', 'Zoom', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('zoom.us', 'Zoom', nil, {{laptop_screen, true, hs.layout.maximized}, {wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
 -- keep-sorted end
 
 -- TODO: I don't use a vertical screen anymore for some time; convert these other layouts on demand

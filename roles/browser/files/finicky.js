@@ -115,7 +115,7 @@ if (!isWeekend) {
 }
 
 // https://github.com/johnste/finicky
-module.exports = {
+export default {
   // Using the unstable browser for personal purposes, and the stable one for work
   defaultBrowser: "Brave Browser Beta",
   rewrite: [
@@ -129,7 +129,7 @@ module.exports = {
     // },
     // {
     //   // https://github.com/johnste/finicky/wiki/Configuration-ideas#redirect-google-links-to-duckduckgocom
-    //   match: finicky.matchDomains([/google\.(com|de|com.br|.+)$/]),
+    //   match: finicky.matchHostnames([/google\.(com|de|com.br|.+)$/]),
     //   url: ({ url }) => ({
     //     ...url,
     //     host: "duckduckgo.com"
@@ -160,7 +160,7 @@ module.exports = {
       browser: "Google Chrome",
     },
     {
-      match: finicky.matchDomains([
+      match: finicky.matchHostnames([
         /eatfirst\.(ninja|com)$/,
         "trello.com",
         "meet.google.com",
@@ -185,7 +185,7 @@ module.exports = {
     },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-spotify-links-in-spotify-app
-      match: finicky.matchDomains("open.spotify.com"),
+      match: finicky.matchHostnames("open.spotify.com"),
       browser: "Spotify",
     },
     {

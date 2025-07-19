@@ -148,6 +148,16 @@ export default {
         };
       },
     },
+    // Remove "/files" when people insist to share links to the "Files" tab.
+    // I want to read the description first, but I'm probably one of the few who cares about it.
+    {
+      match: ({ url }) =>
+        url.host === "github.com" && url.pathname.endsWith("/files"),
+      url: ({ url }) => ({
+        ...url,
+        pathname: url.pathname.replace(/\/files$/, ""),
+      }),
+    },
   ],
   handlers: [
     {

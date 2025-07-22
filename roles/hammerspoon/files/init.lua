@@ -6,6 +6,31 @@
 -- https://github.com/fikovnik/ShiftIt/wiki/The-Hammerspoon-Alternative
 -- https://github.com/scottwhudson/Lunette
 
+-- Configuration
+local debug = false
+
+-- Reposition all stubborn apps that don't save their last window positions
+-- macOS 'Preview' windows are not being moved for some reason
+-- List of apps to reposition on window creation
+local stubbornApps = {
+  -- keep-sorted start
+  "Authy Desktop",
+  "Preview",
+  "ScanSnap Home",
+  -- keep-sorted end
+}
+
+-- List of apps to auto-hide on focus change (matching by appName only)
+local autoHideApps = {
+  -- keep-sorted start
+  "Brave Browser Beta",
+  "Code",
+  "Logseq",
+  "Telegram",
+  "WhatsApp",
+  -- keep-sorted end
+}
+
 hs.window.animationDuration = 0
 hs.console.clearConsole()
 
@@ -14,7 +39,6 @@ hs.console.clearConsole()
 -- See also https://github.com/Hammerspoon/hammerspoon/issues/3591#issuecomment-1988453778
 print(hs.location.get())
 
-local debug = false
 print('Debugging? ' .. tostring(debug))
 
 function debug_print(message)
@@ -245,6 +269,7 @@ config_app('Finder', 'import', nil, {{wide_screen, true, hs.layout.right50_botto
 config_app('Finder', 'inbox', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
 config_app('Gnucash', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('Goland', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('Google Chrome', '', hide_when_working, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
 config_app('Hammerspoon', 'Hammerspoon Console', debug, {{laptop_screen, true, hs.layout.bottom50}})
 config_app('iTerm2', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
 config_app('Logseq', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})
@@ -348,9 +373,78 @@ end
 function apply_window_layout()
     if not hs.window or not hs.window.allWindows then
         hs.alert.show("hs.window or hs.window.allWindows is missing!")
+        return
+    end
+
+    -- Filter out applications that don't exist to prevent nil errors
+    local filtered_layout = {}
+    for _, config in ipairs(window_layout) do
+        local app_name = config[1]
+        local window_title = config[2]
+
+        if app_name and app_name ~= "" then
+            -- Normal app case: check if app exists
+            local app = hs.application.find(app_name)
+            if app then
+                debug_print("Including app in layout: " .. app_name)
+                table.insert(filtered_layout, config)
+            else
+                print("Unable to find app: " .. app_name)
+                print(app_name .. "\t" .. tostring(app))
+                print("No windows matched, skipping.")
+            end
+        elseif app_name == "" and window_title then
+            -- Special case: empty app name with specific window (like YouTube)
+            if type(window_title) == "userdata" and window_title.isValid and window_title:isValid() then
+                debug_print("Including window in layout: " .. tostring(window_title))
+                table.insert(filtered_layout, config)
+            else
+                debug_print("Window not found or invalid, skipping: " .. tostring(window_title))
+            end
+        else
+            -- Skip invalid configurations
+            debug_print("Skipping invalid config: app_name=" .. tostring(app_name) .. ", window_title=" .. tostring(window_title))
+        end
+    end
+
+    -- Debug: print the filtered layout before applying
+    debug_print("Filtered layout contains " .. #filtered_layout .. " entries:")
+    for i, config in ipairs(filtered_layout) do
+        debug_print("  [" .. i .. "] app_name=" .. tostring(config[1]) .. ", window_title=" .. tostring(config[2]) .. ", screen=" .. tostring(config[3]))
+    end
+
+    -- Final safety check: verify all apps in filtered layout actually exist and have allWindows method
+    local safe_layout = {}
+    for _, config in ipairs(filtered_layout) do
+        local app_name = config[1]
+        if app_name and app_name ~= "" then
+            local app = hs.application.find(app_name)
+            if app and app.allWindows then
+                table.insert(safe_layout, config)
+                debug_print("Final check passed for: " .. app_name)
+            else
+                print("Final check failed for: " .. app_name .. " (app=" .. tostring(app) .. ", allWindows=" .. tostring(app and app.allWindows))
+            end
+        else
+            -- Keep non-app entries (like window-specific configs)
+            table.insert(safe_layout, config)
+            debug_print("Keeping non-app config: " .. tostring(config[1]))
+        end
+    end
+
+    debug_print("Safe layout contains " .. #safe_layout .. " entries")
+
+    -- http://www.hammerspoon.org/docs/hs.layout.html
+    -- Use pcall to prevent crashes from layout issues
+    local success, error_msg = pcall(function()
+        hs.layout.apply(safe_layout, compare_window_title)
+    end)
+
+    if not success then
+        print("Layout application failed: " .. tostring(error_msg))
+        print("Skipping layout application to prevent crash")
     else
-        -- http://www.hammerspoon.org/docs/hs.layout.html
-        hs.layout.apply(window_layout, compare_window_title)
+        debug_print("Layout applied successfully")
     end
 end
 
@@ -361,35 +455,104 @@ apply_window_layout()
 -- http://www.hammerspoon.org/docs/hs.screen.watcher.html
 hs.screen.watcher.new(apply_window_layout)
 
-function monitor_app_events(app_name, event_type, app_object)
-    if app_name == 'Preview' then
-        debug_print(app_name)
-        debug_print(event_type)
-        debug_print(app_object)
-        --if event_type == hs.application.watcher.activated then
-       --    debug_print(app_name .. ' opened')
-       --end
-       --if event_type == hs.application.watcher.deactivated then
-       --    debug_print(app_name .. ' closed')
-       --end
+-- Utility: simple string match against a list
+local function isInList(value, list)
+  for _, v in ipairs(list) do
+    if v == value then return true end
+  end
+  return false
+end
+
+-- Utility: safely hide an app with retry logic
+local function safeHideApp(appName, maxRetries)
+  maxRetries = maxRetries or 3
+
+  local app = hs.application.find(appName)
+
+  if not app then
+    debug_print("App not found: " .. appName)
+    return false
+  end
+
+  -- Don't try to hide if app is already hidden
+  if app:isHidden() then
+    debug_print("App already hidden: " .. appName)
+    return true
+  end
+
+  -- Don't hide if app has no windows (might be a background process)
+  local windows = app:allWindows()
+  if not windows or #windows == 0 then
+    debug_print("App has no windows, skipping hide: " .. appName)
+    return true
+  end
+
+  local function attemptHide(retryCount)
+    local success = app:hide()
+    debug_print("Hiding app: " .. appName .. " -> " .. tostring(success) .. " (attempt " .. retryCount .. ")")
+
+    if success then
+      return true
+    elseif retryCount < maxRetries then
+      -- Retry after a short delay
+      hs.timer.doAfter(0.1, function()
+        attemptHide(retryCount + 1)
+      end)
+    else
+      debug_print("Failed to hide app after " .. maxRetries .. " attempts: " .. appName)
+      return false
     end
+  end
+
+  return attemptHide(1)
 end
 
--- https://nikhilism.com/post/2021/useful-hammerspoon-tips/
--- https://www.hammerspoon.org/docs/hs.application.watcher.html
-debug_print('Starting app watcher')
-local my_watch = hs.application.watcher.new(monitor_app_events)
-my_watch:start()
+-- Function to handle auto-hiding apps when focus changes
+local function handleAutoHide(focusedAppName)
+  if not focusedAppName then return end
 
-function reposition_stubborn_windows(window, app_name, event)
-    debug_print(window)
-    debug_print(app_name)
-    debug_print(event)
-    apply_window_layout()
+  debug_print("App focused: " .. focusedAppName)
+
+  -- Add a small delay to ensure focus change is complete
+  hs.timer.doAfter(0.05, function()
+    -- Hide all apps in autoHideApps list except the one just focused
+    for _, appToHide in ipairs(autoHideApps) do
+      if appToHide ~= focusedAppName then
+        safeHideApp(appToHide)
+      end
+    end
+  end)
 end
 
--- Reposition all stubborn apps that don't save their last window positions
--- https://www.hammerspoon.org/docs/hs.window.filter.html#subscribe
--- 'Preview' windows are not being moved for some reason
-wf_stubborn_apps = hs.window.filter.new{'Authy Desktop', 'ScanSnap Home'}
-wf_stubborn_apps:subscribe(hs.window.filter.windowCreated, reposition_stubborn_windows)
+-- Unified window event handler (for stubborn app repositioning)
+local function unifiedWindowHandler(window, appName, event)
+  if not window then return end
+
+  if event == "windowCreated" then
+    if isInList(appName, stubbornApps) then
+      debug_print("Repositioning stubborn app window: " .. appName)
+      apply_window_layout()
+    end
+
+  elseif event == "windowFocused" then
+    -- Also trigger auto-hide from window focus for redundancy
+    handleAutoHide(appName)
+  end
+end
+
+-- Create a shared filter for window behaviors (repositioning stubborn apps)
+local sharedFilter = hs.window.filter.new()
+sharedFilter:subscribe({
+  hs.window.filter.windowCreated,
+  hs.window.filter.windowFocused
+}, unifiedWindowHandler)
+
+-- Create an application watcher for reliable app focus detection
+local appWatcher = hs.application.watcher.new(function(appName, eventType, appObject)
+  if eventType == hs.application.watcher.activated then
+    handleAutoHide(appName)
+  end
+end)
+appWatcher:start()
+
+hs.alert.show("Hammerspoon: window filter and app watcher running")

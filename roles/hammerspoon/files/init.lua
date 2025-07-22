@@ -346,8 +346,12 @@ function compare_window_title(actual_window_title, expected_window_title)
 end
 
 function apply_window_layout()
-    -- http://www.hammerspoon.org/docs/hs.layout.html
-    hs.layout.apply(window_layout, compare_window_title)
+    if not hs.window or not hs.window.allWindows then
+        hs.alert.show("hs.window or hs.window.allWindows is missing!")
+    else
+        -- http://www.hammerspoon.org/docs/hs.layout.html
+        hs.layout.apply(window_layout, compare_window_title)
+    end
 end
 
 apply_window_layout()

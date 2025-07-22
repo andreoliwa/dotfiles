@@ -15,9 +15,19 @@ local debug = false
 local stubbornApps = {
   -- keep-sorted start
   "Authy Desktop",
+  "Logseq",
   "Preview",
   "ScanSnap Home",
   -- keep-sorted end
+}
+
+-- Delay in seconds before repositioning stubborn apps (gives time for app to fully load)
+local stubbornAppDelay = 0.5
+
+-- Per-app delays for stubborn apps that need more time (overrides stubbornAppDelay)
+local stubbornAppDelays = {
+  ["Logseq"] = 1.0,  -- Logseq might need more time to fully load
+  ["Preview"] = 0.3, -- Preview is usually quick
 }
 
 -- List of apps to auto-hide on focus change (matching by appName only)
@@ -463,6 +473,23 @@ local function isInList(value, list)
   return false
 end
 
+-- Utility: manually trigger repositioning for a specific app (useful for testing)
+local function repositionApp(appName)
+  if not appName then
+    print("Usage: repositionApp('AppName')")
+    return
+  end
+
+  local app = hs.application.find(appName)
+  if not app then
+    print("App not found: " .. appName)
+    return
+  end
+
+  print("Manually repositioning app: " .. appName)
+  apply_window_layout()
+end
+
 -- Utility: safely hide an app with retry logic
 local function safeHideApp(appName, maxRetries)
   maxRetries = maxRetries or 3
@@ -530,8 +557,14 @@ local function unifiedWindowHandler(window, appName, event)
 
   if event == "windowCreated" then
     if isInList(appName, stubbornApps) then
-      debug_print("Repositioning stubborn app window: " .. appName)
-      apply_window_layout()
+      -- Use per-app delay if configured, otherwise use default delay
+      local delay = stubbornAppDelays[appName] or stubbornAppDelay
+      debug_print("Repositioning stubborn app window: " .. appName .. " (with " .. delay .. "s delay)")
+      -- Add delay to give the app time to fully load and show up
+      hs.timer.doAfter(delay, function()
+        debug_print("Applying layout for stubborn app: " .. appName)
+        apply_window_layout()
+      end)
     end
 
   elseif event == "windowFocused" then

@@ -568,8 +568,10 @@ local function unifiedWindowHandler(window, appName, event)
     end
 
   elseif event == "windowFocused" then
-    -- Also trigger auto-hide from window focus for redundancy
-    handleAutoHide(appName)
+    if at_the_office then
+      -- Also trigger auto-hide from window focus for redundancy
+      handleAutoHide(appName)
+    end
   end
 end
 

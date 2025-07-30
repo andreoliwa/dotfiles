@@ -145,3 +145,6 @@ fabric.properties
 ################################################################################
 # END https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 ################################################################################
+
+# Augment Code AI
+data/kv-store

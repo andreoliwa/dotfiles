@@ -158,6 +158,13 @@ export default {
         pathname: url.pathname.replace(/\/files$/, ""),
       }),
     },
+    {
+      match: ({ url }) => url.host.includes("doordash-int.com"),
+      url: ({ url }) => ({
+        ...url,
+        host: url.host.replace("doordash-int.com", "doordash.team"),
+      }),
+    },
   ],
   handlers: [
     {

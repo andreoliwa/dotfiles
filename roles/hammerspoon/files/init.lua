@@ -18,6 +18,7 @@ local stubbornApps = {
   "Logseq",
   "Preview",
   "ScanSnap Home",
+  "Telegram",
   -- keep-sorted end
 }
 
@@ -277,6 +278,7 @@ config_app('Finder', '', nil, {{wide_screen, true, hs.layout.right50_top}, {hori
 config_app('Finder', 'consume-into-paperless', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
 config_app('Finder', 'import', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
 config_app('Finder', 'inbox', nil, {{wide_screen, true, hs.layout.right50_bottom}, {horizontal_screen, true, hs.layout.right50_bottom}})
+config_app('Finicky', '', debug, {{laptop_screen, true, hs.layout.bottom50}})
 config_app('Gnucash', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('Goland', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
 config_app('Google Chrome', '', hide_when_working, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})

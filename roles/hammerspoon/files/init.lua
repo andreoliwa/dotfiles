@@ -18,7 +18,7 @@ local stubbornApps = {
   "Logseq",
   "Preview",
   "ScanSnap Home",
-  "Telegram",
+  -- "Telegram", -- Commenting out because it moves the right-click menus too
   -- keep-sorted end
 }
 
@@ -281,7 +281,7 @@ config_app('Finder', 'inbox', nil, {{wide_screen, true, hs.layout.right50_bottom
 config_app('Finicky', '', debug, {{laptop_screen, true, hs.layout.bottom50}})
 config_app('Gnucash', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('Goland', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
-config_app('Google Chrome', '', hide_when_working, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
+config_app('Google Chrome', '', hide_when_working, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
 config_app('Hammerspoon', 'Hammerspoon Console', debug, {{laptop_screen, true, hs.layout.bottom50}})
 config_app('iTerm2', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
 config_app('Logseq', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})

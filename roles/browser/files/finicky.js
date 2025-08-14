@@ -64,6 +64,7 @@ var workURLs = [
   /cursor./,
   /chatgpt/,
   /jira/,
+  /lucid.app/,
 
   // sennder
   /atlassian/,

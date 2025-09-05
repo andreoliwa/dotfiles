@@ -65,6 +65,8 @@ var workURLs = [
   /chatgpt/,
   /jira/,
   /lucid.app/,
+  /schwab.com/,
+  /etrade.com/,
 
   // sennder
   /atlassian/,

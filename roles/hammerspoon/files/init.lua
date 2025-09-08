@@ -15,9 +15,11 @@ local debug = false
 local stubbornApps = {
   -- keep-sorted start
   "Authy Desktop",
+  "FaceTime",
   "Logseq",
   "Preview",
   "ScanSnap Home",
+  "SimpleFloatingClock",
   -- "Telegram", -- Commenting out because it moves the right-click menus too
   -- keep-sorted end
 }

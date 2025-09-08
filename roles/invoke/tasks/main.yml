@@ -1,0 +1,46 @@
+# https://github.com/pyinvoke/invoke
+- name: "Invoke: Install with pipx"
+  ansible.builtin.command: "pipx install invoke"
+  register: result
+  failed_when:
+    - result.rc > 0
+    - "'Not installing to existing directory' not in result.stderr"
+    - "'already seems to be installed' not in result.stdout"
+
+- name: "Invoke: Inject pudb"
+  ansible.builtin.command: "pipx inject invoke pudb"
+
+- name: "Invoke: Inject ipdb"
+  ansible.builtin.command: "pipx inject invoke ipdb"
+
+- name: "Invoke: Bash completion"
+  ansible.builtin.shell: "invoke --print-completion-script=bash > {{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/invoke.bash-completion"
+
+# https://github.com/andreoliwa/conjuring
+- name: "Conjuring: Clone"
+  ansible.builtin.git:
+    repo: git@github.com:andreoliwa/conjuring.git
+    dest: "{{ project_root }}/conjuring"
+
+- name: "Conjuring: Inject"
+  ansible.builtin.command: "pipx inject -e invoke . --include-deps"
+  args:
+    chdir: "{{ project_root }}/conjuring/"
+
+# https://github.com/andreoliwa/conjuring-private
+- name: "Conjuring-private: Clone"
+  ansible.builtin.git:
+    repo: git@github.com:andreoliwa/conjuring-private.git
+    dest: "{{ project_root }}/conjuring-private"
+  ignore_errors: true
+
+- name: "Conjuring-private: Default Todoist tasks"
+  ansible.builtin.blockinfile:
+    path: "{{ project_root }}/todoist/conjuring_todoist.py"
+    create: true
+    marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring-private"
+    block: |
+      from conjuring_private.todoist import *
+
+- name: "Conjuring: Init"
+  ansible.builtin.command: "conjuring init -d {{ project_root }}/conjuring-private/ --force"

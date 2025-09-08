@@ -6,3 +6,4 @@
     - { role: security, tags: ["security", "ssh", "gpg"] }
     - { role: bash, tags: ["bash"] }
     - { role: remote-server, tags: ["remote", "hetzner"] }
+    - { role: invoke, tags: ["invoke"] }

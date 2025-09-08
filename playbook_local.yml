@@ -27,6 +27,7 @@
     # Python / pipx
     - { role: python_pyenv, tags: ["python"] }
     # Depend on pipx:
+    - { role: invoke, tags: ["invoke"] }
     - { role: pre-commit, tags: ["asdf", "pre-commit"] }
     - { role: tmux, tags: ["tmux"] }
     - { role: gita, tags: ["gita", "git"] }

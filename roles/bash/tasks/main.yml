@@ -1,32 +1,43 @@
 - name: "Create ~/.config/dotfiles"
-  file:
+  ansible.builtin.file:
     state: directory
     path: ~/.config/dotfiles
 
-- import_tasks: shell.yml
+- name: "Install shell"
+  ansible.builtin.import_tasks: shell.yml
 
 # To check the distribution on the local machine:
 # ansible -m setup localhost | rg 'distribution"'
-- import_tasks: link_files.yml
+- name: "Link files"
+  ansible.builtin.import_tasks: link_files.yml
   when: ansible_distribution == "MacOSX" # TODO fix: link files on Linux too
-- import_tasks: copy_files.yml
+- name: "Copy files"
+  ansible.builtin.import_tasks: copy_files.yml
   when: ansible_distribution in ("OSMC", "Amazon") or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner"))
 
-- import_tasks: chezmoi.yaml
-- import_tasks: atuin.yaml
+- name: "Install chezmoi"
+  ansible.builtin.import_tasks: chezmoi.yaml
+  when: ansible_os_family == "Darwin"
+
+- name: "Install atuin"
+  ansible.builtin.import_tasks: atuin.yaml
+  when: ansible_os_family == "Darwin"
 
 # https://github.com/powerline/powerline
 # https://github.com/b-ryan/powerline-shell
 # They are both slow and ugly (maybe a font needs to be configured).
 # Too much hassle to configure, not ready out of the box.
-# - import_tasks: bash-powerline.yml
+# - ansible.builtin.import_tasks: bash-powerline.yml
 
-- import_tasks: bash-git-prompt.yml
+- name: "Install bash-git-prompt"
+  ansible.builtin.import_tasks: bash-git-prompt.yml
 
-- import_tasks: z.yml
+- name: "Install z"
+  ansible.builtin.import_tasks: z.yml
   when: ansible_os_family in ("Debian", "OSMC") and ansible_system_vendor is defined and ansible_system_vendor not in ("DigitalOcean", "Hetzner")
 
-- import_tasks: autojump.yml
+- name: "Install autojump"
+  ansible.builtin.import_tasks: autojump.yml
   when: ansible_os_family == "Darwin"
 
 - name: "Create local bash completions dir"

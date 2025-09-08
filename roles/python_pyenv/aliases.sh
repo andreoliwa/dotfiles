@@ -16,8 +16,3 @@ alias pfg="pip freeze | rg"
 alias py='python3'
 alias pv='pyenv version'
 alias pvs='pyenv versions --bare'
-
-alias i='invoke'
-alias il='invoke --list'
-alias ih='invoke --help'
-alias ir='invoke --dry'

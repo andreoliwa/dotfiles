@@ -542,7 +542,7 @@ end
 
 -- Function to handle auto-hiding apps when focus changes
 local function handleAutoHide(focusedAppName)
-  if not focusedAppName then return end
+  if not focusedAppName or not at_the_office then return end
 
   debug_print("App focused: " .. focusedAppName)
 

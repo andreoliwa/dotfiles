@@ -310,6 +310,7 @@ config_app('Todoist', nil, hide_when_working, {{laptop_screen, true, hs.layout.r
 config_app('Toggl Track', nil, hide_when_working, {{wide_screen, not at_the_office, hs.layout.center_left}, {laptop_screen, true, hs.layout.left30}})
 config_app('VLC', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.maximized}, {horizontal_screen, not at_the_office, hs.layout.maximized}})
 config_app('WhatsApp', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})
+config_app('YouTube Music', nil, hide_when_working, {{laptop_screen, true, hs.layout.right70}})
 config_app('zoom.us', 'zoom floating video window', nil, {{laptop_screen, true, hs.layout.left50}})
 config_app('zoom.us', 'Zoom Meeting', nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('zoom.us', 'zoom share statusbar window', nil, {{laptop_screen, true, hs.layout.right50}})

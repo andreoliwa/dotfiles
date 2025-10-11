@@ -1,61 +1,73 @@
 - name: "Upgrade system pip3 version on Linux"
-  pip:
+  ansible.builtin.pip:
     name: pip
-    state: latest
+    state: present
     executable: pip3
   when: ansible_os_family != "Darwin"
 
-- name: "Get latest Python 3.12"
-  shell: "pyenv install --list | egrep -i ' 3.12.[0-9.abrc]+$' | tail -n 1 | xargs"
-  register: latest_python_3_12
+# Update pyenv to latest version to ensure we have access to the latest Python versions
+- name: "Update pyenv to latest version"
+  ansible.builtin.shell: "cd {{ pyenv_root }} && git fetch --tags && git checkout $(git describe --tags $(git rev-list --tags --max-count=1))"
+  register: pyenv_update_result
+  changed_when: "'HEAD is now at' in pyenv_update_result.stdout"
+
+- name: "Get latest Python 3.14"
+  ansible.builtin.shell: "set -o pipefail && {{ pyenv_root }}/bin/pyenv install --list | egrep -i ' 3.14.[0-9.abrc]+$' | tail -n 1 | xargs"
+  register: python_pyenv_latest_python_3_14
   changed_when: false
 
-- name: "Install Python 3.12 version {{ latest_python_3_12.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_12.stdout }}"
+- name: "Install Python 3.14 version {{ python_pyenv_latest_python_3_14.stdout }}"
+  ansible.builtin.shell: "{{ pyenv_root }}/bin/pyenv install {{ python_pyenv_latest_python_3_14.stdout }}"
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_14.stdout }}/bin/python"
+
+- name: "Get latest Python 3.13"
+  ansible.builtin.shell: "set -o pipefail && {{ pyenv_root }}/bin/pyenv install --list | egrep -i ' 3.13.[0-9.abrc]+$' | tail -n 1 | xargs"
+  register: python_pyenv_latest_python_3_13
+  changed_when: false
+
+- name: "Install Python 3.13 version {{ python_pyenv_latest_python_3_13.stdout }}"
+  ansible.builtin.shell: "{{ pyenv_root }}/bin/pyenv install {{ python_pyenv_latest_python_3_13.stdout }}"
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_13.stdout }}/bin/python"
+
+- name: "Get latest Python 3.12"
+  ansible.builtin.shell: "set -o pipefail && {{ pyenv_root }}/bin/pyenv install --list | egrep -i ' 3.12.[0-9.abrc]+$' | tail -n 1 | xargs"
+  register: python_pyenv_latest_python_3_12
+  changed_when: false
+
+- name: "Install Python 3.12 version {{ python_pyenv_latest_python_3_12.stdout }}"
+  ansible.builtin.shell: "{{ pyenv_root }}/bin/pyenv install {{ python_pyenv_latest_python_3_12.stdout }}"
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_12.stdout }}/bin/python"
 
 - name: "Get latest Python 3.11"
-  shell: "pyenv install --list | egrep -i ' 3.11.[0-9.abrc]+$' | tail -n 1 | xargs"
-  register: latest_python_3_11
+  ansible.builtin.shell: "set -o pipefail && {{ pyenv_root }}/bin/pyenv install --list | egrep -i ' 3.11.[0-9.abrc]+$' | tail -n 1 | xargs"
+  register: python_pyenv_latest_python_3_11
   changed_when: false
 
-- name: "Install Python 3.11 version {{ latest_python_3_11.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_11.stdout }}"
+- name: "Install Python 3.11 version {{ python_pyenv_latest_python_3_11.stdout }}"
+  ansible.builtin.shell: "{{ pyenv_root }}/bin/pyenv install {{ python_pyenv_latest_python_3_11.stdout }}"
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_11.stdout }}/bin/python"
 
 - name: "Get latest Python 3.10"
-  shell: "pyenv install --list | egrep -i ' 3.10.[0-9.abrc]+$' | tail -n 1 | xargs"
-  register: latest_python_3_10
+  ansible.builtin.shell: "set -o pipefail && {{ pyenv_root }}/bin/pyenv install --list | egrep -i ' 3.10.[0-9.abrc]+$' | tail -n 1 | xargs"
+  register: python_pyenv_latest_python_3_10
   changed_when: false
 
-- name: "Install Python 3.10 version {{ latest_python_3_10.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_10.stdout }}"
+- name: "Install Python 3.10 version {{ python_pyenv_latest_python_3_10.stdout }}"
+  ansible.builtin.shell: "{{ pyenv_root }}/bin/pyenv install {{ python_pyenv_latest_python_3_10.stdout }}"
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_10.stdout }}/bin/python"
 
 - name: "Get latest Python 3.9"
-  shell: "pyenv install --list | egrep -i ' 3.9.[0-9.abrc]+$' | tail -n 1 | xargs"
-  register: latest_python_3_9
+  ansible.builtin.shell: "set -o pipefail && {{ pyenv_root }}/bin/pyenv install --list | egrep -i ' 3.9.[0-9.abrc]+$' | tail -n 1 | xargs"
+  register: python_pyenv_latest_python_3_9
   changed_when: false
-# TODO feat: if latest_python_3_9.stdout is empty, show warning "run pyenv in another terminal"
+# TODO feat: if python_pyenv_latest_python_3_9.stdout is empty, show warning "run pyenv in another terminal"
 
-- name: "Install Python 3.9 version {{ latest_python_3_9.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_9.stdout }}"
-
-- name: "Get latest Python 3.8"
-  shell: "pyenv install --list | egrep -i ' 3.8[0-9.]+$' | tail -n 1 | xargs"
-  register: latest_python_3_8
-  changed_when: false
-
-- name: "Install Python 3.8 version {{ latest_python_3_8.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_8.stdout }}"
-
-- name: "Get latest Python 3.7"
-  shell: "pyenv install --list | egrep -i ' 3.7[0-9.]+$' | tail -n 1 | xargs"
-  register: latest_python_3_7
-  changed_when: false
-
-- name: "Install Python 3.7 version {{ latest_python_3_7.stdout }}"
-  pyenv:
-    version: "{{ latest_python_3_7.stdout }}"
+- name: "Install Python 3.9 version {{ python_pyenv_latest_python_3_9.stdout }}"
+  ansible.builtin.shell: "{{ pyenv_root }}/bin/pyenv install {{ python_pyenv_latest_python_3_9.stdout }}"
+  args:
+    creates: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_9.stdout }}/bin/python"

@@ -338,17 +338,15 @@ ruby_global_gems:
     - travis
     # keep-sorted end
 
-# Python versions to install with pyenv and set as global
-# Especially useful when using tox
-# NOTE: 2.7 gets installed by Homebrew
-pyenv_global_versions:
-  - 3.10.9
-  - 3.9.16
-  - 3.8.3
-  - 3.7.7
-  - 3.6.10
-  - 3.5.9
-  - 2.7.15
+# markosamuli.pyenv role configuration
+# Don't install any Python versions automatically - we handle this in python_pyenv role
+pyenv_python_versions: []
+
+# Don't set global versions automatically - we handle this in python_pyenv role
+pyenv_global: ""
+
+# Disable shell initialization since we manage it ourselves
+pyenv_init_shell: false
 
 # Install Python 3 modules globally with pipx
 python3_pipx_modules:

@@ -1,7 +1,7 @@
 # Don't install with Homebrew; it uses python@3.9 from the Homebrew dir,
 # which is then used to install pipx modules
 - name: "pipx: Install from GitHub with Python 3.11 https://github.com/pipxproject/pipx#install-pipx"
-  command: "{{ pyenv_root }}/versions/{{ latest_python_3_11.stdout }}/bin/python3 -m pip install -U --user pipx"
+  command: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_11.stdout }}/bin/python3 -m pip install -U --user pipx"
   register: result
   changed_when: "'Requirement already up-to-date: pipx' not in result.stdout"
 
@@ -29,7 +29,7 @@
 - name: "pipx: Remove packages on personal_laptop"
   with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx uninstall {{ item }}"
-  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop']
+  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | length > 0
   register: result
   failed_when:
     - result.rc > 0
@@ -38,7 +38,7 @@
 - name: "pipx: Remove packages on company_laptop"
   with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx uninstall {{ item }}"
-  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop']
+  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop'] | length > 0
   register: result
   failed_when:
     - result.rc > 0
@@ -64,7 +64,7 @@
 - name: "pipx: Install packages on personal_laptop"
   with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
-  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop']
+  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop'] | length > 0
   register: result
   failed_when:
     - result.rc > 0
@@ -74,7 +74,7 @@
 - name: "pipx: Install packages on company_laptop"
   with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
-  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop']
+  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | length > 0
   register: result
   failed_when:
     - result.rc > 0

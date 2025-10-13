@@ -204,11 +204,6 @@ export default {
       browser: "Google Chrome",
     },
     {
-      // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-spotify-links-in-spotify-app
-      match: finicky.matchHostnames("open.spotify.com"),
-      browser: "Spotify",
-    },
-    {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-zoom-links-in-zoom-app
       match: /zoom.us\/j\//,
       browser: "us.zoom.xos",

@@ -63,10 +63,12 @@ var workURLs = [
   /scalyr/,
   /cursor./,
   /chatgpt/,
+  /openai/,
   /jira/,
   /lucid.app/,
   /schwab.com/,
   /etrade.com/,
+  /augmentcode/,
 
   // sennder
   /atlassian/,

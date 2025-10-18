@@ -1,16 +1,16 @@
 # Don't install with Homebrew; it uses python@3.9 from the Homebrew dir,
 # which is then used to install pipx modules
-- name: "pipx: Install from GitHub with Python 3.11 https://github.com/pipxproject/pipx#install-pipx"
-  command: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_11.stdout }}/bin/python3 -m pip install -U --user pipx"
+- name: "Pipx: Install from GitHub with Python 3.13 https://github.com/pipxproject/pipx#install-pipx"
+  command: "{{ pyenv_root }}/versions/{{ python_pyenv_latest_python_3_13.stdout }}/bin/python3 -m pip install -U --user pipx"
   register: result
   changed_when: "'Requirement already up-to-date: pipx' not in result.stdout"
 
-- name: "pipx: Ensure it's on $PATH"
+- name: "Pipx: Ensure it's on $PATH"
   command: "pipx ensurepath"
   register: result
   changed_when: "'is already in PATH' not in result.stderr"
 
-- name: "pipx: Install completion on .bashrc"
+- name: "Pipx: Install completion on .bashrc"
   blockinfile:
     path: ~/.bashrc
     marker: "# ==================== {mark} https://github.com/pipxproject/pipx#install-pipx"
@@ -18,7 +18,7 @@
       # Taken from "pipx completions" command
       command -v register-python-argcomplete >/dev/null && eval "$(register-python-argcomplete pipx)"
 
-- name: "pipx: Remove common packages"
+- name: "Pipx: Remove common packages"
   with_items: "{{ python3_pipx_modules['remove'] }}"
   command: "pipx uninstall {{ item }}"
   register: result
@@ -26,7 +26,7 @@
     - result.rc > 0
     - "'Nothing to uninstall for' not in result.stdout"
 
-- name: "pipx: Remove packages on personal_laptop"
+- name: "Pipx: Remove packages on personal_laptop"
   with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx uninstall {{ item }}"
   when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | length > 0
@@ -35,7 +35,7 @@
     - result.rc > 0
     - "'Nothing to uninstall for' not in result.stdout"
 
-- name: "pipx: Remove packages on company_laptop"
+- name: "Pipx: Remove packages on company_laptop"
   with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx uninstall {{ item }}"
   when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop'] | length > 0
@@ -44,15 +44,15 @@
     - result.rc > 0
     - "'Nothing to uninstall for' not in result.stdout"
 
-- name: "pipx: List invalid packages"
+- name: "Pipx: List invalid packages"
   shell: "pipx list | grep -e 'has invalid interpreter' -e 'has missing internal' | sed 's/^ *//g' | cut -d ' ' -f 2"
   register: pipx_invalid_packages
 
-- name: "pipx: Remove invalid packages"
+- name: "Pipx: Remove invalid packages"
   with_items: "{{ pipx_invalid_packages.stdout_lines }}"
   command: "pipx uninstall {{ item }}"
 
-- name: "pipx: Install common Python 3 modules globally with pipx"
+- name: "Pipx: Install common Python 3 modules globally with pipx"
   with_items: "{{ python3_pipx_modules['common'] }}"
   command: "pipx install --verbose {{ item }}"
   register: result
@@ -61,7 +61,7 @@
     - "'Not installing to existing directory' not in result.stderr"
     - "'already seems to be installed' not in result.stdout"
 
-- name: "pipx: Install packages on personal_laptop"
+- name: "Pipx: Install packages on personal_laptop"
   with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
   when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop'] | length > 0
@@ -71,7 +71,7 @@
     - "'Not installing to existing directory' not in result.stderr"
     - "'already seems to be installed' not in result.stdout"
 
-- name: "pipx: Install packages on company_laptop"
+- name: "Pipx: Install packages on company_laptop"
   with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
   when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | length > 0

@@ -352,14 +352,31 @@ pyenv_init_shell: false
 python3_pipx_modules:
   common:
     # keep-sorted start
+    - gitup # https://github.com/earwig/git-repo-updater.git
+    - organize-tool # https://github.com/tfeldmann/organize
+    - ruff # https://github.com/astral-sh/ruff
+    - tox # https://github.com/tox-dev/tox/
+    - youtube-dl # https://pypi.org/project/youtube_dl/
+    # keep-sorted end
+  personal_laptop:
+    # keep-sorted start
+    - subliminal # https://pypi.org/project/subliminal/
+    # keep-sorted end
+  company_laptop:
+    # keep-sorted start
+    # keep-sorted end
+  remove:
+    # keep-sorted start
+    - aws-shell # https://github.com/awslabs/aws-shell
+    - awscli # https://pypi.org/project/awscli/ Older version 1.18.*
     - black # https://github.com/ambv/black
+    - bumpversion # https://pypi.org/project/bumpversion/
     - commitizen # https://github.com/commitizen-tools/commitizen
     - cookiecutter # https://pypi.org/project/cookiecutter/
     - cookiepatcher # https://pypi.org/project/cookiepatcher/
     - creosote # https://github.com/fredrikaverpil/creosote
     - cruft # https://github.com/cruft/cruft
     - flake8-to-ruff # https://github.com/astral-sh/ruff/blob/main/crates/flake8_to_ruff/README.md?plain=1
-    - gitup # https://github.com/earwig/git-repo-updater.git
     - howdoi # https://pypi.org/project/howdoi/
     - identify # https://github.com/chriskuehl/identify
     - isort # https://github.com/PyCQA/isort
@@ -369,31 +386,13 @@ python3_pipx_modules:
     - maturin # https://github.com/PyO3/maturin
     - mycli # https://github.com/dbcli/mycli
     - openai-whisper # https://github.com/openai/whisper
-    - organize-tool # https://github.com/tfeldmann/organize
     - pgcli # https://github.com/dbcli/pgcli
+    - pipenv # https://github.com/pypa/pipenv
     - prospector # https://github.com/landscapeio/prospector
     - pyoxidizer # https://github.com/indygreg/PyOxidizer
-    - ruff # https://github.com/astral-sh/ruff
-    - ruff-lsp # https://github.com/astral-sh/ruff-lsp
     - sqlite-utils # https://github.com/simonw/sqlite-utils
-    - tox # https://github.com/tox-dev/tox/
-    - yamllint # https://github.com/adrienverge/yamllint
-    - youtube-dl # https://pypi.org/project/youtube_dl/
-    # keep-sorted end
-  personal_laptop:
-    # keep-sorted start
-    - subliminal # https://pypi.org/project/subliminal/
-    # keep-sorted end
-  company_laptop:
-    # keep-sorted start
-    - pipenv # https://github.com/pypa/pipenv
-    # keep-sorted end
-  remove:
-    # keep-sorted start
-    - aws-shell # https://github.com/awslabs/aws-shell
-    - awscli # https://pypi.org/project/awscli/ Older version 1.18.*
-    - bumpversion # https://pypi.org/project/bumpversion/
     - twine # https://pypi.org/project/twine/
+    - yamllint # https://github.com/adrienverge/yamllint
     # keep-sorted end
 
 # Node utilities

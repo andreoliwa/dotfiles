@@ -22,7 +22,6 @@
     - { role: vim, tags: ["vim"] }
     - { role: bat, tags: ["bat"] }
     - { role: hammerspoon, tags: ["hammerspoon"] }
-    - { role: todoist, tags: ["todoist"] }
 
     # Python / pipx
     - { role: python_pyenv, tags: ["python"] }

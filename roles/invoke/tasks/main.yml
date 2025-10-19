@@ -34,13 +34,5 @@
     dest: "{{ project_root }}/conjuring-private"
   ignore_errors: true
 
-- name: "Conjuring-private: Default Todoist tasks"
-  ansible.builtin.blockinfile:
-    path: "{{ project_root }}/todoist/conjuring_todoist.py"
-    create: true
-    marker: "# ==================== {mark} https://github.com/andreoliwa/conjuring-private"
-    block: |
-      from conjuring_private.todoist import *
-
 - name: "Conjuring: Init"
   ansible.builtin.command: "conjuring init -d {{ project_root }}/conjuring-private/ --force"

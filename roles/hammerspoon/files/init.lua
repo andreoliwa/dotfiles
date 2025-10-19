@@ -284,6 +284,7 @@ config_app('Finder', 'inbox', nil, {{wide_screen, true, hs.layout.right50_bottom
 config_app('Finicky', '', debug, {{laptop_screen, true, hs.layout.bottom50}})
 config_app('Gnucash', '', nil, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('Goland', '', nil, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
+config_app('Goland', 'Augment', nil, {{laptop_screen, true, hs.layout.left50}})
 config_app('Google Chrome', '', hide_when_working, {{wide_screen, true, hs.layout.right50}, {horizontal_screen, true, hs.layout.right70}})
 config_app('Hammerspoon', 'Hammerspoon Console', debug, {{laptop_screen, true, hs.layout.bottom50}})
 config_app('iTerm2', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
@@ -298,7 +299,7 @@ config_app('RustRover', '', nil, {{wide_screen, true, hs.layout.right50}, {horiz
 config_app('ScanSnap Home', hs.window.find('- Scan'), nil, {{laptop_screen, true, hs.layout.right70}})
 config_app('ScanSnap Home', nil, nil, {{laptop_screen, true, hs.geometry.rect(0.42, 0.23, 0.5, 0.5)}})
 config_app('Signal', nil, hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})
-config_app('SimpleFloatingClock', nil, nil, {{laptop_screen, true, hs.layout.left30}})
+config_app('SimpleFloatingClock', nil, nil, {{laptop_screen, true, hs.layout.right30}})
 config_app('Skype', nil, nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('Slack', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
 config_app('Speedtest', nil, nil, {{laptop_screen, true, hs.layout.left50}})
@@ -306,7 +307,6 @@ config_app('Spotify', nil, hide_when_working, {{laptop_screen, true, hs.layout.r
 config_app('TeamViewer', nil, nil, {{laptop_screen, true, hs.layout.maximized}})
 config_app('Telegram', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left50}})
 config_app('Terminal', '', nil, {{wide_screen, true, hs.layout.left50}, {horizontal_screen, true, hs.layout.left70}})
-config_app('Todoist', nil, hide_when_working, {{laptop_screen, true, hs.layout.right70}})
 config_app('Toggl Track', nil, hide_when_working, {{wide_screen, not at_the_office, hs.layout.center_left}, {laptop_screen, true, hs.layout.left30}})
 config_app('VLC', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.maximized}, {horizontal_screen, not at_the_office, hs.layout.maximized}})
 config_app('WhatsApp', '', hide_when_working, {{wide_screen, not at_the_office, hs.layout.left50}, {horizontal_screen, not at_the_office, hs.layout.left70}})
@@ -331,7 +331,6 @@ if false and wide_screen == nil then
         {"VLC", nil, hs.layout.maximized, false},
         {"zoom.us", "Zoom", hs.layout.maximized, nil},
         {"dupeGuru", "dupeGuru Results", hs.layout.maximized, nil},
-        {"Brave Browser", "Todoist", hs.layout.maximized, nil},
     })
     config_screen(vertical_screen, {
         {"iTerm2", nil, hs.layout.maximized, nil},
@@ -354,7 +353,6 @@ if false and wide_screen == nil then
         {"Brave Browser", "Brave – DD", hs.layout.bottom50, nil},
         {"Brave Browser", "DevTools", hs.layout.top50, nil},
 
-        {"Todoist", nil, hs.layout.bottom50, nil},
         {"Bitwarden", nil, hs.layout.bottom50, nil},
 
         {"PyCharm", "Debug -", hs.layout.top50, nil},

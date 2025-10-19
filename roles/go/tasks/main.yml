@@ -8,10 +8,32 @@
   args:
     creates: ~/.asdf/plugins/golangci-lint
 
+- name: "Go: Get latest golangci-lint v1 version"
+  ansible.builtin.shell: "set -o pipefail && asdf list golangci-lint | grep -E '^\\s*\\*?\\s*1\\.' | tail -1 | sed 's/[*[:space:]]//g'"
+  register: go_linter_v1
+  changed_when: false
+
+- name: "Go: Get latest golangci-lint v2 version"
+  ansible.builtin.shell: "set -o pipefail && asdf list golangci-lint | grep -E '^\\s*\\*?\\s*2\\.' | tail -1 | sed 's/[*[:space:]]//g'"
+  register: go_linter_v2
+  changed_when: false
+
 - name: "Go: Install golangci-lint versions 1 and 2"
   ansible.builtin.command: "asdf install golangci-lint {{ item }}"
   loop:
-    - 1.64.8
-    - 2.1.2
+    - "{{ go_linter_v1.stdout }}"
+    - "{{ go_linter_v2.stdout }}"
   args:
     creates: ~/.asdf/installs/golangci-lint/{{ item }}/
+
+- name: "Go: Set golangci-lint global version to latest v2"
+  ansible.builtin.command: "asdf set golangci-lint {{ go_linter_v2.stdout }}"
+  args:
+    chdir: "{{ dotfiles_user_home }}"
+  changed_when: false
+
+- name: "Go: Install binaries from go_binaries list"
+  ansible.builtin.command: "go install {{ item.url }}@latest"
+  loop: "{{ go_binaries }}"
+  args:
+    creates: "~/go/bin/{{ item.bin }}"

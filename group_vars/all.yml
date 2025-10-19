@@ -426,6 +426,11 @@ npm_global_packages:
     - webpack
     # keep-sorted end
 
+go_binaries:
+  # keep-sorted start
+  - { bin: todos, url: https://github.com/ianlewis/todos }
+  # keep-sorted end
+
 rust_binaries:
   # keep-sorted start
   - { pkg: cargo-update } # https://github.com/nabijaczleweli/cargo-update

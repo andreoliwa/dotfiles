@@ -1,0 +1,37 @@
+# Patterns to exclude from git-keep output
+# Each line becomes a "-e pattern" argument to git clean
+# Lines starting with # are comments and will be ignored
+# These patterns are NOT compatible with .gitignore
+
+# keep-sorted start
+*.cache
+*.coverage
+*.egg-info
+*.log
+*.pyc
+*.so
+*.testmondata*
+*mypy_cache*
+*ruff_cache*
+.DS_Store
+.gradle
+.nyc_output
+.parcel-cache
+.pytest_cache
+.sass-cache
+.terraform
+.tox
+.venv
+/bazel-*
+/logseq/bak/
+__pycache__
+_build/
+_site/
+build
+data/kv-store
+dist
+htmlcov
+node_modules
+site-packages
+tmp
+# keep-sorted end

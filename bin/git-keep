@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# List untracked and ignored files that might be worth keeping
+# Read exclusion patterns from git-keep-patterns.txt and build -e arguments
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PATTERNS_FILE="$SCRIPT_DIR/git-keep-exclude.txt"
+
+# Build the git clean command with -e exclusions from the patterns file
+EXCLUDE_ARGS=""
+if [ -f "$PATTERNS_FILE" ]; then
+    while IFS= read -r pattern || [ -n "$pattern" ]; do
+        # Skip empty lines and comments
+        case "$pattern" in
+            ''|'#'*) continue ;;
+        esac
+        EXCLUDE_ARGS="$EXCLUDE_ARGS -e $pattern"
+    done < "$PATTERNS_FILE"
+fi
+
+# Run git clean with the exclusion patterns
+# shellcheck disable=SC2086
+git clean -n -d -x $EXCLUDE_ARGS | sed 's/Would remove //'

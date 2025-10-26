@@ -28,8 +28,8 @@ alias gwip="git add -A && git ls-files --deleted -z |
 xargs git rm && git commit -m '__wip__'"
 
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
-alias gu="invoke git.tidy-up"
-alias gmu='gcm; gu'
+alias gu="git pull; git sync"
+alias gmu='gcm; git pull'
 
 alias ghc='gh pr checkout'
 

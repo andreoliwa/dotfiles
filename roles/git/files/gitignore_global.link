@@ -35,6 +35,7 @@ docs/_build
 
 # Sandbox, temporary lab for notes, throwaway scripts, etc.
 *labtemp*
+*dontcommit*
 
 # Ignore Git itself, so fd doesn't search it by default
 .git/

@@ -22,17 +22,9 @@
     repo: git@github.com:andreoliwa/conjuring.git
     dest: "{{ project_root }}/conjuring"
 
-- name: "Conjuring: Inject"
-  ansible.builtin.command: "pipx inject -e invoke . --include-deps"
-  args:
-    chdir: "{{ project_root }}/conjuring/"
-
-# https://github.com/andreoliwa/conjuring-private
-- name: "Conjuring-private: Clone"
+# https://github.com/andreoliwa/my-den
+- name: "My-den: Clone"
   ansible.builtin.git:
-    repo: git@github.com:andreoliwa/conjuring-private.git
-    dest: "{{ project_root }}/conjuring-private"
+    repo: git@github.com:andreoliwa/my-den.git
+    dest: "{{ project_root }}/my-den"
   ignore_errors: true
-
-- name: "Conjuring: Init"
-  ansible.builtin.command: "conjuring init -d {{ project_root }}/conjuring-private/ --force"

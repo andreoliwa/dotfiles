@@ -38,7 +38,7 @@ command -v register-python-argcomplete >/dev/null && eval "$(register-python-arg
 test -d "$HOME"/go/bin && export PATH="$PATH:$HOME/go/bin"
 
 # Add my private script toolbox as last on the PATH
-test -d "$HOME"/Code/toolbox/bin && export PATH="$PATH:$HOME/Code/toolbox/bin"
+test -d "$HOME"/Code/my-den/toolbox/bin && export PATH="$PATH:$HOME/Code/my-den/toolbox/bin"
 
 # Increase Bash history size
 # https://unix.stackexchange.com/questions/20861/is-there-a-way-to-set-the-size-of-the-history-list-in-bash-to-more-than-5000-lin#20925
@@ -51,8 +51,9 @@ shopt -s histappend
 # https://jrnl.sh/en/stable/privacy-and-security/
 export HISTIGNORE="$HISTIGNORE:jrnl*"
 
-# Switch from a CLI editor to VSCode in wait mode
-export EDITOR='code --wait'
+# Terminal editor + VSCode in wait mode
+export EDITOR='vim'
+export VISUAL='code --wait'
 
 # To avoid the message: feh ERROR: Can't open X display. It *is* running, yeah?
 export DISPLAY=:0.0
@@ -63,8 +64,8 @@ export DISPLAY=:0.0
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # shellcheck source=/dev/null
-test -f "$HOME"/container-apps-private/aliases.sh && \
-    source "$HOME"/container-apps-private/aliases.sh
+test -f "$HOME"/Code/my-den/docker/aliases.sh && \
+    source "$HOME"/Code/my-den/docker/aliases.sh
 
 # https://github.com/starship/starship
 command -v starship >/dev/null && eval "$(starship init bash)"

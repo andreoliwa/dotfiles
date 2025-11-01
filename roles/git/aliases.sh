@@ -28,8 +28,13 @@ alias gwip="git add -A && git ls-files --deleted -z |
 xargs git rm && git commit -m '__wip__'"
 
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
-alias gu="git pull; git sync"
-alias gmu='gcm; git pull'
+
+# Manually clean up old draft commits that aren't part of current stack
+alias gclean="git branchless hide 'draft() - stack(@)'"
+
+# Git update: pull, sync branches, and auto-cleanup old draft commits from smartlog
+alias gu="git pull; git sync; gclean 2>/dev/null || true"
+alias gmu='gcm; gu'
 
 alias ghc='gh pr checkout'
 

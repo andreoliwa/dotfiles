@@ -69,6 +69,7 @@ var workURLs = [
   /schwab.com/,
   /etrade.com/,
   /augmentcode/,
+  /codecov.io/,
 
   // sennder
   /atlassian/,
@@ -142,8 +143,8 @@ export default {
     // },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#remove-all-marketingtracking-information-from-urls
-      match: ({ url }) => url.search.includes("utm_"),
-      url: ({ url }) => {
+      match: ({url}) => url.search.includes("utm_"),
+      url: ({url}) => {
         const search = url.search
           .split("&")
           .filter((part) => !part.startsWith("utm_"));
@@ -156,16 +157,16 @@ export default {
     // Remove "/files" when people insist to share links to the "Files" tab.
     // I want to read the description first, but I'm probably one of the few who cares about it.
     {
-      match: ({ url }) =>
+      match: ({url}) =>
         url.host === "github.com" && url.pathname.endsWith("/files"),
-      url: ({ url }) => ({
+      url: ({url}) => ({
         ...url,
         pathname: url.pathname.replace(/\/files$/, ""),
       }),
     },
     {
-      match: ({ url }) => url.host.includes("doordash-int.com"),
-      url: ({ url }) => ({
+      match: ({url}) => url.host.includes("doordash-int.com"),
+      url: ({url}) => ({
         ...url,
         host: url.host.replace("doordash-int.com", "doordash.team"),
       }),
@@ -174,7 +175,7 @@ export default {
   handlers: [
     {
       // Add this query string parameter to a work URL to open it in the personal browser
-      match: ({ url }) => url.search.includes(["personal"]),
+      match: ({url}) => url.search.includes(["personal"]),
       browser: "Brave Browser Beta",
     },
     {
@@ -194,7 +195,7 @@ export default {
     },
     // Work parameters on the query string
     {
-      match: ({ url }) => url.search.includes(["wolt", "sennder", "eatfirst"]),
+      match: ({url}) => url.search.includes(["wolt", "sennder", "eatfirst"]),
       browser: "Google Chrome",
     },
     // Work apps
@@ -202,7 +203,7 @@ export default {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#matching-an-array-of-multiple-apps
       // https://github.com/johnste/finicky#advanced-usage
       // https://github.com/johnste/finicky/wiki/Configuration#parameters
-      match: ({ opener }) => opener.bundleId === "com.tinyspeck.slackmacgap",
+      match: ({opener}) => opener.bundleId === "com.tinyspeck.slackmacgap",
       browser: "Google Chrome",
     },
     {

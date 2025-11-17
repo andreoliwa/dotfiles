@@ -74,7 +74,7 @@
 - name: "Pipx: Install packages on company_laptop"
   with_items: "{{ python3_pipx_modules['company_laptop'] }}"
   command: "pipx install --verbose {{ item }}"
-  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | length > 0
+  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | bool
   register: result
   failed_when:
     - result.rc > 0

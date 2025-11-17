@@ -26,11 +26,6 @@ git_personal:
   # gpg --list-secret-keys --keyid-format LONG
   user_signingkey: B9CAD8F36F84DBFC
 
-git_company:
-  user_name: Augusto Andreoli
-  user_email: augusto.andreoli@wolt.com
-  user_signingkey: 897562523E09FEE8
-
 # Vim
 
 # Whether to install plugins automatically. If not, just run

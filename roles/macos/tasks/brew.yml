@@ -3,47 +3,47 @@
   community.general.homebrew_tap:
     name: "{{ item }}"
     state: present
-  loop: "{{ mac_homebrew_taps['common'] }}"
+  loop: "{{ mac_homebrew_taps['common'] | default([], true) }}"
 
 - name: "Brew: Install common"
   community.general.homebrew:
     name: "{{ item }}"
     state: present
-  loop: "{{ mac_homebrew_packages['common'] }}"
+  loop: "{{ mac_homebrew_packages['common'] | default([], true) }}"
 
 - name: "Brew: Remove"
   community.general.homebrew:
     name: "{{ item }}"
     state: absent
-  loop: "{{ mac_homebrew_packages['remove'] }}"
+  loop: "{{ mac_homebrew_packages['remove'] | default([], true) }}"
   ignore_errors: true
 
 - name: "Brew: Install on personal_laptop"
   community.general.homebrew:
     name: "{{ item }}"
     state: latest
-  loop: "{{ mac_homebrew_packages['personal_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['personal_laptop']
+  loop: "{{ mac_homebrew_packages['personal_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
 - name: "Brew: Remove on personal_laptop"
   community.general.homebrew:
     name: "{{ item }}"
     state: absent
-  loop: "{{ mac_homebrew_packages['company_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['company_laptop']
+  loop: "{{ mac_homebrew_packages['company_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
   ignore_errors: true
 
 - name: "Brew: Install on company_laptop"
   community.general.homebrew:
     name: "{{ item }}"
     state: present
-  loop: "{{ mac_homebrew_packages['company_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['company_laptop']
+  loop: "{{ mac_homebrew_packages['company_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool
 
 - name: "Brew: Remove on company_laptop"
   community.general.homebrew:
     name: "{{ item }}"
     state: absent
-  loop: "{{ mac_homebrew_packages['personal_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and mac_homebrew_packages['personal_laptop']
+  loop: "{{ mac_homebrew_packages['personal_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool
   ignore_errors: true

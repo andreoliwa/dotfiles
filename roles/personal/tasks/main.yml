@@ -1,4 +1,4 @@
 - import_tasks: personal.yml
 
 - import_tasks: wolt.yml
-  when: ansible_env.COMPANY_LAPTOP
+  when: ansible_env.COMPANY_LAPTOP | bool

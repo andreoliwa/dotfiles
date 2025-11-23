@@ -2,34 +2,34 @@
   homebrew_cask:
     name: "{{ item }}"
     state: present
-  with_items: "{{ mac_cask_packages['common'] }}"
+  loop: "{{ mac_cask_packages['common'] | default([], true) }}"
 
 - name: "Cask: Remove common"
   homebrew_cask:
     name: "{{ item }}"
     state: absent
-  with_items: "{{ mac_cask_packages['remove'] }}"
+  loop: "{{ mac_cask_packages['remove'] | default([], true) }}"
 
 - name: "Cask: Install on personal_laptop"
   homebrew_cask:
     name: "{{ item }}"
     state: present
-  with_items: "{{ mac_cask_packages['personal_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and mac_cask_packages['personal_laptop']
+  loop: "{{ mac_cask_packages['personal_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
 - name: "Cask: Remove on personal_laptop"
   homebrew_cask:
     name: "{{ item }}"
     state: absent
-  with_items: "{{ mac_cask_packages['company_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and mac_cask_packages['company_laptop']
+  loop: "{{ mac_cask_packages['company_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
 - name: "Cask: Install on company_laptop"
   homebrew_cask:
     name: "{{ item }}"
     state: present
-  with_items: "{{ mac_cask_packages['company_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and mac_cask_packages['company_laptop']
+  loop: "{{ mac_cask_packages['company_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool
   # This package is failing:
   # localhost failed | item: aws-vault | msg: Error: It seems there is already a Binary at '/usr/local/bin/aws-vault'.
   ignore_errors: yes
@@ -38,5 +38,5 @@
   homebrew_cask:
     name: "{{ item }}"
     state: absent
-  with_items: "{{ mac_cask_packages['personal_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and mac_cask_packages['personal_laptop']
+  loop: "{{ mac_cask_packages['personal_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool

@@ -19,7 +19,7 @@
       command -v register-python-argcomplete >/dev/null && eval "$(register-python-argcomplete pipx)"
 
 - name: "Pipx: Remove common packages"
-  with_items: "{{ python3_pipx_modules['remove'] }}"
+  loop: "{{ python3_pipx_modules['remove'] | default([], true) }}"
   command: "pipx uninstall {{ item }}"
   register: result
   failed_when:
@@ -27,18 +27,18 @@
     - "'Nothing to uninstall for' not in result.stdout"
 
 - name: "Pipx: Remove packages on personal_laptop"
-  with_items: "{{ python3_pipx_modules['company_laptop'] }}"
+  loop: "{{ python3_pipx_modules['company_laptop'] | default([], true) }}"
   command: "pipx uninstall {{ item }}"
-  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | length > 0
+  when: not ansible_env.COMPANY_LAPTOP | bool
   register: result
   failed_when:
     - result.rc > 0
     - "'Nothing to uninstall for' not in result.stdout"
 
 - name: "Pipx: Remove packages on company_laptop"
-  with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
+  loop: "{{ python3_pipx_modules['personal_laptop'] | default([], true) }}"
   command: "pipx uninstall {{ item }}"
-  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop'] | length > 0
+  when: ansible_env.COMPANY_LAPTOP | bool
   register: result
   failed_when:
     - result.rc > 0
@@ -49,11 +49,11 @@
   register: pipx_invalid_packages
 
 - name: "Pipx: Remove invalid packages"
-  with_items: "{{ pipx_invalid_packages.stdout_lines }}"
+  loop: "{{ pipx_invalid_packages.stdout_lines }}"
   command: "pipx uninstall {{ item }}"
 
 - name: "Pipx: Install common Python 3 modules globally with pipx"
-  with_items: "{{ python3_pipx_modules['common'] }}"
+  loop: "{{ python3_pipx_modules['common'] | default([], true) }}"
   command: "pipx install --verbose {{ item }}"
   register: result
   failed_when:
@@ -62,9 +62,9 @@
     - "'already seems to be installed' not in result.stdout"
 
 - name: "Pipx: Install packages on personal_laptop"
-  with_items: "{{ python3_pipx_modules['personal_laptop'] }}"
+  loop: "{{ python3_pipx_modules['personal_laptop'] | default([], true) }}"
   command: "pipx install --verbose {{ item }}"
-  when: not ansible_env.COMPANY_LAPTOP and python3_pipx_modules['personal_laptop'] | length > 0
+  when: not ansible_env.COMPANY_LAPTOP | bool
   register: result
   failed_when:
     - result.rc > 0
@@ -72,9 +72,9 @@
     - "'already seems to be installed' not in result.stdout"
 
 - name: "Pipx: Install packages on company_laptop"
-  with_items: "{{ python3_pipx_modules['company_laptop'] }}"
+  loop: "{{ python3_pipx_modules['company_laptop'] | default([], true) }}"
   command: "pipx install --verbose {{ item }}"
-  when: ansible_env.COMPANY_LAPTOP and python3_pipx_modules['company_laptop'] | bool
+  when: ansible_env.COMPANY_LAPTOP | bool
   register: result
   failed_when:
     - result.rc > 0

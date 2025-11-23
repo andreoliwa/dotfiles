@@ -39,10 +39,13 @@ mac_homebrew_prefix: /opt/homebrew
 mac_homebrew_taps:
   common:
     # keep-sorted start
-    - goreleaser/tap # https://github.com/goreleaser/goreleaser
     - gromgit/fuse # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
     - jmespath/jmespath # https://github.com/jmespath/jp
     - mike-engel/jwt-cli # https://github.com/mike-engel/jwt-cli
+    # keep-sorted end
+  remove:
+    # keep-sorted start
+    - goreleaser/tap # https://github.com/goreleaser/goreleaser
     # keep-sorted end
 
 mac_homebrew_packages:
@@ -53,7 +56,6 @@ mac_homebrew_packages:
     - asciinema # https://github.com/asciinema/asciinema
     - bash
     - bash-completion2 # https://github.com/scop/bash-completion
-    - bitwarden-cli # https://bitwarden.com/
     - blueutil # https://github.com/toy/blueutil
     - caddy # https://caddyserver.com/ to be able to format Caddyfile on VSCode
     - cheat # https://github.com/cheat/cheat
@@ -76,7 +78,6 @@ mac_homebrew_packages:
     - gromgit/fuse/sshfs-mac # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
     - homebrew/core/gh # GitHub CLI https://github.com/cli/cli
     - htop-osx
-    - httpie
     - ipcalc
     - jmespath/jmespath/jp # https://github.com/jmespath/jp
     - jq # https://github.com/stedolan/jq
@@ -88,14 +89,11 @@ mac_homebrew_packages:
     - pidof # http://www.nightproductions.net/cli.htm
     - pinentry-mac
     - pipgrip # needed by brew update-python-resources
-    - postgresql@14 # https://www.postgresql.org/ Needed by pgcli and other packages
     - procs # https://lib.rs/crates/procs
     - remake # https://bashdb.sourceforge.io/remake
     - rg # https://github.com/BurntSushi/ripgrep Install with Brew to get shell completion
     - shellcheck # https://github.com/koalaman/shellcheck#installing
-    - speedtest-cli # https://github.com/sivel/speedtest-cli
     - starship # https://github.com/starship/starship
-    - svn # needed by font-ubuntu
     - swig # https://www.swig.org/ needed to build the Python cryptography package pykcs11 https://pypi.org/project/PyKCS11/
     - telnet
     - terminal-notifier
@@ -116,7 +114,6 @@ mac_homebrew_packages:
     - actionlint # https://github.com/rhysd/actionlint
     - aws-iam-authenticator # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
-    - goreleaser/tap/goreleaser # https://github.com/goreleaser/goreleaser
     - gradle-completion # https://github.com/gradle/gradle-completion
     - mike-engel/jwt-cli/jwt-cli # https://github.com/mike-engel/jwt-cli
     - protobuf # https://github.com/protocolbuffers/protobuf
@@ -126,6 +123,7 @@ mac_homebrew_packages:
     # keep-sorted start
     # Prose linting
     - ValeLint/vale/vale
+    - bitwarden-cli # https://bitwarden.com/
     - composer # https://getcomposer.org/
     - dbeaver-community # Requires Java 8+
     # It didn't work on macOS https://github.com/awslabs/amazon-ecr-credential-helper#mac-os
@@ -134,12 +132,14 @@ mac_homebrew_packages:
     - docker-credential-helper-ecr
     - gdal
     - git-secret # https://git-secret.io/installation
+    - goreleaser/tap/goreleaser # https://github.com/goreleaser/goreleaser
     - graphviz # https://www.graphviz.org/
     # README rendering
     - grip
     - helm # https://helm.sh/
     - heroku/brew/heroku
     - highlight
+    - httpie
     - kettle # Pentaho Data Integration software https://community.hitachivantara.com/docs/DOC-1009931-downloads
     - librdkafka
     - macvim
@@ -147,9 +147,12 @@ mac_homebrew_packages:
     - mosh # https://mosh.org/
     - mysql-connector-c
     - pgbadger
+    - postgresql@14 # https://www.postgresql.org/ Needed by pgcli and other packages
     - python-yq # https://github.com/kislyuk/yq#installation
     - rename
     - s3cmd # https://s3tools.org/s3cmd
+    - speedtest-cli # https://github.com/sivel/speedtest-cli
+    - svn # needed by font-ubuntu
     - terraform # https://www.terraform.io
     # Share tmux sessions
     - tmate
@@ -164,10 +167,8 @@ mac_cask_packages:
     - android-file-transfer # https://www.android.com/filetransfer/
     - appcleaner
     - apppolice # https://github.com/AppPolice/AppPolice
-    - authy # https://authy.com/
-    - beardedspice
     - brave-browser # https://brave.com/
-    - brave-browser-beta # https://brave.com/download-beta/
+    - brave-browser@beta # https://brave.com/download-beta/
     - ccleaner # https://www.ccleaner.com/ccleaner-mac
     - cyberduck # https://cyberduck.io/
     - deepl # https://www.deepl.com/translator
@@ -182,35 +183,26 @@ mac_cask_packages:
     - fujitsu-scansnap-home # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
     - gnucash # https://gnucash.org/
     - grandperspective # https://grandperspectiv.sourceforge.io/
-    - homebrew/cask-versions/whatsapp-legacy # Because the new Mac app doesn't let me select and copy multiple text messages
-    - imagemagick # https://imagemagick.org/
     - iterm2 # https://iterm2.com/
-    - kap
     - keepingyouawake # maintained caffeinate wrapper
     - logitech-options # MX Keys for Mac external keyboard
     - logseq # https://github.com/logseq/logseq
     - macfuse # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
     # To open Meld even with the security warning: https://github.com/yousseb/meld/issues/19#issuecomment-541239058
-    - meld # https://yousseb.github.io/meld/
     - microsoft-office # https://www.microsoft.com/en-us/microsoft-365/mac/microsoft-365-for-mac/
     - orbstack # https://github.com/orbstack/orbstack?tab=readme-ov-file
     # - private-internet-access # TODO: failing with error "Failed to unquarantine app bundle"
-    - raindropio # https://raindrop.io/
     - raycast # https://raycast.app/
     - rescuetime # https://www.rescuetime.com/
     - signal
-    - skype
     - spotify
-    - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
     - syncthing # https://syncthing.net/
-    - teamviewer
     - telegram
     - the-unarchiver
     - tor-browser # https://www.torproject.org/
     - visual-studio-code
     - vlc
     - xquartz # https://www.xquartz.org/
-    - zerotier-one # https://www.zerotier.com/download.shtml
     # Video conferencing
     - zoom
     # keep-sorted end
@@ -220,28 +212,21 @@ mac_cask_packages:
     # keep-sorted start
     - aws-vault # https://github.com/99designs/aws-vault#installing
     - calibre # https://calibre-ebook.com/
-    - cloudflare-warp # VPN client https://cloudflarewarp.com/
-    - findutils # https://www.gnu.org/software/findutils/
     - google-chrome
-    - insomnia # REST client
-    - intellij-idea # https://www.jetbrains.com/idea/
     - jetbrains-toolbox # https://www.jetbrains.com/toolbox-app/
     - kindle # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
     - kindle-previewer # https://www.amazon.com/Kindle-Previewer/b?ie=UTF8&node=21381691011
-    - lens # https://github.com/lensapp/lens
     - logitech-g-hub # http://logitechg.com/support/g305
     - microsoft-office # https://products.office.com/mac/microsoft-office-for-mac/
-    - minikube # https://github.com/kubernetes/minikube
-    - mongodb-compass # https://www.mongodb.com/products/compass
     - postman # https://www.postman.com/
     - send-to-kindle # https://www.amazon.com/gp/sendtokindle/mac
     - slack # https://slack.com/
-    - tunnelblick
-    - virtualbox # https://www.virtualbox.org/
     # keep-sorted end
   remove:
     # keep-sorted start
+    - authy # https://authy.com/
     - aws-vpn-client
+    - beardedspice
     - brave-browser-dev # https://brave.com/download-dev/
     - dashlane # https://www.dashlane.com/
     - datagrip # https://www.jetbrains.com/datagrip/
@@ -249,24 +234,33 @@ mac_cask_packages:
     - dissenter-browser
     - docker # replaced by orbstack
     - epic
+    - findutils # https://www.gnu.org/software/findutils/
     - flux
     - franz # https://meetfranz.com/ Deceiving freemium: trial for 14 days only, not mentioned when you download the app
     - freemind
     - freeplane
     - gmail-notifier
     - google-cloud-sdk
+    - homebrew/cask-versions/whatsapp-legacy # Because the new Mac app doesn't let me select and copy multiple text messages
     - hp-easy-start # https://support.hp.com/
     - iina
+    - imagemagick # https://imagemagick.org/
     - imageoptim # optimizing images
+    - insomnia # REST client
     - intellij-idea-ce # https://www.jetbrains.com/idea/ IntelliJ IDEA Community Edition
     - itau # https://www.itau.com.br/computador/
     - java8
     - jumpcut
+    - kap
     - keepassxc # https://keepassxc.org/
     - kivy
+    - lens # https://github.com/lensapp/lens
     - licecap
     - macterm
+    - meld # https://yousseb.github.io/meld/
     - mia-for-gmail
+    - minikube # https://github.com/kubernetes/minikube
+    - mongodb-compass # https://www.mongodb.com/products/compass
     - musixmatch
     - ngrok
     - notion
@@ -274,16 +268,22 @@ mac_cask_packages:
     - pdfsam-basic
     - powershell # https://github.com/PowerShell/PowerShell
     - pritunl # VPN https://client.pritunl.com/#install
+    - raindropio # https://raindrop.io/
     - selfcontrol
     - shift # https://tryshift.com/ Freemium: only one free app besides email
     - simbl
+    - skype
     - spectacle # Replaced by hammerspoon
     - spotifree
+    - spotify-now-playing # https://github.com/davicorreiajr/spotify-now-playing
+    - teamviewer
     - toggl
     - toggl-track # Deprecated, now there is a macOS native app https://github.com/toggl-open-source/toggldesktop
-    - tor-browser
+    - tunnelblick
     - vagrant
+    - virtualbox # https://www.virtualbox.org/
     - vivaldi # https://vivaldi.com/
+    - zerotier-one # https://www.zerotier.com/download.shtml
     - zulip
     # keep-sorted end
 
@@ -336,7 +336,7 @@ ruby_global_gems:
 
 # markosamuli.pyenv role configuration
 # Don't install any Python versions automatically - we handle this in python_pyenv role
-pyenv_python_versions: []
+pyenv_python_versions: [ ]
 
 # Don't set global versions automatically - we handle this in python_pyenv role
 pyenv_global: ""
@@ -359,8 +359,8 @@ python3_pipx_modules:
     - subliminal # https://pypi.org/project/subliminal/
     # keep-sorted end
   company_laptop:
-    # keep-sorted start
-    # keep-sorted end
+  # keep-sorted start
+  # keep-sorted end
   remove:
     # keep-sorted start
     - aws-shell # https://github.com/awslabs/aws-shell

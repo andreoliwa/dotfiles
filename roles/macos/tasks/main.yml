@@ -5,12 +5,6 @@
 - name: Homebrew
   import_tasks: brew.yml
 
-- name: Tap into homebrew/cask-fonts
-  homebrew_tap: tap=homebrew/cask-fonts state=present
-
-- name: Tap into homebrew/cask-versions
-  homebrew_tap: tap=homebrew/cask-versions state=present
-
 - name: Homebrew Cask
   import_tasks: cask.yml
 

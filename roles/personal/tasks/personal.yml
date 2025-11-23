@@ -12,17 +12,6 @@
   ignore_errors: true
 - debug: var=mr_checkout.stdout
 
-- name: "Create dontforget dir"
-  file:
-    state: directory
-    path: ~/Library/Application Support/dontforget
-
-- name: "personal: Link dontforget dir"
-  file:
-    src: ~/Dropbox/Apps/dontforget/config.yaml
-    dest: ~/Library/Application Support/dontforget/config.yaml
-    state: link
-
 - name: "Install nitpick"
   ansible.builtin.command: "pipx install -e ."
   args:
@@ -33,33 +22,12 @@
   args:
     chdir: "{{ project_root }}/daily-grind"
 
-- name: "Install dontforget"
-  ansible.builtin.command: "make install"
-  args:
-    chdir: "{{ project_root }}/dontforget"
-
-- name: "personal: Create Node-RED flows directory"
-  file:
-    state: directory
-    path: "{{ dotfiles_home }}/roles/node-red/var/config"
-
-- name: "personal: Copy Node-RED flows"
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/vault-node-red-flows.json"
-    dest: "{{ dotfiles_home }}/roles/node-red/var/config/node-red-flows.json"
-  ignore_errors: true
-
-- name: "Install python-clib"
-  ansible.builtin.command: "make install"
-  args:
-    chdir: "{{ project_root }}/python-clib"
-
 - name: "Install featsio/fts-telegram"
   ansible.builtin.command: "pipx install -e ."
   args:
     chdir: "{{ project_root }}/featsio/fts-telegram"
 
 - name: "Install logseq-doctor"
-  ansible.builtin.command: "make pipx-install"
+  ansible.builtin.command: "make install"
   args:
     chdir: "{{ project_root }}/logseq-doctor"

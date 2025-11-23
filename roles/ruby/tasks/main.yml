@@ -12,7 +12,7 @@
   gem:
     name: "{{ item }}"
     state: latest
-  with_items: "{{ ruby_global_gems['common'] }}"
+  loop: "{{ ruby_global_gems['common'] | default([], true) }}"
   when: ruby_global_gems['common']
 
 - name: "Ruby: Remove"
@@ -20,32 +20,32 @@
     name: "{{ item }}"
     state: absent
   when: ruby_global_gems['remove']
-  with_items: "{{ ruby_global_gems['remove'] }}"
+  loop: "{{ ruby_global_gems['remove'] | default([], true) }}"
 
 - name: "Ruby: Install on personal_laptop"
   gem:
     name: "{{ item }}"
     state: latest
-  with_items: "{{ ruby_global_gems['personal_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and ruby_global_gems['personal_laptop']
+  loop: "{{ ruby_global_gems['personal_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
 - name: "Ruby: Remove on personal_laptop"
   gem:
     name: "{{ item }}"
     state: absent
-  with_items: "{{ ruby_global_gems['company_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and ruby_global_gems['company_laptop']
+  loop: "{{ ruby_global_gems['company_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
 - name: "Ruby: Install on company_laptop"
   gem:
     name: "{{ item }}"
     state: latest
-  with_items: "{{ ruby_global_gems['company_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and ruby_global_gems['company_laptop']
+  loop: "{{ ruby_global_gems['company_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool
 
 - name: "Ruby: Remove on company_laptop"
   gem:
     name: "{{ item }}"
     state: absent
-  with_items: "{{ ruby_global_gems['personal_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and ruby_global_gems['personal_laptop']
+  loop: "{{ ruby_global_gems['personal_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool

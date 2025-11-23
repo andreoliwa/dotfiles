@@ -3,7 +3,7 @@
     name: "{{ item }}"
     state: latest
     global: yes
-  with_items: "{{ npm_global_packages['common'] }}"
+  with_items: "{{ npm_global_packages['common'] | default([], true) }}"
   when: npm_global_packages['common']
 
 - name: "npm: Remove"
@@ -12,36 +12,36 @@
     state: absent
     global: yes
   when: npm_global_packages['remove']
-  with_items: "{{ npm_global_packages['remove'] }}"
+  with_items: "{{ npm_global_packages['remove'] | default([], true) }}"
 
 - name: "npm: Install on personal_laptop"
   npm:
     name: "{{ item }}"
     state: latest
     global: yes
-  with_items: "{{ npm_global_packages['personal_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and npm_global_packages['personal_laptop']
+  with_items: "{{ npm_global_packages['personal_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
 - name: "npm: Remove on personal_laptop"
   npm:
     name: "{{ item }}"
     state: absent
     global: yes
-  with_items: "{{ npm_global_packages['company_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and npm_global_packages['company_laptop']
+  with_items: "{{ npm_global_packages['company_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
 - name: "npm: Install on company_laptop"
   npm:
     name: "{{ item }}"
     state: latest
     global: yes
-  with_items: "{{ npm_global_packages['company_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and npm_global_packages['company_laptop']
+  with_items: "{{ npm_global_packages['company_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool
 
 - name: "npm: Remove on company_laptop"
   npm:
     name: "{{ item }}"
     state: absent
     global: yes
-  with_items: "{{ npm_global_packages['personal_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and npm_global_packages['personal_laptop']
+  with_items: "{{ npm_global_packages['personal_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool

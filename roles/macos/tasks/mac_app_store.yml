@@ -3,7 +3,7 @@
 
 - name: "Mac App Store: Install common on current host ({{ ansible_hostname }})"
   command: "mas install {{ item }}"
-  with_items: "{{ mac_mas_packages['common'] }}"
+  loop: "{{ mac_mas_packages['common'] | default([], true) }}"
   ignore_errors: yes
 
 - name: "Mac App Store: Remove on current host ({{ ansible_hostname }})"
@@ -11,31 +11,30 @@
   become: yes
   # To ignore "Warning: Not installed" errors
   ignore_errors: yes
-  with_items: "{{ mac_mas_packages['remove'] }}"
-  when: mac_mas_packages['remove']
+  loop: "{{ mac_mas_packages['remove'] | default([], true) }}"
 
-- name: "Mac App Store: Install on personal_laptop ({{ personal_laptop }})"
+- name: "Mac App Store: Install on personal_laptop"
   command: "mas install {{ item }}"
-  with_items: "{{ mac_mas_packages['personal_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and mac_mas_packages['personal_laptop']
+  loop: "{{ mac_mas_packages['personal_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
-- name: "Mac App Store: Remove on personal_laptop ({{ personal_laptop }})"
+- name: "Mac App Store: Remove on personal_laptop"
   command: "mas uninstall {{ item }}"
   become: yes
   # To ignore "Warning: Not installed" errors
   ignore_errors: yes
-  with_items: "{{ mac_mas_packages['company_laptop'] }}"
-  when: not ansible_env.COMPANY_LAPTOP and mac_mas_packages['company_laptop']
+  loop: "{{ mac_mas_packages['company_laptop'] | default([], true) }}"
+  when: not ansible_env.COMPANY_LAPTOP | bool
 
-- name: "Mac App Store: Install on company_laptop ({{ company_laptop }})"
+- name: "Mac App Store: Install on company_laptop"
   command: "mas install {{ item }}"
-  with_items: "{{ mac_mas_packages['company_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and mac_mas_packages['company_laptop']
+  loop: "{{ mac_mas_packages['company_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool
 
-- name: "Mac App Store: Remove on company_laptop ({{ company_laptop }})"
+- name: "Mac App Store: Remove on company_laptop"
   command: "mas uninstall {{ item }}"
   become: yes
   # To ignore "Warning: Not installed" errors
   ignore_errors: yes
-  with_items: "{{ mac_mas_packages['personal_laptop'] }}"
-  when: ansible_env.COMPANY_LAPTOP and mac_mas_packages['personal_laptop']
+  loop: "{{ mac_mas_packages['personal_laptop'] | default([], true) }}"
+  when: ansible_env.COMPANY_LAPTOP | bool

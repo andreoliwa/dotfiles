@@ -349,8 +349,10 @@ python3_pipx_modules:
   common:
     # keep-sorted start
     - gitup # https://github.com/earwig/git-repo-updater.git
+    - litecli[sqlean] # https://github.com/dbcli/litecli
     - organize-tool # https://github.com/tfeldmann/organize
     - ruff # https://github.com/astral-sh/ruff
+    - sqlite-utils # https://github.com/simonw/sqlite-utils
     - tox # https://github.com/tox-dev/tox/
     - youtube-dl # https://pypi.org/project/youtube_dl/
     # keep-sorted end

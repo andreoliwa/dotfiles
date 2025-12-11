@@ -34,4 +34,4 @@ export INVOKE_RUN_PTY=1
 
 # To fix this warning on macOS: "⚠️ Found a space in the pipx home path. We heavily discourage this, due to multiple incompatibilities.
 # Please check our docs for more information on this, as well as some pointers on how to migrate to a different home path."
-export PIPX_HOME="$HOME/Library/Caches/pipx"
+export PIPX_HOME="$HOME/.local/pipx"

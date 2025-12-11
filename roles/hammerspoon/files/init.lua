@@ -8,6 +8,7 @@
 
 -- Configuration
 local debug = false
+local benchmark_enabled = false
 
 -- Reposition all stubborn apps that don't save their last window positions
 -- macOS 'Preview' windows are not being moved for some reason
@@ -44,8 +45,39 @@ local autoHideApps = {
     -- keep-sorted end
 }
 
+-- Performance benchmarking utilities (defined early so they can be used throughout)
+local benchmark_timers = {}
+
+function benchmark_start(name)
+    if benchmark_enabled then
+        benchmark_timers[name] = hs.timer.secondsSinceEpoch()
+    end
+end
+
+function benchmark_end(name)
+    if benchmark_enabled and benchmark_timers[name] then
+        local duration = hs.timer.secondsSinceEpoch() - benchmark_timers[name]
+        print(string.format("⏱️  %s took %.3f seconds", name, duration))
+        benchmark_timers[name] = nil
+    end
+end
+
+function benchmark(name, func)
+    if benchmark_enabled then
+        local start = hs.timer.secondsSinceEpoch()
+        func()
+        local duration = hs.timer.secondsSinceEpoch() - start
+        print(string.format("⏱️  %s took %.3f seconds", name, duration))
+    else
+        func()
+    end
+end
+
 hs.window.animationDuration = 0
 hs.console.clearConsole()
+
+-- Start timing the entire config load
+benchmark_start("total_config_load")
 
 -- hs.wifi not showing current network in Sonoma 14.2.1
 -- Workaround: https://github.com/Hammerspoon/hammerspoon/issues/3537#issuecomment-1743870568
@@ -70,16 +102,23 @@ function ternary(condition, true_value, false_value)
     end
 end
 
-local networks = hs.wifi.availableNetworks()
-debug_print('WiFi available:')
-for i, network in ipairs(networks) do
-    debug_print(i, network)
+benchmark_start("wifi_checks")
+
+-- Only do expensive WiFi scanning when debugging
+if debug then
+    local networks = hs.wifi.availableNetworks()
+    debug_print('WiFi available:')
+    for i, network in ipairs(networks) do
+        debug_print(i, network)
+    end
+    local interfaces = hs.wifi.interfaces()
+    debug_print('WiFi interfaces:')
+    for i, interface in ipairs(interfaces) do
+        debug_print(i, interface)
+    end
 end
-local interfaces = hs.wifi.interfaces()
-debug_print('WiFi interfaces:')
-for i, interface in ipairs(interfaces) do
-    debug_print(i, interface)
-end
+
+-- Just get current network (fast)
 local currentNetwork = hs.wifi.currentNetwork()
 if currentNetwork then
     debug_print('WiFi network: ' .. currentNetwork)
@@ -87,7 +126,8 @@ else
     debug_print('WiFi network: Not connected')
 end
 
-local at_the_office = string.match(hs.wifi.currentNetwork(), 'wolt') ~= nil
+local at_the_office = currentNetwork and string.match(currentNetwork, 'wolt') ~= nil
+benchmark_end("wifi_checks")
 debug_print('At the office: ' .. tostring(at_the_office))
 local working = hs.application.find('slack') ~= nil
 -- Hide app when working, keep its current visibility state when not working
@@ -201,6 +241,7 @@ hs.layout.bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
 hs.layout.middle_left40 = hs.geometry.rect(0.10, 0, 0.40, 1)
 hs.layout.center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
 hs.layout.center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
+hs.layout.right40 = hs.geometry.rect(0.60, 0, 0.40, 1)
 hs.layout.right50_top = hs.geometry.rect(0.5, 0, 0.5, 0.5)
 hs.layout.right50_bottom = hs.geometry.rect(0.5, 0.5, 0.5, 0.5)
 
@@ -278,14 +319,11 @@ end
 -- Use window_title = '' so the entry with no title appears first.
 config_app('', hs.window.find('YouTube'), nil, { { laptop_screen, true, hs.layout.maximized } })
 config_app('Activity Monitor', '', nil, { { wide_screen, true, hs.layout.right30 }, { horizontal_screen, true, hs.layout.right50 } })
-config_app('App Store', '', nil, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right50 } })
-config_app('Authy Desktop', '', true, { { wide_screen, true, hs.layout.center_left }, { horizontal_screen, true, hs.layout.center_left } })
 config_app('Bitwarden', '', false, { { wide_screen, true, hs.layout.right30 }, { horizontal_screen, true, hs.layout.right30 } })
 config_app('Brave Browser Beta', '', hide_when_working, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
 config_app('Brave Browser', '', nil, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
 config_app('Code', '', nil, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
 config_app('DeepL', '', hide_when_working, { { wide_screen, true, hs.layout.right50_top }, { horizontal_screen, true, hs.layout.right50_top } })
-config_app('Docker Desktop', nil, nil, { { laptop_screen, true, hs.layout.top50 } })
 config_app('FaceTime', nil, nil, { { laptop_screen, true, hs.layout.maximized } })
 config_app('Finder', '', nil, { { wide_screen, true, hs.layout.right50_top }, { horizontal_screen, true, hs.layout.right50_top } })
 config_app('Finder', 'consume-into-paperless', nil, { { wide_screen, true, hs.layout.right50_bottom }, { horizontal_screen, true, hs.layout.right50_bottom } })
@@ -298,23 +336,16 @@ config_app('Hammerspoon', 'Hammerspoon Console', debug, { { laptop_screen, true,
 config_app('iTerm2', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
 config_app('Logseq', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left70 } })
 config_app('Mail', '', false, { { laptop_screen, true, hs.layout.bottom50 } })
-config_app('Notes', '', nil, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right50 } })
 config_app('OrbStack', '', false, { { laptop_screen, true, hs.layout.bottom50 } })
-config_app('Postman', '', nil, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
 config_app('Preview', '', nil, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 }, { laptop_screen, true, hs.layout.maximized } })
 config_app('RustRover', '', nil, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
 config_app('ScanSnap Home', hs.window.find('- Scan'), nil, { { laptop_screen, true, hs.layout.right70 } })
 config_app('ScanSnap Home', nil, nil, { { laptop_screen, true, hs.geometry.rect(0.42, 0.23, 0.5, 0.5) } })
 config_app('Signal', nil, hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left70 } })
-config_app('SimpleFloatingClock', nil, nil, { { laptop_screen, true, hs.layout.right30 } })
-config_app('Skype', nil, nil, { { laptop_screen, true, hs.layout.maximized } })
+config_app('SimpleFloatingClock', nil, nil, { { laptop_screen, true, hs.layout.right40 } })
 config_app('Slack', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
-config_app('Speedtest', nil, nil, { { laptop_screen, true, hs.layout.left50 } })
-config_app('Spotify', nil, hide_when_working, { { laptop_screen, true, hs.layout.right70 } })
-config_app('TeamViewer', nil, nil, { { laptop_screen, true, hs.layout.maximized } })
 config_app('Telegram', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 } })
 config_app('Terminal', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
-config_app('Toggl Track', nil, hide_when_working, { { wide_screen, not at_the_office, hs.layout.center_left }, { laptop_screen, true, hs.layout.left30 } })
 config_app('VLC', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.maximized }, { horizontal_screen, not at_the_office, hs.layout.maximized } })
 config_app('WhatsApp', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left70 } })
 config_app('YouTube Music', nil, hide_when_working, { { laptop_screen, true, hs.layout.right70 } })
@@ -324,60 +355,6 @@ config_app('zoom.us', 'zoom share statusbar window', nil, { { laptop_screen, tru
 config_app('zoom.us', 'zoom share toolbar window', nil, { { laptop_screen, true, hs.layout.right70 } })
 config_app('zoom.us', 'Zoom', nil, { { laptop_screen, true, hs.layout.maximized }, { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
 -- keep-sorted end
-
--- TODO: I don't use a vertical screen anymore for some time; convert these other layouts on demand
-if false and wide_screen == nil then
-    config_screen(horizontal_screen, {
-        { "Finder", nil, hs.layout.top50, nil },
-        { "Code", nil, hs.layout.maximized, nil },
-        { "Brave Browser", nil, hs.layout.maximized, nil },
-        { "Slack", nil, hs.layout.maximized, nil },
-        { "Brave Browser Beta", "Brave Beta – WAA", hs.layout.maximized, nil },
-        { "Goland", nil, hs.layout.maximized, nil },
-        { "PyCharm", nil, hs.layout.maximized, nil },
-        { "VLC", nil, hs.layout.maximized, false },
-        { "zoom.us", "Zoom", hs.layout.maximized, nil },
-        { "dupeGuru", "dupeGuru Results", hs.layout.maximized, nil },
-    })
-    config_screen(vertical_screen, {
-        { "iTerm2", nil, hs.layout.maximized, nil },
-        { "Telegram", nil, hs.layout.bottom50, false },
-        { "WhatsApp", nil, hs.layout.top50, false },
-        { "DeepL", nil, hs.layout.top50, false },
-        { "Signal", nil, hs.layout.top30, false },
-        { "Preview", nil, hs.layout.maximized, nil },
-        { "dupeGuru", "dupeGuru", hs.layout.top50, nil },
-        { "Brave Browser Beta", "Brave Beta – Regina", hs.layout.top50, nil },
-        { "Brave Browser Beta", "Brave Beta – Torrent", hs.layout.bottom50, nil },
-
-        -- Work profiles
-        -- TODO feat: find a better way to configure apps/windows here in this script, because the order
-        --   of these layout tables is important; they are applied in the order they appear
-        { "Brave Browser", "JIRA", hs.layout.top70, nil },
-        { "Brave Browser", "Google Sheets", hs.layout.top70, nil },
-        { "Brave Browser", "Figma", hs.layout.top70, nil },
-        { "Brave Browser", "Brave – Finance", hs.layout.top50, nil },
-        { "Brave Browser", "Brave – DD", hs.layout.bottom50, nil },
-        { "Brave Browser", "DevTools", hs.layout.top50, nil },
-
-        { "Bitwarden", nil, hs.layout.bottom50, nil },
-
-        { "PyCharm", "Debug -", hs.layout.top50, nil },
-        { "PyCharm", "Run -", hs.layout.bottom50, nil },
-    })
-    config_screen(laptop_screen, {
-        { "Spotify", nil, hs.layout.maximized, false },
-        { "Hammerspoon", "Hammerspoon Console", hs.layout.bottom50, debug },
-        { "TeamViewer", nil, hs.layout.maximized, nil },
-        { "zoom.us", 'Zoom Meeting', hs.layout.maximized, nil },
-        { "Skype", nil, hs.layout.maximized, nil },
-        { "App Store", nil, hs.layout.maximized, nil },
-        { "Toggl Track", nil, hs.layout.right70, false },
-        { 'AWS VPN Client', 'AWS VPN Client', hs.layout.right50, nil },
-        { nil, hs.window.find('YouTube'), hs.layout.maximized, nil },
-        { "Activity Monitor", nil, hs.layout.right50, nil },
-    })
-end
 
 -- http://www.hammerspoon.org/docs/hs.layout.html#apply
 function compare_window_title(actual_window_title, expected_window_title)
@@ -393,27 +370,34 @@ function compare_window_title(actual_window_title, expected_window_title)
 end
 
 function apply_window_layout()
+    benchmark_start("apply_window_layout")
+
     if not hs.window or not hs.window.allWindows then
         hs.alert.show("hs.window or hs.window.allWindows is missing!")
         return
     end
 
     -- Filter out applications that don't exist to prevent nil errors
+    -- Optimization: Build a set of running apps first to avoid repeated lookups
+    benchmark_start("filter_layout")
+    local running_apps = {}
+    for _, app in ipairs(hs.application.runningApplications()) do
+        running_apps[app:name()] = app
+    end
+
     local filtered_layout = {}
     for _, config in ipairs(window_layout) do
         local app_name = config[1]
         local window_title = config[2]
 
         if app_name and app_name ~= "" then
-            -- Normal app case: check if app exists
-            local app = hs.application.find(app_name)
+            -- Normal app case: check if app exists in our running apps set
+            local app = running_apps[app_name]
             if app then
                 debug_print("Including app in layout: " .. app_name)
                 table.insert(filtered_layout, config)
             else
-                print("Unable to find app: " .. app_name)
-                print(app_name .. "\t" .. tostring(app))
-                print("No windows matched, skipping.")
+                debug_print("App not running: " .. app_name)
             end
         elseif app_name == "" and window_title then
             -- Special case: empty app name with specific window (like YouTube)
@@ -429,6 +413,8 @@ function apply_window_layout()
         end
     end
 
+    benchmark_end("filter_layout")
+
     -- Debug: print the filtered layout before applying
     debug_print("Filtered layout contains " .. #filtered_layout .. " entries:")
     for i, config in ipairs(filtered_layout) do
@@ -436,16 +422,18 @@ function apply_window_layout()
     end
 
     -- Final safety check: verify all apps in filtered layout actually exist and have allWindows method
+    -- Optimization: Reuse the running_apps set from above
+    benchmark_start("safety_check")
     local safe_layout = {}
     for _, config in ipairs(filtered_layout) do
         local app_name = config[1]
         if app_name and app_name ~= "" then
-            local app = hs.application.find(app_name)
+            local app = running_apps[app_name]
             if app and app.allWindows then
                 table.insert(safe_layout, config)
                 debug_print("Final check passed for: " .. app_name)
             else
-                print("Final check failed for: " .. app_name .. " (app=" .. tostring(app) .. ", allWindows=" .. tostring(app and app.allWindows))
+                debug_print("Final check failed for: " .. app_name)
             end
         else
             -- Keep non-app entries (like window-specific configs)
@@ -454,13 +442,17 @@ function apply_window_layout()
         end
     end
 
+    benchmark_end("safety_check")
+
     debug_print("Safe layout contains " .. #safe_layout .. " entries")
 
     -- http://www.hammerspoon.org/docs/hs.layout.html
     -- Use pcall to prevent crashes from layout issues
+    benchmark_start("layout_apply")
     local success, error_msg = pcall(function()
         hs.layout.apply(safe_layout, compare_window_title)
     end)
+    benchmark_end("layout_apply")
 
     if not success then
         print("Layout application failed: " .. tostring(error_msg))
@@ -468,9 +460,13 @@ function apply_window_layout()
     else
         debug_print("Layout applied successfully")
     end
+
+    benchmark_end("apply_window_layout")
 end
 
-apply_window_layout()
+benchmark("initial_layout_apply", function()
+    apply_window_layout()
+end)
 
 -- Apply window layout when a monitor is connected/disconnected
 -- Newsflash: it doesn't work. ;)
@@ -550,7 +546,10 @@ end
 
 -- Function to handle auto-hiding apps when focus changes
 local function handleAutoHide(focusedAppName)
+    benchmark_start("handleAutoHide")
+
     if not focusedAppName or not at_the_office then
+        benchmark_end("handleAutoHide")
         return
     end
 
@@ -558,18 +557,25 @@ local function handleAutoHide(focusedAppName)
 
     -- Add a small delay to ensure focus change is complete
     hs.timer.doAfter(0.05, function()
+        benchmark_start("auto_hide_loop")
         -- Hide all apps in autoHideApps list except the one just focused
         for _, appToHide in ipairs(autoHideApps) do
             if appToHide ~= focusedAppName then
                 safeHideApp(appToHide)
             end
         end
+        benchmark_end("auto_hide_loop")
     end)
+
+    benchmark_end("handleAutoHide")
 end
 
 -- Unified window event handler (for stubborn app repositioning)
 local function unifiedWindowHandler(window, appName, event)
+    benchmark_start("unifiedWindowHandler")
+
     if not window then
+        benchmark_end("unifiedWindowHandler")
         return
     end
 
@@ -591,6 +597,8 @@ local function unifiedWindowHandler(window, appName, event)
             handleAutoHide(appName)
         end
     end
+
+    benchmark_end("unifiedWindowHandler")
 end
 
 -- Create a shared filter for window behaviors (repositioning stubborn apps)
@@ -607,5 +615,10 @@ local appWatcher = hs.application.watcher.new(function(appName, eventType, appOb
     end
 end)
 appWatcher:start()
+
+benchmark_end("total_config_load")
+print("========================================")
+print("🎯 Hammerspoon config loaded successfully!")
+print("========================================")
 
 hs.alert.show("Hammerspoon: window filter and app watcher running")

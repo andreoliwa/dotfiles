@@ -150,6 +150,8 @@ rules:
             - whatsapp
             - DSC_
             - VID_
+            # Threema
+            - threema
           case_sensitive: false
       - lastmodified
     actions:

@@ -40,12 +40,3 @@
     update: yes
   when: ansible_distribution == "Amazon" or (ansible_system_vendor is defined and ansible_system_vendor in ("DigitalOcean", "Hetzner"))
   ignore_errors: true
-
-- name: Clone container-apps-private
-  git:
-    repo: git@github.com:andreoliwa/container-apps-private.git
-    dest: ~/container-apps-private
-    clone: yes
-    update: yes
-  when: ansible_os_family == "OSMC" or ansible_system_vendor == "Hetzner"
-  ignore_errors: true

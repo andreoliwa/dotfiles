@@ -202,7 +202,7 @@ export default {
     },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-zoom-links-in-zoom-app
-      match: /zoom.us\/j\//,
+      match: /zoom.us\/e?j\//,
       browser: "us.zoom.xos",
     },
   ],

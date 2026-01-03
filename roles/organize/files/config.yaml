@@ -155,7 +155,7 @@ rules:
           case_sensitive: false
       - lastmodified
     actions:
-      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.strftime('%Y/%m')}/"
+      - move: "~/OneDrive/Pictures/New/{lastmodified.strftime('%Y/%m')}/Chat"
 
   - name: Telegram, Facebook
     locations:
@@ -193,7 +193,7 @@ rules:
           case_sensitive: false
       - lastmodified
     actions:
-      - move: "~/OneDrive/Pictures/New_Chat/{lastmodified.strftime('%Y/%m')}/"
+      - move: "~/OneDrive/Pictures/New/{lastmodified.strftime('%Y/%m')}/Chat"
 
   - name: Screenshots
     locations:
@@ -218,7 +218,7 @@ rules:
           years: 1
           mode: newer
     actions:
-      - move: "~/OneDrive/Pictures/New_Screenshots/{lastmodified.strftime('%Y/%m')}/"
+      - move: "~/OneDrive/Pictures/New/{lastmodified.strftime('%Y/%m')}/Screenshots"
 
   - name: Camera
     locations:
@@ -234,7 +234,7 @@ rules:
           years: 1
           mode: newer
     actions:
-      - move: "~/OneDrive/Pictures/New_Camera/{lastmodified.strftime('%Y/%m')}/"
+      - move: "~/OneDrive/Pictures/New/{lastmodified.strftime('%Y/%m')}"
 
   - name: "Classify/organize pictures in year/month subdirectories"
     locations:
@@ -248,4 +248,4 @@ rules:
           years: 1
           mode: newer
     actions:
-      - move: "~/OneDrive/Pictures/New_Split/{lastmodified.strftime('%Y/%m')}/"
+      - move: "~/OneDrive/Pictures/New/{lastmodified.strftime('%Y/%m')}/Split"

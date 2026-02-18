@@ -112,6 +112,7 @@ mac_homebrew_packages:
   company_laptop:
     # keep-sorted start
     - actionlint # https://github.com/rhysd/actionlint
+    - aviator-co/tap/av # https://github.com/aviator-co/av
     - aws-iam-authenticator # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
     - awscli # https://aws.amazon.com/cli/ Newer versions 2.*
     - gradle-completion # https://github.com/gradle/gradle-completion

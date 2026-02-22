@@ -9,7 +9,7 @@ dotfiles_home: "{{dotfiles_user_home}}/dotfiles"
 pyenv_root: "~/.pyenv"
 
 # Root directory for projects
-project_root: "~/Code"
+project_root: "~/dev"
 
 backup_dir: "~/OneDrive/Backup/{{ ansible_hostname }}"
 

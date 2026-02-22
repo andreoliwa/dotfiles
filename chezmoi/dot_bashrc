@@ -12,8 +12,7 @@ source "$HOME"/.config/dotfiles/local.env
 # shellcheck source=/dev/null
 test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/openssl.env
 # shellcheck source=/dev/null
-test -f "$HOME"/container-apps/aliases.sh && \
-    source "$HOME"/container-apps/aliases.sh
+test -f "$HOME"/container-apps/aliases.sh && source "$HOME"/container-apps/aliases.sh
 
 # ==================== BEGIN Bash completion / dotfiles
 export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
@@ -38,7 +37,7 @@ command -v register-python-argcomplete >/dev/null && eval "$(register-python-arg
 test -d "$HOME"/go/bin && export PATH="$PATH:$HOME/go/bin"
 
 # Add my private script toolbox as last on the PATH
-test -d "$HOME"/Code/my-den/toolbox/bin && export PATH="$PATH:$HOME/Code/my-den/toolbox/bin"
+test -d "$HOME"/dev/me/my-den/toolbox/bin && export PATH="$PATH:$HOME/dev/me/my-den/toolbox/bin"
 
 # Increase Bash history size
 # https://unix.stackexchange.com/questions/20861/is-there-a-way-to-set-the-size-of-the-history-list-in-bash-to-more-than-5000-lin#20925
@@ -64,8 +63,8 @@ export DISPLAY=:0.0
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # shellcheck source=/dev/null
-test -f "$HOME"/Code/my-den/docker/aliases.sh && \
-    source "$HOME"/Code/my-den/docker/aliases.sh
+test -f "$HOME"/dev/me/my-den/docker/aliases.sh &&
+    source "$HOME"/dev/me/my-den/docker/aliases.sh
 
 # https://github.com/starship/starship
 command -v starship >/dev/null && eval "$(starship init bash)"

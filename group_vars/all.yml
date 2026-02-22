@@ -522,6 +522,11 @@ chrome_extensions:
     - https://chromewebstore.google.com/detail/web-scrobbler/hhinaapppaileiechjoiifaancjggfjm
     # keep-sorted end
   company_laptop:
+    # Chrome needs specific extensions to (poorly) mimic Brave's privacy features
+    # keep-sorted start
+    - https://chromewebstore.google.com/detail/adblocker-ultimate/ohahllgiabjaoigichmmfljhkcfikeof
+    - https://chromewebstore.google.com/detail/auto-history-wipe/amndpakmdficmebaknminpdbgdccfkjn
+    # keep-sorted end
   remove:
     # keep-sorted start
     - https://chromewebstore.google.com/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen

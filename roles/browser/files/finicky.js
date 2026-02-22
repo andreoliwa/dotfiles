@@ -117,7 +117,10 @@ if (!isWeekend) {
 // https://github.com/johnste/finicky
 export default {
   // Using the unstable browser for personal purposes, and the stable one for work
-  defaultBrowser: "Brave Browser Beta",
+  defaultBrowser: {
+    name: "Google Chrome",
+    profile: "Profile 2" // Personal
+  },
   rewrite: [
     // {
     //   // https://github.com/johnste/finicky/wiki/Configuration-ideas#force-https-for-all-urls
@@ -170,11 +173,17 @@ export default {
     {
       // Add this query string parameter to a work URL to open it in the personal browser
       match: ({url}) => url.search.includes(["personal"]),
-      browser: "Brave Browser Beta",
+      browser: {
+        name: "Google Chrome",
+        profile: "Profile 2" // Personal
+      },
     },
     {
       match: workURLs,
-      browser: "Google Chrome",
+      browser: {
+        name: "Google Chrome",
+        profile: "Profile 1" // Work
+      },
     },
     {
       match: finicky.matchHostnames([
@@ -185,12 +194,18 @@ export default {
         /.*atlassian\.(com|net)$/,
         /.*atl-paas.net/,
       ]),
-      browser: "Google Chrome",
+      browser: {
+        name: "Google Chrome",
+        profile: "Profile 1" // Work
+      },
     },
     // Work parameters on the query string
     {
       match: ({url}) => url.search.includes(["wolt", "sennder", "eatfirst"]),
-      browser: "Google Chrome",
+      browser: {
+        name: "Google Chrome",
+        profile: "Profile 1" // Work
+      },
     },
     // Work apps
     {
@@ -198,7 +213,10 @@ export default {
       // https://github.com/johnste/finicky#advanced-usage
       // https://github.com/johnste/finicky/wiki/Configuration#parameters
       match: ({opener}) => opener.bundleId === "com.tinyspeck.slackmacgap",
-      browser: "Google Chrome",
+      browser: {
+        name: "Google Chrome",
+        profile: "Profile 1" // Work
+      },
     },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#open-zoom-links-in-zoom-app

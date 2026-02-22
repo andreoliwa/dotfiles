@@ -503,6 +503,7 @@ chrome_extensions:
     - https://chromewebstore.google.com/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb
     - https://chromewebstore.google.com/detail/codecov/gedikamndpbemklijjkncpnolildpbgo # Show CodeCov annotations in GitHub pull requests
     - https://chromewebstore.google.com/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn # https://github.com/chitsaou/copy-as-markdown/
+    - https://chromewebstore.google.com/detail/deepl-translate-and-write/cofdbpoegempjloogbagkncekinflcnj
     - https://chromewebstore.google.com/detail/gofullpage-full-page-scre/fdpohaocaechififmbbbbbknoalclacl # GoFullPage - Full Page Screen Capture
     - https://chromewebstore.google.com/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc
     - https://chromewebstore.google.com/detail/private-internet-access/jplnlifepflhkbkgonidnobkakhmpnmh
@@ -510,12 +511,15 @@ chrome_extensions:
     - https://chromewebstore.google.com/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf
     - https://chromewebstore.google.com/detail/rescuetime-for-chrome-and/bdakmnplckeopfghnlpocafcepegjeap/related
     - https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo
+    - https://chromewebstore.google.com/detail/url-shortener-for-amazon/ipafcflbnpkfahilfblbenfabkoaaiid
     # keep-sorted end
   personal_laptop:
     # keep-sorted start
+    - https://chromewebstore.google.com/detail/bitly-short-links-and-qr/iabeihobmhlgpkcgjiloemdbofjbdcic
     - https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     - https://chromewebstore.google.com/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
     - https://chromewebstore.google.com/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
+    - https://chromewebstore.google.com/detail/web-scrobbler/hhinaapppaileiechjoiifaancjggfjm
     # keep-sorted end
   company_laptop:
   remove:

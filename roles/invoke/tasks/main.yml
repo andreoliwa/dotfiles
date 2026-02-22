@@ -20,11 +20,11 @@
 - name: "Conjuring: Clone"
   ansible.builtin.git:
     repo: git@github.com:andreoliwa/conjuring.git
-    dest: "{{ project_root }}/conjuring"
+    dest: "{{ project_root }}/me/conjuring"
 
 # https://github.com/andreoliwa/my-den
 - name: "My-den: Clone"
   ansible.builtin.git:
     repo: git@github.com:andreoliwa/my-den.git
-    dest: "{{ project_root }}/my-den"
+    dest: "{{ project_root }}/me/my-den"
   ignore_errors: true

@@ -76,6 +76,7 @@ var workURLs = [
   /okta/,
   /openai/,
   /ops.wolt/,
+  /orbstack/,
   /orderin/,
   /oreilly/,
   /pardot.com/,

@@ -152,3 +152,4 @@ data/kv-store
 
 # Claude Code
 .claude/*.local.*
+docs/plans/

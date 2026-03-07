@@ -29,11 +29,11 @@ xargs git rm && git commit -m '__wip__'"
 
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 
-# Manually clean up old draft commits that aren't part of current stack
-alias gclean="git branchless hide 'draft() - stack(@)'"
+# Don't use "git branchless hide 'draft() - stack(@)'", it deleted unmerged branches and I lost work
+alias gclean="git delete-merged-branches; git delete-squashed-branches"
 
 # Git update: pull, sync branches, and auto-cleanup old draft commits from smartlog
-alias gu="git pull; git sync; gclean 2>/dev/null || true"
+alias gu="git pull; gclean; git sync 2>/dev/null || true"
 alias gmu='gcm; gu'
 
 alias ghc='gh pr checkout'

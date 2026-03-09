@@ -44,18 +44,3 @@
 
 - name: "Reload TMUX environment: tmux source-file ~/.tmux.conf"
   command: "tmux source-file ~/.tmux.conf"
-# - name: Symlink .tmux.conf
-#   file:
-#     src: "{{ role_path }}/files/tmux.conf"
-#     dest: "{{ dotfiles_user_home }}/.tmux.conf"
-#     state: link
-#   when: ansible_os_family != "Darwin"
-
-# # On macOS, use the same tmux.conf, but also use
-# # reattach_to_user_namespace (for clipboard support)
-# - name: Symlink .tmux.conf (macOS)
-#   file:
-#     src: "{{ role_path }}/files/tmux-mac.conf"
-#     dest: "{{ dotfiles_user_home }}/.tmux.conf"
-#     state: link
-#   when: ansible_os_family == "Darwin"

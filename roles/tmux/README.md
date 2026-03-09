@@ -1,3 +1,23 @@
+# tmux config
+
+## Which file to edit
+
+This setup uses [Oh My Tmux](https://github.com/gpakosz/.tmux):
+
+| Path | Purpose |
+|------|---------|
+| `~/.tmux/` | Oh My Tmux repo (git clone, **do not edit**) |
+| `~/.tmux/.tmux.conf` | Oh My Tmux upstream config (**do not edit**) |
+| `~/.tmux.conf` | Symlink → `~/.tmux/.tmux.conf` (auto-managed) |
+| `~/.tmux.conf.local` | Symlink → `~/dotfiles/roles/tmux/files/oh-my-tmux-local.conf` |
+
+**To customize tmux, edit: `~/dotfiles/roles/tmux/files/oh-my-tmux-local.conf`**
+
+Reload config after editing:
+```bash
+tmux source-file ~/.tmux.conf
+```
+
 # tmux and iTerm2
 
 iTerm2 should be configured to work together with `tmux`, sending the proper keys.

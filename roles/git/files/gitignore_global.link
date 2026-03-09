@@ -47,6 +47,7 @@ docs/_build
 # This way, I can add my unofficial tasks in every project, without commiting them to Git.
 # http://docs.pyinvoke.org/en/latest/concepts/configuration.html
 conjuring_*.py
+conjuring*.toml
 
 # sennder
 dev-tools.ini

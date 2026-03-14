@@ -6,9 +6,7 @@ alias gaa='git add --all'
 alias gb='git branch'
 alias gba='git branch --all --verbose'
 
-alias gcd='git checkout develop || git checkout development'
-alias gd='git checkout develop || git checkout development || git checkout master || git checkout main'
-alias gm='git checkout master || git checkout main || git checkout develop || git checkout development'
+alias gm='git checkout master || git checkout main'
 
 alias gch='git-checkout-issue'
 alias gcm='git checkout master || git checkout main'
@@ -29,11 +27,9 @@ xargs git rm && git commit -m '__wip__'"
 
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 
-# Don't use "git branchless hide 'draft() - stack(@)'", it deleted unmerged branches and I lost work
+# Don't use "git branchless" anymore, it was raising errors constantly and not helping with my workflow
 alias gclean="git delete-merged-branches; git delete-squashed-branches"
-
-# Git update: pull, sync branches, and auto-cleanup old draft commits from smartlog
-alias gu="git pull; gclean; git sync 2>/dev/null || true"
+alias gu="git pull; gclean"
 alias gmu='gcm; gu'
 
 alias ghc='gh pr checkout'
@@ -43,3 +39,8 @@ function co {
     all_args="$*"
     git commit -m "${all_args}"
 }
+
+# https://github.com/garden-rs/garden
+alias ga='garden'
+alias gi='garden ide'
+alias ide='garden ide'

@@ -77,6 +77,7 @@
       complete -F _complete_alias dc
       complete -F _complete_alias dk
       complete -F _complete_alias g
+      complete -F _complete_alias ga
       complete -F _complete_alias gb
       complete -F _complete_alias gco
       complete -F _complete_alias gl

@@ -49,9 +49,6 @@ docs/_build
 conjuring_*.py
 conjuring*.toml
 
-# sennder
-dev-tools.ini
-
 # asdf
 .tool-versions
 
@@ -154,3 +151,4 @@ data/kv-store
 # Claude Code
 .claude/*.local.*
 docs/plans/
+docs/superpowers/

@@ -150,5 +150,6 @@ data/kv-store
 
 # Claude Code
 .claude/*.local.*
+.claude/worktrees/
 docs/plans/
 docs/superpowers/

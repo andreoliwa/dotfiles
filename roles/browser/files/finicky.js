@@ -85,6 +85,7 @@ var workURLs = [
   /postman.com/,
   /protocol-buffers/,
   /retrium.com/,
+  /rootly/,
   /salesforce/,
   /scalyr/,
   /schwab.com/,

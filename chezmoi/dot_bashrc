@@ -74,6 +74,10 @@ command -v starship >/dev/null && eval "$(starship init bash)"
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
 # ==================== END https://github.com/direnv/direnv
 
+# TODO: feat: replace autojump by zoxide
+# https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init bash)"
+
 end_time=$(gdate +%s.%6N)
 execution_time=$(echo "$end_time - $start_time" | bc)
 # Printing is not allowed when running Ansible on a remote host

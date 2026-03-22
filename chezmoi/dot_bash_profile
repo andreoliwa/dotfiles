@@ -1,58 +1,25 @@
 #!/usr/bin/env bash
+# ~/.bash_profile — Login shell init.
+# All configuration lives in ~/.config/shell.d/ fragments.
+# This file should rarely need editing.
 
-# Let Homebrew modify the PATH before everything else, so tools like pyenv can be first in the PATH.
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Source all shell.d fragments in numeric order
+for f in ~/.config/shell.d/*.sh; do
+    # shellcheck source=/dev/null
+    [[ -r "$f" ]] || continue
 
-# Suggestions made by pyenv init:
-# WARNING: `pyenv init -` no longer sets PATH.
-# Run `pyenv init` to see the necessary changes to make to your configuration.
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-command -v pyenv >/dev/null && eval "$(pyenv init -)"
-
-# shellcheck disable=SC1091
-test -f "$HOME/.bashrc" && source "${HOME}/.bashrc"
-# shellcheck disable=SC1091
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
-# https://docs.brew.sh/Shell-Completion
-if type brew &>/dev/null; then
-    HOMEBREW_PREFIX="$(brew --prefix)"
-    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
-        # shellcheck disable=SC1091
-        source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+    # Set DOTF_BENCHMARK=1 to print each fragment's load time (requires gdate: brew install coreutils).
+    if [[ -n "$DOTF_BENCHMARK" ]]; then
+        _t0=$(gdate +%s.%6N)
+        source "$f"
+        _t1=$(gdate +%s.%6N)
+        printf "%.3f s  %s\n" "$(echo "$_t1 - $_t0" | bc)" "$f"
     else
-        for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
-            # shellcheck source=/dev/null
-            [[ -r "$COMPLETION" ]] && source "$COMPLETION"
-        done
+        source "$f"
     fi
-fi
+done
+export SHELL_D_LOADED=1
 
-# Where should I install my own local completions?
-# https://github.com/scop/bash-completion/blob/master/README.md#faq
-if [[ -d "$BASH_COMPLETION_USER_DIR/completions" ]]; then
-    for COMPLETION in "$BASH_COMPLETION_USER_DIR/completions/"*; do
-        # shellcheck source=/dev/null
-        source "$COMPLETION"
-    done
-fi
-
-# https://github.com/tiangolo/typer installs completion files in this directory
-if [[ -d "$HOME/.bash_completions/" ]]; then
-    for COMPLETION in "$HOME/.bash_completions/"*; do
-        # shellcheck source=/dev/null
-        [[ -r "$COMPLETION" ]] && source "$COMPLETION"
-    done
-fi
-
-# Added by OrbStack: command-line tools and integration
+# Source .bashrc for interactive non-login shells compatibility
 # shellcheck source=/dev/null
-source ~/.orbstack/shell/init.bash 2>/dev/null || :
-
-# https://discussions.apple.com/thread/251000125
-ulimit -n 1024
-
-# https://github.com/wting/autojump#known-issues
-# https://superuser.com/questions/1158739/prompt-command-to-reload-from-bash-history
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a; history -r"
+test -f "$HOME/.bashrc" && source "$HOME/.bashrc"

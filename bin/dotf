@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+"""dotf — Dotfiles provisioning wrapper.
+
+Usage:
+    dotf                Apply everything (chezmoi + pyinfra, local)
+    dotf -s @local      Apply to local machine (default)
+    dotf -s user@host   Apply to a remote server
+    dotf -t tmux,caddy  Apply only selected tools
+    dotf -r ~/path/to/private-repo -s user@host -t tmux
+                        Apply selected tools to a remote server
+    dotf --bootstrap    Install pyinfra + prerequisites, then apply
+"""
+
+import argparse
+import os
+import subprocess
+import sys
+from pathlib import Path
+from typing import List, Optional
+
+DOTFILES = Path.home() / "dotfiles"
+
+_ENV_DOTF_REPO = "DOTF_REPO"
+
+
+def _private_pyinfra(private_repo: Optional[Path]) -> Optional[Path]:
+    """Return the private pyinfra directory if it exists, else None."""
+    if private_repo is not None:
+        candidate = private_repo / "pyinfra"
+        return candidate if candidate.is_dir() else None
+    env_val = os.environ.get(_ENV_DOTF_REPO)
+    if env_val:
+        candidate = Path(env_val) / "pyinfra"
+        return candidate if candidate.is_dir() else None
+    return None
+
+
+def run(cmd: List[str], **kwargs: object) -> int:
+    """Print and execute a shell command, returning its exit code."""
+    print(f"→ {' '.join(cmd)}")
+    return subprocess.call(cmd, **kwargs)  # type: ignore[arg-type]
+
+
+def bootstrap() -> None:
+    """Install pyinfra and prerequisites needed to run dotf on a fresh machine."""
+    print("==> Bootstrapping: installing pyinfra...")
+    # Prefer uv (fastest, modern), then pipx (isolated), then pip (last resort).
+    if subprocess.call(["which", "uv"], stdout=subprocess.DEVNULL) == 0:
+        run(["uv", "tool", "install", "pyinfra", "--force"])
+    elif subprocess.call(["which", "pipx"], stdout=subprocess.DEVNULL) == 0:
+        run(["pipx", "install", "pyinfra"])
+    else:
+        run([sys.executable, "-m", "pip", "install", "--user", "pyinfra"])
+    print("==> Bootstrap complete. Re-run dotf without --bootstrap to provision.")
+
+
+def apply_chezmoi(private_repo: Optional[Path]) -> None:
+    """Apply chezmoi from the public source, then private source if available."""
+    run(["chezmoi", "apply", "--source", str(DOTFILES / "chezmoi")])
+    private_den = private_repo if private_repo is not None else None
+    if private_den is not None:
+        private_chezmoi = private_den / "chezmoi"
+        if private_chezmoi.is_dir():
+            run(["chezmoi", "apply", "--source", str(private_chezmoi)])
+
+
+def apply_pyinfra(
+    private_pyinfra: Optional[Path],
+    server: str,
+    tools: Optional[List[str]],
+) -> None:
+    """Run pyinfra from the first directory that has both inventory.py and deploy.py.
+
+    Searches private repo first, falls back to the public dotfiles pyinfra dir.
+    """
+    candidates = [private_pyinfra, DOTFILES / "pyinfra"] if private_pyinfra else [DOTFILES / "pyinfra"]
+    workdir = next(
+        (d for d in candidates if d is not None and (d / "inventory.py").exists() and (d / "deploy.py").exists()),
+        None,
+    )
+    if workdir is None:
+        print("Error: no inventory.py + deploy.py found in private or public pyinfra dir")
+        return
+    extra: List[str] = ["--limit", server]
+    if tools:
+        extra += ["--data", f"tools={','.join(tools)}"]
+    run(["pyinfra", "inventory.py", "deploy.py"] + extra, cwd=str(workdir))
+
+
+def main() -> None:
+    """Parse arguments and run the appropriate provisioning steps."""
+    parser = argparse.ArgumentParser(
+        prog="dotf",
+        description="Dotfiles provisioning wrapper.",
+    )
+    parser.add_argument(
+        "-s",
+        "--server",
+        default="@local",
+        metavar="SERVER",
+        help="Target server/host (default: @local). Use pyinfra host syntax.",
+    )
+    parser.add_argument(
+        "-t",
+        "--tools",
+        default=None,
+        metavar="TOOL[,TOOL...]",
+        help="Comma-separated list of tools to provision (default: all).",
+    )
+    parser.add_argument(
+        "--bootstrap",
+        action="store_true",
+        help="Install pyinfra and prerequisites before provisioning.",
+    )
+    parser.add_argument(
+        "-r",
+        "--repo",
+        default=None,
+        metavar="PATH",
+        help="Path to private repo root (overrides $%s). If absent, only public tasks run." % _ENV_DOTF_REPO,
+    )
+    args = parser.parse_args()
+
+    private_repo: Optional[Path] = Path(args.repo) if args.repo else None
+
+    if args.bootstrap:
+        bootstrap()
+        return
+
+    tools: Optional[List[str]] = [t.strip() for t in args.tools.split(",")] if args.tools else None
+
+    private_pyinfra = _private_pyinfra(private_repo)
+    apply_chezmoi(private_repo)
+    apply_pyinfra(private_pyinfra, args.server, tools)
+
+
+if __name__ == "__main__":
+    main()

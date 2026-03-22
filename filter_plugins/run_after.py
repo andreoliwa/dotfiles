@@ -2,6 +2,7 @@
 
 `Developing plugins <https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#filter-plugins>`_.
 """
+
 from datetime import datetime
 from pathlib import Path
 

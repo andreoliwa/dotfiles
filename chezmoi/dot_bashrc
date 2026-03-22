@@ -1,96 +1,31 @@
 #!/usr/bin/env bash
+# ~/.bashrc — Interactive non-login shell init.
+# All configuration lives in ~/.config/shell.d/ fragments.
+# This file should rarely need editing.
 
-# Uncomment to debug
-# set -x
+# Guard: only run for interactive shells
+[[ $- != *i* ]] && return
 
-start_time=$(gdate +%s.%6N)
+# Both .bash_profile and .bashrc source shell.d because bash only reads one per session type:
+# login shells read .bash_profile (SSH, terminal apps on macOS), interactive non-login shells
+# read .bashrc (tmux panes, nested bash, `bash -i`). The SHELL_D_LOADED guard prevents double-loading.
 
-# Load environment variables and aliases; some files should exist,
-# you will get a warning to remind you to create them
-# shellcheck source=/dev/null
-source "$HOME"/.config/dotfiles/local.env
-# shellcheck source=/dev/null
-test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/openssl.env
-# shellcheck source=/dev/null
-test -f "$HOME"/container-apps/aliases.sh && source "$HOME"/container-apps/aliases.sh
+# If shell.d fragments weren't already loaded by .bash_profile (login shell),
+# source them now. This handles: ssh remote-host, tmux new panes, etc.
+if [[ -z "$SHELL_D_LOADED" ]]; then
+    for f in ~/.config/shell.d/*.sh; do
+        # shellcheck source=/dev/null
+        [[ -r "$f" ]] || continue
 
-# ==================== BEGIN Bash completion / dotfiles
-export BASH_COMPLETION_USER_DIR="$HOME/.local/share/bash-completion"
-
-# brew info bash-completion2
-export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
-# shellcheck source=/dev/null
-[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
-
-# Source all scripts. To regenerate this .sh file, run:
-# dotfiles-cache-shell-scripts bash
-# shellcheck source=/dev/null
-test -f "$HOME"/.cache/dotfiles/cached_script.sh && source "$HOME"/.cache/dotfiles/cached_script.sh
-# ==================== END Bash completion / dotfiles
-
-# ==================== BEGIN https://github.com/pipxproject/pipx#install-pipx
-# Taken from "pipx completions" command
-command -v register-python-argcomplete >/dev/null && eval "$(register-python-argcomplete pipx)"
-# ==================== END https://github.com/pipxproject/pipx#install-pipx
-
-# Add Golang bin directory to the PATH
-test -d "$HOME"/go/bin && export PATH="$PATH:$HOME/go/bin"
-
-# Add my private script toolbox as last on the PATH
-test -d "$HOME"/dev/me/my-den/toolbox/bin && export PATH="$PATH:$HOME/dev/me/my-den/toolbox/bin"
-
-# Increase Bash history size
-# https://unix.stackexchange.com/questions/20861/is-there-a-way-to-set-the-size-of-the-history-list-in-bash-to-more-than-5000-lin#20925
-export HISTSIZE=30000
-export HISTFILESIZE=1000000
-
-# https://askubuntu.com/questions/67283/is-it-possible-to-make-writing-to-bash-history-immediate/67306#67306
-shopt -s histappend
-
-# https://jrnl.sh/en/stable/privacy-and-security/
-export HISTIGNORE="$HISTIGNORE:jrnl*"
-
-# Terminal editor + VSCode in wait mode
-export EDITOR='vim'
-export VISUAL='code --wait'
-
-# To avoid the message: feh ERROR: Can't open X display. It *is* running, yeah?
-export DISPLAY=:0.0
-
-# https://github.com/junegunn/fzf
-# Taken from 'brew info fzf' (and edited by an ansible role):
-# shellcheck source=/dev/null
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# shellcheck source=/dev/null
-test -f "$HOME"/dev/me/my-den/docker/aliases.sh &&
-    source "$HOME"/dev/me/my-den/docker/aliases.sh
-
-# https://github.com/starship/starship
-command -v starship >/dev/null && eval "$(starship init bash)"
-
-# ==================== BEGIN https://github.com/direnv/direnv
-# https://direnv.net/docs/hook.html#bash
-command -v direnv >/dev/null && eval "$(direnv hook bash)"
-# ==================== END https://github.com/direnv/direnv
-
-# TODO: feat: replace autojump by zoxide
-# https://github.com/ajeetdsouza/zoxide
-eval "$(zoxide init bash)"
-
-end_time=$(gdate +%s.%6N)
-execution_time=$(echo "$end_time - $start_time" | bc)
-# Printing is not allowed when running Ansible on a remote host
-# This command shows warnings in magenta:
-#   dotfiles-setup -r hetzner
-# [WARNING]: sftp transfer mechanism failed on [rlyeh]. Use ANSIBLE_DEBUG=1 to see detailed information
-# [WARNING]: scp transfer mechanism failed on [rlyeh]. Use ANSIBLE_DEBUG=1 to see detailed information
-# Running with debug mode another error is displayed:
-#   ANSIBLE_DEBUG=1 dotfiles-setup -r hetzner
-# Ensure the remote shell produces no output for non-interactive sessions.
-[[ $OSTYPE == darwin* ]] && printf "Elapsed time: %.6f seconds\n" "$execution_time"
-
-# shellcheck source=/dev/null
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-# https://docs.atuin.sh/configuration/key-binding/#disable-up-arrow
-eval "$(atuin init bash --disable-up-arrow)"
+        # Set DOTF_BENCHMARK=1 to print each fragment's load time (requires gdate: brew install coreutils).
+        if [[ -n "$DOTF_BENCHMARK" ]]; then
+            _t0=$(gdate +%s.%6N)
+            source "$f"
+            _t1=$(gdate +%s.%6N)
+            printf "%.3f s  %s\n" "$(echo "$_t1 - $_t0" | bc)" "$f"
+        else
+            source "$f"
+        fi
+    done
+    export SHELL_D_LOADED=1
+fi

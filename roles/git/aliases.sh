@@ -29,7 +29,7 @@ alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 
 # Don't use "git branchless" anymore, it was raising errors constantly and not helping with my workflow
 alias gclean="git delete-merged-branches; git delete-squashed-branches"
-alias gu="git pull; gclean"
+alias gu="invoke git.tidy-up"
 alias gmu='gcm; gu'
 
 alias ghc='gh pr checkout'

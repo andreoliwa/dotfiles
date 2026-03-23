@@ -1,6 +1,7 @@
 # dotfiles
 
-[sloria's dotfiles](https://github.com/sloria/dotfiles-old), rewritten as Ansible roles. Sets up a full local development environment with a **single command.**
+[sloria's dotfiles](https://github.com/sloria/dotfiles-old), rewritten as Ansible roles. Sets up a full local
+development environment with a **single command.**
 
 Fully supports macOS. Red Hat and Debian support is good but not as complete.
 
@@ -14,7 +15,8 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 - alternative Python configuration with pyenv, pip, virtualenv
 - a tmux.conf that's pretty neat.
 - [tmuxp](https://tmuxp.git-pull.com/en/latest/) for tmux session management
-- vim with [vim-plug](https://github.com/junegunn/vim-plug) for plugin management. All configuration in a single file [.vimrc](https://github.com/sloria/dotfiles/blob/master/roles/vim/files/vimrc).
+- vim with [vim-plug](https://github.com/junegunn/vim-plug) for plugin management. All configuration in a single
+  file [.vimrc](https://github.com/sloria/dotfiles/blob/master/roles/vim/files/vimrc).
 - pluggable. Everything is optional. Fork this. Remove what you don't use. Configure what you do use.
 - Mac packages installed with [homebrew][]. Mac apps installed with [homebrew-cask][].
 - Useful git aliases
@@ -24,15 +26,16 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
 ## prerequisites (install these first)
 
 - [macOS: upgrade to the latest version possible](https://support.apple.com/macos)
-- HomeBrew: [macOS requirements](https://docs.brew.sh/Installation#macos-requirements) first (e.g.: `xcode-select --install`)
+- HomeBrew: [macOS requirements](https://docs.brew.sh/Installation#macos-requirements) first (e.g.:
+  `xcode-select --install`)
 - [Install HomeBrew](https://brew.sh/)
 - ansible >= 2.4:
   - macOS: `brew install ansible`;
-  - Linux: [get the latest PPA](http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine).
+  -
+  Linux: [get the latest PPA](http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine).
 - Other tools to start working on this repo: `brew install fzf`
 - If you're installing a new computer, copy or create these files/directories:
   - GPG config: `~/.gnupg/`
-  - Env variables: `~/.config/dotfiles/local.env`, set `export COMPANY_LAPTOP=` variable (set any value on the company laptop)
   - Ansible Vault password: `~/.config/dotfiles/vault_password.txt`
 
 ## install
@@ -49,7 +52,8 @@ Fully supports macOS. Red Hat and Debian support is good but not as complete.
   - `git_personal.user_name`: Your name, which will be attached to commit messages, e.g. "Steven Loria"
   - `github_username`: Your Github username.
   - `git_personal.user_email`: Your git email address.
-- Optional, but recommended: Update `group_vars/local` with the programs you want installed by [homebrew][], [homebrew-cask][], and npm.
+- Optional, but recommended: Update `group_vars/local` with the programs you want installed
+  by [homebrew][], [homebrew-cask][], and npm.
   - `mac_homebrew_packages`: Utilities that don't get installed by the roles.
   - `mac_cask_packages`: Mac Apps you want installed with [homebrew-cask][].
 - Edit `playbook_local.yml` as you see fit. Remove any roles you don't use. Edit roles that you do use.
@@ -94,7 +98,8 @@ Type `dotfiles-setup -h` to see all possibilities.
 
 ## special files
 
-All configuration is done in `~/dotfiles`. Each role may contain (in addition to the typical ansible directories and files) a number of special files
+All configuration is done in `~/dotfiles`. Each role may contain (in addition to the typical ansible directories and
+files) a number of special files
 
 - **role/\*.zsh**: Any files ending in `.zsh` get loaded into your environment.
 - for xonsh: **role/\*.xsh**: Any files ending in `.xsh` get loaded into your environment.
@@ -104,7 +109,8 @@ All configuration is done in `~/dotfiles`. Each role may contain (in addition to
 
 **iterm2**
 
-To import the iterm2 profile, go to your iterm2 preferences, and enable "Load preferences from custom folder" and select the iterm2 folder in the `misc/` directory.
+To import the iterm2 profile, go to your iterm2 preferences, and enable "Load preferences from custom folder" and select
+the iterm2 folder in the `misc/` directory.
 
 ![iterm2 profile](https://user-images.githubusercontent.com/2379650/34223487-859f2752-e58d-11e7-8024-9e6af5c1ec4e.png)
 
@@ -153,6 +159,7 @@ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 - Full Debian and Red Hat support
 
 [homebrew]: http://brew.sh/
+
 [homebrew-cask]: https://github.com/caskroom/homebrew-cask
 
 ## license

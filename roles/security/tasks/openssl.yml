@@ -1,21 +1,12 @@
 - name: "openssl: Add env vars to shell script"
-  shell: "brew info openssl | grep ' export ' | awk '{$1=$1};1' > ~/.config/dotfiles/openssl.env"
+  shell: "brew info openssl | grep ' export ' | awk '{$1=$1};1' > ~/dotfiles/pyinfra/tasks/openssl/01-env.sh"
   when: ansible_os_family == "Darwin"
 
 # https://stackoverflow.com/questions/58272830/python-crashing-on-macos-10-15-beta-19a582a-with-usr-lib-libcrypto-dylib/58445755#58445755
 - name: "openssl: Add DYLD_LIBRARY_PATH to avoid error (python is loading libcrypto in an unsafe way / Abort trap: 6)"
   lineinfile:
-    path: ~/.config/dotfiles/openssl.env
+    path: ~/dotfiles/pyinfra/tasks/openssl/01-env.sh
     state: present
     regexp: "DYLD_LIBRARY_PATH"
     line: "export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$DYLD_LIBRARY_PATH"
-  when: ansible_os_family == "Darwin"
-
-- name: "openssl: Export vars on .bashrc"
-  lineinfile:
-    path: ~/.bashrc
-    state: present
-    regexp: "/.config/dotfiles/openssl.env"
-    line: 'test -f "$HOME"/.config/dotfiles/openssl.env && source "$HOME"/.config/dotfiles/openssl.env'
-    insertafter: "test -f"
   when: ansible_os_family == "Darwin"

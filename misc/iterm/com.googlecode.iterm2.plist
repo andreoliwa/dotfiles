@@ -19,7 +19,7 @@
 	<key>AiMaxTokens</key>
 	<integer>400000</integer>
 	<key>AiModel</key>
-	<string>gpt-5.1</string>
+	<string>gpt-5.2</string>
 	<key>AiResponseMaxTokens</key>
 	<integer>128000</integer>
 	<key>AitermURL</key>
@@ -36,6 +36,8 @@
 	<true/>
 	<key>EnableProxyIcon</key>
 	<true/>
+	<key>ForceKeyboard</key>
+	<false/>
 	<key>GlobalKeyMap</key>
 	<dict>
 		<key>0x19-0x60000</key>
@@ -1082,19 +1084,25 @@
 					<key>Text</key>
 					<string>0x0c</string>
 				</dict>
+				<key>0xd-0x20000-0x24</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>[13;2u</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
 				<key>0xf700-0x220000</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
 					<key>Text</key>
 					<string>[A</string>
-				</dict>
-				<key>0xf700-0x240000</key>
-				<dict>
-					<key>Action</key>
-					<integer>11</integer>
-					<key>Text</key>
-					<string>0x01 0x6b</string>
 				</dict>
 				<key>0xf700-0x260000</key>
 				<dict>
@@ -1251,6 +1259,8 @@
 					<string></string>
 				</dict>
 			</dict>
+			<key>Left Control Key</key>
+			<integer>0</integer>
 			<key>Link Color</key>
 			<dict>
 				<key>Alpha Component</key>

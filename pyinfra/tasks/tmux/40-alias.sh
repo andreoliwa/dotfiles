@@ -3,7 +3,9 @@
 # https://github.com/tmux-python/tmuxp
 export TMUXP_CONFIGDIR="$HOME/.config/tmuxp"
 
-alias t="tmux"
-alias tls="tmux list-session"
-alias tat="tmux attach-session -d -t"
+# keep-sorted start
 alias mux="tmuxp load -y "
+alias t="tmux"
+alias tat="tmux attach-session -d -t"
+alias tls="tmux list-session"
+# keep-sorted end

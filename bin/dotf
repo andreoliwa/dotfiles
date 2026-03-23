@@ -30,7 +30,7 @@ def _private_pyinfra(private_repo: Optional[Path]) -> Optional[Path]:
         return candidate if candidate.is_dir() else None
     env_val = os.environ.get(_ENV_DOTF_REPO)
     if env_val:
-        candidate = Path(env_val) / "pyinfra"
+        candidate = Path(env_val).expanduser().resolve() / "pyinfra"
         return candidate if candidate.is_dir() else None
     return None
 

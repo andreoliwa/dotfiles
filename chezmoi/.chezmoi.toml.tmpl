@@ -2,3 +2,8 @@
 
 # https://www.chezmoi.io/user-guide/advanced/customize-your-source-directory/
 sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
+
+# Suppress warning when applying a secondary --source (e.g. private repo overlay)
+# that has no .chezmoi.toml.tmpl of its own.
+[warnings]
+    configFileTemplateHasChanged = false

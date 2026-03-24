@@ -57,9 +57,13 @@ def bootstrap() -> None:
 def apply_chezmoi(private_repo: Optional[Path]) -> None:
     """Apply chezmoi from the public source, then private source if available."""
     run(["chezmoi", "apply", "--source", str(DOTFILES / "chezmoi")])
-    private_den = private_repo if private_repo is not None else None
-    if private_den is not None:
-        private_chezmoi = private_den / "chezmoi"
+    # Resolve private repo: explicit arg > $DOTF_REPO env var
+    if private_repo is None:
+        env_val = os.environ.get(_ENV_DOTF_REPO)
+        if env_val:
+            private_repo = Path(env_val).expanduser().resolve()
+    if private_repo is not None:
+        private_chezmoi = private_repo / "chezmoi"
         if private_chezmoi.is_dir():
             run(["chezmoi", "apply", "--source", str(private_chezmoi)])
 
@@ -108,6 +112,11 @@ def main() -> None:
         help="Comma-separated list of tools to provision (default: all).",
     )
     parser.add_argument(
+        "--chezmoi",
+        action="store_true",
+        help="Apply chezmoi only (skip pyinfra).",
+    )
+    parser.add_argument(
         "--bootstrap",
         action="store_true",
         help="Install pyinfra and prerequisites before provisioning.",
@@ -125,6 +134,10 @@ def main() -> None:
 
     if args.bootstrap:
         bootstrap()
+        return
+
+    if args.chezmoi:
+        apply_chezmoi(private_repo)
         return
 
     tools: Optional[List[str]] = [t.strip() for t in args.tools.split(",")] if args.tools else None

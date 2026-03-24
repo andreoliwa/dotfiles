@@ -1,0 +1,14 @@
+---
+# https://garden-rs.gitlab.io/configuration.html
+garden:
+  root: "${GARDEN_CONFIG_DIR}"
+  includes:
+    - private.yaml
+
+commands:
+  st:
+    - git status --short
+    - git branch
+  status:
+    - git status --short
+    - git branch

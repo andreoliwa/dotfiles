@@ -21,8 +21,51 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
 ]
 
-[tool.black]
+[tool.ruff]
+fix = true
+# https://docs.astral.sh/ruff/settings/#line-length
 line-length = 120
+# https://docs.astral.sh/ruff/settings/#show-fixes
+show-fixes = true
+# https://docs.astral.sh/ruff/settings/#target-version
+target-version = "py314"
+
+[tool.ruff.lint]
+# warning: The following rules may cause conflicts when used with the formatter: `COM812`, `D203`.
+# To avoid unexpected behavior, we recommend disabling these rules, either by removing them from the
+# `select` or `extend-select` configuration or adding them to the `ignore` configuration.
+ignore = [
+  "COM812",
+  "D203",
+  "D211", # No blank line before class
+  "D213", # multi-line-summary-second-line
+  "FBT001", # Boolean-typed positional argument in function definition
+  "FBT002", # Boolean default positional argument in function definition
+  "FIX001",
+  "FIX002", # Line contains TO DO, consider resolving the issue
+  "PLC0415", # Import should be at top of file (lazy imports for performance)
+  "T201", # print statement used
+  "TD001",
+  "TD002", # Missing author
+  "TD003", # Missing issue link on the line following
+]
+# https://docs.astral.sh/ruff/settings/#select
+select = ["ALL"]
+
+# https://docs.astral.sh/ruff/rules/#flake8-quotes-q
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "double"
+
+# https://docs.astral.sh/ruff/rules/#mccabe-c90
+[tool.ruff.lint.mccabe]
+# https://docs.astral.sh/ruff/settings/#max-complexity
+max-complexity = 10
+
+# https://docs.astral.sh/ruff/settings/#per-file-ignores
+[tool.ruff.lint.per-file-ignores]
+# chezmoi source files use the executable_ prefix to encode the executable bit;
+# the actual file mode is intentionally non-executable in the repo.
+"chezmoi/**/executable_*" = ["EXE001"]
 
 [tool.poetry.dependencies]
 python = "^3.7"

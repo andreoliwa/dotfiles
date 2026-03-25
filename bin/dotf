@@ -16,14 +16,13 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 DOTFILES = Path.home() / "dotfiles"
 
 _ENV_DOTF_REPO = "DOTF_REPO"
 
 
-def _private_pyinfra(private_repo: Optional[Path]) -> Optional[Path]:
+def _private_pyinfra(private_repo: Path | None) -> Path | None:
     """Return the private pyinfra directory if it exists, else None."""
     if private_repo is not None:
         candidate = private_repo / "pyinfra"
@@ -35,26 +34,26 @@ def _private_pyinfra(private_repo: Optional[Path]) -> Optional[Path]:
     return None
 
 
-def run(cmd: List[str], **kwargs: object) -> int:
+def run(cmd: list[str], **kwargs: object) -> int:
     """Print and execute a shell command, returning its exit code."""
     print(f"→ {' '.join(cmd)}")
-    return subprocess.call(cmd, **kwargs)  # type: ignore[arg-type]
+    return subprocess.call(cmd, **kwargs)  # type: ignore[arg-type]  # noqa: S603
 
 
 def bootstrap() -> None:
     """Install pyinfra and prerequisites needed to run dotf on a fresh machine."""
     print("==> Bootstrapping: installing pyinfra...")
     # Prefer uv (fastest, modern), then pipx (isolated), then pip (last resort).
-    if subprocess.call(["which", "uv"], stdout=subprocess.DEVNULL) == 0:
+    if subprocess.call(["which", "uv"], stdout=subprocess.DEVNULL) == 0:  # noqa: S607
         run(["uv", "tool", "install", "pyinfra", "--force"])
-    elif subprocess.call(["which", "pipx"], stdout=subprocess.DEVNULL) == 0:
+    elif subprocess.call(["which", "pipx"], stdout=subprocess.DEVNULL) == 0:  # noqa: S607
         run(["pipx", "install", "pyinfra"])
     else:
         run([sys.executable, "-m", "pip", "install", "--user", "pyinfra"])
     print("==> Bootstrap complete. Re-run dotf without --bootstrap to provision.")
 
 
-def apply_chezmoi(private_repo: Optional[Path]) -> None:
+def apply_chezmoi(private_repo: Path | None) -> None:
     """Apply chezmoi from the public source, then private source if available."""
     run(["chezmoi", "apply", "--source", str(DOTFILES / "chezmoi")])
     # Resolve private repo: explicit arg > $DOTF_REPO env var
@@ -69,9 +68,9 @@ def apply_chezmoi(private_repo: Optional[Path]) -> None:
 
 
 def apply_pyinfra(
-    private_pyinfra: Optional[Path],
+    private_pyinfra: Path | None,
     server: str,
-    tools: Optional[List[str]],
+    tools: list[str] | None,
 ) -> None:
     """Run pyinfra from the first directory that has both inventory.py and deploy.py.
 
@@ -85,10 +84,10 @@ def apply_pyinfra(
     if workdir is None:
         print("Error: no inventory.py + deploy.py found in private or public pyinfra dir")
         return
-    extra: List[str] = ["--limit", server]
+    extra: list[str] = ["--limit", server]
     if tools:
         extra += ["--data", f"tools={','.join(tools)}"]
-    run(["pyinfra", "inventory.py", "deploy.py"] + extra, cwd=str(workdir))
+    run(["pyinfra", "inventory.py", "deploy.py", *extra], cwd=str(workdir))
 
 
 def main() -> None:
@@ -126,11 +125,11 @@ def main() -> None:
         "--repo",
         default=None,
         metavar="PATH",
-        help="Path to private repo root (overrides $%s). If absent, only public tasks run." % _ENV_DOTF_REPO,
+        help=f"Path to private repo root (overrides ${_ENV_DOTF_REPO}). If absent, only public tasks run.",
     )
     args = parser.parse_args()
 
-    private_repo: Optional[Path] = Path(args.repo) if args.repo else None
+    private_repo: Path | None = Path(args.repo) if args.repo else None
 
     if args.bootstrap:
         bootstrap()
@@ -140,7 +139,7 @@ def main() -> None:
         apply_chezmoi(private_repo)
         return
 
-    tools: Optional[List[str]] = [t.strip() for t in args.tools.split(",")] if args.tools else None
+    tools: list[str] | None = [t.strip() for t in args.tools.split(",")] if args.tools else None
 
     private_pyinfra = _private_pyinfra(private_repo)
     apply_chezmoi(private_repo)

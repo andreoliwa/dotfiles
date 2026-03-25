@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 """Setup a similar development environment in multiple operating systems."""
+
 import argparse
 import os
 import sys
 from pathlib import Path
 from subprocess import PIPE, CalledProcessError, run
+from typing import Any
 
 
-def shell(command_line, quiet=False, return_lines=False, **kwargs):
-    """Print and run a shell command."""
+def shell(command_line: str, quiet: bool = False, return_lines: bool = False, **kwargs: Any) -> Any:  # noqa: ANN401
+    """Run a shell command, optionally returning output lines."""
     if not quiet:
-        print("$ {}".format(command_line))
+        print(f"$ {command_line}")
     if return_lines:
         kwargs.setdefault("stdout", PIPE)
 
-    completed_process = run(command_line, shell=True, universal_newlines=True, **kwargs)
+    completed_process = run(command_line, shell=True, text=True, check=False, **kwargs)  # noqa: S602
     if not return_lines:
         return completed_process
 
@@ -22,34 +24,31 @@ def shell(command_line, quiet=False, return_lines=False, **kwargs):
     return stdout.split("\n") if stdout else []
 
 
-def notify(title, message):
-    """If terminal-notifier is installed, use it to display a notification."""
+def notify(title: str, message: str) -> None:
+    """Display a desktop notification via terminal-notifier if available."""
     check = "which" if sys.platform == "linux" else "command -v"
     try:
-        terminal_notifier_path = shell("{} terminal-notifier".format(check), check=True, stdout=PIPE).stdout.strip()
+        terminal_notifier_path = shell(f"{check} terminal-notifier", check=True, stdout=PIPE).stdout.strip()
     except CalledProcessError:
         terminal_notifier_path = ""
     if terminal_notifier_path:
-        shell(
-            'terminal-notifier -title "{}: {} complete" -message "Successfully {} dev environment."'.format(
-                Path(__file__).name, title, message
-            )
-        )
+        name = Path(__file__).name
+        shell(f'terminal-notifier -title "{name}: {title} complete" -message "Successfully {message} dev environment."')
 
 
-def get_python():
-    """Get the Python interpreter used by ansible."""
+def get_python() -> str:
+    """Return the Python interpreter path used by ansible."""
     ansible_python_interpreter = shell(
         "ansible --version | grep 'ansible python' |"
-        + r" sed -E -e 's#/site.+##g' -e 's#.+ (/opt)#\1#g' -e 's#.+ (/usr)#\1#g' -e 's#/lib/#/bin/#g'",
+        r" sed -E -e 's#/site.+##g' -e 's#.+ (/opt)#\1#g' -e 's#.+ (/usr)#\1#g' -e 's#/lib/#/bin/#g'",
         return_lines=True,
     )[0]
     print("Using this Python interpreter:", ansible_python_interpreter)
     return ansible_python_interpreter
 
 
-def main():
-    """Main function."""
+def main() -> None:  # noqa: C901, PLR0912, PLR0915
+    """Run an Ansible playbook to set up a dev machine."""
     parser = argparse.ArgumentParser(
         description="run an Ansible playbook to setup a similar dev machine in multiple operating systems"
     )
@@ -109,7 +108,7 @@ def main():
         os.environ["MULTI_DEV_MACHINE_VERBOSE"] = verbose_option.strip()
 
     tags_with_comma = ",".join(args.tag)
-    tags_option = " --tags {}".format(tags_with_comma) if args.tag else ""
+    tags_option = f" --tags {tags_with_comma}" if args.tag else ""
     if tags_with_comma:
         os.environ["MULTI_DEV_MACHINE_TAGS"] = tags_with_comma  # This variable is used on the Vagrantfile
 
@@ -119,7 +118,7 @@ def main():
     # Find the correct interpreter only on localhost,
     # otherwise it fails with error: "The following modules failed to execute: setup"
     if not args.remote:
-        command_parts.append("-e ansible_python_interpreter={}".format(get_python()))
+        command_parts.append(f"-e ansible_python_interpreter={get_python()}")
 
     if args.dry:
         # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_checkmode.html#using-check-mode
@@ -130,7 +129,7 @@ def main():
             # https://docs.ansible.com/ansible/latest/user_guide/vault.html#providing-vault-passwords
             "--vault-id dotfiles@~/.config/dotfiles/vault_password.txt",
             "--inventory ~/dotfiles/hosts",
-            "~/dotfiles/playbook_{}.yml".format(playbook_file),
+            f"~/dotfiles/playbook_{playbook_file}.yml",
         ]
     )
 
@@ -143,7 +142,7 @@ def main():
                 "| tail -n +6",
                 "| sort | uniq",
                 "| fzf --height 50% --reverse --inline-info --select-1 --exit-0 --cycle",
-                "--query={!r}".format(args.task),
+                f"--query={args.task!r}",
             ]
         )
         selected = shell(" ".join(fzf_parts), quiet=True, return_lines=True)
@@ -153,37 +152,33 @@ def main():
         role_task = selected[0].split("\t")[0]
         task_parts = role_task.split(" :", 1)  # Ansible adds a "<role> :" prefix on tasks, with a space before ":"
         chosen_task = task_parts[1].strip() if len(task_parts) > 1 else role_task
-        command_parts.append("--start-at-task {!r}".format(chosen_task))
+        command_parts.append(f"--start-at-task {chosen_task!r}")
 
     playbook_command = " ".join(command_parts)
     if args.virtual_machine:
-        print("Provisioning the Vagrant virtual machine {}...".format(args.virtual_machine))
+        print(f"Provisioning the Vagrant virtual machine {args.virtual_machine}...")
         if args.reload:
-            shell("vagrant reload {}".format(args.virtual_machine))
+            shell(f"vagrant reload {args.virtual_machine}")
             up_command = ""
         else:
-            output = shell("vagrant status {}".format(args.virtual_machine), stdout=PIPE).stdout.strip()
+            output = shell(f"vagrant status {args.virtual_machine}", stdout=PIPE).stdout.strip()
             lines = output.split("\n")
-            if len(lines) < 3:
+            if len(lines) < 3:  # noqa: PLR2004
                 return
             up_command = "up --" if " running " not in lines[2] else ""
-        shell("vagrant {}provision {}".format(up_command, args.virtual_machine))
+        shell(f"vagrant {up_command}provision {args.virtual_machine}")
         notify("Vagrant provision", "provisioned")
     elif args.bootstrap:
-        print("Setting up local dev environment...{}".format(tags_option))
-        shell("{} --ask-become-pass{}{}".format(playbook_command, verbose_option, tags_option))
+        print(f"Setting up local dev environment...{tags_option}")
+        shell(f"{playbook_command} --ask-become-pass{verbose_option}{tags_option}")
         notify("Bootstrap", "set up")
     else:
         # Always ask sudo password under Linux even on update; it is needed for several roles
         ask_password_option = " --ask-become-pass" if sys.platform == "linux" or args.sudo else ""
 
-        print("Updating local dev environment...{}".format(tags_option))
+        print(f"Updating local dev environment...{tags_option}")
         # Run all roles except for the ones tagged with 'bootstrap'
-        shell(
-            "{} --skip-tags 'bootstrap'{}{}{}".format(
-                playbook_command, verbose_option, ask_password_option, tags_option
-            )
-        )
+        shell(f"{playbook_command} --skip-tags 'bootstrap'{verbose_option}{ask_password_option}{tags_option}")
         notify("Update", "updated")
 
 

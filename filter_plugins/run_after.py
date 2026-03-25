@@ -3,14 +3,14 @@
 `Developing plugins <https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#filter-plugins>`_.
 """
 
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 CACHE_DIR = Path.home() / ".cache/dotfiles/run_only_after"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def run_only_after(task_identifier, expected_minutes=60):
+def run_only_after(task_identifier: str, expected_minutes: int = 60) -> bool:
     """Filter to run a task only after a expected number of minutes (default 60).
 
     Usage:
@@ -22,7 +22,7 @@ def run_only_after(task_identifier, expected_minutes=60):
     file_name = task_identifier.strip().replace(" ", "_").lower()
     file_path = CACHE_DIR / file_name
     if file_path.exists():
-        now = datetime.now().timestamp()
+        now = datetime.now(tz=UTC).timestamp()
         modification = file_path.stat().st_mtime
         diff_minutes = (now - modification) / 60
         if diff_minutes < expected_minutes:
@@ -38,6 +38,6 @@ class FilterModule:
     `Plugin examples <https://github.com/ansible/ansible/blob/devel/lib/ansible/plugins/filter/core.py>`_.
     """
 
-    def filters(self):
+    def filters(self) -> dict:
         """Add those functions as filters on Ansible."""
         return {"run_only_after": run_only_after}

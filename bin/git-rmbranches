@@ -1,3 +1,4 @@
 #!/bin/sh
 # Remove branches that match a certain pattern
-git branch -D `git branch | grep $1`
+# shellcheck disable=SC2046
+git branch -D $(git branch | grep "$1")

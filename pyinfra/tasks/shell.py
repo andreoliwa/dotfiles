@@ -41,6 +41,7 @@ def _symlink_name(fragment: Path, repo_label: str) -> str:
     Example:
         tasks/git/40-alias.sh (dotfiles)        → 40-alias-git.sh
         my-private-repo/pyinfra/tasks/git/40-alias.sh    → 40-alias-git-my-private-repo.sh
+
     """
     task = fragment.parent.name
     suffix = f"-{repo_label}" if repo_label else ""
@@ -62,9 +63,9 @@ def assemble_shell_d(use_symlinks: bool) -> str:
             continue
         fragments = sorted(tasks_dir.absolute_path.rglob("*.sh"), key=lambda p: p.name)
         for fragment in fragments:
-            dest = os.path.join(tmp_dir, _symlink_name(fragment, tasks_dir.label))
+            dest = Path(tmp_dir) / _symlink_name(fragment, tasks_dir.label)
             if use_symlinks:
-                os.symlink(fragment.resolve(), dest)
+                dest.symlink_to(fragment.resolve())
             else:
                 shutil.copy2(fragment, dest)
 

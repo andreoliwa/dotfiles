@@ -1,2 +1,2 @@
 #!/bin/sh
-bash $ZSH/roles/macos/files/set-defaults.sh
+bash "$ZSH/roles/macos/files/set-defaults.sh"

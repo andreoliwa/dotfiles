@@ -30,7 +30,7 @@ def load_state() -> dict:
     """Load timer state from disk, returning defaults if missing or corrupt."""
     try:
         return json.loads(STATE_FILE.read_text())
-    except FileNotFoundError, json.JSONDecodeError:
+    except (FileNotFoundError, json.JSONDecodeError):
         return {"total_ms": 0}
 
 

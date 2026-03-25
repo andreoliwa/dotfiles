@@ -12,14 +12,3 @@ commands:
   status:
     - git status --short
     - git branch
-
-templates:
-  python-project:
-    commands:
-      ide: pycharm ${TREE_PATH}
-  go-project:
-    commands:
-      ide: goland ${TREE_PATH}
-  idea-project:
-    commands:
-      ide: idea ${TREE_PATH}

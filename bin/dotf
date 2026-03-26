@@ -55,7 +55,8 @@ def bootstrap() -> None:
 
 def apply_chezmoi(private_repo: Path | None) -> None:
     """Apply chezmoi from the public source, then private source if available."""
-    run(["chezmoi", "apply", "--verbose", "--source", str(DOTFILES / "chezmoi")])
+    common_args = ["chezmoi", "apply", "--verbose", "--source"]
+    run([*common_args, str(DOTFILES / "chezmoi")])
     # Resolve private repo: explicit arg > $DOTF_REPO env var
     if private_repo is None:
         env_val = os.environ.get(_ENV_DOTF_REPO)
@@ -64,7 +65,7 @@ def apply_chezmoi(private_repo: Path | None) -> None:
     if private_repo is not None:
         private_chezmoi = private_repo / "chezmoi"
         if private_chezmoi.is_dir():
-            run(["chezmoi", "apply", "--source", str(private_chezmoi)])
+            run([*common_args, str(private_chezmoi)])
 
 
 def apply_pyinfra(

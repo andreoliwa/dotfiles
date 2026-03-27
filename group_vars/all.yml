@@ -517,6 +517,8 @@ chrome_extensions:
     # keep-sorted start
     - https://chromewebstore.google.com/detail/bitly-short-links-and-qr/iabeihobmhlgpkcgjiloemdbofjbdcic
     - https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
+    # https://github.com/DIYgod/RSSHub-Radar
+    - https://chromewebstore.google.com/detail/rsshub-radar/kefjpfngnndepjbopdmoebkipbgkggaa?pli=1
     - https://chromewebstore.google.com/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde
     - https://chromewebstore.google.com/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj
     - https://chromewebstore.google.com/detail/web-scrobbler/hhinaapppaileiechjoiifaancjggfjm

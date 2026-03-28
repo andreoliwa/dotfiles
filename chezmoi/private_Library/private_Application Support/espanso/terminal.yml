@@ -1,0 +1,7 @@
+filter:
+  - exec: "iterm2|Terminal" # regex
+
+options:
+  # force the paste-based injection (works for raw-mode TUIs)
+  force_mode: clipboard
+  fast_inject: false

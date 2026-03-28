@@ -70,3 +70,10 @@ repos:
       - id: shellcheck
         # https://www.shellcheck.net/wiki/SC1071
         args: ["-e", "SC1071", "-x"]
+  - repo: local
+    hooks:
+      - id: sort-espanso-matches
+        name: Sort espanso match files
+        language: script
+        entry: .sort-espanso.sh
+        files: ^chezmoi/private_Library/private_Application Support/espanso/match/.*\.yml$

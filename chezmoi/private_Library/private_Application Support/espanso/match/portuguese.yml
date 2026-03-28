@@ -1,0 +1,447 @@
+# Imported from MacOS text replacements
+# https://espanso.org/docs/matches/basics/
+matches:
+  - replace: à
+    trigger: "`a"
+  - replace: à
+    trigger: aa
+    word: true
+  - replace: ão
+    trigger: aao
+  - replace: às
+    trigger: aas
+    word: true
+  - propagate_case: true
+    replace: abraços e beijos
+    trigger: abjs
+    word: true
+  - replace: Abraços!
+    trigger: abss
+    word: true
+  - propagate_case: true
+    replace: aí
+    trigger: aih
+    word: true
+  - propagate_case: true
+    replace: alemão
+    trigger: alemao
+    word: true
+  - replace: amanhã
+    trigger: amanha
+    word: true
+  - replace: apê
+    trigger: apeh
+    word: true
+  - replace: até
+    trigger: ateh
+    word: true
+  - propagate_case: true
+    replace: atenção
+    trigger: atencao
+    word: true
+  - propagate_case: true
+    replace: avançar
+    trigger: avancar
+    word: true
+  - replace: bom dia
+    trigger: bd
+    word: true
+  - propagate_case: true
+    replace: belê
+    trigger: beleh
+    word: true
+  - propagate_case: true
+    replace: beijos
+    trigger: bjs
+    word: true
+  - replace: beleza
+    trigger: blz
+    word: true
+  - replace: café
+    trigger: cafe
+    word: true
+  - propagate_case: true
+    replace: cá
+    trigger: cah
+    word: true
+  - propagate_case: true
+    replace: chamada de vídeo
+    trigger: cdv
+    word: true
+  - replace: começou
+    trigger: comecou
+    word: true
+  - replace: conheço
+    trigger: conheco
+    word: true
+  - propagate_case: true
+    replace: conteúdo
+    trigger: conteudo
+    word: true
+  - propagate_case: true
+    replace: dá
+    trigger: dah
+    word: true
+  - propagate_case: true
+    replace: daí
+    trigger: daih
+    word: true
+  - propagate_case: true
+    replace: dão
+    trigger: dao
+    word: true
+  - propagate_case: true
+    replace: dê
+    trigger: deh
+    word: true
+  - propagate_case: true
+    replace: dúvidas
+    trigger: duvidas
+    word: true
+  - propagate_case: true
+    replace: é
+    trigger: eh
+    word: true
+  - propagate_case: true
+    replace: enquanto
+    trigger: enqt
+    word: true
+  - propagate_case: true
+    replace: enquanto
+    trigger: enqto
+    word: true
+  - replace: então
+    trigger: entao
+    word: true
+  - replace: escritório
+    trigger: escritorio
+    word: true
+  - propagate_case: true
+    replace: esqueço
+    trigger: esqueco
+    word: true
+  - propagate_case: true
+    replace: está
+    trigger: estah
+    word: true
+  - propagate_case: true
+    replace: estão
+    trigger: estao
+    word: true
+  - propagate_case: true
+    replace: faça
+    trigger: facca
+    word: true
+  - propagate_case: true
+    replace: faço
+    trigger: faco
+    word: true
+  - propagate_case: true
+    replace: filha da puta
+    trigger: fadp
+    word: true
+  - propagate_case: true
+    replace: filhas da puta
+    trigger: fadps
+    word: true
+  - propagate_case: true
+    replace: família
+    trigger: familia
+    word: true
+  - propagate_case: true
+    replace: filho da puta
+    trigger: fdp
+    word: true
+  - propagate_case: true
+    replace: filhos da puta
+    trigger: fdps
+    word: true
+  - propagate_case: true
+    replace: fim de semana
+    trigger: fds
+    word: true
+  - replace: Florianópolis
+    trigger: fln
+    word: true
+  - propagate_case: true
+    replace: gravação
+    trigger: gravacao
+    word: true
+  - replace: há
+    trigger: haa
+    word: true
+  - replace: há
+    trigger: hah
+    word: true
+  - propagate_case: true
+    replace: hoje
+    trigger: hj
+    word: true
+  - propagate_case: true
+    replace: indicação
+    trigger: indicacao
+    word: true
+  - propagate_case: true
+    replace: já
+    trigger: jah
+    word: true
+  - propagate_case: true
+    replace: lá
+    trigger: lah
+    word: true
+  - replace: lê
+    trigger: leh
+    word: true
+  - replace: mãe
+    trigger: mae
+    word: true
+  - replace: mamãe
+    trigger: mamae
+    word: true
+  - propagate_case: true
+    replace: mão
+    trigger: mao
+    word: true
+  - propagate_case: true
+    replace: mês
+    trigger: mes
+    word: true
+  - replace: mensagem
+    trigger: msgm
+    word: true
+  - propagate_case: true
+    replace: não
+    trigger: nao
+    word: true
+  - replace: né
+    trigger: neh
+    word: true
+  - replace: ninguém
+    trigger: ninguem
+    word: true
+  - propagate_case: true
+    replace: notificação
+    trigger: notificacao
+    word: true
+  - propagate_case: true
+    replace: notificações
+    trigger: notificacoes
+    word: true
+  - propagate_case: true
+    replace: pá
+    trigger: pah
+    word: true
+  - replace: pé
+    trigger: peh
+    word: true
+  - replace: porque
+    trigger: pq
+    word: true
+  - replace: por quê
+    trigger: pqa
+    word: true
+  - propagate_case: true
+    replace: puta que o pariu
+    trigger: pqop
+    word: true
+  - propagate_case: true
+    replace: puta que pariu
+    trigger: pqp
+    word: true
+  - replace: por que
+    trigger: pqs
+    word: true
+  - replace: preço
+    trigger: preco
+    word: true
+  - propagate_case: true
+    replace: previsão
+    trigger: previsao
+    word: true
+  - propagate_case: true
+    replace: própria
+    trigger: propia
+    word: true
+  - propagate_case: true
+    replace: próprio
+    trigger: propio
+    word: true
+  - propagate_case: true
+    replace: própria
+    trigger: propria
+    word: true
+  - propagate_case: true
+    replace: próprio
+    trigger: proprio
+    word: true
+  - propagate_case: true
+    replace: quando
+    trigger: qd
+    word: true
+  - propagate_case: true
+    replace: quando
+    trigger: qdo
+    word: true
+  - propagate_case: true
+    replace: quê
+    trigger: qe
+    word: true
+  - propagate_case: true
+    replace: qualquer
+    trigger: qq
+    word: true
+  - propagate_case: true
+    replace: quanto
+    trigger: qt
+    word: true
+  - propagate_case: true
+    replace: quanta
+    trigger: qta
+    word: true
+  - propagate_case: true
+    replace: quantas
+    trigger: qtas
+    word: true
+  - replace: quantidade
+    trigger: qtd
+    word: true
+  - replace: quantidade
+    trigger: qtde
+    word: true
+  - propagate_case: true
+    replace: quanto
+    trigger: qto
+    word: true
+  - propagate_case: true
+    replace: quantos
+    trigger: qtos
+    word: true
+  - propagate_case: true
+    replace: quantos
+    trigger: qts
+    word: true
+  - replace: que
+    trigger: qu
+    word: true
+  - replace: reunião
+    trigger: reuniao
+    word: true
+  - propagate_case: true
+    replace: são
+    trigger: sao
+    word: true
+  - replace: senão
+    trigger: senao
+    word: true
+  - replace: será
+    trigger: serah
+    word: true
+  - replace: serão
+    trigger: serao
+    word: true
+  - propagate_case: true
+    replace: sofá
+    trigger: sofah
+    word: true
+  - replace: só
+    trigger: soh
+    word: true
+  - propagate_case: true
+    replace: superstição
+    trigger: supersticao
+    word: true
+  - propagate_case: true
+    replace: superstições
+    trigger: supersticoes
+    word: true
+  - propagate_case: true
+    replace: superstição
+    trigger: superticao
+    word: true
+  - propagate_case: true
+    replace: tá
+    trigger: taa
+    word: true
+  - propagate_case: true
+    replace: tá
+    trigger: tah
+    word: true
+  - propagate_case: true
+    replace: tão
+    trigger: tao
+    word: true
+  - propagate_case: true
+    replace: também
+    trigger: tb
+    word: true
+  - propagate_case: true
+    replace: tudo
+    trigger: td
+    word: true
+  - propagate_case: true
+    replace: têm
+    trigger: teem
+    word: true
+  - propagate_case: true
+    replace: terça
+    trigger: terca
+    word: true
+  - propagate_case: true
+    replace: tô
+    trigger: toh
+    word: true
+  - propagate_case: true
+    replace: tô
+    trigger: tou
+    word: true
+  - replace: talvez
+    trigger: tvz
+    word: true
+  - replace: ué
+    trigger: ueh
+    word: true
+  - replace: vá
+    trigger: vah
+    word: true
+  - replace: vão
+    trigger: vao
+    word: true
+  - replace: várias
+    trigger: varias
+    word: true
+  - replace: vários
+    trigger: varios
+    word: true
+  - propagate_case: true
+    replace: você
+    trigger: vc
+    word: true
+  - propagate_case: true
+    replace: vocês
+    trigger: vcs
+    word: true
+  - propagate_case: true
+    replace: vê
+    trigger: veh
+    word: true
+  - propagate_case: true
+    replace: você
+    trigger: voce
+    word: true
+  - propagate_case: true
+    replace: vai se foder
+    trigger: vsf
+    word: true
+  - propagate_case: true
+    replace: vai tomar no cu
+    trigger: vtnc
+    word: true
+  - propagate_case: true
+    replace: Zé
+    trigger: zeh
+    word: true
+  - replace: ã
+    trigger: ~a
+  - propagate_case: true
+    replace: õ
+    trigger: "~o"

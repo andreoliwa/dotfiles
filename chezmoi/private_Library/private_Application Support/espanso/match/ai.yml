@@ -1,0 +1,52 @@
+# https://espanso.org/docs/matches/basics/
+matches:
+  - label: "FIXME"
+    replace: Implement all FIXME comments in this branch.
+    trigger: :fix
+    word: true
+  - label: "FIXME + prek run"
+    replace: Implement all FIXME comments in this branch. Run 'prek run' and fix all linting errors.
+    trigger: :fix
+    word: true
+  - label: "FIXME + task list + prek run"
+    replace: |
+      Read all FIXME comments in this branch, prepare a task list to implement all of them.
+      Run 'prek run' and fix all linting errors. Inteeview me if you have questions.
+    trigger: :fix
+    word: true
+  - label: "Ask me questions"
+    replace: Ask me questions, interview me if you need more information.
+    trigger: amq
+    word: true
+  - replace: Claude Code
+    trigger: cco
+    word: true
+  - replace: ChatGPT
+    trigger: cgp
+    word: true
+  - propagate_case: true
+    replace: Show me your plan before implementation, so I can approve it.
+    trigger: smp
+    word: true
+  - label: "Summarize Slack thread"
+    replace: Summarize this Slack thread
+    trigger: sz
+    word: true
+  - label: "Summarize chat"
+    replace: Summarize this chat
+    trigger: sz
+    word: true
+  - label: "Summarize chat for Logseq as Mardkown"
+    replace: Summarize this chat and output it in Logseq Markdown inside a code block
+    trigger: sz
+    word: true
+  - label: "Summarize chat for Logseq as HTML"
+    propagate_case: true
+    replace: |
+      Summarize the chat so I can save to my notes.
+      Format for Logseq:
+      - no horizontal separators
+      - bullet points even for headers
+      - emojis and bold/italic on headers, but don't overuse
+    trigger: szl
+    word: true

@@ -1,0 +1,27 @@
+# Imported from MacOS text replacements
+# https://espanso.org/docs/matches/basics/
+matches:
+  - replace: für
+    trigger: fuer
+    word: true
+  - replace: Finanzamt
+    trigger: fza
+    word: true
+  - replace: Finanztip
+    trigger: fzt
+    word: true
+  - replace: Mit freundlichen Grüßen
+    trigger: mfg
+    word: true
+  - replace: Oktoberfest
+    trigger: okf
+    word: true
+  - replace: Prenzlauer Berg
+    trigger: pberg
+    word: true
+  - replace: Rosa-Luxemburg Platz
+    trigger: rlp
+    word: true
+  - replace: über
+    trigger: ueber
+    word: true

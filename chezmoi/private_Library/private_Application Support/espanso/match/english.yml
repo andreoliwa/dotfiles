@@ -1,0 +1,433 @@
+# https://espanso.org/docs/matches/basics/
+matches:
+  - replace: 1-on-1
+    trigger: 1o1
+    word: true
+  - replace: 7-Eleven
+    trigger: "711"
+    word: true
+  - propagate_case: true
+    replace: acceptance criteria
+    trigger: acr
+    word: true
+  - propagate_case: true
+    replace: as far as I know
+    trigger: afaik
+    word: true
+  - propagate_case: true
+    replace: as far as I remember
+    trigger: afair
+    word: true
+  - propagate_case: true
+    replace: as far as I understand
+    trigger: afaiu
+    word: true
+  - propagate_case: true
+    replace: away from keyboard
+    trigger: afk
+    word: true
+  - replace: acknowledge
+    trigger: ak
+    word: true
+  - replace: Approving to unblock.
+    trigger: apr
+    word: true
+  - propagate_case: true
+    replace: as soon as possible
+    trigger: asap
+    word: true
+  - propagate_case: true
+    replace: assigned
+    trigger: assinged
+    word: true
+  - propagate_case: true
+    replace: at the moment
+    trigger: atmo
+    word: true
+  - replace: backend
+    trigger: b-e
+    word: true
+  - propagate_case: true
+    replace: backend
+    trigger: bae
+    word: true
+  - replace: backend
+    trigger: bbe
+    word: true
+  - propagate_case: true
+    replace: barbecue
+    trigger: bbq
+    word: true
+  - propagate_case: true
+    replace: backend
+    trigger: bke
+    word: true
+  - propagate_case: true
+    replace: be right back
+    trigger: brb
+    word: true
+  - propagate_case: true
+    replace: by the way
+    trigger: btw
+    word: true
+  - replace: chargeback
+    trigger: cbk
+    word: true
+  - replace: Confluence
+    trigger: cf
+    word: true
+  - propagate_case: true
+    replace: codegen
+    trigger: cg
+    word: true
+  - propagate_case: true
+    replace: correct me if I'm wrong
+    trigger: cmiiw
+    word: true
+  - propagate_case: true
+    replace: code review
+    trigger: crw
+    word: true
+  - propagate_case: true
+    replace: code reviews
+    trigger: crws
+    word: true
+  - replace: Could you share the URL?
+    trigger: cys
+    word: true
+  - replace: Could you share the context?
+    trigger: cys
+    word: true
+  - replace: Could you share the conversation?
+    trigger: cys
+    word: true
+  - replace: Could you share the ticket?
+    trigger: cys
+    word: true
+  - replace: database
+    trigger: dab
+    word: true
+  - replace: databases
+    trigger: dabs
+    word: true
+  - replace: definitely
+    trigger: defo
+    word: true
+  - replace: will be done in a follow-up PR
+    trigger: dfup
+    word: true
+  - propagate_case: true
+    replace: data modeling
+    trigger: dml
+    word: true
+  - propagate_case: true
+    replace: don't
+    trigger: don'
+    word: true
+  - replace: Dramatiq
+    trigger: dq
+    word: true
+  - replace: daily stand-up
+    trigger: dsu
+    word: true
+  - replace: Datadog
+    trigger: dtd
+    word: true
+  - replace: "Details in the thread. \U0001F9F5"
+    trigger: dth
+    word: true
+  - replace: DevOps
+    trigger: dvo
+    word: true
+  - replace: developer experience
+    trigger: dx
+    word: true
+  - replace: end-to-end
+    trigger: e2e
+    word: true
+  - propagate_case: true
+    replace: engineering manager
+    trigger: emg
+    word: true
+  - propagate_case: true
+    replace: engineering managers
+    trigger: emgs
+    word: true
+  - replace: frontend
+    trigger: f-e
+    word: true
+  - propagate_case: true
+    replace: for Christ's sake
+    trigger: fcs
+    word: true
+  - replace: frontend
+    trigger: ffe
+    word: true
+  - propagate_case: true
+    replace: feature flag
+    trigger: ffg
+    word: true
+  - propagate_case: true
+    replace: feature flags
+    trigger: ffgs
+    word: true
+  - propagate_case: true
+    replace: for fuck's sake
+    trigger: ffs
+    word: true
+  - replace: in a follow-up PR
+    trigger: fup
+    word: true
+  - replace: for what it's worth
+    trigger: fwiw
+    word: true
+  - replace: golangci-lint
+    trigger: gcl
+    word: true
+  - propagate_case: true
+    replace: girlfriend
+    trigger: gf
+    word: true
+  - replace: GitHub Actions
+    trigger: gha
+    word: true
+  - replace: GitHub
+    trigger: gih
+    word: true
+  - replace: I don't know
+    trigger: idk
+    word: true
+  - replace: I didn't understand
+    trigger: idu
+    word: true
+  - replace: if I recall correctly
+    trigger: iirc
+    word: true
+  - replace: if I understand correctly
+    trigger: iiuc
+    word: true
+  - propagate_case: true
+    replace: in my humble opinion
+    trigger: imho
+    word: true
+  - propagate_case: true
+    replace: in my opinion
+    trigger: imo
+    word: true
+  - propagate_case: true
+    replace: Kubernetes
+    trigger: k8s
+    word: true
+  - replace: Kind regards
+    trigger: krg
+    word: true
+  - propagate_case: true
+    replace: looks good to me
+    trigger: lgtm
+    word: true
+  - propagate_case: true
+    replace: let me know
+    trigger: lmk
+    word: true
+  - replace: Logseq
+    trigger: lq
+    word: true
+  - replace: Markdown
+    trigger: mkd
+    word: true
+  - propagate_case: true
+    replace: merge request
+    trigger: mrq
+    word: true
+  - replace: merge requests
+    trigger: mrqs
+    word: true
+  - replace: message
+    trigger: msg
+    word: true
+  - replace: mainstream media
+    trigger: msm
+    word: true
+  - propagate_case: true
+    replace: microservice
+    trigger: msv
+    word: true
+  - propagate_case: true
+    replace: microservices
+    trigger: msvs
+    word: true
+  - propagate_case: true
+    replace: materialize
+    trigger: mtz
+    word: true
+  - propagate_case: true
+    replace: meet-up
+    trigger: mup
+    word: true
+  - propagate_case: true
+    replace: meet-ups
+    trigger: mups
+    word: true
+  - propagate_case: true
+    replace: need to drop
+    trigger: ntd
+    word: true
+  - propagate_case: true
+    replace: of course
+    trigger: ofc
+    word: true
+  - replace: oh, I see
+    trigger: oic
+    word: true
+  - propagate_case: true
+    replace: on my way
+    trigger: omw
+    word: true
+  - replace: on the other hand
+    trigger: otoh
+    word: true
+  - replace: P2P
+    trigger: p2
+    word: true
+  - replace: Protobuf
+    trigger: pb
+    word: true
+  - replace: Protobufs
+    trigger: pbs
+    word: true
+  - propagate_case: true
+    replace: product lead
+    trigger: pdl
+    word: true
+  - propagate_case: true
+    replace: product leads
+    trigger: pdls
+    word: true
+  - replace: PDRN
+    trigger: pdrn
+  - replace: peer-to-peer
+    trigger: pe2
+    word: true
+  - propagate_case: true
+    replace: please
+    trigger: pls
+    word: true
+  - replace: "Parking lot \U0001F9F5"
+    trigger: plt
+    word: true
+  - replace: proof-of-concept
+    trigger: poc
+    word: true
+  - replace: pull request
+    trigger: prq
+    word: true
+  - replace: pull requests
+    trigger: prqs
+    word: true
+  - propagate_case: true
+    replace: pull requests
+    trigger: prs
+    word: true
+  - propagate_case: true
+    replace: please take a look
+    trigger: ptal
+    word: true
+  - replace: Brazilian Portuguese
+    trigger: ptbr
+    word: true
+  - propagate_case: true
+    replace: restaurant
+    trigger: rnt
+    word: true
+  - propagate_case: true
+    replace: RaspberryPi
+    trigger: rpi
+    word: true
+  - replace: support associate
+    trigger: saa
+    word: true
+  - replace: "¯_(ツ)_/¯"
+    trigger: shrug
+    word: true
+  - replace: Skynet
+    trigger: skn
+    word: true
+  - propagate_case: true
+    replace: source of truth
+    trigger: sot
+    word: true
+  - replace: SRE
+    trigger: sre
+    word: true
+  - replace: stand-up
+    trigger: stu
+    word: true
+  - propagate_case: true
+    replace: to be defined
+    trigger: tbd
+    word: true
+  - propagate_case: true
+    replace: to be honest
+    trigger: tbh
+    word: true
+  - propagate_case: true
+    replace: troubleshooting
+    trigger: tbs
+    word: true
+  - propagate_case: true
+    replace: for traceability
+    trigger: tiz
+    word: true
+  - replace: "TL;DR: "
+    trigger: tldr
+    word: true
+  - replace: team lead
+    trigger: tml
+    word: true
+  - propagate_case: true
+    replace: team leads
+    trigger: tmls
+    word: true
+  - propagate_case: true
+    replace: talk to you later
+    trigger: ttyl
+    word: true
+  - propagate_case: true
+    replace: talk to you tomorrow
+    trigger: ttyt
+    word: true
+  - replace: TeamViewer
+    trigger: tvw
+    word: true
+  - replace: that's what she said
+    trigger: twss
+    word: true
+  - propagate_case: true
+    replace: for visibility
+    trigger: viz
+    word: true
+  - replace: WhatsApp
+    trigger: wap
+    word: true
+  - propagate_case: true
+    replace: what do you mean?
+    trigger: wdym
+    word: true
+  - propagate_case: true
+    replace: what do you think?
+    trigger: wdyt
+    word: true
+  - propagate_case: true
+    replace: what the fuck
+    trigger: wtf
+    word: true
+  - replace: Christmas
+    trigger: xmas
+    word: true
+  - propagate_case: true
+    replace: yes, go ahead
+    trigger: yga
+    word: true
+  - replace: YouTube Music
+    trigger: ytm
+    word: true

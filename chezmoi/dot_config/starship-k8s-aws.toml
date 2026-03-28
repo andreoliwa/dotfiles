@@ -1,0 +1,13 @@
+# https://starship.rs/config/#kubernetes
+[kubernetes]
+disabled = false
+
+# https://starship.rs/config/#time
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%H:%M"
+
+# https://starship.rs/config/#aws
+[aws]
+disabled = false

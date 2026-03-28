@@ -1,167 +1,117 @@
-# dotfiles
+# Dotfiles (powered by pyinfra + chezmoi)
 
-[sloria's dotfiles](https://github.com/sloria/dotfiles-old), rewritten as Ansible roles. Sets up a full local
-development environment with a **single command.**
+Personal macOS development environment.
 
-Fully supports macOS. Red Hat and Debian support is good but not as complete.
+**Currently migrating from Ansible to [pyinfra](https://pyinfra.com) + [chezmoi](https://chezmoi.io).**
 
-## a few neat features
+## Quick install (new machine)
+
+Requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Then:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/andreoliwa/dotfiles/master/install.sh | sh
+```
+
+Installs `dotf` and `pyinfra` globally. No need to clone the repo first.
+
+## dotf CLI
+
+`dotf` is the provisioning wrapper. It lives in `src/dotf/` and is installed via the `install.sh` script above.
+
+```bash
+dotf --help
+```
+
+Internally calls pyinfra and chezmoi. Source is pulled directly from this repo's `master` branch — not published to
+PyPI.
+
+## Decisions
+
+- **pyinfra over Ansible**: gradual migration, Ansible roles remain in place until fully replaced.
+- **chezmoi for dotfiles**: manages `~/` files; source directory is `~/dotfiles/chezmoi/`.
+- **uv as installer**: `uv tool install` gives pyinfra and dotf a shared isolated venv with both CLIs on PATH.
+- **Git-only distribution**: `dotf` is installed from `git+https://github.com/andreoliwa/dotfiles.git`, not PyPI.
+- **Two-repo setup**: `~/dotfiles/` (public) + private repo for machine-specific config. The public repo has zero
+  references to private machines or paths.
+
+---
+
+## Legacy Ansible setup
+
+> The sections below describe the original Ansible-based setup. They remain accurate but are progressively being
+> replaced by the pyinfra + chezmoi workflow above.
+
+### A few neat features
 
 - [xonsh](https://xon.sh) (Python-powered shell)
 - zsh configured with [prezto](https://github.com/sorin-ionescu/prezto).
 - nice fonts for the terminal and coding.
 - iterm2 profile (w/ hotkey, themes, etc.)
-- python2, python3, pyenv (for managing Python versions), and pyenv-virtualenv (for managing virtualenvs)
-- alternative Python configuration with pyenv, pip, virtualenv
 - a tmux.conf that's pretty neat.
 - [tmuxp](https://tmuxp.git-pull.com/en/latest/) for tmux session management
-- vim with [vim-plug](https://github.com/junegunn/vim-plug) for plugin management. All configuration in a single
-  file [.vimrc](https://github.com/sloria/dotfiles/blob/master/roles/vim/files/vimrc).
-- pluggable. Everything is optional. Fork this. Remove what you don't use. Configure what you do use.
 - Mac packages installed with [homebrew][]. Mac apps installed with [homebrew-cask][].
 - Useful git aliases
 - Optional git commit signing with GPG
-- Preview the setup on Linux machines using Vagrant's virtual machines
 
-## prerequisites (install these first)
+### Prerequisites
 
 - [macOS: upgrade to the latest version possible](https://support.apple.com/macos)
 - HomeBrew: [macOS requirements](https://docs.brew.sh/Installation#macos-requirements) first (e.g.:
   `xcode-select --install`)
 - [Install HomeBrew](https://brew.sh/)
-- ansible >= 2.4:
-  - macOS: `brew install ansible`;
-  -
-  Linux: [get the latest PPA](http://docs.ansible.com/ansible/latest/intro_installation.html#installing-the-control-machine).
-- Other tools to start working on this repo: `brew install fzf`
+- ansible >= 2.4: `brew install ansible`
 - If you're installing a new computer, copy or create these files/directories:
   - GPG config: `~/.gnupg/`
   - Ansible Vault password: `~/.config/dotfiles/vault_password.txt`
 
-## install
+### Install
 
-- [Fork](https://github.com/sloria/dotfiles/fork) this repo.
-- Clone your fork.
-  ```bash
-  # Replace git url with your fork
-  # NOTE: It is important that you clone to ~/dotfiles
-  git clone https://github.com/YOU/dotfiles.git ~/dotfiles
-  cd ~/dotfiles
-  ```
-- Update the following variables in `group_vars/local` (at a minimum)
-  - `git_personal.user_name`: Your name, which will be attached to commit messages, e.g. "Steven Loria"
-  - `github_username`: Your Github username.
-  - `git_personal.user_email`: Your git email address.
-- Optional, but recommended: Update `group_vars/local` with the programs you want installed
-  by [homebrew][], [homebrew-cask][], and npm.
-  - `mac_homebrew_packages`: Utilities that don't get installed by the roles.
-  - `mac_cask_packages`: Mac Apps you want installed with [homebrew-cask][].
-- Edit `playbook_local.yml` as you see fit. Remove any roles you don't use. Edit roles that you do use.
-- Run the installation script.
-  Comment out private roles (they will fail on first execution).
+- Clone the repo to `~/dotfiles`.
+- Update variables in `group_vars/local` (git identity, github username, email).
+- Run:
   ```bash
   ~/dotfiles/bin/dotfiles-setup --galaxy --bootstrap
   ```
 
-## updating your local environment
-
-Once you have the dotfiles installed you can run the following command to rerun the ansible playbook:
+### Updating
 
 ```bash
 dotfiles-setup
+# or with specific roles:
+dotfiles-setup git python macos
 ```
 
-You can optionally pass role names
+### Architecture
+
+- `roles/` — Custom Ansible roles (each role = one tool/concern)
+- `roles_galaxy/` — Third-party roles from Ansible Galaxy
+- `group_vars/all.yml` — Central config: package lists, tool versions
+- `group_vars/local` — Machine-specific overrides
+- `playbook_local.yml` — Main playbook; roles are tagged for selective execution
+- `chezmoi/` — Chezmoi-managed dotfiles (`dot_` prefix convention)
+- `bin/` — Scripts on `$PATH`
+
+Package lists in `group_vars/all.yml` use a `common` / `personal_laptop` / `company_laptop` / `remove` structure,
+maintained in alphabetical order within `# keep-sorted` markers.
+
+### Notes
+
+**iterm2**: go to preferences → enable "Load preferences from custom folder" → select `misc/iterm2/`.
+
+**macOS keyboard**: manually set key repeat to max and map Caps Lock to Ctrl.
+
+### Troubleshooting
+
+If you get an error about Xcode command-line tools:
 
 ```bash
-dotfiles-setup git python
-```
-
-## updating your dotfiles repo
-
-To keep your fork up to date with the `sloria` fork:
-
-```
-git remote add sloria https://github.com/sloria/dotfiles.git
-git pull sloria master
-```
-
-## command
-
-There is a script `dotfiles-setup` in the `bin` directory for setting up and updating development environments:
-
-- bootstrap/updates the local environment
-- install Galaxy roles
-- run Ansible on Vagrant VMs
-
-Type `dotfiles-setup -h` to see all possibilities.
-
-## special files
-
-All configuration is done in `~/dotfiles`. Each role may contain (in addition to the typical ansible directories and
-files) a number of special files
-
-- **role/\*.zsh**: Any files ending in `.zsh` get loaded into your environment.
-- for xonsh: **role/\*.xsh**: Any files ending in `.xsh` get loaded into your environment.
-- **bin/**: Anything in `bin/` will get added to your `$PATH` and be made available everywhere.
-
-## notes
-
-**iterm2**
-
-To import the iterm2 profile, go to your iterm2 preferences, and enable "Load preferences from custom folder" and select
-the iterm2 folder in the `misc/` directory.
-
-![iterm2 profile](https://user-images.githubusercontent.com/2379650/34223487-859f2752-e58d-11e7-8024-9e6af5c1ec4e.png)
-
-**macOS keyboard settings**
-
-There are a few keyboard customizations that must be done manually:
-
-- Turning repeat speed up to 11.
-
-![Keyboard settings](https://user-images.githubusercontent.com/2379650/34223505-91f95072-e58d-11e7-9b36-78aec4203b0d.png "Key repeat settings")
-
-- Mapping Caps Lock to Ctrl.
-
-![Modifier keys](https://user-images.githubusercontent.com/2379650/34223523-a2c8e4e4-e58d-11e7-9532-d74b95d8408a.png)
-
-## what if I only want your vim?
-
-First make sure you have a sane vim compiled. On macOS, the following will do:
-
-```
-brew install macvim --HEAD --with-override-system-vim
-```
-
-The following commands will install vim-plug and download my `.vimrc`.
-
-After backing up your `~/.vim` directory and `~/.vimrc`:
-
-```
-mkdir -p ~/.vim/autoload
-curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-curl -fLo ~/.vimrc https://raw.githubusercontent.com/sloria/dotfiles/master/roles/vim/files/vimrc
-```
-
-You will now be able to open vim and run `:PlugInstall` to install all plugins.
-
-## troubleshooting
-
-If you get an error about Xcode command-line tools, you may need to run
-
-```
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 ```
-
-## todo
-
-- Full Debian and Red Hat support
 
 [homebrew]: http://brew.sh/
 
 [homebrew-cask]: https://github.com/caskroom/homebrew-cask
 
-## license
+## License
 
 [MIT Licensed](http://sloria.mit-license.org/).

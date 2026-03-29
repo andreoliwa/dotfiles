@@ -1,3 +1,12 @@
+#!/bin/sh
+# Managed by chezmoi (dotfiles public overlay).
+# Writes base gitconfig content, then re-appends any [include]/[includeIf]
+# blocks already present in the file so  overlay additions are preserved.
+
+# Capture existing include blocks from stdin before emitting anything
+includes=$(cat | grep -A1 '^\[include\]\|^\[includeIf ')
+
+cat <<'GITCONFIG'
 [alias]
 a = add
 st = status
@@ -109,3 +118,9 @@ defaultBranch = master
 # Use SSH instead of HTTPS for private repos: https://go.dev/doc/faq#git_https
 [url "ssh://git@github.com/"]
 insteadOf = https://github.com/
+GITCONFIG
+
+# Re-append include blocks preserved from the existing file
+if [ -n "$includes" ]; then
+    printf '%s\n' "$includes"
+fi

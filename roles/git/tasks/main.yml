@@ -4,8 +4,3 @@
   when: ansible_os_family in ("Debian", "OSMC")
 - import_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
-
-- import_tasks: gitconfig.yml
-  when:
-    - ansible_distribution not in ("Amazon", "OSMC")
-    - ansible_system_vendor is not defined or ansible_system_vendor not in ("DigitalOcean", "Hetzner")

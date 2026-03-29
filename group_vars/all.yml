@@ -13,19 +13,6 @@ project_root: "~/dev"
 
 backup_dir: "~/OneDrive/Backup/{{ ansible_hostname }}"
 
-github_username: andreoliwa
-
-git_personal:
-  # Name used in commit messages
-  user_name: W. Augusto Andreoli
-  # If you use GitHub, this should be the same as the email used on Github
-  user_email: andreoliwa@sent.com
-  # GPG Key ID used to sign git commits
-  # See https://github.com/pstadler/keybase-gpg-github setup instructions
-  # To see all keys:
-  # gpg --list-secret-keys --keyid-format LONG
-  user_signingkey: B9CAD8F36F84DBFC
-
 # Vim
 
 # Whether to install plugins automatically. If not, just run

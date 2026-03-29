@@ -14,6 +14,10 @@ matches:
       Run 'prek run' and fix all linting errors. Inteeview me if you have questions.
     trigger: :fix
     word: true
+  - label: "prek run"
+    replace: Run 'prek run' and fix all linting errors.
+    trigger: :fix
+    word: true
   - label: "Ask me questions"
     replace: Ask me questions, interview me if you need more information.
     trigger: amq

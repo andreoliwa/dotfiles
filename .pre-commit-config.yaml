@@ -2,7 +2,7 @@ default_language_version:
   python: python3.13
 
 ci:
-  skip: [bashate, shellcheck]
+  skip: [bashate, shellcheck, sort-espanso-matches]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0

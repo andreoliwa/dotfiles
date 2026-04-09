@@ -170,14 +170,6 @@ export default {
         host: url.host.replace("doordash-int.com", "doordash.team"),
       }),
     },
-    {
-      // Rewrite DoorDash Slack workspace URLs to wolt.slack.com
-      match: ({url}) => /^doordash.*\.slack\.com$/.test(url.host),
-      url: ({url}) => ({
-        ...url,
-        host: "wolt.slack.com",
-      }),
-    },
   ],
   handlers: [
     {

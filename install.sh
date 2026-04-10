@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# install.sh — install dotf and pyinfra via uv
+# install.sh - install dotf and pyinfra via uv
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/andreoliwa/dotfiles/master/install.sh | sh
@@ -10,10 +10,10 @@ set -e
 
 echo "==> Installing dotf (and pyinfra) via uv..."
 if [ -t 0 ]; then
-    # Running locally (stdin is a terminal) — install from the current directory
-    uv tool install . --with-executables-from pyinfra
+    # Running locally (stdin is a terminal) - install from the current directory
+    uv tool install --editable . --with-executables-from pyinfra
 else
-    # Running via curl | sh — install from GitHub
+    # Running via curl | sh - install from GitHub
     uv tool install "dotf @ git+https://github.com/andreoliwa/dotfiles.git" --with-executables-from pyinfra
 fi
 

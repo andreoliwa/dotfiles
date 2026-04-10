@@ -4,7 +4,7 @@
 
 export VISUAL='code --wait'
 
-# Homebrew must be first — other tools (pyenv) depend on it being in PATH
+# Homebrew must be first - other tools (pyenv) depend on it being in PATH
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # macOS file descriptor limit

@@ -1,0 +1,26 @@
+[tools]
+python = ["3.14", "3.13", "3.12", "3.11", "3.10", "3.9"]  # all for tox
+node = "lts"
+pnpm = "latest"
+ruby = "latest"
+java = "openjdk-17"
+golangci-lint = "2.5.0"
+
+[env]
+# Avoid locale errors in some Python modules
+LC_ALL = "en_US.UTF-8"
+LANG = "en_US.UTF-8"
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONBREAKPOINT
+PYTHONBREAKPOINT = "pudb.set_trace"
+# Echo all commands in all tasks by default (like 'make' does)
+# http://docs.pyinvoke.org/en/stable/concepts/configuration.html#basic-rules
+INVOKE_RUN_ECHO = "1"
+# Use a pseudoterminal by default (display colored output)
+# http://docs.pyinvoke.org/en/stable/api/runners.html#invoke.runners.Runner.run
+INVOKE_RUN_PTY = "1"
+# Avoid pipx warning about spaces in home path on macOS
+PIPX_HOME = "{{env.HOME}}/.local/pipx"
+# Avoid fork() crash when macOS Objective-C runtime is used in subprocesses (e.g. flake8)
+# https://stackoverflow.com/a/52230415
+OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
+RIPGREP_CONFIG_PATH = "{{env.HOME}}/.ripgreprc"

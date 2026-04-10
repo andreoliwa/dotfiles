@@ -32,25 +32,29 @@ matches:
     replace: Show me your plan before implementation, so I can approve it.
     trigger: smp
     word: true
-  - label: "Summarize chat for Logseq as HTML"
+  - label: "Summarize Slack thread"
+    replace: Summarize this Slack thread
+    trigger: sz
+    word: true
+  - label: "Summarize conversation"
+    replace: Summarize this conversation
+    trigger: sz
+    word: true
+  - label: "Summarize conversation for Logseq as Mardkown"
+    replace: Summarize this conversation and output it in Logseq Markdown inside a code block
+    trigger: sz
+    word: true
+  - label: "Summarize conversation for Logseq as HTML"
     propagate_case: true
     replace: |
-      Summarize the chat so I can save to my notes.
+      Summarize this conversation so I can save to my notes.
       Format for Logseq:
       - no horizontal separators
       - bullet points even for headers
       - emojis and bold/italic on headers, but don't overuse
     trigger: sz
     word: true
-  - label: "Summarize Slack thread"
-    replace: Summarize this Slack thread
-    trigger: sz
-    word: true
-  - label: "Summarize chat"
-    replace: Summarize this chat
-    trigger: sz
-    word: true
-  - label: "Summarize chat for Logseq as Mardkown"
-    replace: Summarize this chat and output it in Logseq Markdown inside a code block
+  - label: "Summarize conversation as Markdown in ~/Downloads"
+    replace: Summarize this current conversation as a new Markdown file in ~/Downloads/.
     trigger: sz
     word: true

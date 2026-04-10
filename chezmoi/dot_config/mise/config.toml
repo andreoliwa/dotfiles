@@ -5,6 +5,15 @@ pnpm = "latest"
 ruby = "latest"
 java = "openjdk-17"
 golangci-lint = "2.5.0"
+# Using pipx backend (not vfox) because the vfox Poetry plugin is broken:
+# it fails with a Lua runtime error during PostInstall.
+# Bug: https://github.com/mise-plugins/vfox-poetry
+# pipx backend installs Poetry in an isolated virtualenv (prevents dependency conflicts).
+# Per-repo version pinning: add a mise.toml in the repo root with:
+#   [tools]
+#   "pipx:poetry" = "1.8.5"   # or whatever version that repo needs
+# The global "latest" here is the fallback when no repo-level config exists.
+"pipx:poetry" = "latest"
 
 [env]
 # Avoid locale errors in some Python modules

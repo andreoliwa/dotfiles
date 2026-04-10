@@ -18,7 +18,7 @@ matches:
     replace: Run 'prek run' and fix all linting errors.
     trigger: :fix
     word: true
-  - label: "Ask me questions"
+  - label: "Ask me questions, interview me"
     replace: Ask me questions, interview me if you need more information.
     trigger: amq
     word: true
@@ -32,6 +32,16 @@ matches:
     replace: Show me your plan before implementation, so I can approve it.
     trigger: smp
     word: true
+  - label: "Summarize chat for Logseq as HTML"
+    propagate_case: true
+    replace: |
+      Summarize the chat so I can save to my notes.
+      Format for Logseq:
+      - no horizontal separators
+      - bullet points even for headers
+      - emojis and bold/italic on headers, but don't overuse
+    trigger: sz
+    word: true
   - label: "Summarize Slack thread"
     replace: Summarize this Slack thread
     trigger: sz
@@ -43,14 +53,4 @@ matches:
   - label: "Summarize chat for Logseq as Mardkown"
     replace: Summarize this chat and output it in Logseq Markdown inside a code block
     trigger: sz
-    word: true
-  - label: "Summarize chat for Logseq as HTML"
-    propagate_case: true
-    replace: |
-      Summarize the chat so I can save to my notes.
-      Format for Logseq:
-      - no horizontal separators
-      - bullet points even for headers
-      - emojis and bold/italic on headers, but don't overuse
-    trigger: szl
     word: true

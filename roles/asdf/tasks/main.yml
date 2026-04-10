@@ -1,6 +1,0 @@
-# https://asdf-vm.com/#/core-manage-asdf?id=dependencies
-- name: "Asdf: Install with Homebrew"
-  homebrew:
-    name: ["coreutils", "curl", "git", "asdf"]
-    state: present
-  when: ansible_os_family == "Darwin"

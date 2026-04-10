@@ -13,7 +13,6 @@
     - { role: java, tags: ["java"] }
 
     # Tools
-    - { role: direnv, tags: ["direnv"] }
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }
     - { role: browser, tags: ["browser"] }
     - { role: fzf, tags: ["fzf"] }

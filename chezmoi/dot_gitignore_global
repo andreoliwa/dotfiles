@@ -17,13 +17,10 @@ Icon
 # SublimeText project files
 *.sublime-workspace
 
-## autoenv ##
+# mise and env files
+mise.local.toml
 .env
-.autoenv
-.autoenv.zsh
 .ropeproject
-.autoxsh
-.envrc
 .env*local
 
 ### Python ###
@@ -48,9 +45,6 @@ docs/_build
 # http://docs.pyinvoke.org/en/latest/concepts/configuration.html
 conjuring_*.py
 conjuring*.toml
-
-# asdf
-.tool-versions
 
 # PyCharm
 #  JetBrains specific template is maintainted in a separate JetBrains.gitignore that can

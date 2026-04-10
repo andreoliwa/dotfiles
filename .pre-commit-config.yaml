@@ -24,6 +24,12 @@ repos:
       - id: ruff-format
       - id: ruff-check
         args: [--fix]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        stages: [pre-commit]
+        exclude: vault
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.10.0
     hooks:

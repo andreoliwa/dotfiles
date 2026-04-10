@@ -109,7 +109,6 @@ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 ```
 
 [homebrew]: http://brew.sh/
-
 [homebrew-cask]: https://github.com/caskroom/homebrew-cask
 
 ## License

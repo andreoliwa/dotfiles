@@ -9,7 +9,6 @@
     src: "{{ role_path }}/files/vault_id_rsa.pub"
     dest: "~/.ssh/id_rsa.pub"
     mode: "0600"
-
 # TODO: needs password on the first run, so this step is useless
 # # https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent
 # - name: "Add identity"

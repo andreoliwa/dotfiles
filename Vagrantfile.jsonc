@@ -3,19 +3,19 @@
         {
             "url": "https://app.vagrantup.com/ubuntu/boxes/bionic64",
             "name": "ubuntu1804",
-            "box": "ubuntu/bionic64"
+            "box": "ubuntu/bionic64",
         },
         {
             "url": "https://app.vagrantup.com/fedora/boxes/28-cloud-base",
             "name": "fedora28",
             "box": "fedora/28-cloud-base",
-            "box_version": "20180425"
+            "box_version": "20180425",
         },
         {
             "url": "https://app.vagrantup.com/centos/boxes/7",
             "name": "centos7",
-            "box": "centos/7"
-        }
+            "box": "centos/7",
+        },
         // Both Manjaro boxes are not working with Vagrant:
         // {
         //   "url": "https://app.vagrantup.com/mloskot/boxes/manjaro-i3-17.0-minimal",
@@ -29,5 +29,5 @@
         //   "box": "marashni/manjaro64",
         //   "box_version": "0.0.1"
         // }
-    ]
+    ],
 }

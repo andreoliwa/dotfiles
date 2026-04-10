@@ -109,11 +109,7 @@ var workURLs = [
 
 if (!isWeekend) {
   // Local URLs, GitHub
-  workURLs.push(
-    /localhost/,
-    /127.0.0.1/,
-    /0.0.0.0/,
-  );
+  workURLs.push(/localhost/, /127.0.0.1/, /0.0.0.0/);
 }
 
 // https://github.com/johnste/finicky
@@ -121,7 +117,7 @@ export default {
   // Using the unstable browser for personal purposes, and the stable one for work
   defaultBrowser: {
     name: "Google Chrome",
-    profile: "Profile 2" // Personal
+    profile: "Profile 2", // Personal
   },
   rewrite: [
     // {
@@ -142,8 +138,8 @@ export default {
     // },
     {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#remove-all-marketingtracking-information-from-urls
-      match: ({url}) => url.search.includes("utm_"),
-      url: ({url}) => {
+      match: ({ url }) => url.search.includes("utm_"),
+      url: ({ url }) => {
         const search = url.search
           .split("&")
           .filter((part) => !part.startsWith("utm_"));
@@ -156,16 +152,18 @@ export default {
     // Remove "/files" when people insist on sharing links to the "Files" tab. Except when there is an anchor after it.
     // I want to read the description first, but I'm probably one of the few who cares about it.
     {
-      match: ({url}) =>
-        url.host === "github.com" && url.pathname.endsWith("/files") && !url.hash,
-      url: ({url}) => ({
+      match: ({ url }) =>
+        url.host === "github.com" &&
+        url.pathname.endsWith("/files") &&
+        !url.hash,
+      url: ({ url }) => ({
         ...url,
         pathname: url.pathname.replace(/\/files$/, ""),
       }),
     },
     {
-      match: ({url}) => url.host.includes("doordash-int.com"),
-      url: ({url}) => ({
+      match: ({ url }) => url.host.includes("doordash-int.com"),
+      url: ({ url }) => ({
         ...url,
         host: url.host.replace("doordash-int.com", "doordash.team"),
       }),
@@ -174,17 +172,17 @@ export default {
   handlers: [
     {
       // Add this query string parameter to a work URL to open it in the personal browser
-      match: ({url}) => url.search.includes(["personal"]),
+      match: ({ url }) => url.search.includes(["personal"]),
       browser: {
         name: "Google Chrome",
-        profile: "Profile 2" // Personal
+        profile: "Profile 2", // Personal
       },
     },
     {
       match: workURLs,
       browser: {
         name: "Google Chrome",
-        profile: "Profile 1" // Work
+        profile: "Profile 1", // Work
       },
     },
     {
@@ -198,15 +196,15 @@ export default {
       ]),
       browser: {
         name: "Google Chrome",
-        profile: "Profile 1" // Work
+        profile: "Profile 1", // Work
       },
     },
     // Work parameters on the query string
     {
-      match: ({url}) => url.search.includes(["wolt", "sennder", "eatfirst"]),
+      match: ({ url }) => url.search.includes(["wolt", "sennder", "eatfirst"]),
       browser: {
         name: "Google Chrome",
-        profile: "Profile 1" // Work
+        profile: "Profile 1", // Work
       },
     },
     // Work apps
@@ -214,10 +212,10 @@ export default {
       // https://github.com/johnste/finicky/wiki/Configuration-ideas#matching-an-array-of-multiple-apps
       // https://github.com/johnste/finicky#advanced-usage
       // https://github.com/johnste/finicky/wiki/Configuration#parameters
-      match: ({opener}) => opener.bundleId === "com.tinyspeck.slackmacgap",
+      match: ({ opener }) => opener.bundleId === "com.tinyspeck.slackmacgap",
       browser: {
         name: "Google Chrome",
-        profile: "Profile 1" // Work
+        profile: "Profile 1", // Work
       },
     },
     {

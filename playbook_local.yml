@@ -10,7 +10,6 @@
     - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
 
     - { role: poetry, tags: ["poetry"] }
-    - { role: java, tags: ["java"] }
 
     # Tools
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }
@@ -22,7 +21,6 @@
 
     # Depend on pipx:
     - { role: invoke, tags: ["invoke"] }
-    - { role: pre-commit, tags: ["asdf", "pre-commit"] }
     - { role: gita, tags: ["gita", "git"] }
     - { role: mkdocs, tags: ["mkdocs", "docs"] }
 
@@ -35,7 +33,6 @@
     - { role: go, tags: ["go"] }
     - { role: rust, tags: ["rust"] }
     - { role: node, tags: ["node"] }
-    - { role: ruby, tags: ["ruby"] }
     - { role: kubernetes, tags: ["kubernetes", "k8s"] }
 
     # Personal and last

@@ -5,9 +5,6 @@ dotfiles_user_home: "{{ '~' | expanduser }}"
 # Where your dotfiles live. Probably don't need to change this.
 dotfiles_home: "{{dotfiles_user_home}}/dotfiles"
 
-# Python tasks need the PYENV_ROOT environment variable set with this value
-pyenv_root: "~/.pyenv"
-
 # Root directory for projects
 project_root: "~/dev"
 
@@ -320,65 +317,6 @@ ruby_global_gems:
     - jekyll # https://jekyllrb.com/ # Used by https://github.com/andreoliwa/online-cv
     - lunchy
     - travis
-    # keep-sorted end
-
-# markosamuli.pyenv role configuration
-# Don't install any Python versions automatically - we handle this in python_pyenv role
-pyenv_python_versions: [ ]
-
-# Don't set global versions automatically - we handle this in python_pyenv role
-pyenv_global: ""
-
-# Disable shell initialization since we manage it ourselves
-pyenv_init_shell: false
-
-# Install Python 3 modules globally with pipx
-python3_pipx_modules:
-  common:
-    # keep-sorted start
-    - gitup # https://github.com/earwig/git-repo-updater.git
-    - litecli[sqlean] # https://github.com/dbcli/litecli
-    - organize-tool # https://github.com/tfeldmann/organize
-    - ruff # https://github.com/astral-sh/ruff
-    - sqlite-utils # https://github.com/simonw/sqlite-utils
-    - tox # https://github.com/tox-dev/tox/
-    - youtube-dl # https://pypi.org/project/youtube_dl/
-    # keep-sorted end
-  personal_laptop:
-    # keep-sorted start
-    - subliminal # https://pypi.org/project/subliminal/
-    # keep-sorted end
-  company_laptop:
-  # keep-sorted start
-  # keep-sorted end
-  remove:
-    # keep-sorted start
-    - aws-shell # https://github.com/awslabs/aws-shell
-    - awscli # https://pypi.org/project/awscli/ Older version 1.18.*
-    - black # https://github.com/ambv/black
-    - bumpversion # https://pypi.org/project/bumpversion/
-    - commitizen # https://github.com/commitizen-tools/commitizen
-    - cookiecutter # https://pypi.org/project/cookiecutter/
-    - cookiepatcher # https://pypi.org/project/cookiepatcher/
-    - creosote # https://github.com/fredrikaverpil/creosote
-    - cruft # https://github.com/cruft/cruft
-    - flake8-to-ruff # https://github.com/astral-sh/ruff/blob/main/crates/flake8_to_ruff/README.md?plain=1
-    - howdoi # https://pypi.org/project/howdoi/
-    - identify # https://github.com/chriskuehl/identify
-    - isort # https://github.com/PyCQA/isort
-    - keyring # https://pypi.org/project/keyring/
-    - kubernetes-validate # https://github.com/willthames/kubernetes-validate
-    - litecli # SQLite CLI https://github.com/dbcli/litecli
-    - maturin # https://github.com/PyO3/maturin
-    - mycli # https://github.com/dbcli/mycli
-    - openai-whisper # https://github.com/openai/whisper
-    - pgcli # https://github.com/dbcli/pgcli
-    - pipenv # https://github.com/pypa/pipenv
-    - prospector # https://github.com/landscapeio/prospector
-    - pyoxidizer # https://github.com/indygreg/PyOxidizer
-    - sqlite-utils # https://github.com/simonw/sqlite-utils
-    - twine # https://pypi.org/project/twine/
-    - yamllint # https://github.com/adrienverge/yamllint
     # keep-sorted end
 
 # Node utilities

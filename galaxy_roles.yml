@@ -1,9 +1,6 @@
 # Community roles from https://galaxy.ansible.com/
 # https://galaxy.ansible.com/docs/using/installing.html#installing-multiple-roles-from-a-file
 
-# https://github.com/markosamuli/ansible-pyenv
-- src: markosamuli.pyenv
-
 # https://github.com/geerlingguy/ansible-role-docker
 - src: geerlingguy.docker
 

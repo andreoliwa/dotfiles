@@ -63,5 +63,6 @@ max-complexity = 10
 # chezmoi source files use the executable_ prefix to encode the executable bit;
 # the actual file mode is intentionally non-executable in the repo.
 "chezmoi/**/executable_*" = ["EXE001"]
-# pyinfra task dirs are namespace packages; no __init__.py needed (PEP 420).
+# pyinfra task dirs and chezmoi-managed files are not packages; no __init__.py needed.
 "pyinfra/**/*.py" = ["INP001"]
+"chezmoi/**/*.py" = ["INP001"]

@@ -1,3 +1,0 @@
-dependencies:
-  # Using markosamuli.pyenv instead of suzuki-shunsuke.pyenv for better maintenance and compatibility
-  - { role: markosamuli.pyenv }

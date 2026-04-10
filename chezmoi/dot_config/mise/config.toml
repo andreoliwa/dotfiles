@@ -18,7 +18,8 @@ INVOKE_RUN_ECHO = "1"
 # Use a pseudoterminal by default (display colored output)
 # http://docs.pyinvoke.org/en/stable/api/runners.html#invoke.runners.Runner.run
 INVOKE_RUN_PTY = "1"
-# Avoid pipx warning about spaces in home path on macOS
+# To fix this warning on macOS: "⚠️ Found a space in the pipx home path. We heavily discourage this, due to multiple incompatibilities.
+# Please check our docs for more information on this, as well as some pointers on how to migrate to a different home path."
 PIPX_HOME = "{{env.HOME}}/.local/pipx"
 # Avoid fork() crash when macOS Objective-C runtime is used in subprocesses (e.g. flake8)
 # https://stackoverflow.com/a/52230415

@@ -2,49 +2,47 @@
   hosts: local
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
-    - { role: ansible, tags: ["ansible"] }
-    - { role: bash, tags: ["bash"] }
-    - { role: security, tags: ["security", "ssh", "gpg"] }
-    - { role: git, tags: ["git"] }
-    - { role: package_manager, tags: ["package_manager", "bootstrap"] }
-    - { role: macos, tags: ["macos"], when: ansible_os_family == "Darwin" }
+    - { role: ansible, tags: [ "ansible" ] }
+    - { role: bash, tags: [ "bash" ] }
+    - { role: security, tags: [ "security", "ssh", "gpg" ] }
+    - { role: git, tags: [ "git" ] }
+    - { role: package_manager, tags: [ "package_manager", "bootstrap" ] }
+    - { role: macos, tags: [ "macos" ], when: ansible_os_family == "Darwin" }
 
     # asdf
-    - { role: asdf, tags: ["asdf"] }
-    - { role: poetry, tags: ["asdf", "poetry"] }
-    - { role: java, tags: ["asdf", "java"] }
+    - { role: asdf, tags: [ "asdf" ] }
+    - { role: poetry, tags: [ "asdf", "poetry" ] }
+    - { role: java, tags: [ "asdf", "java" ] }
 
     # Tools
-    - { role: direnv, tags: ["direnv"] }
-    - { role: gnome_do, tags: ["gnome_do", "alfred"] }
-    - { role: browser, tags: ["browser"] }
-    - { role: fzf, tags: ["fzf"] }
-    - { role: vim, tags: ["vim"] }
-    - { role: bat, tags: ["bat"] }
-    - { role: hammerspoon, tags: ["hammerspoon"] }
+    - { role: direnv, tags: [ "direnv" ] }
+    - { role: gnome_do, tags: [ "gnome_do", "alfred" ] }
+    - { role: browser, tags: [ "browser" ] }
+    - { role: fzf, tags: [ "fzf" ] }
+    - { role: vim, tags: [ "vim" ] }
+    - { role: bat, tags: [ "bat" ] }
+    - { role: hammerspoon, tags: [ "hammerspoon" ] }
 
-    # Python / pipx
-    - { role: python_pyenv, tags: ["python"] }
     # Depend on pipx:
-    - { role: invoke, tags: ["invoke"] }
-    - { role: pre-commit, tags: ["asdf", "pre-commit"] }
-    - { role: gita, tags: ["gita", "git"] }
-    - { role: mkdocs, tags: ["mkdocs", "docs"] }
+    - { role: invoke, tags: [ "invoke" ] }
+    - { role: pre-commit, tags: [ "asdf", "pre-commit" ] }
+    - { role: gita, tags: [ "gita", "git" ] }
+    - { role: mkdocs, tags: [ "mkdocs", "docs" ] }
 
-    - { role: docker, tags: ["docker"] }
+    - { role: docker, tags: [ "docker" ] }
     - {
-        role: gantsign.visual-studio-code,
-        tags: ["vscode"],
-        when: ansible_os_family != "Darwin",
-      }
-    - { role: go, tags: ["go"] }
-    - { role: rust, tags: ["rust"] }
-    - { role: node, tags: ["node"] }
-    - { role: ruby, tags: ["ruby"] }
-    - { role: kubernetes, tags: ["kubernetes", "k8s"] }
+      role: gantsign.visual-studio-code,
+      tags: [ "vscode" ],
+      when: ansible_os_family != "Darwin",
+    }
+    - { role: go, tags: [ "go" ] }
+    - { role: rust, tags: [ "rust" ] }
+    - { role: node, tags: [ "node" ] }
+    - { role: ruby, tags: [ "ruby" ] }
+    - { role: kubernetes, tags: [ "kubernetes", "k8s" ] }
 
     # Personal and last
-    - { role: organize, tags: ["organize"] }
-    - { role: personal, tags: ["personal"] }
+    - { role: organize, tags: [ "organize" ] }
+    - { role: personal, tags: [ "personal" ] }
     # TODO: fix: move backup tasks from Ansible to Invoke
     # - { role: backup, tags: ["backup"] }

@@ -1,0 +1,46 @@
+# pipx modules managed by dotf.
+
+common = [
+    "gitup", # https://github.com/earwig/git-repo-updater.git
+    "litecli[sqlean]", # https://github.com/dbcli/litecli
+    "organize-tool", # https://github.com/tfeldmann/organize
+    "ruff", # https://github.com/astral-sh/ruff
+    "sqlite-utils", # https://github.com/simonw/sqlite-utils
+    "tox", # https://github.com/tox-dev/tox/
+    "youtube-dl", # https://pypi.org/project/youtube_dl/
+]
+
+company_laptop = []
+
+personal_laptop = [
+    "subliminal", # https://pypi.org/project/subliminal/
+]
+
+remove = [
+    "aws-shell", # https://github.com/awslabs/aws-shell
+    "awscli", # https://pypi.org/project/awscli/ Older version 1.18.*
+    "black", # https://github.com/ambv/black
+    "bumpversion", # https://pypi.org/project/bumpversion/
+    "commitizen", # https://github.com/commitizen-tools/commitizen
+    "cookiecutter", # https://pypi.org/project/cookiecutter/
+    "cookiepatcher", # https://pypi.org/project/cookiepatcher/
+    "creosote", # https://github.com/fredrikaverpil/creosote
+    "cruft", # https://github.com/cruft/cruft
+    "flake8-to-ruff", # https://github.com/astral-sh/ruff/blob/main/crates/flake8_to_ruff/README.md?plain=1
+    "howdoi", # https://pypi.org/project/howdoi/
+    "identify", # https://github.com/chriskuehl/identify
+    "isort", # https://github.com/PyCQA/isort
+    "keyring", # https://pypi.org/project/keyring/
+    "kubernetes-validate", # https://github.com/willthames/kubernetes-validate
+    "litecli", # SQLite CLI https://github.com/dbcli/litecli
+    "maturin", # https://github.com/PyO3/maturin
+    "mycli", # https://github.com/dbcli/mycli
+    "openai-whisper", # https://github.com/openai/whisper
+    "pgcli", # https://github.com/dbcli/pgcli
+    "pipenv", # https://github.com/pypa/pipenv
+    "prospector", # https://github.com/landscapeio/prospector
+    "pyoxidizer", # https://github.com/indygreg/PyOxidizer
+    "sqlite-utils", # https://github.com/simonw/sqlite-utils
+    "twine", # https://pypi.org/project/twine/
+    "yamllint", # https://github.com/adrienverge/yamllint
+]

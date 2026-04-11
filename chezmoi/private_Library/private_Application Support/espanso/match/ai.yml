@@ -14,6 +14,13 @@ matches:
       Run 'prek run' and fix all linting errors. Inteeview me if you have questions.
     trigger: :fix
     word: true
+  - label: "Frontmatter tags in docs"
+    replace: |
+      Read docs under `docs/superpowers/` and `docs/plans/`, compare with the codebase to confirm which ones
+      have been implemented, add frontmatter tags. Update "last updated" with the date of the latest
+      related commit for each doc.
+    trigger: :fix
+    word: true
   - label: "prek run"
     replace: Run 'prek run' and fix all linting errors.
     trigger: :fix

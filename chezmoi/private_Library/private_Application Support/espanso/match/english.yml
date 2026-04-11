@@ -309,6 +309,10 @@ matches:
     trigger: pe2
     word: true
   - propagate_case: true
+    replace: PostgreSQL
+    trigger: pgs
+    word: true
+  - propagate_case: true
     replace: please
     trigger: pls
     word: true

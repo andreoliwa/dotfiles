@@ -60,6 +60,8 @@ def apply_pyinfra(
     private_pyinfra: Path | None,
     server: str,
     tools: list[str] | None,
+    *,
+    yes: bool = False,
 ) -> None:
     """Run pyinfra from the first directory that has both inventory.py and deploy.py.
 
@@ -76,4 +78,6 @@ def apply_pyinfra(
     extra: list[str] = ["--limit", server]
     if tools:
         extra += ["--data", f"tools={','.join(tools)}"]
+    if yes:
+        extra.append("-y")
     run(["pyinfra", "inventory.py", "deploy.py", *extra], cwd=str(workdir))

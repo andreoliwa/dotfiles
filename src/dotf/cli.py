@@ -13,7 +13,7 @@ app = typer.Typer(help="Dotfiles provisioning wrapper.", no_args_is_help=True)
 
 
 @app.command()
-def apply(
+def provision(
     server: Annotated[
         str, typer.Option("-s", "--server", metavar="SERVER", help="Target server (default: @local).")
     ] = "@local",
@@ -26,12 +26,13 @@ def apply(
     repo: Annotated[
         Path | None, typer.Option("-r", "--repo", metavar="PATH", help="Path to private repo root.")
     ] = None,
+    yes: Annotated[bool, typer.Option("-y", "--yes", help="Pass -y to pyinfra, skipping confirmation prompt.")] = False,
 ) -> None:
     """Apply chezmoi + pyinfra (full provisioning)."""
     tools_list: list[str] | None = [t for t in (s.strip() for s in tools.split(",")) if t] if tools else None
     private_pyinfra = _private_pyinfra(repo)
     apply_chezmoi(repo)
-    apply_pyinfra(private_pyinfra, server, tools_list)
+    apply_pyinfra(private_pyinfra, server, tools_list, yes=yes)
 
 
 @app.command()

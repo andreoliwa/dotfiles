@@ -34,3 +34,10 @@ PIPX_HOME = "{{env.HOME}}/.local/pipx"
 # https://stackoverflow.com/a/52230415
 OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
 RIPGREP_CONFIG_PATH = "{{env.HOME}}/.ripgreprc"
+
+[hooks]
+enter = "invoke ai.plans"
+
+[settings]
+# Needed to use "hooks" above
+experimental = true

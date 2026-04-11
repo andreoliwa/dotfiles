@@ -9,7 +9,7 @@ import typer
 
 from dotf.ops import _private_pyinfra, apply_chezmoi, apply_pyinfra
 
-app = typer.Typer(help="Dotfiles provisioning wrapper.", no_args_is_help=True)
+app = typer.Typer(help="Dotfiles provisioning wrapper.", no_args_is_help=True, rich_markup_mode=None)
 
 
 @app.command()

@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 DOTFILES = Path.home() / "dotfiles"
@@ -80,4 +81,5 @@ def apply_pyinfra(
         extra += ["--data", f"tools={','.join(tools)}"]
     if yes:
         extra.append("-y")
-    run(["pyinfra", "inventory.py", "deploy.py", *extra], cwd=str(workdir))
+    pyinfra_bin = Path(sys.executable).parent / "pyinfra"
+    run([str(pyinfra_bin), "inventory.py", "deploy.py", *extra], cwd=str(workdir))

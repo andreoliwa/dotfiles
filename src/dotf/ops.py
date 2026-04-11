@@ -27,10 +27,24 @@ def _private_pyinfra(private_repo: Path | None) -> Path | None:
     return None
 
 
+def _chezmoi_apply_source(source: Path) -> None:
+    """Apply a single chezmoi source dir, then offer merge-all if MM conflicts exist."""
+    run(["chezmoi", "apply", "--verbose", "--source", str(source)])
+    status = subprocess.check_output(["chezmoi", "status", "--source", str(source)], text=True)  # noqa: S603 S607
+    mm_files = [line for line in status.splitlines() if line[:2] == "MM"]
+    if not mm_files:
+        return
+    print("Files modified in both source and destination:")
+    for line in mm_files:
+        print(f"  {line}")
+    answer = input("Run 'chezmoi merge-all' for this source? [y/N] ").strip()
+    if answer.lower() in {"y", "yes"}:
+        run(["chezmoi", "merge-all", "--source", str(source)])
+
+
 def apply_chezmoi(private_repo: Path | None) -> None:
     """Apply chezmoi from the public source, then private source if available."""
-    common_args = ["chezmoi", "apply", "--verbose", "--source"]
-    run([*common_args, str(DOTFILES / "chezmoi")])
+    _chezmoi_apply_source(DOTFILES / "chezmoi")
     # Resolve private repo: explicit arg > $DOTF_REPO env var
     if private_repo is None:
         env_val = os.environ.get(_ENV_DOTF_REPO)
@@ -39,7 +53,7 @@ def apply_chezmoi(private_repo: Path | None) -> None:
     if private_repo is not None:
         private_chezmoi = private_repo / "chezmoi"
         if private_chezmoi.is_dir():
-            run([*common_args, str(private_chezmoi)])
+            _chezmoi_apply_source(private_chezmoi)
 
 
 def apply_pyinfra(

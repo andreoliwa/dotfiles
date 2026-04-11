@@ -118,6 +118,14 @@ defaultBranch = master
 # Use SSH instead of HTTPS for private repos: https://go.dev/doc/faq#git_https
 [url "ssh://git@github.com/"]
 insteadOf = https://github.com/
+
+# Git trace2: company telemetry added by devbox tooling.
+# Records every git command (timing, args, exit codes) as JSON Lines.
+# Devbox reads this file to collect developer productivity metrics.
+# See: https://git-scm.com/docs/api-trace2
+[trace2]
+eventTarget = /Users/aa/.devbox/git-trace2.jsonl
+eventBrief = true
 GITCONFIG
 
 # Re-append include blocks preserved from the existing file

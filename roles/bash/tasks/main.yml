@@ -58,7 +58,7 @@
       [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 
       # Source all scripts. To regenerate this .sh file, run:
-      # dotfiles-cache-shell-scripts bash
+      # dotf cache
       # shellcheck source=/dev/null
       test -f "$HOME"/.cache/dotfiles/cached_script.sh && source "$HOME"/.cache/dotfiles/cached_script.sh
 
@@ -92,15 +92,8 @@
       complete -F _complete_alias rsync-default
       # keep-sorted end
 
-# --break-system-packages to allow installing PyYAML globally on M3 Pro
-- name: "dotfiles-cache-shell-scripts: Install PyYAML"
-  command: "python3 -m pip install pyyaml --break-system-packages"
-  when:
-    - ansible_distribution not in ("OSMC", "Amazon")
-    - ansible_system_vendor is not defined or ansible_system_vendor not in ("DigitalOcean", "Hetzner")
-
-- name: "dotfiles-cache-shell-scripts: Create cached script that will be sourced on .bashrc"
-  command: "{{ dotfiles_home }}/bin/dotfiles-cache-shell-scripts bash"
+- name: "dotf cache: Create cached script that will be sourced on .bashrc"
+  command: "dotf cache"
   when:
     - ansible_distribution not in ("OSMC", "Amazon")
     - ansible_system_vendor is not defined or ansible_system_vendor not in ("DigitalOcean", "Hetzner")

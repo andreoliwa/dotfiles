@@ -70,15 +70,15 @@ PyPI.
 - Update variables in `group_vars/local` (git identity, github username, email).
 - Run:
   ```bash
-  ~/dotfiles/bin/dotfiles-setup --galaxy --bootstrap
+  dotf legacy --galaxy --bootstrap
   ```
 
 ### Updating
 
 ```bash
-dotfiles-setup
+dotf legacy
 # or with specific roles:
-dotfiles-setup git python macos
+dotf legacy git python macos
 ```
 
 ### Architecture

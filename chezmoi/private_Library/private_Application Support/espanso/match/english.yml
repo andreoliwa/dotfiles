@@ -188,14 +188,6 @@ matches:
     replace: girlfriend
     trigger: gf
     word: true
-  - replace: GitHub Actions
-    trigger: gha
-    word: true
-  - replace: GitHub
-    trigger: gih
-    word: true
-  - replace: HTML
-    trigger: html
   - replace: I don't know
     trigger: idk
     word: true
@@ -216,10 +208,6 @@ matches:
     replace: in my opinion
     trigger: imo
     word: true
-  - propagate_case: true
-    replace: Kubernetes
-    trigger: k8s
-    word: true
   - replace: Kind regards
     trigger: krg
     word: true
@@ -231,32 +219,11 @@ matches:
     replace: let me know
     trigger: lmk
     word: true
-  - replace: Logseq
-    trigger: lq
-    word: true
-  - replace: Markdown
-    trigger: mkd
-    word: true
-  - propagate_case: true
-    replace: merge request
-    trigger: mrq
-    word: true
-  - replace: merge requests
-    trigger: mrqs
-    word: true
   - replace: message
     trigger: msg
     word: true
   - replace: mainstream media
     trigger: msm
-    word: true
-  - propagate_case: true
-    replace: microservice
-    trigger: msv
-    word: true
-  - propagate_case: true
-    replace: microservices
-    trigger: msvs
     word: true
   - propagate_case: true
     replace: materialize
@@ -265,11 +232,6 @@ matches:
   - propagate_case: true
     replace: meet-up
     trigger: mup
-    word: true
-  - propagate_case: true
-    replace: meet-ups
-    trigger: mups
-    word: true
   - propagate_case: true
     replace: need to drop
     trigger: ntd
@@ -288,51 +250,9 @@ matches:
   - replace: on the other hand
     trigger: otoh
     word: true
-  - replace: P2P
-    trigger: p2
-    word: true
-  - replace: Protobuf
-    trigger: pb
-    word: true
-  - replace: Protobufs
-    trigger: pbs
-    word: true
-  - propagate_case: true
-    replace: product lead
-    trigger: pdl
-    word: true
-  - propagate_case: true
-    replace: product leads
-    trigger: pdls
-    word: true
-  - replace: PDRN
-    trigger: pdrn
-  - replace: peer-to-peer
-    trigger: pe2
-    word: true
-  - propagate_case: true
-    replace: PostgreSQL
-    trigger: pgs
-    word: true
   - propagate_case: true
     replace: please
     trigger: pls
-    word: true
-  - replace: "Parking lot \U0001F9F5"
-    trigger: plt
-    word: true
-  - replace: proof-of-concept
-    trigger: poc
-    word: true
-  - replace: pull request
-    trigger: prq
-    word: true
-  - replace: pull requests
-    trigger: prqs
-    word: true
-  - propagate_case: true
-    replace: pull requests
-    trigger: prs
     word: true
   - propagate_case: true
     replace: please take a look
@@ -345,25 +265,15 @@ matches:
     replace: restaurant
     trigger: rnt
     word: true
-  - propagate_case: true
-    replace: RaspberryPi
-    trigger: rpi
-    word: true
   - replace: support associate
     trigger: saa
     word: true
   - replace: "¯_(ツ)_/¯"
     trigger: shrug
     word: true
-  - replace: Skynet
-    trigger: skn
-    word: true
   - propagate_case: true
     replace: source of truth
     trigger: sot
-    word: true
-  - replace: SRE
-    trigger: sre
     word: true
   - replace: stand-up
     trigger: stu
@@ -387,13 +297,6 @@ matches:
   - replace: "TL;DR: "
     trigger: tldr
     word: true
-  - replace: team lead
-    trigger: tml
-    word: true
-  - propagate_case: true
-    replace: team leads
-    trigger: tmls
-    word: true
   - propagate_case: true
     replace: talk to you later
     trigger: ttyl
@@ -402,18 +305,12 @@ matches:
     replace: talk to you tomorrow
     trigger: ttyt
     word: true
-  - replace: TeamViewer
-    trigger: tvw
-    word: true
   - replace: that's what she said
     trigger: twss
     word: true
   - propagate_case: true
     replace: for visibility
     trigger: viz
-    word: true
-  - replace: WhatsApp
-    trigger: wap
     word: true
   - propagate_case: true
     replace: what do you mean?
@@ -433,7 +330,4 @@ matches:
   - propagate_case: true
     replace: yes, go ahead
     trigger: yga
-    word: true
-  - replace: YouTube Music
-    trigger: ytm
     word: true

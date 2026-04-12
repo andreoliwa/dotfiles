@@ -11,22 +11,23 @@ matches:
   - label: "FIXME + task list + prek run"
     replace: |
       Read all FIXME comments in this branch, prepare a task list to implement all of them.
-      Run 'prek run' and fix all linting errors. Inteeview me if you have questions.
+      Run 'prek run' and fix all linting errors. Interview me if you have questions.
     trigger: :fix
     word: true
   - label: "Frontmatter tags in docs"
     replace: |
       Read docs under `docs/superpowers/` and `docs/plans/`, compare with the codebase to confirm which ones
-      have been implemented, add frontmatter tags. Update "last updated" with the date of the latest
-      related commit for each doc.
+      have been implemented, add Frontmatter tags. Update "last updated" with the date of the latest
+      related commit for each doc. Add a "draft" status if doc is not a plan (e.g. a chat).
+      Always add a "last updated" date.
     trigger: :fix
     word: true
   - label: "prek run"
-    replace: Run 'prek run' and fix all linting errors.
+    replace: Run 'prek run' on all changed files in this branch and fix all linting errors.
     trigger: :fix
     word: true
   - label: "Ask me questions, interview me"
-    replace: Ask me questions, interview me if you need more information.
+    replace: Ask me clarifying questions, interview me if you need more information.
     trigger: amq
     word: true
   - replace: Claude Code

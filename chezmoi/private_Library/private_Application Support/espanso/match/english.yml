@@ -194,6 +194,8 @@ matches:
   - replace: GitHub
     trigger: gih
     word: true
+  - replace: HTML
+    trigger: html
   - replace: I don't know
     trigger: idk
     word: true

@@ -24,7 +24,7 @@ echo
 #  -q | xargs docker rm -v 2> /dev/null
 EXITED_COMMAND="docker ps --filter status=exited"
 UNUSED_COMMAND="docker images --filter dangling=true"
-CLEANUP_COMMAND="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock zzrot/docker-clean --log"
+CLEANUP_COMMAND="docker-clean"
 
 echo -e "Exited containers:\n$EXITED_COMMAND"
 $EXITED_COMMAND
@@ -33,10 +33,7 @@ echo -e "Unused images:\n$UNUSED_COMMAND"
 $UNUSED_COMMAND
 echo
 echo -e "Cleanup command:\n$CLEANUP_COMMAND"
-echo "Press any key to run them, or Ctrl-C to quit."
-read -r
-
-docker pull zzrot/docker-clean
+# read -r doesn't doesn't work with Invoke
 $CLEANUP_COMMAND
 
 echo -e "\nVolumes:"

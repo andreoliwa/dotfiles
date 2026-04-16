@@ -53,10 +53,10 @@ matches:
   - replace: proof-of-concept
     trigger: poc
     word: true
-  - replace: pull request
-    trigger: prq
   - propagate_case: true
-    replace: pull requests
+    replace: pull request
+    trigger: prq
+  - replace: pull requests
     trigger: prs
     word: true
   - propagate_case: true

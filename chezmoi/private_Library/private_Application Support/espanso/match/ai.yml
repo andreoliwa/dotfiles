@@ -2,17 +2,17 @@
 matches:
   - label: "FIXME"
     replace: Implement all FIXME comments in this branch.
-    trigger: :fix
+    trigger: :ai
     word: true
   - label: "FIXME + prek run"
     replace: Implement all FIXME comments in this branch. Run 'prek run' and fix all linting errors.
-    trigger: :fix
+    trigger: :ai
     word: true
   - label: "FIXME + task list + prek run"
     replace: |
       Read all FIXME comments in this branch, prepare a task list to implement all of them.
       Run 'prek run' and fix all linting errors. Interview me if you have questions.
-    trigger: :fix
+    trigger: :ai
     word: true
   - label: "Frontmatter tags in docs"
     replace: |
@@ -20,11 +20,17 @@ matches:
       have been implemented, add Frontmatter tags. Update "last updated" with the date of the latest
       related commit for each doc. Add a "draft" status if doc is not a plan (e.g. a chat).
       Always add a "last updated" date.
-    trigger: :fix
+    trigger: :ai
     word: true
   - label: "prek run"
     replace: Run 'prek run' on all changed files in this branch and fix all linting errors.
-    trigger: :fix
+    trigger: :ai
+    word: true
+  - label: "PR: update pull request description"
+    replace: |
+      Update the PR description on GitHub with the changes made in this branch.
+      Be concise, use human-readable bullet points.
+    trigger: :ai
     word: true
   - label: "Ask me questions, interview me"
     replace: Ask me clarifying questions, interview me if you need more information.

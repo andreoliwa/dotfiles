@@ -236,6 +236,9 @@ matches:
     replace: need to drop
     trigger: ntd
     word: true
+  - replace: NYC
+    trigger: nyc
+    word: true
   - propagate_case: true
     replace: of course
     trigger: ofc

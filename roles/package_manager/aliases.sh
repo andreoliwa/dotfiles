@@ -5,8 +5,6 @@ alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pa
 # Syntax-highlighted cat (requires python-pygments)
 alias dog="pygmentize -g"
 
-alias cl="clear"
-alias c="clear"
 alias pg='ps -ef | grep'
 alias pkill!="pkill -9 -f "
 alias fkill="fkill -v"

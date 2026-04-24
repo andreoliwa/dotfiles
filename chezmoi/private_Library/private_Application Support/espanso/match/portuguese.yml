@@ -15,7 +15,8 @@ matches:
     replace: abraços e beijos
     trigger: abjs
     word: true
-  - replace: Abraços!
+  - propagate_case: true
+    replace: abraços!
     trigger: abss
     word: true
   - propagate_case: true
@@ -26,13 +27,16 @@ matches:
     replace: alemão
     trigger: alemao
     word: true
-  - replace: amanhã
+  - propagate_case: true
+    replace: amanhã
     trigger: amanha
     word: true
-  - replace: apê
+  - propagate_case: true
+    replace: apê
     trigger: apeh
     word: true
-  - replace: até
+  - propagate_case: true
+    replace: até
     trigger: ateh
     word: true
   - propagate_case: true
@@ -43,7 +47,8 @@ matches:
     replace: avançar
     trigger: avancar
     word: true
-  - replace: bom dia
+  - propagate_case: true
+    replace: bom dia
     trigger: bd
     word: true
   - propagate_case: true
@@ -54,7 +59,8 @@ matches:
     replace: beijos
     trigger: bjs
     word: true
-  - replace: beleza
+  - propagate_case: true
+    replace: beleza
     trigger: blz
     word: true
   - replace: café
@@ -68,10 +74,12 @@ matches:
     replace: chamada de vídeo
     trigger: cdv
     word: true
-  - replace: começou
+  - propagate_case: true
+    replace: começou
     trigger: comecou
     word: true
-  - replace: conheço
+  - propagate_case: true
+    replace: conheço
     trigger: conheco
     word: true
   - propagate_case: true
@@ -110,10 +118,12 @@ matches:
     replace: enquanto
     trigger: enqto
     word: true
-  - replace: então
+  - propagate_case: true
+    replace: então
     trigger: entao
     word: true
-  - replace: escritório
+  - propagate_case: true
+    replace: escritório
     trigger: escritorio
     word: true
   - propagate_case: true
@@ -167,10 +177,12 @@ matches:
     replace: gravação
     trigger: gravacao
     word: true
-  - replace: há
+  - propagate_case: true
+    replace: há
     trigger: haa
     word: true
-  - replace: há
+  - propagate_case: true
+    replace: há
     trigger: hah
     word: true
   - propagate_case: true
@@ -189,13 +201,16 @@ matches:
     replace: lá
     trigger: lah
     word: true
-  - replace: lê
+  - propagate_case: true
+    replace: lê
     trigger: leh
     word: true
-  - replace: mãe
+  - propagate_case: true
+    replace: mãe
     trigger: mae
     word: true
-  - replace: mamãe
+  - propagate_case: true
+    replace: mamãe
     trigger: mamae
     word: true
   - propagate_case: true
@@ -206,17 +221,20 @@ matches:
     replace: mês
     trigger: mes
     word: true
-  - replace: mensagem
+  - propagate_case: true
+    replace: mensagem
     trigger: msgm
     word: true
   - propagate_case: true
     replace: não
     trigger: nao
     word: true
-  - replace: né
+  - propagate_case: true
+    replace: né
     trigger: neh
     word: true
-  - replace: ninguém
+  - propagate_case: true
+    replace: ninguém
     trigger: ninguem
     word: true
   - propagate_case: true
@@ -231,13 +249,16 @@ matches:
     replace: pá
     trigger: pah
     word: true
-  - replace: pé
+  - propagate_case: true
+    replace: pé
     trigger: peh
     word: true
-  - replace: porque
+  - propagate_case: true
+    replace: porque
     trigger: pq
     word: true
-  - replace: por quê
+  - propagate_case: true
+    replace: por quê
     trigger: pqa
     word: true
   - propagate_case: true
@@ -248,10 +269,12 @@ matches:
     replace: puta que pariu
     trigger: pqp
     word: true
-  - replace: por que
+  - propagate_case: true
+    replace: por que
     trigger: pqs
     word: true
-  - replace: preço
+  - propagate_case: true
+    replace: preço
     trigger: preco
     word: true
   - propagate_case: true
@@ -302,7 +325,8 @@ matches:
     replace: quantas
     trigger: qtas
     word: true
-  - replace: quantidade
+  - propagate_case: true
+    replace: quantidade
     trigger: qtd
     word: true
   - replace: quantidade
@@ -320,30 +344,36 @@ matches:
     replace: quantos
     trigger: qts
     word: true
-  - replace: que
+  - propagate_case: true
+    replace: que
     trigger: qu
     word: true
-  - replace: reunião
+  - propagate_case: true
+    replace: reunião
     trigger: reuniao
     word: true
   - propagate_case: true
     replace: são
     trigger: sao
     word: true
-  - replace: senão
+  - propagate_case: true
+    replace: senão
     trigger: senao
     word: true
-  - replace: será
+  - propagate_case: true
+    replace: será
     trigger: serah
     word: true
-  - replace: serão
+  - propagate_case: true
+    replace: serão
     trigger: serao
     word: true
   - propagate_case: true
     replace: sofá
     trigger: sofah
     word: true
-  - replace: só
+  - propagate_case: true
+    replace: só
     trigger: soh
     word: true
   - propagate_case: true
@@ -394,22 +424,28 @@ matches:
     replace: tô
     trigger: tou
     word: true
-  - replace: talvez
+  - propagate_case: true
+    replace: talvez
     trigger: tvz
     word: true
-  - replace: ué
+  - propagate_case: true
+    replace: ué
     trigger: ueh
     word: true
-  - replace: vá
+  - propagate_case: true
+    replace: vá
     trigger: vah
     word: true
-  - replace: vão
+  - propagate_case: true
+    replace: vão
     trigger: vao
     word: true
-  - replace: várias
+  - propagate_case: true
+    replace: várias
     trigger: varias
     word: true
-  - replace: vários
+  - propagate_case: true
+    replace: vários
     trigger: varios
     word: true
   - propagate_case: true

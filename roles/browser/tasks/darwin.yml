@@ -1,5 +1,0 @@
-- name: "Link ~/.finicky.js file"
-  file:
-    src: "{{ role_path }}/files/finicky.js"
-    dest: ~/.finicky.js
-    state: link

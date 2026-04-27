@@ -36,6 +36,9 @@ matches:
     replace: Ask me clarifying questions, interview me if you need more information.
     trigger: amq
     word: true
+  - replace: Are you dead? Stuck? Frozen? Continue!
+    trigger: ayd
+    word: true
   - replace: Claude Code
     trigger: cco
     word: true

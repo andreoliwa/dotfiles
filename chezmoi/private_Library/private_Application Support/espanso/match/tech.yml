@@ -1,5 +1,8 @@
 # https://espanso.org/docs/matches/basics/
 matches:
+  - replace: Fritz!Box
+    trigger: fbx
+    word: true
   - replace: GitHub Actions
     trigger: gha
     word: true

@@ -8,12 +8,54 @@ from typing import Annotated
 
 import typer
 
-from dotf.ops import _SUPPORTED_SHELLS, _private_pyinfra, apply_chezmoi, apply_pyinfra, cache_shell_scripts, run_legacy
+from dotf.ops import (
+    _SUPPORTED_SHELLS,
+    _print_green,
+    _private_pyinfra,
+    apply_chezmoi,
+    apply_pyinfra,
+    cache_shell_scripts,
+    list_provision,
+    resolve_server,
+    run_legacy,
+)
 
 app = typer.Typer(help="Dotfiles provisioning wrapper.", no_args_is_help=True, rich_markup_mode=None)
 
 
-@app.command()
+@app.callback()
+def main(
+    debug: Annotated[bool, typer.Option("--debug", "-d", help="Enable debug output (passes -v to pyinfra).")] = False,
+) -> None:
+    """Dotfiles provisioning wrapper."""
+    if debug:
+        os.environ["DOTF_DEBUG"] = "1"
+
+
+def _provision_impl(
+    server: str,
+    tools: str | None,
+    repo: Path | None,
+    yes: bool,
+) -> None:
+    tools_list: list[str] | None = [t for t in (s.strip() for s in tools.split(",")) if t] if tools else None
+    if tools_list:
+        from dotf.ops import resolve_tools
+
+        tools_list = resolve_tools(tools_list, repo)
+
+    resolved_server = resolve_server(server)
+    if server != "@local":
+        _print_green(f"Server: {resolved_server}")
+    if tools_list:
+        _print_green(f"Tools:  {', '.join(tools_list)}")
+
+    private_pyinfra = _private_pyinfra(repo)
+    apply_chezmoi(repo)
+    apply_pyinfra(private_pyinfra, resolved_server, tools_list, yes=yes)
+
+
+@app.command("provision")
 def provision(
     server: Annotated[
         str, typer.Option("-s", "--server", metavar="SERVER", help="Target server (default: @local).")
@@ -30,10 +72,21 @@ def provision(
     yes: Annotated[bool, typer.Option("-y", "--yes", help="Pass -y to pyinfra, skipping confirmation prompt.")] = False,
 ) -> None:
     """Apply chezmoi + pyinfra (full provisioning)."""
-    tools_list: list[str] | None = [t for t in (s.strip() for s in tools.split(",")) if t] if tools else None
-    private_pyinfra = _private_pyinfra(repo)
-    apply_chezmoi(repo)
-    apply_pyinfra(private_pyinfra, server, tools_list, yes=yes)
+    _provision_impl(server, tools, repo, yes)
+
+
+app.command("prov")(provision)
+
+
+@app.command("list")
+@app.command("ls")
+def list_cmd(
+    repo: Annotated[
+        Path | None, typer.Option("-r", "--repo", metavar="PATH", help="Path to private repo root.")
+    ] = None,
+) -> None:
+    """List configured servers and available tools."""
+    list_provision(repo)
 
 
 @app.command()

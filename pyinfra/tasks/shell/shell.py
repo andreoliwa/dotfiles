@@ -1,9 +1,8 @@
 """Deploy shell.d fragments to ~/.config/shell.d/."""
 
-import os
 import shutil
+import sys
 import tempfile
-from dataclasses import dataclass
 from pathlib import Path
 
 from pyinfra.connectors.local import LocalConnector
@@ -11,26 +10,15 @@ from pyinfra.operations import files
 
 from pyinfra import host
 
-
-@dataclass
-class TasksDir:
-    """Tasks directory and its properties."""
-
-    # Callers must pass absolute paths via DOTF_EXTRA_TASKS_DIRS.
-    absolute_path: Path
-    # Label appended to symlink names to avoid collisions across repos.
-    # Empty string for the primary dotfiles repo (no suffix).
-    label: str
-
+# lib.py lives one level up from tasks/ — add its directory to sys.path so it
+# can be imported regardless of the working directory pyinfra was launched from.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from lib import TasksDir, parse_extra_tasks_dirs
 
 # Shell fragments live alongside their tool's Python code under tasks/<tool>/
 TASKS_DIR = Path(__file__).parent
 
-# DOTF_EXTRA_TASKS_DIRS: colon-separated absolute paths to extra tasks directories.
-_extra = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
-EXTRA_TASKS_DIRS: list[TasksDir] = [
-    TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in _extra.split(":") if p
-]
+EXTRA_TASKS_DIRS: list[TasksDir] = parse_extra_tasks_dirs()
 
 SHELL_D = str(Path.home() / ".config" / "shell.d")
 

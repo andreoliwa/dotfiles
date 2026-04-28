@@ -10,12 +10,93 @@ from pprint import pprint
 
 DOTFILES = Path.home() / "dotfiles"
 
+SERVER_ALIASES: dict[str, list[str]] = {
+    "macbook": ["mac", "local", "mbp"],
+    "rpi": ["raspberry", "pi"],
+}
+
+
+def resolve_server(query: str) -> str:
+    """Resolve a server query to a canonical inventory group name.
+
+    Exact match wins. Otherwise, substring-matches against aliases.
+    If ambiguous, prompts via iterfzf. Falls back to raw query if no match.
+    """
+    if query in SERVER_ALIASES:
+        return query
+
+    matches = [group for group, aliases in SERVER_ALIASES.items() if any(query in alias for alias in aliases)]
+
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        from iterfzf import iterfzf
+
+        chosen = iterfzf(iter(matches), prompt=f"Multiple servers match '{query}': ")
+        return chosen or query
+
+    return query
+
+
+def resolve_tools(tokens: list[str], private_repo: Path | None) -> list[str]:
+    """Resolve tool name tokens to canonical tool names via iterfzf.
+
+    Exact matches are returned as-is. Partial tokens trigger iterfzf selection.
+    """
+    import sys
+
+    _pyinfra_lib = DOTFILES / "pyinfra"
+    sys.path.insert(0, str(_pyinfra_lib))
+    from lib import TasksDir, discover_tasks
+
+    dotfiles_tasks = DOTFILES / "pyinfra" / "tasks"
+    extra_env = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
+    extra_dirs = [TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in extra_env.split(":") if p]
+    private_pyinfra = _private_pyinfra(private_repo)
+    if private_pyinfra:
+        extra_dirs.append(TasksDir(absolute_path=private_pyinfra / "tasks", label=""))
+
+    all_tool_names = sorted(discover_tasks(dotfiles_tasks, extra_dirs).keys())
+    resolved = []
+
+    for token in tokens:
+        if token in all_tool_names:
+            resolved.append(token)
+            continue
+        from iterfzf import iterfzf
+
+        chosen = iterfzf(
+            iter(all_tool_names),
+            query=token,
+            prompt=f"Select tool for '{token}': ",
+            cycle=True,
+            __extra__=["--select-1", "--height=~40%", "--reverse", "--no-unicode", "--no-separator"],
+        )
+        if chosen:
+            resolved.append(chosen)
+
+    return resolved
+
+
 _ENV_DOTF_REPO = "DOTF_REPO"
+
+
+_BLUE = "\033[94m"
+_GREEN = "\033[92m"
+_RESET = "\033[0m"
+
+
+def _print_blue(msg: str) -> None:
+    print(f"{_BLUE}{msg}{_RESET}")
+
+
+def _print_green(msg: str) -> None:
+    print(f"{_GREEN}{msg}{_RESET}")
 
 
 def run(cmd: list[str], **kwargs: object) -> int:
     """Print and execute a shell command, returning its exit code."""
-    print(f"→ {' '.join(cmd)}")
+    _print_blue(f"→ {' '.join(cmd)}")
     return subprocess.call(cmd, **kwargs)  # type: ignore[arg-type]  # noqa: S603
 
 
@@ -55,9 +136,84 @@ def apply_chezmoi(private_repo: Path | None) -> None:
         if env_val:
             private_repo = Path(env_val).expanduser().resolve()
     if private_repo is not None:
-        private_chezmoi = private_repo / "chezmoi"
+        private_chezmoi = private_repo / "chezmoi" / "local"
         if private_chezmoi.is_dir():
             _chezmoi_apply_source(private_chezmoi)
+
+
+def _parse_inventory_servers(inv_path: Path) -> list[tuple[str, str, str]]:
+    """Parse inventory.py statically and return (name, host, tools_str) tuples."""
+    import ast as _ast
+
+    results = []
+    tree = _ast.parse(inv_path.read_text())
+    for node in _ast.walk(tree):
+        if not isinstance(node, _ast.Assign):
+            continue
+        for target in node.targets:
+            if not isinstance(target, _ast.Name):
+                continue
+            name = target.id
+            val = node.value
+            if not isinstance(val, _ast.List) or not val.elts:
+                continue
+            first = val.elts[0]
+            if not (isinstance(first, _ast.Tuple) and len(first.elts) >= 2):  # noqa: PLR2004
+                continue
+            first_elt = first.elts[0]
+            host_val = first_elt.value if isinstance(first_elt, _ast.Constant) else None
+            host_str = host_val if isinstance(host_val, str) else ""
+            tools_str = _extract_tools_from_dict(first.elts[1])
+            if host_str:
+                results.append((name, host_str, tools_str))
+    return results
+
+
+def _extract_tools_from_dict(dict_node: object) -> str:
+    """Extract the 'tools' list value from an ast.Dict node as a comma-separated string."""
+    import ast as _ast
+
+    if not isinstance(dict_node, _ast.Dict):
+        return ""
+    for k, v in zip(dict_node.keys, dict_node.values, strict=False):
+        if isinstance(k, _ast.Constant) and k.value == "tools" and isinstance(v, _ast.List):
+            return ", ".join(str(e.value) for e in v.elts if isinstance(e, _ast.Constant) and isinstance(e.value, str))
+    return ""
+
+
+def list_provision(private_repo: Path | None) -> None:
+    """Print configured servers and available tools, then exit."""
+    import sys
+
+    _pyinfra_lib = DOTFILES / "pyinfra"
+    sys.path.insert(0, str(_pyinfra_lib))
+    from lib import TasksDir, discover_tasks, read_module_docstring
+
+    # -- Servers ---------------------------------------------------------------
+    private_pyinfra = _private_pyinfra(private_repo)
+    print("Servers:")
+    if private_pyinfra:
+        inv_path = private_pyinfra / "inventory.py"
+        if inv_path.exists():
+            for name, host_str, tools_str in _parse_inventory_servers(inv_path):
+                print(f"  {name:<12}{host_str:<20}tools: {tools_str}")
+    else:
+        print("  (no private repo configured — set DOTF_REPO or pass -r)")
+
+    # -- Tools -----------------------------------------------------------------
+    print()
+    print("Tools (alphabetical):")
+    dotfiles_tasks = DOTFILES / "pyinfra" / "tasks"
+    extra_env = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
+    extra_dirs = [TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in extra_env.split(":") if p]
+    if private_pyinfra:
+        extra_dirs.append(TasksDir(absolute_path=private_pyinfra / "tasks", label=""))
+
+    all_tasks = discover_tasks(dotfiles_tasks, extra_dirs)
+    for tool_name, tool_path in sorted(all_tasks.items()):
+        doc = read_module_docstring(tool_path)
+        first_line = doc.split("\n")[0] if doc else ""
+        print(f"  {tool_name:<14}{first_line}")
 
 
 def apply_pyinfra(
@@ -84,8 +240,56 @@ def apply_pyinfra(
         extra += ["--data", f"tools={','.join(tools)}"]
     if yes:
         extra.append("-y")
-    pyinfra_bin = Path(sys.executable).parent / "pyinfra"
+    if os.environ.get("DOTF_DEBUG"):
+        extra.append("-v")
+    pyinfra_bin = _ensure_system_pyinfra() if server != "@local" else Path(sys.executable).parent / "pyinfra"
     run([str(pyinfra_bin), "inventory.py", "deploy.py", *extra], cwd=str(workdir))
+
+
+def _homebrew_prefix() -> Path:
+    """Return the Homebrew prefix, using $HOMEBREW_PREFIX if set, else `brew --prefix`."""
+    env_val = os.environ.get("HOMEBREW_PREFIX")
+    if env_val:
+        return Path(env_val)
+    return Path(subprocess.check_output(["brew", "--prefix"], text=True).strip())  # noqa: S607
+
+
+def _system_python() -> Path | None:
+    """Return the first system Python found outside this tool's venv.
+
+    Remote provisioning runs pyinfra outside this tool's venv, so we need a
+    system-level Python that SSH can invoke on the control machine without
+    activating any virtualenv. Tries Homebrew 3.14 → 3.13 → 3.12, then
+    falls back to /usr/bin/python3.
+    """
+    prefix = _homebrew_prefix()
+    candidates = [
+        prefix / "bin" / "python3.14",
+        prefix / "bin" / "python3.13",
+        prefix / "bin" / "python3.12",
+        Path("/usr/bin/python3"),
+    ]
+    return next((p for p in candidates if p.exists()), None)
+
+
+def _ensure_system_pyinfra() -> Path:
+    """Install/upgrade pyinfra into the system Python if needed, return its pyinfra path.
+
+    --break-system-packages is intentional: we're installing into the system
+    Python (not a venv) so that pyinfra is available system-wide for remote
+    SSH sessions, which don't inherit this tool's venv.
+    """
+    python = _system_python()
+    if python is None:
+        msg = "No system Python found; cannot provision remote hosts"
+        raise SystemExit(msg)
+    pyinfra_bin = python.parent / "pyinfra"
+    print(f"→ Ensuring pyinfra is installed in {python} ...")
+    run([str(python), "-m", "pip", "install", "--upgrade", "--break-system-packages", "pyinfra"])
+    if not pyinfra_bin.exists():
+        msg = f"pyinfra not found at {pyinfra_bin} after install"
+        raise SystemExit(msg)
+    return pyinfra_bin
 
 
 # ---------------------------------------------------------------------------

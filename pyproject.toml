@@ -3,7 +3,7 @@ name = "dotf"
 version = "0.1.0"
 description = "Dotfiles provisioning wrapper"
 requires-python = ">=3.12"
-dependencies = ["typer", "pyinfra", "pyyaml"]
+dependencies = ["typer", "pyinfra", "pyyaml", "iterfzf"]
 
 [project.scripts]
 dotf = "dotf.cli:app"

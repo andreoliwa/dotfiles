@@ -275,6 +275,10 @@ matches:
     trigger: shrug
     word: true
   - propagate_case: true
+    replace: something like that
+    trigger: slt
+    word: true
+  - propagate_case: true
     replace: source of truth
     trigger: sot
     word: true

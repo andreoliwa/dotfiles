@@ -22,8 +22,16 @@ matches:
       Always add a "last updated" date.
     trigger: :ai
     word: true
+  - label: "Rebase on origina/main, fix conflicts, force-push"
+    replace: Rebase the branch on top of origin/main, fix conflicts and force-push, I allow it this time.
+    trigger: :ai
+    word: true
   - label: "prek run"
     replace: Run 'prek run' on all changed files in this branch and fix all linting errors.
+    trigger: :ai
+    word: true
+  - label: "Switch to the work tree and branch"
+    replace: Switch to the work tree and branch of
     trigger: :ai
     word: true
   - label: "PR: update pull request description"

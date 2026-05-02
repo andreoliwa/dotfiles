@@ -4,7 +4,7 @@ node = "lts"
 pnpm = "latest"
 ruby = "latest"
 java = "openjdk-17"
-golangci-lint = "2.5.0"
+golangci-lint = "2.12.1"
 # Using pipx backend (not vfox) because the vfox Poetry plugin is broken:
 # it fails with a Lua runtime error during PostInstall.
 # Bug: https://github.com/mise-plugins/vfox-poetry

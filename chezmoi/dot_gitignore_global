@@ -145,3 +145,4 @@ data/kv-store
 # Claude Code
 .claude/*.local.*
 .claude/worktrees/
+.worktrees/

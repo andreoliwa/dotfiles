@@ -115,7 +115,9 @@ def _private_pyinfra(private_repo: Path | None) -> Path | None:
 def _chezmoi_apply_source(source: Path) -> None:
     """Apply a single chezmoi source dir, then offer merge-all if MM conflicts exist."""
     run(["chezmoi", "apply", "--verbose", "--source", str(source)])
-    status = subprocess.check_output(["chezmoi", "status", "--source", str(source)], text=True)  # noqa: S603 S607
+    # chezmoi status exits 1 when it finds differences (not an error); capture output regardless
+    result = subprocess.run(["chezmoi", "status", "--source", str(source)], text=True, capture_output=True, check=False)  # noqa: S603 S607
+    status = result.stdout
     mm_files = [line for line in status.splitlines() if line[:2] == "MM"]
     if not mm_files:
         return

@@ -1,4 +1,21 @@
-"""dotf ops — subprocess and path operations, no CLI framework."""
+"""dotf ops — subprocess and path operations, no CLI framework.
+
+Chezmoi apply — local vs remote split
+--------------------------------------
+Local apply (macbook/@local):
+  _chezmoi_apply_source() in this file — diff via delta, interactive prompt, then apply.
+
+Remote apply (other servers from the private inventory.py):
+  1. _chezmoi_remote_diff() in this file SSHes into the host, runs `chezmoi diff` there,
+     pipes the output through local delta, and prompts for confirmation.
+  2. Only if confirmed: apply_pyinfra() runs pyinfra, which includes
+     pyinfra/tasks/chezmoi/chezmoi.py — that task archives the local chezmoi source,
+     uploads it, and runs `chezmoi apply` unconditionally on the remote.
+
+This file owns all interactive logic (diff preview + prompt) for both local and remote.
+pyinfra/tasks/chezmoi/chezmoi.py is intentionally unconditional — it trusts that ops.py
+already obtained confirmation before pyinfra was invoked.
+"""
 
 import os
 import re
@@ -85,6 +102,7 @@ _BLUE = "\033[94m"
 _ENV_DOTF_REPO = "DOTF_REPO"
 _GREEN = "\033[92m"
 _RESET = "\033[0m"
+_YELLOW = "\033[93m"
 # keep-sorted end
 
 
@@ -94,6 +112,10 @@ def _print_blue(msg: str) -> None:
 
 def _print_green(msg: str) -> None:
     print(f"{_GREEN}{msg}{_RESET}")
+
+
+def _print_yellow(msg: str) -> None:
+    print(f"{_YELLOW}{msg}{_RESET}")
 
 
 def run(cmd: list[str], **kwargs: object) -> int:
@@ -175,8 +197,37 @@ def apply_chezmoi(private_repo: Path | None, *, yes: bool = False) -> None:
             _chezmoi_apply_source(private_chezmoi, yes=yes)
 
 
-def _parse_inventory_servers(inv_path: Path) -> list[tuple[str, str, str]]:
-    """Parse inventory.py statically and return (name, host, tools_str) tuples."""
+def _resolve_enum_host(inv_path: Path, attr: str) -> str:
+    """Resolve a Server enum attribute name to its string value by importing servers.py.
+
+    servers.py lives alongside inventory.py in the private pyinfra dir. It defines a
+    Server(str, Enum) where each member's value is the actual IP/hostname used for SSH.
+    We import it dynamically so the static AST parser can resolve
+    e.g. Server.myexampleserver → IP.
+    """
+    servers_path = inv_path.parent / "servers.py"
+    if not servers_path.exists():
+        return attr
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("_servers", servers_path)
+    if spec is None or spec.loader is None:
+        return attr
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    server_cls = getattr(mod, "Server", None)
+    if server_cls is None:
+        return attr
+    member = getattr(server_cls, attr, None)
+    return str(member.value) if member is not None else attr
+
+
+def _parse_inventory_servers(inv_path: Path) -> list[tuple[str, str, str, str]]:
+    """Parse inventory.py statically and return (name, host, ssh_user, tools_str) tuples.
+
+    host is the resolved IP/hostname (enum values are looked up via servers.py).
+    ssh_user is extracted from the host data dict; empty string if not set.
+    """
     import ast as _ast
 
     results = []
@@ -198,13 +249,31 @@ def _parse_inventory_servers(inv_path: Path) -> list[tuple[str, str, str]]:
             if isinstance(first_elt, _ast.Constant):
                 host_str = first_elt.value if isinstance(first_elt.value, str) else ""
             elif isinstance(first_elt, _ast.Attribute):
-                host_str = first_elt.attr
+                host_str = _resolve_enum_host(inv_path, first_elt.attr)
             else:
                 host_str = ""
+            ssh_user = _extract_str_from_dict(first.elts[1], "ssh_user")
             tools_str = _extract_tools_from_dict(first.elts[1])
             if host_str:
-                results.append((name, host_str, tools_str))
+                results.append((name, host_str, ssh_user, tools_str))
     return results
+
+
+def _extract_str_from_dict(dict_node: object, key: str) -> str:
+    """Extract a string value by key from an ast.Dict node; empty string if absent."""
+    import ast as _ast
+
+    if not isinstance(dict_node, _ast.Dict):
+        return ""
+    for k, v in zip(dict_node.keys, dict_node.values, strict=False):
+        if (
+            isinstance(k, _ast.Constant)
+            and k.value == key
+            and isinstance(v, _ast.Constant)
+            and isinstance(v.value, str)
+        ):
+            return v.value
+    return ""
 
 
 def _extract_tools_from_dict(dict_node: object) -> str:
@@ -233,7 +302,7 @@ def list_provision(private_repo: Path | None) -> None:
     if private_pyinfra:
         inv_path = private_pyinfra / "inventory.py"
         if inv_path.exists():
-            for name, host_str, tools_str in _parse_inventory_servers(inv_path):
+            for name, host_str, _ssh_user, tools_str in _parse_inventory_servers(inv_path):
                 print(f"  {name:<12}{host_str:<20}tools: {tools_str}")
     else:
         print("  (no private repo configured — set DOTF_REPO or pass -r)")
@@ -252,6 +321,90 @@ def list_provision(private_repo: Path | None) -> None:
         doc = read_module_docstring(tool_path)
         first_line = doc.split("\n")[0] if doc else ""
         print(f"  {tool_name:<14}{first_line}")
+
+
+def _resolve_ssh_target(server: str, private_pyinfra: Path | None) -> tuple[str, str] | None:
+    """Return (user@host, remote_chezmoi_src_dir) for a named inventory group, or None.
+
+    Looks up the server group in inventory.py to get the actual SSH host and user.
+    remote_chezmoi_src_dir is the path on the remote where the source dir will be rsynced
+    (matches the path used in pyinfra/tasks/chezmoi/chezmoi.py).
+    Returns None for @local or if the group is not found.
+    """
+    if server == "@local" or private_pyinfra is None:
+        return None
+    inv_path = private_pyinfra / "inventory.py"
+    if not inv_path.exists():
+        return None
+    for name, host_str, ssh_user, _tools_str in _parse_inventory_servers(inv_path):
+        if name == server:
+            if host_str == "@local":
+                return None
+            target = f"{ssh_user}@{host_str}" if ssh_user else host_str
+            return target, "/tmp/chezmoi-src"  # noqa: S108
+    return None
+
+
+def _chezmoi_remote_diff(
+    server: str, private_pyinfra: Path | None, private_repo: Path | None, *, yes: bool = False
+) -> bool:
+    """Rsync the chezmoi source dir to the remote, run chezmoi diff there, show via local delta, prompt.
+
+    Returns True if the user confirmed (or --yes was passed), False if skipped.
+
+    Flow mirrors _chezmoi_apply_source for local hosts:
+      1. Rsync the raw chezmoi source dir (dot_-prefixed layout) to a temp dir on the remote.
+         chezmoi diff/apply require the source directory, not a rendered archive — `chezmoi
+         archive` produces the target state (rendered home files), not a source dir.
+      2. SSH in: run `chezmoi diff --source=<remote_src_dir>`, pipe output through local delta.
+      3. Prompt. If confirmed, return True so the caller proceeds with pyinfra.
+
+    pyinfra/tasks/chezmoi/chezmoi.py is unconditional — it trusts this function ran first
+    and that /tmp/chezmoi-src is already on the remote.
+    """
+    ssh_info = _resolve_ssh_target(server, private_pyinfra)
+    if ssh_info is None:
+        return True
+
+    ssh_target, remote_src_dir = ssh_info
+
+    if private_repo is None:
+        env_val = os.environ.get(_ENV_DOTF_REPO)
+        if env_val:
+            private_repo = Path(env_val).expanduser().resolve()
+    if private_repo is None:
+        return True
+
+    chezmoi_src = private_repo / "chezmoi" / server
+    if not chezmoi_src.is_dir():
+        print(f"No chezmoi source for {server} at {chezmoi_src}, skipping remote diff.")
+        return True
+
+    repo_label = f"{private_repo.name}/chezmoi/{server}"
+
+    # Rsync the source directory (trailing slash = sync contents, not the dir itself)
+    run(["rsync", "-a", "--delete", f"{chezmoi_src}/", f"{ssh_target}:{remote_src_dir}/"])
+
+    probe = subprocess.run(  # noqa: S603
+        ["ssh", ssh_target, f"chezmoi diff --no-pager --source={remote_src_dir}"],  # noqa: S607
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if not probe.stdout.strip():
+        print(f"No changes from {repo_label}.")
+        return True
+
+    delta = subprocess.Popen(["delta"], stdin=subprocess.PIPE)  # noqa: S607
+    delta.communicate(probe.stdout.encode())
+
+    if not yes:
+        answer = input(f"Apply changes from {repo_label} to {server}? [y/N] ").strip()
+        if answer.lower() not in {"y", "yes"}:
+            print(f"Skipped {repo_label}.")
+            return False
+    _print_yellow("Changes not applied yet — pyinfra will apply them via 'Apply chezmoi from source dir'.")
+    return True
 
 
 def apply_pyinfra(

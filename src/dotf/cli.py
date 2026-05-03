@@ -10,6 +10,7 @@ import typer
 
 from dotf.ops import (
     _SUPPORTED_SHELLS,
+    _chezmoi_remote_diff,
     _print_green,
     _private_pyinfra,
     apply_chezmoi,
@@ -57,7 +58,15 @@ def _provision_impl(
         _print_green(f"Tools:  {', '.join(tools_list)}")
 
     private_pyinfra = _private_pyinfra(repo)
-    apply_chezmoi(repo, yes=_yes())
+
+    chezmoi_in_tools = tools_list is None or "chezmoi" in tools_list
+    if resolved_server == "@local":
+        apply_chezmoi(repo, yes=_yes())
+    elif chezmoi_in_tools:
+        confirmed = _chezmoi_remote_diff(resolved_server, private_pyinfra, repo, yes=_yes())
+        if not confirmed:
+            tools_list = [t for t in (tools_list or []) if t != "chezmoi"]
+
     apply_pyinfra(private_pyinfra, resolved_server, tools_list, yes=_yes())
 
 
@@ -78,9 +87,6 @@ def provision(
 ) -> None:
     """Apply chezmoi + pyinfra (full provisioning)."""
     _provision_impl(server, tools, repo)
-
-
-app.command("prov")(provision)
 
 
 @app.command("list")

@@ -38,5 +38,3 @@
     # Personal and last
     - { role: organize, tags: ["organize"] }
     - { role: personal, tags: ["personal"] }
-    # TODO: fix: move backup tasks from Ansible to Invoke
-    # - { role: backup, tags: ["backup"] }

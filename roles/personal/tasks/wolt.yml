@@ -3,12 +3,6 @@
     state: directory
     path: ~/wolt
 
-- name: "wolt: Copy .mrconfig"
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/vault-wolt.mrconfig"
-    dest: ~/wolt/.mrconfig
-    mode: "0600"
-
 - name: "wolt: Checkout repos"
   ansible.builtin.command: "mr checkout"
   args:

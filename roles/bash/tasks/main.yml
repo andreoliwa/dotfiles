@@ -36,10 +36,6 @@
   ansible.builtin.import_tasks: z.yml
   when: ansible_os_family in ("Debian", "OSMC") and ansible_system_vendor is defined and ansible_system_vendor not in ("DigitalOcean", "Hetzner")
 
-- name: "Install autojump"
-  ansible.builtin.import_tasks: autojump.yml
-  when: ansible_os_family == "Darwin"
-
 - name: "Create local bash completions dir"
   file:
     state: directory

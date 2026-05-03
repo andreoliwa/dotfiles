@@ -501,7 +501,6 @@ def run_legacy(  # noqa: C901, PLR0912, PLR0913, PLR0915
 
     command_parts.extend(
         [
-            "--vault-id dotfiles@~/.config/dotfiles/vault_password.txt",
             "--inventory ~/dotfiles/hosts",
             f"~/dotfiles/playbook_{playbook_file}.yml",
         ]

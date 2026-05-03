@@ -1,9 +1,3 @@
-- name: "personal: Copy .mrconfig"
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/vault.mrconfig"
-    dest: ~/.mrconfig
-    mode: "0600"
-
 - name: "personal: Checkout repos"
   ansible.builtin.command: "mr checkout"
   args:

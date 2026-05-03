@@ -1,6 +1,3 @@
-- import_tasks: apt_sources.yml
-  when: ansible_system_vendor == "Hetzner"
-
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
 - name: "Install apt packages"
   apt:
@@ -13,9 +10,6 @@
     - "'apt_packages' | run_only_after"
   register: remote_apt_packages
 - debug: var=remote_apt_packages
-
-- import_tasks: caddy.yml
-  when: ansible_system_vendor == "Hetzner"
 
 - import_tasks: osmc.yml
   when: ansible_os_family == "OSMC"

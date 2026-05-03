@@ -8,7 +8,9 @@ from collections import OrderedDict, defaultdict
 from pathlib import Path
 from pprint import pprint
 
-DOTFILES = Path.home() / "dotfiles"
+# Cannot import DOTFILES_PATH from pyinfra/lib.py: pyinfra tasks run in a separate
+# process under the pyinfra CLI, which has no knowledge of the dotf package.
+DOTFILES_PATH = Path(__file__).parent.parent.parent
 
 SERVER_ALIASES: dict[str, list[str]] = {
     "macbook": ["mac", "local", "mbp"],
@@ -45,11 +47,11 @@ def resolve_tools(tokens: list[str], private_repo: Path | None) -> list[str]:
     """
     import sys
 
-    _pyinfra_lib = DOTFILES / "pyinfra"
+    _pyinfra_lib = DOTFILES_PATH / "pyinfra"
     sys.path.insert(0, str(_pyinfra_lib))
     from lib import TasksDir, discover_tasks
 
-    dotfiles_tasks = DOTFILES / "pyinfra" / "tasks"
+    dotfiles_tasks = DOTFILES_PATH / "pyinfra" / "tasks"
     extra_env = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
     extra_dirs = [TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in extra_env.split(":") if p]
     private_pyinfra = _private_pyinfra(private_repo)
@@ -78,12 +80,12 @@ def resolve_tools(tokens: list[str], private_repo: Path | None) -> list[str]:
     return resolved
 
 
-_ENV_DOTF_REPO = "DOTF_REPO"
-
-
+# keep-sorted start
 _BLUE = "\033[94m"
+_ENV_DOTF_REPO = "DOTF_REPO"
 _GREEN = "\033[92m"
 _RESET = "\033[0m"
+# keep-sorted end
 
 
 def _print_blue(msg: str) -> None:
@@ -112,26 +114,56 @@ def _private_pyinfra(private_repo: Path | None) -> Path | None:
     return None
 
 
-def _chezmoi_apply_source(source: Path) -> None:
-    """Apply a single chezmoi source dir, then offer merge-all if MM conflicts exist."""
-    run(["chezmoi", "apply", "--verbose", "--source", str(source)])
-    # chezmoi status exits 1 when it finds differences (not an error); capture output regardless
-    result = subprocess.run(["chezmoi", "status", "--source", str(source)], text=True, capture_output=True, check=False)  # noqa: S603 S607
-    status = result.stdout
-    mm_files = [line for line in status.splitlines() if line[:2] == "MM"]
+def _chezmoi_repo_name(source: Path) -> str:
+    """Return the repo name for a chezmoi source dir (parent of the 'chezmoi' component)."""
+    for parent in source.parents:
+        if parent.name == "chezmoi":
+            return parent.parent.name
+    if source.name == "chezmoi":
+        return source.parent.name
+    return source.name
+
+
+def _chezmoi_apply_source(source: Path, *, yes: bool = False) -> None:
+    """Diff then apply a chezmoi source dir, offering merge-all on MM conflicts."""
+    source_args = ["--source", str(source)]
+    repo_name = f"{_chezmoi_repo_name(source)}/chezmoi"
+
+    # chezmoi diff always exits 0; capture with --no-pager to check for changes
+    probe = subprocess.run(["chezmoi", "diff", "--no-pager", *source_args], text=True, capture_output=True, check=False)  # noqa: S603 S607
+    if not probe.stdout.strip():
+        print(f"No changes from {repo_name}.")
+        return
+
+    # Re-run with delta as pager so it owns the TTY and supports keyboard navigation
+    subprocess.run(["chezmoi", "diff", "--pager", "delta", *source_args], check=False)  # noqa: S603 S607
+
+    if not yes:
+        answer = input(f"Apply changes from {repo_name}? [y/N] ").strip()
+        if answer.lower() not in {"y", "yes"}:
+            print(f"Skipped {repo_name}.")
+            return
+
+    run(["chezmoi", "apply", "--verbose", *source_args])
+
+    # chezmoi status exits 1 when it finds MM differences — capture regardless
+    result = subprocess.run(["chezmoi", "status", *source_args], text=True, capture_output=True, check=False)  # noqa: S603 S607
+    mm_files = [line for line in result.stdout.splitlines() if line[:2] == "MM"]
     if not mm_files:
         return
     print("Files modified in both source and destination:")
     for line in mm_files:
         print(f"  {line}")
-    answer = input("Run 'chezmoi merge-all' for this source? [y/N] ").strip()
-    if answer.lower() in {"y", "yes"}:
-        run(["chezmoi", "merge-all", "--source", str(source)])
+    if not yes:
+        answer = input(f"Run 'chezmoi merge-all' for {repo_name}? [y/N] ").strip()
+        if answer.lower() not in {"y", "yes"}:
+            return
+    run(["chezmoi", "merge-all", *source_args])
 
 
-def apply_chezmoi(private_repo: Path | None) -> None:
+def apply_chezmoi(private_repo: Path | None, *, yes: bool = False) -> None:
     """Apply chezmoi from the public source, then private source if available."""
-    _chezmoi_apply_source(DOTFILES / "chezmoi")
+    _chezmoi_apply_source(DOTFILES_PATH / "chezmoi", yes=yes)
     # Resolve private repo: explicit arg > $DOTF_REPO env var
     if private_repo is None:
         env_val = os.environ.get(_ENV_DOTF_REPO)
@@ -140,7 +172,7 @@ def apply_chezmoi(private_repo: Path | None) -> None:
     if private_repo is not None:
         private_chezmoi = private_repo / "chezmoi" / "local"
         if private_chezmoi.is_dir():
-            _chezmoi_apply_source(private_chezmoi)
+            _chezmoi_apply_source(private_chezmoi, yes=yes)
 
 
 def _parse_inventory_servers(inv_path: Path) -> list[tuple[str, str, str]]:
@@ -163,8 +195,12 @@ def _parse_inventory_servers(inv_path: Path) -> list[tuple[str, str, str]]:
             if not (isinstance(first, _ast.Tuple) and len(first.elts) >= 2):  # noqa: PLR2004
                 continue
             first_elt = first.elts[0]
-            host_val = first_elt.value if isinstance(first_elt, _ast.Constant) else None
-            host_str = host_val if isinstance(host_val, str) else ""
+            if isinstance(first_elt, _ast.Constant):
+                host_str = first_elt.value if isinstance(first_elt.value, str) else ""
+            elif isinstance(first_elt, _ast.Attribute):
+                host_str = first_elt.attr
+            else:
+                host_str = ""
             tools_str = _extract_tools_from_dict(first.elts[1])
             if host_str:
                 results.append((name, host_str, tools_str))
@@ -187,7 +223,7 @@ def list_provision(private_repo: Path | None) -> None:
     """Print configured servers and available tools, then exit."""
     import sys
 
-    _pyinfra_lib = DOTFILES / "pyinfra"
+    _pyinfra_lib = DOTFILES_PATH / "pyinfra"
     sys.path.insert(0, str(_pyinfra_lib))
     from lib import TasksDir, discover_tasks, read_module_docstring
 
@@ -205,7 +241,7 @@ def list_provision(private_repo: Path | None) -> None:
     # -- Tools -----------------------------------------------------------------
     print()
     print("Tools (alphabetical):")
-    dotfiles_tasks = DOTFILES / "pyinfra" / "tasks"
+    dotfiles_tasks = DOTFILES_PATH / "pyinfra" / "tasks"
     extra_env = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
     extra_dirs = [TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in extra_env.split(":") if p]
     if private_pyinfra:
@@ -229,7 +265,7 @@ def apply_pyinfra(
 
     Searches private repo first, falls back to the public dotfiles pyinfra dir.
     """
-    candidates = [private_pyinfra, DOTFILES / "pyinfra"] if private_pyinfra else [DOTFILES / "pyinfra"]
+    candidates = [private_pyinfra, DOTFILES_PATH / "pyinfra"] if private_pyinfra else [DOTFILES_PATH / "pyinfra"]
     workdir = next(
         (d for d in candidates if d is not None and (d / "inventory.py").exists() and (d / "deploy.py").exists()),
         None,

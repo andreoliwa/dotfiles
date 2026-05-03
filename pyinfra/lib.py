@@ -5,6 +5,11 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
+# Root of the dotfiles repo — derived from this file's location.
+# Cannot import DOTFILES_PATH from src/dotf/ops.py: pyinfra tasks run under the
+# pyinfra CLI in a separate process with no dotf package on sys.path.
+DOTFILES_PATH = Path(__file__).parent.parent
+
 
 @dataclass
 class TasksDir:

@@ -26,17 +26,23 @@ app = typer.Typer(help="Dotfiles provisioning wrapper.", no_args_is_help=True, r
 @app.callback()
 def main(
     debug: Annotated[bool, typer.Option("--debug", "-d", help="Enable debug output (passes -v to pyinfra).")] = False,
+    yes: Annotated[bool, typer.Option("-y", "--yes", help="Skip all confirmation prompts.")] = False,
 ) -> None:
     """Dotfiles provisioning wrapper."""
     if debug:
         os.environ["DOTF_DEBUG"] = "1"
+    if yes:
+        os.environ["DOTF_YES"] = "1"
+
+
+def _yes() -> bool:
+    return bool(os.environ.get("DOTF_YES"))
 
 
 def _provision_impl(
     server: str,
     tools: str | None,
     repo: Path | None,
-    yes: bool,
 ) -> None:
     tools_list: list[str] | None = [t for t in (s.strip() for s in tools.split(",")) if t] if tools else None
     if tools_list:
@@ -51,8 +57,8 @@ def _provision_impl(
         _print_green(f"Tools:  {', '.join(tools_list)}")
 
     private_pyinfra = _private_pyinfra(repo)
-    apply_chezmoi(repo)
-    apply_pyinfra(private_pyinfra, resolved_server, tools_list, yes=yes)
+    apply_chezmoi(repo, yes=_yes())
+    apply_pyinfra(private_pyinfra, resolved_server, tools_list, yes=_yes())
 
 
 @app.command("provision")
@@ -69,10 +75,9 @@ def provision(
     repo: Annotated[
         Path | None, typer.Option("-r", "--repo", metavar="PATH", help="Path to private repo root.")
     ] = None,
-    yes: Annotated[bool, typer.Option("-y", "--yes", help="Pass -y to pyinfra, skipping confirmation prompt.")] = False,
 ) -> None:
     """Apply chezmoi + pyinfra (full provisioning)."""
-    _provision_impl(server, tools, repo, yes)
+    _provision_impl(server, tools, repo)
 
 
 app.command("prov")(provision)
@@ -96,7 +101,7 @@ def chezmoi(
     ] = None,
 ) -> None:
     """Apply chezmoi only (skip pyinfra)."""
-    apply_chezmoi(repo)
+    apply_chezmoi(repo, yes=_yes())
 
 
 @app.command()

@@ -80,7 +80,7 @@ def resolve_server(query: str, private_repo: Path | None = None) -> str:
     if any(s.name == query for s in servers):
         return query
 
-    matches = [s.name for s in servers if query in s.aliases or query == s.name]
+    matches = [s.name for s in servers if any(query in alias for alias in s.aliases) or query in s.name]
 
     if len(matches) == 1:
         return matches[0]

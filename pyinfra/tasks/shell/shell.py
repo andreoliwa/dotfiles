@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from lib import TasksDir, parse_extra_tasks_dirs
 
 # Shell fragments live alongside their tool's Python code under tasks/<tool>/
-TASKS_DIR = Path(__file__).parent
+TASKS_DIR = Path(__file__).parent.parent
 
 EXTRA_TASKS_DIRS: list[TasksDir] = parse_extra_tasks_dirs()
 

@@ -1,14 +1,98 @@
-"""Shared pyinfra utilities: task discovery and extra-tasks-dirs parsing."""
+"""Shared pyinfra utilities: task discovery, extra-tasks-dirs parsing, and server inventory."""
 
 import ast
+import json
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 # Root of the dotfiles repo — derived from this file's location.
 # Cannot import DOTFILES_PATH from src/dotf/ops.py: pyinfra tasks run under the
 # pyinfra CLI in a separate process with no dotf package on sys.path.
 DOTFILES_PATH = Path(__file__).parent.parent
+
+_ENV_DOTF_SERVERS = "DOTF_SERVERS"
+LOCAL_HOST = "@local"
+
+
+@dataclass
+class Server:
+    """A provisioning target: local machine or remote SSH host."""
+
+    name: str
+    host: str  # IP, hostname, or LOCAL_HOST
+    tools: list[str]
+    aliases: list[str] = field(default_factory=list)
+    ssh_user: str = ""
+    mise_compile: bool = False
+
+    @property
+    def ssh_allow_agent(self) -> bool:
+        """True when an ssh_user is set — agent forwarding is always needed for remote hosts."""
+        return bool(self.ssh_user)
+
+    def encode(self) -> dict:
+        """Serialize to a JSON-compatible dict."""
+        return {
+            "name": self.name,
+            "host": self.host,
+            "tools": self.tools,
+            "aliases": self.aliases,
+            "ssh_user": self.ssh_user,
+            "mise_compile": self.mise_compile,
+        }
+
+    @classmethod
+    def decode(cls, data: dict) -> "Server":
+        """Deserialize from a dict; raises ValueError on missing required fields."""
+        required = ("name", "host", "tools")
+        missing = [k for k in required if k not in data]
+        if missing:
+            _msg = f"Server dict missing required fields: {missing!r}"
+            raise ValueError(_msg)
+        return cls(
+            name=data["name"],
+            host=data["host"],
+            tools=data["tools"],
+            aliases=data.get("aliases", []),
+            ssh_user=data.get("ssh_user", ""),
+            mise_compile=data.get("mise_compile", False),
+        )
+
+    @classmethod
+    def decode_all(cls, json_str: str) -> "list[Server]":
+        """Decode a JSON string produced by encode_servers(); aborts on parse error."""
+        try:
+            items = json.loads(json_str)
+        except json.JSONDecodeError as exc:
+            _msg = f"DOTF_SERVERS is not valid JSON: {exc}"
+            raise SystemExit(_msg) from exc
+        if not isinstance(items, list):
+            _msg = "DOTF_SERVERS must be a JSON array"
+            raise SystemExit(_msg)
+        servers = []
+        for i, item in enumerate(items):
+            try:
+                servers.append(cls.decode(item))
+            except ValueError as exc:
+                _msg = f"DOTF_SERVERS[{i}]: {exc}"
+                raise SystemExit(_msg) from exc
+        return servers
+
+    def to_pyinfra_host(self) -> tuple[str, dict]:
+        """Return a (host, data_dict) tuple suitable for a pyinfra inventory list."""
+        data: dict = {"tools": ",".join(self.tools)}
+        if self.ssh_user:
+            data["ssh_user"] = self.ssh_user
+            data["ssh_allow_agent"] = True
+        if self.mise_compile:
+            data["mise_compile"] = self.mise_compile
+        return self.host, data
+
+
+def encode_servers(servers: "list[Server]") -> str:
+    """Encode a list of Server instances to a JSON string for DOTF_SERVERS."""
+    return json.dumps([s.encode() for s in servers])
 
 
 @dataclass

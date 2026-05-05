@@ -51,7 +51,7 @@ def _provision_impl(
 
         tools_list = resolve_tools(tools_list, repo)
 
-    resolved_server = resolve_server(server)
+    resolved_server = resolve_server(server, repo)
     if server != "@local":
         _print_green(f"Server: {resolved_server}")
     if tools_list:
@@ -63,7 +63,7 @@ def _provision_impl(
     if resolved_server == "@local":
         apply_chezmoi(repo, yes=_yes())
     elif chezmoi_in_tools:
-        confirmed = _chezmoi_remote_diff(resolved_server, private_pyinfra, repo, yes=_yes())
+        confirmed = _chezmoi_remote_diff(resolved_server, repo, yes=_yes())
         if not confirmed:
             tools_list = [t for t in (tools_list or []) if t != "chezmoi"]
 

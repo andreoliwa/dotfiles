@@ -29,22 +29,58 @@ from pprint import pprint
 # process under the pyinfra CLI, which has no knowledge of the dotf package.
 DOTFILES_PATH = Path(__file__).parent.parent.parent
 
-SERVER_ALIASES: dict[str, list[str]] = {
-    "macbook": ["mac", "local", "mbp"],
-    "rpi": ["raspberry", "pi"],
-}
+# Mirrors lib.LOCAL_HOST — duplicated here to avoid a sys.path import at module level.
+# Keep in sync with dotfiles/pyinfra/lib.py.
+_LOCAL_HOST = "@local"
 
 
-def resolve_server(query: str) -> str:
+def _load_servers(private_repo: Path | None = None) -> "list":
+    """Return the Server list, loading from DOTF_SERVERS if set, else from inventory.py.
+
+    DOTF_SERVERS is populated by deploy.py when pyinfra runs. For commands like
+    'dotf ls' that run outside pyinfra, we fall back to importing inventory.py directly
+    from the private repo so the server list is always current without any manual sync.
+    """
+    _pyinfra_lib = DOTFILES_PATH / "pyinfra"
+    if str(_pyinfra_lib) not in sys.path:
+        sys.path.insert(0, str(_pyinfra_lib))
+    from lib import Server
+
+    raw = os.environ.get("DOTF_SERVERS", "")
+    if raw:
+        return Server.decode_all(raw)
+
+    # Fallback: import inventory.py from the private repo directly.
+    private_pyinfra = _private_pyinfra(private_repo)
+    if private_pyinfra is None:
+        return []
+    inv_path = private_pyinfra / "inventory.py"
+    if not inv_path.exists():
+        return []
+    import importlib.util
+
+    if str(private_pyinfra) not in sys.path:
+        sys.path.insert(0, str(private_pyinfra))
+    spec = importlib.util.spec_from_file_location("_inventory", inv_path)
+    if spec is None or spec.loader is None:
+        return []
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return list(getattr(mod, "_servers", []))
+
+
+def resolve_server(query: str, private_repo: Path | None = None) -> str:
     """Resolve a server query to a canonical inventory group name.
 
-    Exact match wins. Otherwise, substring-matches against aliases.
+    Exact match wins. Otherwise, substring-matches against server names and aliases.
     If ambiguous, prompts via iterfzf. Falls back to raw query if no match.
     """
-    if query in SERVER_ALIASES:
+    servers = _load_servers(private_repo)
+
+    if any(s.name == query for s in servers):
         return query
 
-    matches = [group for group, aliases in SERVER_ALIASES.items() if any(query in alias for alias in aliases)]
+    matches = [s.name for s in servers if query in s.aliases or query == s.name]
 
     if len(matches) == 1:
         return matches[0]
@@ -197,119 +233,29 @@ def apply_chezmoi(private_repo: Path | None, *, yes: bool = False) -> None:
             _chezmoi_apply_source(private_chezmoi, yes=yes)
 
 
-def _resolve_enum_host(inv_path: Path, attr: str) -> str:
-    """Resolve a Server enum attribute name to its string value by importing servers.py.
-
-    servers.py lives alongside inventory.py in the private pyinfra dir. It defines a
-    Server(str, Enum) where each member's value is the actual IP/hostname used for SSH.
-    We import it dynamically so the static AST parser can resolve
-    e.g. Server.myexampleserver → IP.
-    """
-    servers_path = inv_path.parent / "servers.py"
-    if not servers_path.exists():
-        return attr
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location("_servers", servers_path)
-    if spec is None or spec.loader is None:
-        return attr
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    server_cls = getattr(mod, "Server", None)
-    if server_cls is None:
-        return attr
-    member = getattr(server_cls, attr, None)
-    return str(member.value) if member is not None else attr
-
-
-def _parse_inventory_servers(inv_path: Path) -> list[tuple[str, str, str, str]]:
-    """Parse inventory.py statically and return (name, host, ssh_user, tools_str) tuples.
-
-    host is the resolved IP/hostname (enum values are looked up via servers.py).
-    ssh_user is extracted from the host data dict; empty string if not set.
-    """
-    import ast as _ast
-
-    results = []
-    tree = _ast.parse(inv_path.read_text())
-    for node in _ast.walk(tree):
-        if not isinstance(node, _ast.Assign):
-            continue
-        for target in node.targets:
-            if not isinstance(target, _ast.Name):
-                continue
-            name = target.id
-            val = node.value
-            if not isinstance(val, _ast.List) or not val.elts:
-                continue
-            first = val.elts[0]
-            if not (isinstance(first, _ast.Tuple) and len(first.elts) >= 2):  # noqa: PLR2004
-                continue
-            first_elt = first.elts[0]
-            if isinstance(first_elt, _ast.Constant):
-                host_str = first_elt.value if isinstance(first_elt.value, str) else ""
-            elif isinstance(first_elt, _ast.Attribute):
-                host_str = _resolve_enum_host(inv_path, first_elt.attr)
-            else:
-                host_str = ""
-            ssh_user = _extract_str_from_dict(first.elts[1], "ssh_user")
-            tools_str = _extract_tools_from_dict(first.elts[1])
-            if host_str:
-                results.append((name, host_str, ssh_user, tools_str))
-    return results
-
-
-def _extract_str_from_dict(dict_node: object, key: str) -> str:
-    """Extract a string value by key from an ast.Dict node; empty string if absent."""
-    import ast as _ast
-
-    if not isinstance(dict_node, _ast.Dict):
-        return ""
-    for k, v in zip(dict_node.keys, dict_node.values, strict=False):
-        if (
-            isinstance(k, _ast.Constant)
-            and k.value == key
-            and isinstance(v, _ast.Constant)
-            and isinstance(v.value, str)
-        ):
-            return v.value
-    return ""
-
-
-def _extract_tools_from_dict(dict_node: object) -> str:
-    """Extract the 'tools' list value from an ast.Dict node as a comma-separated string."""
-    import ast as _ast
-
-    if not isinstance(dict_node, _ast.Dict):
-        return ""
-    for k, v in zip(dict_node.keys, dict_node.values, strict=False):
-        if isinstance(k, _ast.Constant) and k.value == "tools" and isinstance(v, _ast.List):
-            return ", ".join(str(e.value) for e in v.elts if isinstance(e, _ast.Constant) and isinstance(e.value, str))
-    return ""
-
-
 def list_provision(private_repo: Path | None) -> None:
     """Print configured servers and available tools, then exit."""
     import sys
 
     _pyinfra_lib = DOTFILES_PATH / "pyinfra"
-    sys.path.insert(0, str(_pyinfra_lib))
+    if str(_pyinfra_lib) not in sys.path:
+        sys.path.insert(0, str(_pyinfra_lib))
     from lib import TasksDir, discover_tasks, read_module_docstring
 
     # -- Servers ---------------------------------------------------------------
-    private_pyinfra = _private_pyinfra(private_repo)
+    servers = _load_servers(private_repo)
     print("Servers:")
-    if private_pyinfra:
-        inv_path = private_pyinfra / "inventory.py"
-        if inv_path.exists():
-            for name, host_str, _ssh_user, tools_str in _parse_inventory_servers(inv_path):
-                print(f"  {name:<12}{host_str:<20}tools: {tools_str}")
+    if servers:
+        for s in servers:
+            tools_str = ", ".join(s.tools)
+            print(f"  {s.name:<12}{s.host:<20}{tools_str}")
     else:
         print("  (no private repo configured — set DOTF_REPO or pass -r)")
 
     # -- Tools -----------------------------------------------------------------
     print()
-    print("Tools (alphabetical):")
+    print("Tools:")
+    private_pyinfra = _private_pyinfra(private_repo)
     dotfiles_tasks = DOTFILES_PATH / "pyinfra" / "tasks"
     extra_env = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
     extra_dirs = [TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in extra_env.split(":") if p]
@@ -323,31 +269,26 @@ def list_provision(private_repo: Path | None) -> None:
         print(f"  {tool_name:<14}{first_line}")
 
 
-def _resolve_ssh_target(server: str, private_pyinfra: Path | None) -> tuple[str, str] | None:
+def _resolve_ssh_target(server: str, private_repo: Path | None) -> tuple[str, str] | None:
     """Return (user@host, remote_chezmoi_src_dir) for a named inventory group, or None.
 
-    Looks up the server group in inventory.py to get the actual SSH host and user.
+    Looks up the server in DOTF_SERVERS (or inventory.py fallback) to get the SSH host and user.
     remote_chezmoi_src_dir is the path on the remote where the source dir will be rsynced
     (matches the path used in pyinfra/tasks/chezmoi/chezmoi.py).
-    Returns None for @local or if the group is not found.
+    Returns None for @local or if the server is not found.
     """
-    if server == "@local" or private_pyinfra is None:
+    if server == _LOCAL_HOST:
         return None
-    inv_path = private_pyinfra / "inventory.py"
-    if not inv_path.exists():
-        return None
-    for name, host_str, ssh_user, _tools_str in _parse_inventory_servers(inv_path):
-        if name == server:
-            if host_str == "@local":
+    for s in _load_servers(private_repo):
+        if s.name == server:
+            if s.host == _LOCAL_HOST:
                 return None
-            target = f"{ssh_user}@{host_str}" if ssh_user else host_str
+            target = f"{s.ssh_user}@{s.host}" if s.ssh_user else s.host
             return target, "/tmp/chezmoi-src"  # noqa: S108
     return None
 
 
-def _chezmoi_remote_diff(
-    server: str, private_pyinfra: Path | None, private_repo: Path | None, *, yes: bool = False
-) -> bool:
+def _chezmoi_remote_diff(server: str, private_repo: Path | None, *, yes: bool = False) -> bool:
     """Rsync the chezmoi source dir to the remote, run chezmoi diff there, show via local delta, prompt.
 
     Returns True if the user confirmed (or --yes was passed), False if skipped.
@@ -362,7 +303,7 @@ def _chezmoi_remote_diff(
     pyinfra/tasks/chezmoi/chezmoi.py is unconditional — it trusts this function ran first
     and that /tmp/chezmoi-src is already on the remote.
     """
-    ssh_info = _resolve_ssh_target(server, private_pyinfra)
+    ssh_info = _resolve_ssh_target(server, private_repo)
     if ssh_info is None:
         return True
 
@@ -433,7 +374,7 @@ def apply_pyinfra(
         extra.append("-y")
     if os.environ.get("DOTF_DEBUG"):
         extra.append("-v")
-    pyinfra_bin = _ensure_system_pyinfra() if server != "@local" else Path(sys.executable).parent / "pyinfra"
+    pyinfra_bin = _ensure_system_pyinfra() if server != _LOCAL_HOST else Path(sys.executable).parent / "pyinfra"
     run([str(pyinfra_bin), "inventory.py", "deploy.py", *extra], cwd=str(workdir))
 
 

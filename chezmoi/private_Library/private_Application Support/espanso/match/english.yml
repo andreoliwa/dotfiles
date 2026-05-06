@@ -26,7 +26,8 @@ matches:
     replace: away from keyboard
     trigger: afk
     word: true
-  - replace: acknowledge
+  - propagate_case: true
+    replace: acknowledge
     trigger: ak
     word: true
   - replace: Approving to unblock.
@@ -44,14 +45,16 @@ matches:
     replace: at the moment
     trigger: atmo
     word: true
-  - replace: backend
+  - propagate_case: true
+    replace: backend
     trigger: b-e
     word: true
   - propagate_case: true
     replace: backend
     trigger: bae
     word: true
-  - replace: backend
+  - propagate_case: true
+    replace: backend
     trigger: bbe
     word: true
   - propagate_case: true
@@ -70,7 +73,8 @@ matches:
     replace: by the way
     trigger: btw
     word: true
-  - replace: chargeback
+  - propagate_case: true
+    replace: chargeback
     trigger: cbk
     word: true
   - replace: Confluence
@@ -104,13 +108,16 @@ matches:
   - replace: Could you share the ticket?
     trigger: cys
     word: true
-  - replace: database
+  - propagate_case: true
+    replace: database
     trigger: dab
     word: true
-  - replace: databases
+  - propagate_case: true
+    replace: databases
     trigger: dabs
     word: true
-  - replace: definitely
+  - propagate_case: true
+    replace: definitely
     trigger: defo
     word: true
   - replace: will be done in a follow-up PR
@@ -127,7 +134,8 @@ matches:
   - replace: Dramatiq
     trigger: dq
     word: true
-  - replace: daily stand-up
+  - propagate_case: true
+    replace: daily stand-up
     trigger: dsu
     word: true
   - replace: Datadog
@@ -139,7 +147,8 @@ matches:
   - replace: DevOps
     trigger: dvo
     word: true
-  - replace: developer experience
+  - propagate_case: true
+    replace: developer experience
     trigger: dx
     word: true
   - replace: end-to-end
@@ -153,14 +162,16 @@ matches:
     replace: engineering managers
     trigger: emgs
     word: true
-  - replace: frontend
+  - propagate_case: true
+    replace: frontend
     trigger: f-e
     word: true
   - propagate_case: true
     replace: for Christ's sake
     trigger: fcs
     word: true
-  - replace: frontend
+  - propagate_case: true
+    replace: frontend
     trigger: ffe
     word: true
   - propagate_case: true
@@ -175,11 +186,17 @@ matches:
     replace: for fuck's sake
     trigger: ffs
     word: true
-  - replace: in a follow-up PR
+  - propagate_case: true
+    replace: in a follow-up PR
     trigger: fup
     word: true
-  - replace: for what it's worth
+  - propagate_case: true
+    replace: for what it's worth
     trigger: fwiw
+    word: true
+  - propagate_case: true
+    replace: for your information
+    trigger: fyi
     word: true
   - replace: golangci-lint
     trigger: gcl
@@ -194,10 +211,12 @@ matches:
   - replace: I didn't understand
     trigger: idu
     word: true
-  - replace: if I recall correctly
+  - propagate_case: true
+    replace: if I recall correctly
     trigger: iirc
     word: true
-  - replace: if I understand correctly
+  - propagate_case: true
+    replace: if I understand correctly
     trigger: iiuc
     word: true
   - propagate_case: true
@@ -219,10 +238,12 @@ matches:
     replace: let me know
     trigger: lmk
     word: true
-  - replace: message
+  - propagate_case: true
+    replace: message
     trigger: msg
     word: true
-  - replace: mainstream media
+  - propagate_case: true
+    replace: mainstream media
     trigger: msm
     word: true
   - propagate_case: true
@@ -243,14 +264,20 @@ matches:
     replace: of course
     trigger: ofc
     word: true
-  - replace: oh, I see
+  - propagate_case: true
+    replace: oh, I see
     trigger: oic
     word: true
   - propagate_case: true
     replace: on my way
     trigger: omw
     word: true
-  - replace: on the other hand
+  - propagate_case: true
+    replace: out-of-the-box
+    trigger: ootb
+    word: true
+  - propagate_case: true
+    replace: on the other hand
     trigger: otoh
     word: true
   - propagate_case: true
@@ -268,7 +295,8 @@ matches:
     replace: restaurant
     trigger: rnt
     word: true
-  - replace: support associate
+  - propagate_case: true
+    replace: support associate
     trigger: saa
     word: true
   - replace: "¯_(ツ)_/¯"
@@ -282,7 +310,8 @@ matches:
     replace: source of truth
     trigger: sot
     word: true
-  - replace: stand-up
+  - propagate_case: true
+    replace: stand-up
     trigger: stu
     word: true
   - propagate_case: true
@@ -301,7 +330,7 @@ matches:
     replace: for traceability
     trigger: tiz
     word: true
-  - replace: "TL;DR: "
+  - replace: "TL;DR:"
     trigger: tldr
     word: true
   - propagate_case: true
@@ -312,7 +341,8 @@ matches:
     replace: talk to you tomorrow
     trigger: ttyt
     word: true
-  - replace: that's what she said
+  - propagate_case: true
+    replace: that's what she said
     trigger: twss
     word: true
   - propagate_case: true

@@ -9,8 +9,14 @@ matches:
   - replace: GitHub
     trigger: gih
     word: true
+  - replace: gRPC
+    trigger: grpc
+    word: true
   - replace: HTML
     trigger: html
+  - replace: Invoke
+    trigger: ik
+    word: true
   - propagate_case: true
     replace: Kubernetes
     trigger: k8s
@@ -49,6 +55,9 @@ matches:
   - propagate_case: true
     replace: PostgreSQL
     trigger: pgs
+    word: true
+  - replace: PyInvoke
+    trigger: pik
     word: true
   - replace: PocketBase
     trigger: pob

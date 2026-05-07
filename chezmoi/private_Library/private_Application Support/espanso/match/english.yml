@@ -257,6 +257,10 @@ matches:
     replace: need to drop
     trigger: ntd
     word: true
+  - propagate_case: true
+    replace: never mind
+    trigger: nvm
+    word: true
   - replace: NYC
     trigger: nyc
     word: true

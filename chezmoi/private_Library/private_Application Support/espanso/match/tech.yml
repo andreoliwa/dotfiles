@@ -17,6 +17,9 @@ matches:
   - replace: Invoke
     trigger: ik
     word: true
+  - replace: Jira
+    trigger: ji
+    word: true
   - propagate_case: true
     replace: Kubernetes
     trigger: k8s
@@ -87,6 +90,8 @@ matches:
   - replace: TeamViewer
     trigger: tvw
     word: true
+  - replace: URL
+    trigger: url
   - replace: WhatsApp
     trigger: wap
     word: true

@@ -6,6 +6,7 @@ import tempfile
 from pathlib import Path
 
 from pyinfra.connectors.local import LocalConnector
+from pyinfra.facts.server import Home
 from pyinfra.operations import files
 
 from pyinfra import host
@@ -20,7 +21,10 @@ TASKS_DIR = Path(__file__).parent.parent
 
 EXTRA_TASKS_DIRS: list[TasksDir] = parse_extra_tasks_dirs()
 
-SHELL_D = str(Path.home() / ".config" / "shell.d")
+# Use the remote Home fact, not Path.home() — Path.home() resolves on the control machine
+# and would deploy to the wrong path on remote hosts. Tilde strings don't work either
+# because pyinfra passes them quoted to the shell, suppressing expansion.
+SHELL_D = str(Path(host.get_fact(Home)) / ".config" / "shell.d")
 
 
 def _symlink_name(fragment: Path, repo_label: str) -> str:

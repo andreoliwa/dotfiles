@@ -5,9 +5,12 @@
 
 from pathlib import Path
 
+from pyinfra.facts.server import Home
 from pyinfra.operations import brew, files, git, pipx
 
-HOME = Path.home()
+from pyinfra import host
+
+HOME = Path(host.get_fact(Home))
 TPM_DIR = HOME / ".tmux" / "plugins" / "tpm"
 OH_MY_TMUX_DIR = HOME / ".tmux"
 

@@ -3,12 +3,12 @@
 from pathlib import Path
 
 from lib import DOTFILES_PATH
-from pyinfra.facts.server import Kernel
+from pyinfra.facts.server import Home, Kernel
 from pyinfra.operations import files, server
 
 from pyinfra import host
 
-_ssh = Path.home() / ".ssh"
+_ssh = Path(host.get_fact(Home)) / ".ssh"
 ssh_dir = str(_ssh)
 config_d = str(_ssh / "config.d")
 known_hosts = str(_ssh / "known_hosts")

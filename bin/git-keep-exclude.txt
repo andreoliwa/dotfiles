@@ -2,6 +2,11 @@
 # Each line becomes a "-e pattern" argument to git clean
 # Lines starting with # are comments and will be ignored
 # These patterns are NOT compatible with .gitignore
+#
+# Convention: append trailing / to patterns that should match directories only.
+# Patterns with wildcard prefixes (e.g. *mypy_cache*) cannot use trailing /
+# for dir-only matching - gitignore semantics require a leading / or no wildcard
+# before the slash to anchor it. Leave those without /.
 
 # keep-sorted start
 *.cache
@@ -14,24 +19,28 @@
 *mypy_cache*
 *ruff_cache*
 .DS_Store
-.gradle
-.nyc_output
-.parcel-cache
-.pytest_cache
-.sass-cache
-.terraform
-.tox
-.venv
+.gradle/
+.nyc_output/
+.parcel-cache/
+.pytest_cache/
+.sass-cache/
+.terraform/
+.tox/
+.venv/
 /bazel-*
 /logseq/bak/
-__pycache__
+__pycache__/
 _build/
 _site/
-build
-data/kv-store
-dist
-htmlcov
-node_modules
-site-packages
-tmp
+build/
+cache/
+data/kv-store/
+dist/
+htmlcov/
+lock/
+node_modules/
+site-packages/
+target/
+tmp/
+vendor/bundle/
 # keep-sorted end

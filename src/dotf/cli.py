@@ -43,6 +43,7 @@ def _yes() -> bool:
 def _provision_impl(
     server: str,
     tools: str | None,
+    start_from: str | None,
     repo: Path | None,
 ) -> None:
     tools_list: list[str] | None = [t for t in (s.strip() for s in tools.split(",")) if t] if tools else None
@@ -54,6 +55,20 @@ def _provision_impl(
     resolved_server = resolve_server(server, repo)
     if server != "@local":
         _print_green(f"Server: {resolved_server}")
+
+    if start_from:
+        from dotf.ops import _load_servers
+
+        server_obj = next((s for s in _load_servers(repo) if s.name == resolved_server), None)
+        order = list(server_obj.tools) if server_obj else (tools_list or [])
+        if start_from not in order:
+            typer.echo(f"--start-from '{start_from}' not in server '{resolved_server}' tools: {order}", err=True)
+            raise typer.Exit(1)
+        idx = order.index(start_from)
+        sliced = order[idx:]
+        tools_list = [t for t in tools_list if t in sliced] if tools_list else sliced
+        _print_green(f"Starting from: {start_from}")
+
     if tools_list:
         _print_green(f"Tools:  {', '.join(tools_list)}")
 
@@ -72,13 +87,19 @@ def _provision_impl(
 
 @app.command("provision")
 def provision(
+    tools: Annotated[
+        str | None,
+        typer.Argument(metavar="TOOL[,TOOL...]", help="Comma-separated tools to provision (default: all)."),
+    ] = None,
     server: Annotated[
         str, typer.Option("-s", "--server", metavar="SERVER", help="Target server (default: @local).")
     ] = "@local",
-    tools: Annotated[
+    start_from: Annotated[
         str | None,
         typer.Option(
-            "-t", "--tools", metavar="TOOL[,TOOL...]", help="Comma-separated tools to provision (default: all)."
+            "--start-from",
+            metavar="TOOL",
+            help="Skip tools that come before this one in the server's inventory order.",
         ),
     ] = None,
     repo: Annotated[
@@ -86,7 +107,7 @@ def provision(
     ] = None,
 ) -> None:
     """Apply chezmoi + pyinfra (full provisioning)."""
-    _provision_impl(server, tools, repo)
+    _provision_impl(server, tools, start_from, repo)
 
 
 @app.command("list")

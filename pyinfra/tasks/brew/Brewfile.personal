@@ -1,0 +1,12 @@
+# Brewfile.personal - personal_laptop-only entries from group_vars/all.yml.
+# Common entries live in Brewfile.common; brew.py loads both.
+
+# Taps
+
+# Brews
+brew "gromgit/fuse/ntfs-3g-mac"
+
+# Casks
+cask "brave-browser"
+cask "brave-browser@beta"
+cask "transmission-remote-gui"

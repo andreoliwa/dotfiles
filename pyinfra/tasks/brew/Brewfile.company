@@ -1,0 +1,20 @@
+# Brewfile.company - company_laptop-only entries from group_vars/all.yml.
+# Common entries live in Brewfile.common; brew.py loads both.
+
+# Taps
+
+# Brews
+brew "actionlint"
+brew "aviator-co/tap/av"
+brew "aws-iam-authenticator"
+brew "awscli"
+brew "gradle-completion"
+brew "mike-engel/jwt-cli/jwt-cli"
+brew "protobuf"
+brew "vault"
+
+# Casks
+cask "aws-vault"
+cask "google-chrome"
+cask "postman"
+cask "slack"

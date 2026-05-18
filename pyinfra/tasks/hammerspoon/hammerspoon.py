@@ -5,7 +5,7 @@ Hammerspoon cask + init.lua come from Brewfile + chezmoi respectively.
 
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import git
-from shared import make_env, shell
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
@@ -20,7 +20,7 @@ if host.get_fact(Kernel) == "Darwin":
     git.repo(
         name="Clone Lunette spoon",
         src="https://github.com/scottwhudson/Lunette",
-        dest="~/.hammerspoon/Lunette",
+        dest=home_path(".hammerspoon/Lunette"),
         pull=False,
     )
     shell(

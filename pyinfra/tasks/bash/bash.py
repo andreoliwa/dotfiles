@@ -42,7 +42,7 @@ shell(
 git.repo(
     name="Clone bash-git-prompt",
     src="https://github.com/magicmonty/bash-git-prompt.git",
-    dest="~/.bash-git-prompt",
+    dest=home_path(".bash-git-prompt"),
     branch="master",
     pull=False,
 )

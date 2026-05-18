@@ -373,7 +373,7 @@ def apply_pyinfra(
     if yes:
         extra.append("-y")
     if os.environ.get("DOTF_DEBUG"):
-        extra.append("-v")
+        extra.append("-vv")
     _repo_root = private_pyinfra.parent if private_pyinfra is not None else None
     is_local = server == _LOCAL_HOST or any(
         s.name == server and s.host == _LOCAL_HOST for s in _load_servers(_repo_root)

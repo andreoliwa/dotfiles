@@ -69,6 +69,6 @@ server.shell(
 
 server.shell(
     name="brew bundle (install formulae + casks + taps)",
-    commands=[f"{_brew_bin()} bundle --global"],
-    _env=_ENV,
+    commands=[f"{_brew_bin()} bundle --global --verbose"],
+    _env={**_ENV, "HOMEBREW_NO_AUTO_UPDATE": "1", "HOMEBREW_BUNDLE_NO_LOCK": "1"},
 )

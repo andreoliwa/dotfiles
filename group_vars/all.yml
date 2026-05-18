@@ -288,37 +288,6 @@ apt_packages:
   - xfce4
   # keep-sorted end
 
-# Node utilities
-npm_global_packages:
-  common:
-    - prettier
-  personal_laptop:
-  company_laptop:
-  remove:
-    # keep-sorted start
-
-    - "@commitlint/cli" # https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/cli
-    - "@commitlint/config-conventional"
-    # Sentry
-    - "@sentry/cli" # https://github.com/getsentry/sentry-cli
-    - aws-es-kibana
-    - babel-eslint
-    - codeowners # https://github.com/beaugunderson/codeowners
-    - commitizen # https://github.com/commitizen/cz-cli
-    # Conventional commits and semantic release
-    - conventional-changelog-cli # https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli
-    - eslint
-    - eslint-config-airbnb
-    - eslint-plugin-react
-    - np
-    # MarkDown linter
-    - remark-cli # https://github.com/remarkjs/remark/tree/master/packages/remark-cli
-    - remark-preset-lint-markdown-style-guide # https://github.com/remarkjs/remark-lint/tree/master/packages/remark-preset-lint-markdown-style-guide
-    - remark-preset-lint-recommended # https://github.com/remarkjs/remark-lint#cli
-    - semantic-release-cli # https://github.com/semantic-release/cli
-    - webpack
-    # keep-sorted end
-
 go_binaries:
   # keep-sorted start
   - { bin: todos, url: https://github.com/ianlewis/todos }

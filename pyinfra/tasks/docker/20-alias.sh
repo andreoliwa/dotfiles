@@ -1,4 +1,5 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+# shellcheck disable=SC2086,SC2162  # legacy aliases, intentional behavior
 alias dk="docker "
 alias dklog="docker logs -f --tail 100 "
 alias dkl="docker logs -f --tail 100 "

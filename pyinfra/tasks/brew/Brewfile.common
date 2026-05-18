@@ -101,3 +101,11 @@ cask "visual-studio-code"
 cask "vlc"
 cask "xquartz"
 cask "zoom"
+
+# Kubernetes
+brew "kubectl"
+brew "kubernetes-cli"
+brew "kubectx"
+brew "k9s"
+brew "kubie"
+brew "krew"

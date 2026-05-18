@@ -1,108 +1,108 @@
 # Brewfile.common - entries shared by every variant.
 
 # macFUSE cask must install before any gromgit/fuse formula.
-cask "macfuse"
+cask "macfuse"  # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
 
 # Taps
-tap "gromgit/fuse"
-tap "jmespath/jmespath"
-tap "mike-engel/jwt-cli"
+tap "gromgit/fuse"  # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
+tap "jmespath/jmespath"  # https://github.com/jmespath/jp
+tap "mike-engel/jwt-cli"  # https://github.com/mike-engel/jwt-cli
 
 # Brews
-brew "7zip"
+brew "7zip"  # https://7-zip.org
 brew "bash"
-brew "bash-completion2"
-brew "blueutil"
-brew "colordiff"
-brew "coreutils"
-brew "ctop"
+brew "bash-completion2"  # https://github.com/scop/bash-completion
+brew "blueutil"  # https://github.com/toy/blueutil
+brew "colordiff"  # https://www.colordiff.org/
+brew "coreutils"  # https://www.gnu.org/software/coreutils
+brew "ctop"  # Top for docker containers
 brew "curl"
 brew "diff-so-fancy"
 brew "duplicity"
-brew "dust"
-brew "fd"
-brew "feh"
-brew "ffmpeg"
-brew "fx"
-brew "git-branchless"
-brew "git-extras"
-brew "gnu-tar"
-brew "go"
+brew "dust"  # https://lib.rs/crates/du-dust
+brew "fd"  # https://github.com/sharkdp/fd
+brew "feh"  # https://feh.finalrewind.org/
+brew "ffmpeg"  # https://ffmpeg.org/ needed by openai-whisper
+brew "fx"  # https://github.com/antonmedv/fx
+brew "git-branchless"  # https://github.com/arxanas/git-branchless
+brew "git-extras"  # https://github.com/tj/git-extras
+brew "gnu-tar"  # https://www.gnu.org/software/tar/
+brew "go"  # https://golang.org
 brew "gpg"
-brew "gromgit/fuse/sshfs-mac"
-brew "homebrew/core/gh"
+brew "gromgit/fuse/sshfs-mac"  # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
+brew "homebrew/core/gh"  # GitHub CLI https://github.com/cli/cli
 brew "htop-osx"
 brew "ipcalc"
-brew "jmespath/jmespath/jp"
-brew "jq"
-brew "jrnl"
-brew "libsodium"
-brew "moreutils"
+brew "jmespath/jmespath/jp"  # https://github.com/jmespath/jp
+brew "jq"  # https://github.com/stedolan/jq
+brew "jrnl"  # https://jrnl.sh/
+brew "libsodium"  # can't be removed from personal_laptop, required by ffmpeg and zeromq
+brew "moreutils"  # https://joeyh.name/code/moreutils/ with the sponge command
 brew "nmap"
-brew "pidof"
+brew "pidof"  # http://www.nightproductions.net/cli.htm
 brew "pinentry-mac"
-brew "pipgrip"
-brew "procs"
-brew "remake"
-brew "rg"
-brew "shellcheck"
-brew "starship"
-brew "swig"
+brew "pipgrip"  # needed by brew update-python-resources
+brew "procs"  # https://lib.rs/crates/procs
+brew "remake"  # https://bashdb.sourceforge.io/remake
+brew "rg"  # https://github.com/BurntSushi/ripgrep Install with Brew to get shell completion
+brew "shellcheck"  # https://github.com/koalaman/shellcheck#installing
+brew "starship"  # https://github.com/starship/starship
+brew "swig"  # https://www.swig.org/ needed to build the Python cryptography package pykcs11 https://pypi.org/project/PyKCS11/
 brew "telnet"
 brew "terminal-notifier"
 brew "tldr"
-brew "topgrade"
+brew "topgrade"  # https://github.com/r-darwish/topgrade
 brew "watch"
-brew "wdiff"
+brew "wdiff"  # https://www.gnu.org/software/wdiff/
 brew "wget"
-brew "wmctrl"
-brew "yq"
+brew "wmctrl"  # https://sites.google.com/site/tstyblo/wmctrl
+brew "yq"  # https://github.com/mikefarah/yq
 brew "mas"
-brew "gh"
+brew "gh"  # GitHub CLI https://github.com/cli/cli
 brew "fzf"
 brew "rustup"
 
 # Casks
-cask "android-file-transfer"
+cask "android-file-transfer"  # https://www.android.com/filetransfer/
 cask "appcleaner"
-cask "apppolice"
-cask "calibre"
-cask "ccleaner"
-cask "cyberduck"
-cask "deepl"
-cask "dropbox"
-cask "dupeguru"
-cask "finicky"
-cask "flameshot"
+cask "apppolice"  # https://github.com/AppPolice/AppPolice
+cask "calibre"  # https://calibre-ebook.com/
+cask "ccleaner"  # https://www.ccleaner.com/ccleaner-mac
+cask "cyberduck"  # https://cyberduck.io/
+cask "deepl"  # https://www.deepl.com/translator
+cask "dropbox"  # https://www.dropbox.com/
+cask "dupeguru"  # https://dupeguru.voltaicideas.net/
+cask "finicky"  # https://github.com/johnste/finicky
+cask "flameshot"  # https://github.com/flameshot-org/flameshot#installation
 cask "font-cousine"
 cask "font-hack"
-cask "font-jetbrains-mono"
+cask "font-jetbrains-mono"  # https://www.jetbrains.com/lp/mono/
 cask "font-ubuntu"
-cask "fujitsu-scansnap-home"
-cask "gnucash"
-cask "grandperspective"
-cask "iterm2"
-cask "jetbrains-toolbox"
-cask "keepingyouawake"
-cask "kindle"
-cask "kindle-previewer"
-cask "logitech-g-hub"
-cask "logitech-options"
-cask "logseq"
-cask "microsoft-office"
-cask "orbstack"
-cask "raycast"
-cask "rescuetime"
-cask "send-to-kindle"
+cask "fujitsu-scansnap-home"  # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
+cask "gnucash"  # https://gnucash.org/
+cask "grandperspective"  # https://grandperspectiv.sourceforge.io/
+cask "iterm2"  # https://iterm2.com/
+cask "jetbrains-toolbox"  # https://www.jetbrains.com/toolbox-app/
+cask "keepingyouawake"  # maintained caffeinate wrapper
+cask "kindle"  # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
+cask "kindle-previewer"  # https://www.amazon.com/Kindle-Previewer/b?ie=UTF8&node=21381691011
+cask "logitech-g-hub"  # http://logitechg.com/support/g305
+cask "logitech-options"  # MX Keys for Mac external keyboard
+cask "logseq"  # https://github.com/logseq/logseq
+cask "microsoft-office"  # https://products.office.com/mac/microsoft-office-for-mac/
+cask "orbstack"  # https://github.com/orbstack/orbstack?tab=readme-ov-file
+cask "raycast"  # https://raycast.app/
+cask "rescuetime"  # https://www.rescuetime.com/
+cask "send-to-kindle"  # https://www.amazon.com/gp/sendtokindle/mac
 cask "signal"
 cask "spotify"
-cask "syncthing"
+cask "syncthing"  # https://syncthing.net/
 cask "telegram"
 cask "the-unarchiver"
-cask "tor-browser"
+cask "tor-browser"  # https://www.torproject.org/
 cask "visual-studio-code"
 cask "vlc"
-cask "xquartz"
+cask "xquartz"  # https://www.xquartz.org/
 cask "zoom"
 
 # Kubernetes

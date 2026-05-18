@@ -4,9 +4,9 @@
 # Taps
 
 # Brews
-brew "gromgit/fuse/ntfs-3g-mac"
+brew "gromgit/fuse/ntfs-3g-mac"  # Read-write NTFS driver for FUSE https://www.tuxera.com/community/open-source-ntfs-3g/
 
 # Casks
-cask "brave-browser"
-cask "brave-browser@beta"
-cask "transmission-remote-gui"
+cask "brave-browser"  # https://brave.com/
+cask "brave-browser@beta"  # https://brave.com/download-beta/
+cask "transmission-remote-gui"  # https://github.com/transmission-remote-gui/transgui

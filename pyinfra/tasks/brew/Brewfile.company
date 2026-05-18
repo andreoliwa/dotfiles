@@ -4,17 +4,17 @@
 # Taps
 
 # Brews
-brew "actionlint"
-brew "aviator-co/tap/av"
-brew "aws-iam-authenticator"
-brew "awscli"
-brew "gradle-completion"
-brew "mike-engel/jwt-cli/jwt-cli"
-brew "protobuf"
-brew "vault"
+brew "actionlint"  # https://github.com/rhysd/actionlint
+brew "aviator-co/tap/av"  # https://github.com/aviator-co/av
+brew "aws-iam-authenticator"  # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
+brew "awscli"  # https://aws.amazon.com/cli/ Newer versions 2.*
+brew "gradle-completion"  # https://github.com/gradle/gradle-completion
+brew "mike-engel/jwt-cli/jwt-cli"  # https://github.com/mike-engel/jwt-cli
+brew "protobuf"  # https://github.com/protocolbuffers/protobuf
+brew "vault"  # Hashicorp https://www.vaultproject.io/
 
 # Casks
-cask "aws-vault"
+cask "aws-vault"  # https://github.com/99designs/aws-vault#installing
 cask "google-chrome"
-cask "postman"
-cask "slack"
+cask "postman"  # https://www.postman.com/
+cask "slack"  # https://slack.com/

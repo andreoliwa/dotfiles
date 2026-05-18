@@ -53,7 +53,13 @@ def assemble_shell_d(use_symlinks: bool) -> str:
     for tasks_dir in all_dirs:
         if not tasks_dir.absolute_path.is_dir():
             continue
-        fragments = sorted(tasks_dir.absolute_path.rglob("*.sh"), key=lambda p: p.name)
+        # Only pick up fragments named NN-*.sh (two leading digits + dash).
+        # Convention doubles as a load-order prefix and prevents accidental
+        # globbing of helper scripts like brew/askpass.sh.
+        fragments = sorted(
+            (p for p in tasks_dir.absolute_path.rglob("[0-9][0-9]-*.sh")),
+            key=lambda p: p.name,
+        )
         for fragment in fragments:
             dest = Path(tmp_dir) / _symlink_name(fragment, tasks_dir.label)
             if use_symlinks:

@@ -1,52 +1,50 @@
-"""Install pipx and manage pipx-installed packages from pipx.toml."""
+"""Install pipx and manage pipx-installed packages from inventory.
 
-import os
-import tomllib
-from pathlib import Path
+Reads ``host.data.pipx_packages`` (list[str]) and ``host.data.pipx_injects``
+(dict[str, list[str]]) - both JSON-encoded by Server.to_pyinfra_host().
+"""
+
+import json
 
 from pyinfra.operations import server
 
-IS_COMPANY_LAPTOP = bool(os.environ.get("COMPANY_LAPTOP"))
+from pyinfra import host
 
-_PIPX = tomllib.loads((Path(__file__).parent / "pipx.toml").read_text())
+_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
+_ENV = {"PATH": f"$HOME/.local/bin:{_BREW_PATH}:/usr/bin:/bin"}
 
 server.shell(
     name="Install pipx via pip",
     commands=["python3 -m pip install -U --user pipx"],
+    _env=_ENV,
 )
 
 server.shell(
     name="Ensure pipx is on PATH",
     commands=["pipx ensurepath"],
+    _env=_ENV,
     _ignore_errors=True,
 )
 
-# -- uninstall removed modules -------------------------------------------------
 
-_remove = list(_PIPX.get("remove", []))
-if IS_COMPANY_LAPTOP:
-    _remove += _PIPX.get("personal_laptop", [])
-else:
-    _remove += _PIPX.get("company_laptop", [])
+def _decode(raw: object, default: object) -> object:
+    if isinstance(raw, str) and raw:
+        return json.loads(raw)
+    return raw or default
 
-for _pkg in _remove:
-    server.shell(
-        name=f"pipx uninstall {_pkg}",
-        commands=[f"pipx uninstall {_pkg}"],
-        _ignore_errors=True,
-    )
 
-# -- install modules -----------------------------------------------------------
+_packages: list[str] = _decode(host.data.get("pipx_packages", "[]"), [])  # type: ignore[assignment]
+_injects: dict[str, list[str]] = _decode(host.data.get("pipx_injects", "{}"), {})  # type: ignore[assignment]
 
-_install = list(_PIPX.get("common", []))
-if IS_COMPANY_LAPTOP:
-    _install += _PIPX.get("company_laptop", [])
-else:
-    _install += _PIPX.get("personal_laptop", [])
-
-for _pkg in _install:
+for _pkg in _packages:
     server.shell(
         name=f"pipx install {_pkg}",
-        commands=[f"pipx install --verbose {_pkg}"],
-        _ignore_errors=True,
+        commands=[f"pipx install --force --include-deps {_pkg}"],
+        _env=_ENV,
     )
+    for _inject in _injects.get(_pkg, []):
+        server.shell(
+            name=f"pipx inject {_pkg} <- {_inject}",
+            commands=[f"pipx inject --force -e {_pkg} {_inject}"],
+            _env=_ENV,
+        )

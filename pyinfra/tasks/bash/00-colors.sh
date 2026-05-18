@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# howdoi bash colors
+# Bash color env vars + echo_error/echo_success helpers.
 # Black        0;30     Dark Gray     1;30
 # Red          0;31     Light Red     1;31
 # Green        0;32     Light Green   1;32

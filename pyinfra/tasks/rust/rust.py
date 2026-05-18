@@ -16,6 +16,12 @@ _CARGO_BINARIES = [
     "tailspin",
 ]
 
+# Rust binaries installed from source (no PyPI/crates.io release).
+_CARGO_GIT_REPOS = [
+    # https://github.com/gnprice/toml-cli
+    "https://github.com/gnprice/toml-cli",
+]
+
 server.shell(
     name="rustup install nightly",
     commands=["rustup toolchain install nightly --no-self-update"],
@@ -26,5 +32,12 @@ for _pkg in _CARGO_BINARIES:
     server.shell(
         name=f"cargo install {_pkg}",
         commands=[f"cargo install --quiet --locked {_pkg}"],
+        _env=_ENV,
+    )
+
+for _repo in _CARGO_GIT_REPOS:
+    server.shell(
+        name=f"cargo install --git {_repo}",
+        commands=[f"cargo install --quiet --git {_repo}"],
         _env=_ENV,
     )

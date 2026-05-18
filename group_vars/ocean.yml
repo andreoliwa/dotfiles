@@ -9,5 +9,4 @@ apt_packages:
   - gddrescue
   - pv
   - testdisk
-  # TODO feat: install zerotier-one # https://www.zerotier.com/download.shtml
   - pgcli

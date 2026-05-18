@@ -11,7 +11,6 @@
 
     # Tools
     - { role: gnome_do, tags: ["gnome_do", "alfred"] }
-    - { role: browser, tags: ["browser"] }
     - { role: fzf, tags: ["fzf"] }
     - { role: vim, tags: ["vim"] }
     - { role: bat, tags: ["bat"] }
@@ -19,7 +18,6 @@
 
     # Depend on pipx:
     - { role: invoke, tags: ["invoke"] }
-    - { role: gita, tags: ["gita", "git"] }
     - { role: mkdocs, tags: ["mkdocs", "docs"] }
 
     - { role: docker, tags: ["docker"] }
@@ -35,4 +33,3 @@
 
     # Personal and last
     - { role: organize, tags: ["organize"] }
-    - { role: personal, tags: ["personal"] }

@@ -9,12 +9,13 @@ import tomllib
 from pathlib import Path
 
 from pyinfra.facts.server import Kernel
-from shared import make_env, shell
+from shared import make_env, shell, sudo_env
 
 from pyinfra import host
 
 HERE = Path(__file__).parent
 _ENV = make_env()
+_SUDO_ENV = sudo_env()
 
 
 def _load(name: str) -> dict:
@@ -40,7 +41,7 @@ if host.get_fact(Kernel) == "Darwin":
     for _pkg in _remove_ids:
         shell(
             name=f"mas uninstall {_pkg}",
-            commands=[f"sudo mas uninstall {_pkg}"],
-            _env=_ENV,
+            commands=[f"sudo -A mas uninstall {_pkg}"],
+            _env=_SUDO_ENV,
             _ignore_errors=True,
         )

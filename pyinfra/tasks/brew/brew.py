@@ -8,7 +8,7 @@ from pathlib import Path
 
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import files
-from shared import home_path, make_env, shell
+from shared import ASKPASS_PATH, home_path, make_env, shell, sudo_env
 
 from pyinfra import host
 
@@ -29,7 +29,7 @@ if not COMMON.exists() or not VARIANT_FILE.exists():
 _REMOTE_COMMON = home_path(".Brewfile.common")
 _REMOTE_VARIANT = home_path(".Brewfile.variant")
 _REMOTE_FINAL = home_path(".Brewfile")
-_REMOTE_ASKPASS = home_path(".local/bin/dotf-askpass.sh")
+_REMOTE_ASKPASS = home_path(ASKPASS_PATH)
 
 
 def _brew_bin() -> str:
@@ -84,9 +84,8 @@ shell(
     name="brew bundle (install formulae + casks + taps)",
     commands=[f"sudo -A -v && {_brew_bin()} bundle --global --verbose"],
     _env={
-        **_ENV,
+        **sudo_env(),
         "HOMEBREW_NO_AUTO_UPDATE": "1",
         "HOMEBREW_BUNDLE_NO_LOCK": "1",
-        "SUDO_ASKPASS": _REMOTE_ASKPASS,
     },
 )

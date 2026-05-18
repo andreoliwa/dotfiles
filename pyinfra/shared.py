@@ -37,6 +37,24 @@ def home_path(*parts: str) -> str:
     return "/".join([host.get_fact(Home), *parts])
 
 
+# Path where brew.py installs the askpass helper (see tasks/brew/askpass.sh).
+# Tasks that run `sudo -A` must pass `sudo_env()` so the helper is found.
+ASKPASS_PATH = ".local/bin/dotf-askpass.sh"
+
+
+def sudo_env(*prepend_paths: str) -> dict[str, str]:
+    """Return `_env` with PATH + SUDO_ASKPASS for non-TTY `sudo -A` calls.
+
+    pyinfra runs commands without a TTY, so plain `sudo` hangs on the password
+    prompt. Use `sudo -A <cmd>` with this env so sudo reads the password from
+    the askpass helper (GUI prompt first run, login-keychain cache after).
+
+    Requires tasks/brew/brew.py to have installed the helper first; brew runs
+    early in the inventory, so any later task can rely on it being present.
+    """
+    return {**make_env(*prepend_paths), "SUDO_ASKPASS": home_path(ASKPASS_PATH)}
+
+
 # Single log file all `shell()` ops append to; follow with `dotf tail`.
 PROVISION_LOG = ".cache/dotf/provision.log"
 

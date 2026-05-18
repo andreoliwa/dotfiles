@@ -20,12 +20,6 @@ ansible_connection=ssh
 # https://github.com/ansible/ansible/issues/62722#issuecomment-537096638
 ansible_python_interpreter=/usr/bin/python
 
-[ocean]
-gotham
-
-[aws:vars]
-ansible_connection=ssh
-
 [hetzner]
 rlyeh
 

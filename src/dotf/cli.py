@@ -185,7 +185,7 @@ def legacy(  # noqa: PLR0913
     sudo: Annotated[bool, typer.Option("--sudo", help="Ask become password.")] = False,
     remote: Annotated[
         str | None,
-        typer.Option("--remote", "-r", metavar="TARGET", help="Setup remote server (pi, aws, ocean, hetzner)."),
+        typer.Option("--remote", "-r", metavar="TARGET", help="Setup remote server (pi, aws, hetzner)."),
     ] = None,
     tags: Annotated[list[str] | None, typer.Argument(metavar="TAG", help="Ansible role tags.")] = None,
 ) -> None:

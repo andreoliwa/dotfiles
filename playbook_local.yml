@@ -1,3 +1,0 @@
-- name: Set up local development environment
-  hosts: local
-  roles: []

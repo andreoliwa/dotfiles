@@ -1,5 +1,0 @@
-- name: Set up the AWS EC2 instance
-  hosts: aws
-  roles:
-    # Tag each role so that we can select individual roles to run with ansible-playbook --tags
-    []

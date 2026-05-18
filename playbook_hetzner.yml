@@ -1,5 +1,0 @@
-- name: Set up the Hetzner instance
-  hosts: rlyeh
-  roles:
-    # Tag each role so that we can select individual roles to run with ansible-playbook --tags
-    []

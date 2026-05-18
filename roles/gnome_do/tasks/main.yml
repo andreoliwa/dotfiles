@@ -1,6 +1,0 @@
-- name: "Install Alfred"
-  import_tasks: darwin.yml
-  when: ansible_os_family == "Darwin"
-- name: "Install Gnome Do"
-  import_tasks: debian.yml
-  when: ansible_os_family == "Debian"

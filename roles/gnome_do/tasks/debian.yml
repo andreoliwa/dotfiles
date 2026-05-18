@@ -1,5 +1,0 @@
-- name: Install gnome-do and plugins with apt
-  apt:
-    name: ["gnome-do", "gnome-do-plugins"]
-    state: latest
-  become: true

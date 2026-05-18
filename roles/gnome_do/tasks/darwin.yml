@@ -1,2 +1,0 @@
-- name: Install Alfred (similar to gnome-do) with Homebrew
-  homebrew_cask: name=alfred state=present

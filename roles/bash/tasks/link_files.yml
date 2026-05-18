@@ -1,7 +1,0 @@
-- name: "Link dotfiles-bash-completion.sh"
-  file:
-    src: "{{ role_path }}/files/dotfiles-bash-completion.sh"
-    dest: "{{ mac_homebrew_prefix }}/etc/bash_completion.d/dotfiles-bash-completion.sh"
-    state: link
-    force: yes
-    follow: false

@@ -1,6 +1,0 @@
-- import_tasks: darwin.yml
-  when: ansible_os_family == "Darwin"
-- import_tasks: debian.yml
-  when: ansible_os_family in ("Debian", "OSMC")
-- import_tasks: redhat.yml
-  when: ansible_os_family == "RedHat"

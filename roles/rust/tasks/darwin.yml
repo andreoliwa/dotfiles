@@ -1,3 +1,0 @@
-- name: Install dependencies on macOS
-  homebrew:
-    name: ["openssl", "cmake"]

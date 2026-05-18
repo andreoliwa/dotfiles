@@ -1,6 +1,0 @@
-- name: Install dependencies
-  ansible.builtin.apt:
-    name:
-      - libssl-dev
-      - cmake
-  become: true

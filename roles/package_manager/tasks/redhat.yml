@@ -1,4 +1,0 @@
-- name: Upgrade yum packages
-  yum: name=* state=latest
-  when: package_upgrade
-  become: true

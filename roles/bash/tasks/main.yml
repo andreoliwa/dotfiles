@@ -54,36 +54,6 @@
       # shellcheck source=/dev/null
       test -f "$HOME"/.cache/dotfiles/cached_script.sh && source "$HOME"/.cache/dotfiles/cached_script.sh
 
-- name: "complete_alias: Copy script from https://github.com/cykerway/complete-alias"
-  get_url:
-    url: "https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias"
-    dest: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/complete_alias.bash-completion"
-
-- name: "complete_alias: Add aliases to script"
-  blockinfile:
-    path: "{{ ansible_env.BASH_COMPLETION_USER_DIR }}/completions/complete_alias.bash-completion"
-    marker: "# ==================== {mark} My aliases"
-    block: |
-      # keep-sorted start
-      complete -F _complete_alias d
-      complete -F _complete_alias dc
-      complete -F _complete_alias dk
-      complete -F _complete_alias g
-      complete -F _complete_alias ga
-      complete -F _complete_alias gb
-      complete -F _complete_alias gco
-      complete -F _complete_alias gl
-      complete -F _complete_alias gp
-      complete -F _complete_alias gs
-      complete -F _complete_alias gst
-      complete -F _complete_alias i
-      complete -F _complete_alias ih
-      complete -F _complete_alias ir
-      complete -F _complete_alias k
-      complete -F _complete_alias p
-      complete -F _complete_alias rsync-default
-      # keep-sorted end
-
 - name: "dotf cache: Create cached script that will be sourced on .bashrc"
   command: "dotf cache"
   when:

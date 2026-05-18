@@ -46,3 +46,47 @@ git.repo(
     branch="master",
     pull=False,
 )
+
+# complete_alias: bash completion for aliases.
+# https://github.com/cykerway/complete-alias
+_COMPLETE_ALIAS = "$HOME/.local/share/bash-completion/completions/complete_alias.bash-completion"
+_COMPLETE_ALIASES = (
+    # keep-sorted start
+    "d",
+    "dc",
+    "dk",
+    "g",
+    "ga",
+    "gb",
+    "gco",
+    "gl",
+    "gp",
+    "gs",
+    "gst",
+    "i",
+    "ih",
+    "ir",
+    "k",
+    "p",
+    "rsync-default",
+    # keep-sorted end
+)
+_MARKER = "# === complete_alias: my aliases ==="
+
+server.shell(
+    name="Download complete_alias completion script",
+    commands=[
+        f"curl -fsSL -o {_COMPLETE_ALIAS} "
+        "https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias",
+    ],
+    _env=_ENV,
+)
+
+_block = "\\n".join(f"complete -F _complete_alias {a}" for a in _COMPLETE_ALIASES)
+server.shell(
+    name="Append my aliases to complete_alias completion",
+    commands=[
+        f"grep -qF '{_MARKER}' {_COMPLETE_ALIAS} || printf '\\n{_MARKER}\\n{_block}\\n' >> {_COMPLETE_ALIAS}",
+    ],
+    _env=_ENV,
+)

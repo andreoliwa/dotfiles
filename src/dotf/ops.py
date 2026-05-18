@@ -379,7 +379,12 @@ def apply_pyinfra(
         s.name == server and s.host == _LOCAL_HOST for s in _load_servers(_repo_root)
     )
     pyinfra_bin = Path(sys.executable).parent / "pyinfra" if is_local else _ensure_system_pyinfra()
-    run([str(pyinfra_bin), "inventory.py", "deploy.py", *extra], cwd=str(workdir))
+    # Run from $HOME so pyinfra's relative-path display does not contain `../`s.
+    # inventory.py + deploy.py are passed as absolute paths.
+    run(
+        [str(pyinfra_bin), str(workdir / "inventory.py"), str(workdir / "deploy.py"), *extra],
+        cwd=str(Path.home()),
+    )
 
 
 def _homebrew_prefix() -> Path:

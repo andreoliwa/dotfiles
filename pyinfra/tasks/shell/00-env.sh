@@ -4,6 +4,9 @@
 # Terminal editor
 export EDITOR='vim'
 
+# ripgrep config
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 # X11 display (for tools like feh)
 export DISPLAY=:0.0
 

@@ -69,6 +69,13 @@ server.shell(
 
 server.shell(
     name="brew bundle (install formulae + casks + taps)",
-    commands=[f"{_brew_bin()} bundle --global --verbose"],
+    commands=[
+        # tee to a log so progress is visible from another pane: `tail -f ~/.cache/dotf/brew-bundle.log`
+        f"mkdir -p {home_path('.cache/dotf')} && "
+        f"{_brew_bin()} bundle --global --verbose 2>&1 | tee {home_path('.cache/dotf/brew-bundle.log')}; "
+        # propagate brew's exit code from pipeline
+        f"test ${{PIPESTATUS[0]:-0}} -eq 0",
+    ],
     _env={**_ENV, "HOMEBREW_NO_AUTO_UPDATE": "1", "HOMEBREW_BUNDLE_NO_LOCK": "1"},
+    _shell_executable="bash",
 )

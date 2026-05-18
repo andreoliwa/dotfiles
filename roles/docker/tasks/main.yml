@@ -1,5 +1,2 @@
-- import_tasks: osmc.yml
-  when: ansible_os_family == "OSMC"
-
 - import_tasks: darwin.yml
   when: ansible_os_family == "Darwin"

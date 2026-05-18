@@ -59,7 +59,11 @@ def _provision_impl(
     if start_from:
         from dotf.ops import _load_servers
 
-        server_obj = next((s for s in _load_servers(repo) if s.name == resolved_server), None)
+        servers = _load_servers(repo)
+        # Match by name first; fall back to host (handles default "@local").
+        server_obj = next((s for s in servers if s.name == resolved_server), None)
+        if server_obj is None:
+            server_obj = next((s for s in servers if s.host == resolved_server), None)
         order = list(server_obj.tools) if server_obj else (tools_list or [])
         if start_from not in order:
             typer.echo(f"--start-from '{start_from}' not in server '{resolved_server}' tools: {order}", err=True)

@@ -288,26 +288,6 @@ apt_packages:
   - xfce4
   # keep-sorted end
 
-# Mac-App-Store-only apps to be installed with mas
-# Use App IDs found with `mas search <name>`
-mac_mas_packages:
-  common:
-    # keep-sorted start
-    # To enable biometric unlock, Bitwarden has to be installed from the App Store, not from a cask
-    - 1352778147 # Bitwarden https://itunes.apple.com/us/app/id1352778147
-    - 409203825 # Numbers https://itunes.apple.com/us/app/id409203825
-    - 973134470 # Be Focused - Focus Timer https://apps.apple.com/us/app/be-focused-focus-timer/id973134470
-    # keep-sorted end
-  personal_laptop:
-  company_laptop:
-  remove:
-    # keep-sorted start
-    - 1153157709 # Speedtest by Ookla https://itunes.apple.com/us/app/id1153157709
-    - 1291898086 # Toggl Track https://apps.apple.com/us/app/toggl-track-hours-time-log/id1291898086
-    - 526298438 # Lightshot Screenshot https://apps.apple.com/us/app/lightshot-screenshot/id526298438
-    - 585829637 # Todoist https://itunes.apple.com/us/app/id585829637
-    # keep-sorted end
-
 # Node utilities
 npm_global_packages:
   common:

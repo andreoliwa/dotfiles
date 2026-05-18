@@ -1,0 +1,13 @@
+# Mac App Store packages shared by every variant.
+# Each entry: app id  # name url
+install = [
+    1352778147, # Bitwarden https://itunes.apple.com/us/app/id1352778147
+    409203825,  # Numbers https://itunes.apple.com/us/app/id409203825
+    973134470,  # Be Focused - Focus Timer https://apps.apple.com/us/app/be-focused-focus-timer/id973134470
+]
+remove = [
+    1153157709, # Speedtest by Ookla
+    1291898086, # Toggl Track
+    526298438,  # Lightshot Screenshot
+    585829637,  # Todoist
+]

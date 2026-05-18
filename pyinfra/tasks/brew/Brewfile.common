@@ -15,6 +15,7 @@ brew "bash-completion2"  # https://github.com/scop/bash-completion
 brew "blueutil"  # https://github.com/toy/blueutil
 brew "colordiff"  # https://www.colordiff.org/
 brew "coreutils"  # https://www.gnu.org/software/coreutils
+brew "ctags"  # https://ctags.sourceforge.net/ exuberant-ctags for vim TagBar
 brew "ctop"  # Top for docker containers
 brew "curl"
 brew "diff-so-fancy"
@@ -37,6 +38,7 @@ brew "jmespath/jmespath/jp"  # https://github.com/jmespath/jp
 brew "jq"  # https://github.com/stedolan/jq
 brew "jrnl"  # https://jrnl.sh/
 brew "libsodium"  # can't be removed from personal_laptop, required by ffmpeg and zeromq
+brew "macvim"  # https://github.com/macvim-dev/macvim GUI vim, also overrides system vim
 brew "moreutils"  # https://joeyh.name/code/moreutils/ with the sponge command
 brew "nmap"
 brew "pidof"  # http://www.nightproductions.net/cli.htm

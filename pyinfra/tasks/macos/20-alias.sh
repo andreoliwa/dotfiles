@@ -1,4 +1,5 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+# shellcheck disable=SC2086,SC2139
 alias cask="brew cask"
 alias services="brew services"
 

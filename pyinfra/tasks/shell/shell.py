@@ -90,3 +90,12 @@ files.sync(
     dest=SHELL_D,
     delete=True,
 )
+
+# Purge legacy Ansible bash bridge cache. cached_script.sh was sourced by
+# 32-ansible.sh (deleted) and injected PATH=$PATH:~/dotfiles/bin from the old
+# roles. Removed unconditionally so stale caches don't leak into new shells.
+files.directory(
+    name="Remove legacy ~/.cache/dotfiles cache",
+    path=str(Path(host.get_fact(Home)) / ".cache" / "dotfiles"),
+    present=False,
+)

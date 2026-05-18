@@ -11,6 +11,7 @@ import typer
 from dotf.ops import (
     _chezmoi_remote_diff,
     _print_green,
+    _print_yellow,
     _private_pyinfra,
     apply_chezmoi,
     apply_pyinfra,
@@ -83,6 +84,7 @@ def _provision_impl(
         if not confirmed:
             tools_list = [t for t in (tools_list or []) if t != "chezmoi"]
 
+    _print_yellow("Tip: run `dotf tail` in another terminal to follow server.shell output.")
     apply_pyinfra(private_pyinfra, resolved_server, tools_list, yes=_yes())
 
 

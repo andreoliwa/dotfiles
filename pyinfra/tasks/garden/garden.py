@@ -23,12 +23,6 @@ shell(
 )
 
 shell(
-    name="cargo install fren",
-    commands=["cargo install --quiet --locked fren"],
-    _env=_ENV,
-)
-
-shell(
     name="garden grow",
     commands=[
         # Use whatever garden config the user has under ~/.config/garden/.

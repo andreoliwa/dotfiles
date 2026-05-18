@@ -11,7 +11,7 @@ if host.get_fact(Kernel) == "Darwin":
     shell(
         name="fzf install (key bindings + completion)",
         commands=[
-            '"$(brew --prefix)/opt/fzf/install" --bash --key-bindings --completion --no-update-rc',
+            '"$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc',
         ],
         _env=_ENV,
     )

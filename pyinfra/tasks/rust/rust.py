@@ -13,7 +13,6 @@ _ENV = {"PATH": f"$HOME/.cargo/bin:{_BREW_PATH}:/usr/bin:/bin"}
 _CARGO_BINARIES = [
     "cargo-update",
     "cargo-workspaces",
-    "eza",
     "tailspin",
 ]
 

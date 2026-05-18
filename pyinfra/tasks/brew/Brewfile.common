@@ -1,5 +1,8 @@
 # Brewfile.common - entries shared by every variant.
 
+# macFUSE cask must install before any gromgit/fuse formula.
+cask "macfuse"
+
 # Taps
 tap "gromgit/fuse"
 tap "jmespath/jmespath"
@@ -85,7 +88,6 @@ cask "kindle-previewer"
 cask "logitech-g-hub"
 cask "logitech-options"
 cask "logseq"
-cask "macfuse"
 cask "microsoft-office"
 cask "orbstack"
 cask "raycast"

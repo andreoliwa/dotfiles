@@ -19,10 +19,6 @@
   ansible.builtin.import_tasks: chezmoi.yaml
   when: ansible_os_family == "Darwin"
 
-- name: "Install atuin"
-  ansible.builtin.import_tasks: atuin.yaml
-  when: ansible_os_family == "Darwin"
-
 # https://github.com/powerline/powerline
 # https://github.com/b-ryan/powerline-shell
 # They are both slow and ugly (maybe a font needs to be configured).

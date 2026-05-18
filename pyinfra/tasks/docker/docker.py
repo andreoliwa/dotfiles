@@ -9,9 +9,9 @@ repo, switches iptables to legacy, adds the osmc user to the docker group.
 Reference: https://docs.docker.com/engine/install/debian/
 """
 
-from constants import make_env
 from pyinfra.facts.server import Kernel, LinuxName
 from pyinfra.operations import apt, server
+from shared import make_env
 
 from pyinfra import host
 

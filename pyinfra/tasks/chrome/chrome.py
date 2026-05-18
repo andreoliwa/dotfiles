@@ -8,9 +8,9 @@ Set host.data.brew_variant to switch the personal/company list. Default is
 "company".
 """
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import server
+from shared import make_env
 
 from pyinfra import host
 

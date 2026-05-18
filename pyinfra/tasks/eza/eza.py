@@ -1,9 +1,9 @@
 """eza: install via cargo. Shell aliases ship as a shell.d fragment."""
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
-_ENV = make_env("$HOME/.cargo/bin")
+_ENV = make_env(home_path(".cargo/bin"))
 
 server.shell(
     name="cargo install eza",

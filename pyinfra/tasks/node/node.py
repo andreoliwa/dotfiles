@@ -5,12 +5,12 @@ company/personal package list based on host.data.brew_variant (defaults to
 company).
 """
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
 from pyinfra import host
 
-_ENV = make_env("$HOME/.local/share/mise/shims")
+_ENV = make_env(home_path(".local/share/mise/shims"))
 
 _COMMON: list[str] = ["prettier"]
 _PERSONAL: list[str] = []

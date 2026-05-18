@@ -1,9 +1,9 @@
 """Poetry bash completion. Poetry itself is installed by mise."""
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
-_ENV = make_env("$HOME/.local/share/mise/shims")
+_ENV = make_env(home_path(".local/share/mise/shims"))
 
 server.shell(
     name="Remove legacy ~/.poetry dir",

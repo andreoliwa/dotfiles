@@ -1,8 +1,8 @@
 """fzf: assumes brew installed it (Brewfile), runs the key-bindings installer."""
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import server
+from shared import make_env
 
 from pyinfra import host
 

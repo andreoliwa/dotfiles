@@ -4,8 +4,8 @@ gh comes from Brewfile. Identity, signing key, and gpgsign flags are
 configured per-profile in chezmoi (private gitconfig overlay).
 """
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import make_env
 
 _ENV = make_env()
 

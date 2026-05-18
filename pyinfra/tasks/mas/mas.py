@@ -8,9 +8,9 @@ Server.brew_variant == "personal").
 import tomllib
 from pathlib import Path
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import server
+from shared import make_env
 
 from pyinfra import host
 

@@ -1,7 +1,7 @@
 """vim: install vim-plug plugin manager. Vim itself comes from Brewfile (macvim)."""
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import make_env
 
 _ENV = make_env()
 

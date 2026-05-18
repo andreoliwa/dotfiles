@@ -6,12 +6,12 @@ Reads ``host.data.pipx_packages`` (list[str]) and ``host.data.pipx_injects``
 
 import json
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
 from pyinfra import host
 
-_ENV = make_env("$HOME/.local/bin")
+_ENV = make_env(home_path(".local/bin"))
 
 server.shell(
     name="Install pipx via pip",

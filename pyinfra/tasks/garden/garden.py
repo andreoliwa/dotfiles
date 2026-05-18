@@ -6,10 +6,10 @@ Prerequisites:
 - ~/.config/garden/garden.yaml deployed via chezmoi (private overlay).
 """
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
-_ENV = make_env("$HOME/.cargo/bin")
+_ENV = make_env(home_path(".cargo/bin"))
 
 server.shell(
     name="rustup default stable",

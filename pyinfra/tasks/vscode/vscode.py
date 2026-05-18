@@ -6,9 +6,9 @@ installs every extension listed in extensions.txt via `code --install-extension`
 
 from pathlib import Path
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import server
+from shared import make_env
 
 from pyinfra import host
 

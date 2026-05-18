@@ -6,9 +6,9 @@ for packages already installed.
 
 from pathlib import Path
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import files, server
+from shared import home_path, make_env
 
 from pyinfra import host
 
@@ -24,6 +24,10 @@ if not COMMON.exists() or not VARIANT_FILE.exists():
     _missing = [str(p) for p in (COMMON, VARIANT_FILE) if not p.exists()]
     _msg = f"Brewfile(s) not found: {_missing}. Check brew_variant on Server."
     raise SystemExit(_msg)
+
+_REMOTE_COMMON = home_path(".Brewfile.common")
+_REMOTE_VARIANT = home_path(".Brewfile.variant")
+_REMOTE_FINAL = home_path(".Brewfile")
 
 
 def _brew_bin() -> str:
@@ -46,20 +50,20 @@ server.shell(
 files.put(
     name="Sync Brewfile.common to ~/.Brewfile.common",
     src=str(COMMON),
-    dest="~/.Brewfile.common",
+    dest=_REMOTE_COMMON,
     mode="644",
 )
 
 files.put(
     name=f"Sync Brewfile.{_VARIANT} to ~/.Brewfile.variant",
     src=str(VARIANT_FILE),
-    dest="~/.Brewfile.variant",
+    dest=_REMOTE_VARIANT,
     mode="644",
 )
 
 server.shell(
     name="Concatenate ~/.Brewfile from common + variant",
-    commands=["cat $HOME/.Brewfile.common $HOME/.Brewfile.variant > $HOME/.Brewfile"],
+    commands=[f"cat {_REMOTE_COMMON} {_REMOTE_VARIANT} > {_REMOTE_FINAL}"],
     _env=_ENV,
 )
 

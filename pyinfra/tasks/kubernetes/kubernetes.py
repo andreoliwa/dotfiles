@@ -1,9 +1,9 @@
 """Kubernetes CLI: krew plugins. Binaries come from Brewfile."""
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
-_ENV = make_env("$HOME/.krew/bin")
+_ENV = make_env(home_path(".krew/bin"))
 
 _KREW_PLUGINS = [
     "score",

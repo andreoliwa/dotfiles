@@ -10,6 +10,7 @@ import json
 
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import apt, files, server
+from shared import home_path
 
 from pyinfra import host
 
@@ -36,7 +37,7 @@ if host.get_fact(Kernel) == "Linux":
     )
     files.directory(
         name="Ensure ~/OneDrive/Backup",
-        path="~/OneDrive/Backup",
+        path=home_path("OneDrive/Backup"),
     )
 
     # bash-powerline: https://github.com/riobard/bash-powerline (RPi + Hetzner only)

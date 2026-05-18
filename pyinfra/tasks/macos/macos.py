@@ -4,13 +4,14 @@ from pathlib import Path
 
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import files, server
+from shared import home_path
 
 from pyinfra import host
 
 HERE = Path(__file__).parent
 _SCRIPT = HERE / "set-defaults.bash"
 
-_DEST = "$HOME/.cache/dotf/set-defaults.bash"
+_DEST = home_path(".cache/dotf/set-defaults.bash")
 
 if host.get_fact(Kernel) == "Darwin":
     server.shell(

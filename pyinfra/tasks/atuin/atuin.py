@@ -4,10 +4,10 @@ Shell fragment lives in 99-init.sh in this same dir.
 Reference: https://docs.atuin.sh/guide/installation/
 """
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
-_ENV = make_env("$HOME/.atuin/bin")
+_ENV = make_env(home_path(".atuin/bin"))
 
 server.shell(
     name="Install atuin",

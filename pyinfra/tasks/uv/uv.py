@@ -6,13 +6,13 @@ server's uv_packages list (from inventory).
 
 import json
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import brew, server
+from shared import home_path, make_env
 
 from pyinfra import host
 
-_ENV = make_env("$HOME/.local/bin")
+_ENV = make_env(home_path(".local/bin"))
 
 if host.get_fact(Kernel) == "Darwin":
     brew.packages(

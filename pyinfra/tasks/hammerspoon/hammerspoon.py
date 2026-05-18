@@ -3,9 +3,9 @@
 Hammerspoon cask + init.lua come from Brewfile + chezmoi respectively.
 """
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import git, server
+from shared import make_env
 
 from pyinfra import host
 

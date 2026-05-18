@@ -10,9 +10,9 @@ Brewfile installs bash + bash-completion@2. This task wires the rest:
 .bashrc itself is deployed via chezmoi (dotfiles/chezmoi/dot_bashrc).
 """
 
-from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import git, server
+from shared import home_path, make_env
 
 from pyinfra import host
 
@@ -49,7 +49,7 @@ git.repo(
 
 # complete_alias: bash completion for aliases.
 # https://github.com/cykerway/complete-alias
-_COMPLETE_ALIAS = "$HOME/.local/share/bash-completion/completions/complete_alias.bash-completion"
+_COMPLETE_ALIAS = home_path(".local/share/bash-completion/completions/complete_alias.bash-completion")
 _COMPLETE_ALIASES = (
     # keep-sorted start
     "d",

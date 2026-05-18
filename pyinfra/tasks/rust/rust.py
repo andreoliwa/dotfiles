@@ -5,10 +5,10 @@ rustup-init comes from Brewfile. The garden task already invokes
 task adds the nightly toolchain and a list of cargo binaries.
 """
 
-from constants import make_env
 from pyinfra.operations import server
+from shared import home_path, make_env
 
-_ENV = make_env("$HOME/.cargo/bin")
+_ENV = make_env(home_path(".cargo/bin"))
 
 _CARGO_BINARIES = [
     "cargo-update",

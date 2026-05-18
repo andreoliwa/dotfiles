@@ -374,7 +374,11 @@ def apply_pyinfra(
         extra.append("-y")
     if os.environ.get("DOTF_DEBUG"):
         extra.append("-v")
-    pyinfra_bin = _ensure_system_pyinfra() if server != _LOCAL_HOST else Path(sys.executable).parent / "pyinfra"
+    _repo_root = private_pyinfra.parent if private_pyinfra is not None else None
+    is_local = server == _LOCAL_HOST or any(
+        s.name == server and s.host == _LOCAL_HOST for s in _load_servers(_repo_root)
+    )
+    pyinfra_bin = Path(sys.executable).parent / "pyinfra" if is_local else _ensure_system_pyinfra()
     run([str(pyinfra_bin), "inventory.py", "deploy.py", *extra], cwd=str(workdir))
 
 

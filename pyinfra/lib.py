@@ -25,6 +25,12 @@ class Server:
     aliases: list[str] = field(default_factory=list)
     ssh_user: str = ""
     mise_compile: bool = False
+    brew_variant: str = "company"
+    uv_packages: list[str] = field(default_factory=list)
+    uv_extra_args: dict[str, list[str]] = field(default_factory=dict)
+    pipx_packages: list[str] = field(default_factory=list)
+    pipx_injects: dict[str, list[str]] = field(default_factory=dict)
+    conjuring_mode: str = "personal"
 
     @property
     def ssh_allow_agent(self) -> bool:
@@ -40,6 +46,12 @@ class Server:
             "aliases": self.aliases,
             "ssh_user": self.ssh_user,
             "mise_compile": self.mise_compile,
+            "brew_variant": self.brew_variant,
+            "uv_packages": self.uv_packages,
+            "uv_extra_args": self.uv_extra_args,
+            "pipx_packages": self.pipx_packages,
+            "pipx_injects": self.pipx_injects,
+            "conjuring_mode": self.conjuring_mode,
         }
 
     @classmethod
@@ -57,6 +69,12 @@ class Server:
             aliases=data.get("aliases", []),
             ssh_user=data.get("ssh_user", ""),
             mise_compile=data.get("mise_compile", False),
+            brew_variant=data.get("brew_variant", "company"),
+            uv_packages=data.get("uv_packages", []),
+            uv_extra_args=data.get("uv_extra_args", {}),
+            pipx_packages=data.get("pipx_packages", []),
+            pipx_injects=data.get("pipx_injects", {}),
+            conjuring_mode=data.get("conjuring_mode", "personal"),
         )
 
     @classmethod
@@ -87,6 +105,19 @@ class Server:
             data["ssh_allow_agent"] = True
         if self.mise_compile:
             data["mise_compile"] = self.mise_compile
+        if self.brew_variant != "company":
+            data["brew_variant"] = self.brew_variant
+        # Pass package lists as JSON strings; tasks json.loads them.
+        if self.uv_packages:
+            data["uv_packages"] = json.dumps(self.uv_packages)
+        if self.uv_extra_args:
+            data["uv_extra_args"] = json.dumps(self.uv_extra_args)
+        if self.pipx_packages:
+            data["pipx_packages"] = json.dumps(self.pipx_packages)
+        if self.pipx_injects:
+            data["pipx_injects"] = json.dumps(self.pipx_injects)
+        if self.conjuring_mode != "personal":
+            data["conjuring_mode"] = self.conjuring_mode
         return self.host, data
 
 

@@ -16,6 +16,7 @@ _ENV = make_env()
 
 HERE = Path(__file__).parent
 COMMON = HERE / "Brewfile.common"
+ASKPASS_SRC = HERE / "askpass.sh"
 # Server picks the variant via host.data["brew_variant"] -> Brewfile.<variant>.
 # Default is "company" (work laptop); personal machines opt in explicitly.
 _VARIANT = host.data.get("brew_variant", "company")
@@ -28,6 +29,7 @@ if not COMMON.exists() or not VARIANT_FILE.exists():
 _REMOTE_COMMON = home_path(".Brewfile.common")
 _REMOTE_VARIANT = home_path(".Brewfile.variant")
 _REMOTE_FINAL = home_path(".Brewfile")
+_REMOTE_ASKPASS = home_path(".local/bin/dotf-askpass.sh")
 
 
 def _brew_bin() -> str:
@@ -67,8 +69,24 @@ shell(
     _env=_ENV,
 )
 
+files.put(
+    name="Install SUDO_ASKPASS helper for brew cask postflight",
+    src=str(ASKPASS_SRC),
+    dest=_REMOTE_ASKPASS,
+    mode="700",
+)
+
+# Some cask postflights (e.g. kindle-previewer: launchctl bootout) call sudo
+# from a non-TTY subprocess. SUDO_ASKPASS lets those `sudo -A` calls succeed
+# without hanging on a hidden prompt. Prime the timestamp first so brief
+# child sudo calls reuse it instead of triggering the askpass GUI each time.
 shell(
     name="brew bundle (install formulae + casks + taps)",
-    commands=[f"{_brew_bin()} bundle --global --verbose"],
-    _env={**_ENV, "HOMEBREW_NO_AUTO_UPDATE": "1", "HOMEBREW_BUNDLE_NO_LOCK": "1"},
+    commands=[f"sudo -A -v && {_brew_bin()} bundle --global --verbose"],
+    _env={
+        **_ENV,
+        "HOMEBREW_NO_AUTO_UPDATE": "1",
+        "HOMEBREW_BUNDLE_NO_LOCK": "1",
+        "SUDO_ASKPASS": _REMOTE_ASKPASS,
+    },
 )

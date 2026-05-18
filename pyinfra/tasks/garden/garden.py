@@ -6,30 +6,29 @@ Prerequisites:
 - ~/.config/garden/garden.yaml deployed via chezmoi (private overlay).
 """
 
-from pyinfra.operations import server
-from shared import home_path, make_env
+from shared import home_path, make_env, shell
 
 _ENV = make_env(home_path(".cargo/bin"))
 
-server.shell(
+shell(
     name="rustup default stable",
     commands=["rustup default stable >/dev/null 2>&1 || rustup-init -y --no-modify-path --default-toolchain stable"],
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="cargo install garden-tools",
     commands=["cargo install --quiet --locked garden-tools"],
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="cargo install fren",
     commands=["cargo install --quiet --locked fren"],
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="garden grow",
     commands=[
         # Use whatever garden config the user has under ~/.config/garden/.

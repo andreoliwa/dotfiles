@@ -136,6 +136,18 @@ def chezmoi(
 
 
 @app.command()
+def tail() -> None:
+    """Follow the pyinfra provisioning log (~/.cache/dotf/provision.log)."""
+    import subprocess
+
+    log = Path.home() / ".cache" / "dotf" / "provision.log"
+    if not log.exists():
+        log.parent.mkdir(parents=True, exist_ok=True)
+        log.touch()
+    subprocess.run(["tail", "-f", "-n", "50", str(log)], check=False)  # noqa: S603, S607
+
+
+@app.command()
 def cache(
     debug: Annotated[bool, typer.Option("--debug", "-d", help="Debug mode.")] = False,
 ) -> None:

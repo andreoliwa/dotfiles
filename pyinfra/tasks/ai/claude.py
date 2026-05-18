@@ -13,7 +13,8 @@ imported but not included by pyinfra directly.
 from pathlib import Path
 
 from pyinfra.facts.server import Home
-from pyinfra.operations import brew, git, server
+from pyinfra.operations import brew, git
+from shared import shell
 
 from pyinfra import host
 
@@ -57,7 +58,7 @@ def install_ccnotify() -> None:
     clone_script = home / CCNOTIFY_CLONE_DIR / "ccnotify.py"
     target = install_dir / "ccnotify.py"
 
-    server.shell(
+    shell(
         name="Install CCNotify (mkdir + symlink + chmod)",
         commands=[
             f"mkdir -p {install_dir}",
@@ -85,7 +86,7 @@ def install_caveman() -> None:
       1. claude plugin marketplace add JuliusBrussee/caveman
       2. claude plugin install caveman@caveman
     """
-    server.shell(
+    shell(
         name="Install Caveman (marketplace + plugin)",
         commands=[
             f"claude plugin marketplace add {CAVEMAN_MARKETPLACE}",

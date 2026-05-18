@@ -4,18 +4,17 @@ gh comes from Brewfile. Identity, signing key, and gpgsign flags are
 configured per-profile in chezmoi (private gitconfig overlay).
 """
 
-from pyinfra.operations import server
-from shared import make_env
+from shared import make_env, shell
 
 _ENV = make_env()
 
-server.shell(
+shell(
     name="git config: gpg.format openpgp",
     commands=["git config --global gpg.format openpgp"],
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="gh smoke check",
     commands=["gh --version >/dev/null"],
     _env=_ENV,

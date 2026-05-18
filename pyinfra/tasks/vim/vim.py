@@ -1,17 +1,16 @@
 """vim: install vim-plug plugin manager. Vim itself comes from Brewfile (macvim)."""
 
-from pyinfra.operations import server
-from shared import make_env
+from shared import make_env, shell
 
 _ENV = make_env()
 
-server.shell(
+shell(
     name="Ensure ~/.vim/autoload dir",
     commands=["mkdir -p $HOME/.vim/autoload"],
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="Install vim-plug",
     commands=[
         "curl -fsSL -o $HOME/.vim/autoload/plug.vim "
@@ -20,7 +19,7 @@ server.shell(
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="vim PlugInstall (non-interactive)",
     commands=["vim -es -u $HOME/.vimrc -i NONE -c 'PlugInstall | qall' || true"],
     _env=_ENV,

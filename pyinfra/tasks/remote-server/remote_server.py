@@ -9,8 +9,8 @@ Per-host apt packages come from Server.apt_packages in the private inventory.
 import json
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import apt, files, server
-from shared import home_path
+from pyinfra.operations import apt, files
+from shared import home_path, shell
 
 from pyinfra import host
 
@@ -41,7 +41,7 @@ if host.get_fact(Kernel) == "Linux":
     )
 
     # bash-powerline: https://github.com/riobard/bash-powerline (RPi + Hetzner only)
-    server.shell(
+    shell(
         name="Download bash-powerline.sh",
         commands=[
             "curl -fsSL -o $HOME/.bash-powerline.sh "
@@ -52,7 +52,7 @@ if host.get_fact(Kernel) == "Linux":
     # Link GNU gdate so scripts portable from macOS (where coreutils provides
     # gdate) still work on Linux where `date` is already the GNU version.
     # https://stackoverflow.com/questions/15330775/what-does-gdate-mean-in-this-shell-script
-    server.shell(
+    shell(
         name="Symlink /bin/gdate to system date",
         commands=["command -v gdate || sudo ln -s $(command -v date) /bin/gdate"],
     )

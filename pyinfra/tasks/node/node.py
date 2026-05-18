@@ -5,8 +5,7 @@ company/personal package list based on host.data.brew_variant (defaults to
 company).
 """
 
-from pyinfra.operations import server
-from shared import home_path, make_env
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
@@ -43,14 +42,14 @@ _variant = host.data.get("brew_variant", "company")
 _packages = _COMMON + (_PERSONAL if _variant == "personal" else _COMPANY)
 
 for _pkg in _packages:
-    server.shell(
+    shell(
         name=f"npm install -g {_pkg}",
         commands=[f"npm install -g --silent {_pkg}"],
         _env=_ENV,
     )
 
 for _pkg in _REMOVE:
-    server.shell(
+    shell(
         name=f"npm uninstall -g {_pkg}",
         commands=[f"npm uninstall -g --silent {_pkg}"],
         _env=_ENV,

@@ -9,8 +9,7 @@ import tomllib
 from pathlib import Path
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import server
-from shared import make_env
+from shared import make_env, shell
 
 from pyinfra import host
 
@@ -31,7 +30,7 @@ if host.get_fact(Kernel) == "Darwin":
     _remove_ids = [*_common.get("remove", []), *_variant_data.get("remove", [])]
 
     for _pkg in _install_ids:
-        server.shell(
+        shell(
             name=f"mas install {_pkg}",
             commands=[f"mas install {_pkg}"],
             _env=_ENV,
@@ -39,7 +38,7 @@ if host.get_fact(Kernel) == "Darwin":
         )
 
     for _pkg in _remove_ids:
-        server.shell(
+        shell(
             name=f"mas uninstall {_pkg}",
             commands=[f"sudo mas uninstall {_pkg}"],
             _env=_ENV,

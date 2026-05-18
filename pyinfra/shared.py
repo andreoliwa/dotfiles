@@ -5,6 +5,7 @@ inserts the pyinfra dir into sys.path before running tasks).
 """
 
 from pyinfra.facts.server import Home
+from pyinfra.operations import server as _server
 
 from pyinfra import host
 
@@ -34,3 +35,32 @@ def home_path(*parts: str) -> str:
     path is correct for both local and remote provisioning.
     """
     return "/".join([host.get_fact(Home), *parts])
+
+
+# Single log file all `shell()` ops append to; follow with `dotf tail`.
+PROVISION_LOG = ".cache/dotf/provision.log"
+
+
+def shell(name: str, commands: str | list[str], **kwargs: object) -> object:
+    """Wrap `server.shell` so stdout/stderr also append to ~/.cache/dotf/provision.log.
+
+    Use this in place of `server.shell(...)` in any task that runs shell
+    commands. The log file is shared by every task, so `dotf tail` follows
+    progress across the whole `dotf provision` run.
+
+    Implementation:
+      - Joins multiple commands with `&&` so a failure short-circuits.
+      - Pipes combined stdout+stderr through tee --append to the log.
+      - Wraps in bash to use pipefail so the tee still fails on command error.
+    """
+    log = home_path(PROVISION_LOG)
+    cmd_str = commands if isinstance(commands, str) else " && ".join(commands)
+
+    wrapped = (
+        f'mkdir -p "$(dirname {log})" && '
+        f'{{ printf "\\n>>> %s\\n" {name!r} >> {log}; }} && '
+        f"set -o pipefail; "
+        f"({cmd_str}) 2>&1 | tee -a {log}"
+    )
+    kwargs.setdefault("_shell_executable", "bash")
+    return _server.shell(name=name, commands=[wrapped], **kwargs)

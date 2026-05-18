@@ -10,15 +10,15 @@ Reference: https://docs.docker.com/engine/install/debian/
 """
 
 from pyinfra.facts.server import Kernel, LinuxName
-from pyinfra.operations import apt, server
-from shared import make_env
+from pyinfra.operations import apt
+from shared import make_env, shell
 
 from pyinfra import host
 
 _ENV = make_env()
 
 if host.get_fact(Kernel) == "Darwin":
-    server.shell(
+    shell(
         name="Link docker.bash-completion if Docker.app present",
         commands=[
             "src=/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion; "
@@ -27,7 +27,7 @@ if host.get_fact(Kernel) == "Darwin":
         ],
         _env=_ENV,
     )
-    server.shell(
+    shell(
         name="Link docker-compose.bash-completion if Docker.app present",
         commands=[
             "src=/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion; "
@@ -58,14 +58,14 @@ if host.get_fact(LinuxName) == "OSMC":
         latest=True,
         _sudo=True,
     )
-    server.shell(
+    shell(
         name="Add Docker GPG key",
         commands=[
             "curl -fsSL https://download.docker.com/linux/debian/gpg "
             "| sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
         ],
     )
-    server.shell(
+    shell(
         name="Add Docker apt repo",
         commands=[
             'echo "deb [arch=armhf signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] '
@@ -73,7 +73,7 @@ if host.get_fact(LinuxName) == "OSMC":
             "| sudo tee /etc/apt/sources.list.d/docker.list >/dev/null",
         ],
     )
-    server.shell(
+    shell(
         name="Revert iptables to legacy",
         commands=[
             "sudo update-alternatives --set iptables /usr/sbin/iptables-legacy "
@@ -87,11 +87,11 @@ if host.get_fact(LinuxName) == "OSMC":
         latest=True,
         _sudo=True,
     )
-    server.shell(
+    shell(
         name="Ensure docker group exists",
         commands=["sudo groupadd -f docker"],
     )
-    server.shell(
+    shell(
         name="Add osmc user to docker group",
         commands=["sudo usermod -aG docker osmc"],
     )

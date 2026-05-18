@@ -11,8 +11,8 @@ Brewfile installs bash + bash-completion@2. This task wires the rest:
 """
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import git, server
-from shared import home_path, make_env
+from pyinfra.operations import git
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
@@ -21,19 +21,19 @@ _ENV = make_env()
 if host.get_fact(Kernel) == "Darwin":
     _bash = "/opt/homebrew/bin/bash"
 
-    server.shell(
+    shell(
         name="Register Homebrew bash in /etc/shells",
         commands=[f"grep -qxF '{_bash}' /etc/shells || echo '{_bash}' | sudo tee -a /etc/shells >/dev/null"],
         _env=_ENV,
     )
 
-    server.shell(
+    shell(
         name="chsh to Homebrew bash",
         commands=[f"[ \"$SHELL\" = '{_bash}' ] || chsh -s '{_bash}'"],
         _env=_ENV,
     )
 
-server.shell(
+shell(
     name="Create BASH_COMPLETION_USER_DIR",
     commands=["mkdir -p $HOME/.local/share/bash-completion/completions"],
     _env=_ENV,
@@ -73,7 +73,7 @@ _COMPLETE_ALIASES = (
 )
 _MARKER = "# === complete_alias: my aliases ==="
 
-server.shell(
+shell(
     name="Download complete_alias completion script",
     commands=[
         f"curl -fsSL -o {_COMPLETE_ALIAS} "
@@ -83,7 +83,7 @@ server.shell(
 )
 
 _block = "\\n".join(f"complete -F _complete_alias {a}" for a in _COMPLETE_ALIASES)
-server.shell(
+shell(
     name="Append my aliases to complete_alias completion",
     commands=[
         f"grep -qF '{_MARKER}' {_COMPLETE_ALIAS} || printf '\\n{_MARKER}\\n{_block}\\n' >> {_COMPLETE_ALIAS}",

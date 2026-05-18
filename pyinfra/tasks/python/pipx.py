@@ -6,20 +6,19 @@ Reads ``host.data.pipx_packages`` (list[str]) and ``host.data.pipx_injects``
 
 import json
 
-from pyinfra.operations import server
-from shared import home_path, make_env
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
 _ENV = make_env(home_path(".local/bin"))
 
-server.shell(
+shell(
     name="Install pipx via pip",
     commands=["python3 -m pip install -U --user pipx"],
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="Ensure pipx is on PATH",
     commands=["pipx ensurepath"],
     _env=_ENV,
@@ -37,13 +36,13 @@ _packages: list[str] = _decode(host.data.get("pipx_packages", "[]"), [])  # type
 _injects: dict[str, list[str]] = _decode(host.data.get("pipx_injects", "{}"), {})  # type: ignore[assignment]
 
 for _pkg in _packages:
-    server.shell(
+    shell(
         name=f"pipx install {_pkg}",
         commands=[f"pipx install --force --include-deps {_pkg}"],
         _env=_ENV,
     )
     for _inject in _injects.get(_pkg, []):
-        server.shell(
+        shell(
             name=f"pipx inject {_pkg} <- {_inject}",
             commands=[f"pipx inject --force -e {_pkg} {_inject}"],
             _env=_ENV,

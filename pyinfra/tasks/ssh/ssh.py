@@ -4,7 +4,8 @@ from pathlib import Path
 
 from lib import DOTFILES_PATH
 from pyinfra.facts.server import Home, Kernel
-from pyinfra.operations import files, server
+from pyinfra.operations import files
+from shared import shell
 
 from pyinfra import host
 
@@ -27,7 +28,7 @@ files.directory(
     present=True,
 )
 
-server.shell(
+shell(
     name="Add GitHub and BitBucket to known_hosts",
     # ssh-keyscan then dedup; avoids repeated entries on re-runs
     commands=[
@@ -40,7 +41,7 @@ server.shell(
 
 if host.get_fact(Kernel) == "Darwin":
     openssl_env = str(DOTFILES_PATH / "pyinfra" / "tasks" / "openssl" / "01-env.sh")
-    server.shell(
+    shell(
         name="Regenerate openssl env fragment from brew",
         commands=[
             f"{{ echo '#!/usr/bin/env bash';"

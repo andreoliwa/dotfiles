@@ -9,8 +9,7 @@ Set host.data.brew_variant to switch the personal/company list. Default is
 """
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import server
-from shared import make_env
+from shared import make_env, shell
 
 from pyinfra import host
 
@@ -71,7 +70,7 @@ if host.get_fact(Kernel) == "Darwin":
     _urls = _COMMON_URLS + (_PERSONAL_URLS if _variant == "personal" else _COMPANY_URLS)
 
     for _url in _urls:
-        server.shell(
+        shell(
             name=f"open {_url}",
             commands=[f"open '{_url}'"],
             _env=_ENV,

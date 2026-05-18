@@ -3,8 +3,8 @@
 from pathlib import Path
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import files, server
-from shared import home_path
+from pyinfra.operations import files
+from shared import home_path, shell
 
 from pyinfra import host
 
@@ -14,7 +14,7 @@ _SCRIPT = HERE / "set-defaults.bash"
 _DEST = home_path(".cache/dotf/set-defaults.bash")
 
 if host.get_fact(Kernel) == "Darwin":
-    server.shell(
+    shell(
         name="Ensure dotf cache dir",
         commands=["mkdir -p $HOME/.cache/dotf"],
     )
@@ -24,7 +24,7 @@ if host.get_fact(Kernel) == "Darwin":
         dest=_DEST,
         mode="755",
     )
-    server.shell(
+    shell(
         name="Run set-defaults.bash",
         commands=[_DEST],
     )

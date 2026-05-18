@@ -1,7 +1,8 @@
 """Unified version manager. Uses Homebrew on macOS, curl installer on Linux."""
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import brew, server
+from pyinfra.operations import brew
+from shared import shell
 
 from pyinfra import host
 
@@ -12,7 +13,7 @@ if host.get_fact(Kernel) == "Darwin":
         latest=True,
     )
 else:
-    server.shell(
+    shell(
         name="Install mise via curl",
         commands=["curl https://mise.run | sh"],
     )

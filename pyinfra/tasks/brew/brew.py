@@ -7,8 +7,8 @@ for packages already installed.
 from pathlib import Path
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import files, server
-from shared import home_path, make_env
+from pyinfra.operations import files
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
@@ -36,7 +36,7 @@ def _brew_bin() -> str:
     return "/home/linuxbrew/.linuxbrew/bin/brew"
 
 
-server.shell(
+shell(
     name="Install Homebrew if missing",
     commands=[
         "if ! command -v brew >/dev/null 2>&1; then "
@@ -61,21 +61,14 @@ files.put(
     mode="644",
 )
 
-server.shell(
+shell(
     name="Concatenate ~/.Brewfile from common + variant",
     commands=[f"cat {_REMOTE_COMMON} {_REMOTE_VARIANT} > {_REMOTE_FINAL}"],
     _env=_ENV,
 )
 
-server.shell(
+shell(
     name="brew bundle (install formulae + casks + taps)",
-    commands=[
-        # tee to a log so progress is visible from another pane: `tail -f ~/.cache/dotf/brew-bundle.log`
-        f"mkdir -p {home_path('.cache/dotf')} && "
-        f"{_brew_bin()} bundle --global --verbose 2>&1 | tee {home_path('.cache/dotf/brew-bundle.log')}; "
-        # propagate brew's exit code from pipeline
-        f"test ${{PIPESTATUS[0]:-0}} -eq 0",
-    ],
+    commands=[f"{_brew_bin()} bundle --global --verbose"],
     _env={**_ENV, "HOMEBREW_NO_AUTO_UPDATE": "1", "HOMEBREW_BUNDLE_NO_LOCK": "1"},
-    _shell_executable="bash",
 )

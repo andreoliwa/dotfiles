@@ -3,7 +3,8 @@
 from pathlib import Path
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import apt, files, server
+from pyinfra.operations import apt, files
+from shared import shell
 
 from pyinfra import host
 
@@ -14,7 +15,7 @@ if host.get_fact(Kernel) == "Linux":
     # Key and source must be set up before any apt-get update — the xcaddy repo key expires
     # periodically, and if the source is already configured on the host, apt-get update will
     # fail signature verification before we get a chance to refresh the key.
-    server.shell(
+    shell(
         name="Add Caddy xcaddy apt source",
         commands=[
             "curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/debian.deb.txt'"
@@ -23,7 +24,7 @@ if host.get_fact(Kernel) == "Linux":
         _sudo=True,
     )
 
-    server.shell(
+    shell(
         name="Refresh Caddy apt repo key",
         commands=[
             "curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/gpg.key'"
@@ -44,7 +45,7 @@ if host.get_fact(Kernel) == "Linux":
         _sudo=True,
     )
 
-    server.shell(
+    shell(
         name="Build Caddy with caddy-security plugin",
         # https://github.com/greenpau/caddy-security
         # /usr/local/go/bin is not in the non-interactive SSH PATH — use full path via GOROOT.
@@ -70,7 +71,7 @@ if host.get_fact(Kernel) == "Linux":
         _sudo=True,
     )
 
-    server.shell(
+    shell(
         name="Reload systemd and enable caddy",
         commands=[
             "systemctl daemon-reload",
@@ -79,7 +80,7 @@ if host.get_fact(Kernel) == "Linux":
         _sudo=True,
     )
 
-    server.shell(
+    shell(
         name="Restart caddy",
         commands=["systemctl restart caddy"],
         _sudo=True,

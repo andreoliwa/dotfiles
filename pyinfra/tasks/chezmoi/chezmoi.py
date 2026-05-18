@@ -16,7 +16,8 @@ from pathlib import Path
 
 from pyinfra.connectors.local import LocalConnector
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import brew, server
+from pyinfra.operations import brew
+from shared import shell
 
 from pyinfra import host
 
@@ -29,7 +30,7 @@ if host.get_fact(Kernel) == "Darwin":
 else:
     # get.chezmoi.io mis-detects armv7l as "arm" and fetches a 404 URL.
     # Install directly from the GitHub release .deb using the dpkg architecture name.
-    server.shell(
+    shell(
         name="Install chezmoi via deb",
         commands=[
             "ARCH=$(dpkg --print-architecture) &&"
@@ -57,7 +58,7 @@ if not isinstance(host.connector, LocalConnector):
             # before pyinfra was invoked (diff + prompt happen there). Just apply it here.
             # chezmoi diff/apply require the dot_-prefixed source layout, not a rendered archive.
             _remote_src_dir = "/tmp/chezmoi-src"  # noqa: S108
-            server.shell(
+            shell(
                 name="Apply chezmoi from source dir",
                 commands=[f"chezmoi apply --source={_remote_src_dir}"],
             )

@@ -4,15 +4,15 @@ Hammerspoon cask + init.lua come from Brewfile + chezmoi respectively.
 """
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import git, server
-from shared import make_env
+from pyinfra.operations import git
+from shared import make_env, shell
 
 from pyinfra import host
 
 _ENV = make_env()
 
 if host.get_fact(Kernel) == "Darwin":
-    server.shell(
+    shell(
         name="Ensure ~/.hammerspoon/Spoons",
         commands=["mkdir -p $HOME/.hammerspoon/Spoons"],
         _env=_ENV,
@@ -23,7 +23,7 @@ if host.get_fact(Kernel) == "Darwin":
         dest="~/.hammerspoon/Lunette",
         pull=False,
     )
-    server.shell(
+    shell(
         name="Symlink Lunette spoon",
         commands=[
             "ln -sfn $HOME/.hammerspoon/Lunette/Source/Lunette.spoon $HOME/.hammerspoon/Spoons/Lunette.spoon",

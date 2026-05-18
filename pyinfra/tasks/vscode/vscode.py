@@ -7,8 +7,7 @@ installs every extension listed in extensions.txt via `code --install-extension`
 from pathlib import Path
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import server
-from shared import make_env
+from shared import make_env, shell
 
 from pyinfra import host
 
@@ -20,7 +19,7 @@ _ENV = make_env()
 if host.get_fact(Kernel) == "Darwin":
     _extensions = [line.strip() for line in EXT_FILE.read_text().splitlines() if line.strip()]
     for _ext in _extensions:
-        server.shell(
+        shell(
             name=f"code --install-extension {_ext}",
             commands=[f"code --install-extension {_ext} --force"],
             _env=_ENV,

@@ -41,3 +41,11 @@ if host.get_fact(Kernel) == "Linux":
             "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh",
         ],
     )
+
+    # Link GNU gdate so scripts portable from macOS (where coreutils provides
+    # gdate) still work on Linux where `date` is already the GNU version.
+    # https://stackoverflow.com/questions/15330775/what-does-gdate-mean-in-this-shell-script
+    server.shell(
+        name="Symlink /bin/gdate to system date",
+        commands=["command -v gdate || sudo ln -s $(command -v date) /bin/gdate"],
+    )

@@ -31,6 +31,7 @@ class Server:
     pipx_packages: list[str] = field(default_factory=list)
     pipx_injects: dict[str, list[str]] = field(default_factory=dict)
     conjuring_mode: str = "personal"
+    apt_packages: list[str] = field(default_factory=list)
 
     @property
     def ssh_allow_agent(self) -> bool:
@@ -52,6 +53,7 @@ class Server:
             "pipx_packages": self.pipx_packages,
             "pipx_injects": self.pipx_injects,
             "conjuring_mode": self.conjuring_mode,
+            "apt_packages": self.apt_packages,
         }
 
     @classmethod
@@ -75,6 +77,7 @@ class Server:
             pipx_packages=data.get("pipx_packages", []),
             pipx_injects=data.get("pipx_injects", {}),
             conjuring_mode=data.get("conjuring_mode", "personal"),
+            apt_packages=data.get("apt_packages", []),
         )
 
     @classmethod
@@ -118,6 +121,8 @@ class Server:
             data["pipx_injects"] = json.dumps(self.pipx_injects)
         if self.conjuring_mode != "personal":
             data["conjuring_mode"] = self.conjuring_mode
+        if self.apt_packages:
+            data["apt_packages"] = json.dumps(self.apt_packages)
         return self.host, data
 
 

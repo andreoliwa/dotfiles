@@ -2,14 +2,18 @@
 
 OSMC-specific bits (CIFS mounts, samba, video subtitle setup) are not yet
 migrated; run them via `dotf legacy` for now.
+
+Per-host apt packages come from Server.apt_packages in the private inventory.
 """
+
+import json
 
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import apt, files, server
 
 from pyinfra import host
 
-_APT_PACKAGES = [
+_BASE_APT_PACKAGES = [
     "curl",
     "dos2unix",
     "gnupg-agent",
@@ -22,9 +26,11 @@ _APT_PACKAGES = [
 ]
 
 if host.get_fact(Kernel) == "Linux":
+    _raw = host.data.get("apt_packages", "[]")
+    _extra = json.loads(_raw) if isinstance(_raw, str) else _raw
     apt.packages(
-        name="Install base apt packages",
-        packages=_APT_PACKAGES,
+        name="Install apt packages (base + per-host)",
+        packages=_BASE_APT_PACKAGES + list(_extra),
         update=True,
         _sudo=True,
     )

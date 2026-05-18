@@ -1,5 +1,0 @@
-# APT packages that don't get installed by a role
-apt_packages:
-  - docker.io
-  - docker-compose
-  - fd-find # https://github.com/sharkdp/fd

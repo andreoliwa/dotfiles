@@ -8,14 +8,14 @@ Server.brew_variant == "personal").
 import tomllib
 from pathlib import Path
 
+from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import server
 
 from pyinfra import host
 
 HERE = Path(__file__).parent
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"{_BREW_PATH}:/usr/bin:/bin"}
+_ENV = make_env()
 
 
 def _load(name: str) -> dict:

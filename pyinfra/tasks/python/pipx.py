@@ -6,12 +6,12 @@ Reads ``host.data.pipx_packages`` (list[str]) and ``host.data.pipx_injects``
 
 import json
 
+from constants import make_env
 from pyinfra.operations import server
 
 from pyinfra import host
 
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"$HOME/.local/bin:{_BREW_PATH}:/usr/bin:/bin"}
+_ENV = make_env("$HOME/.local/bin")
 
 server.shell(
     name="Install pipx via pip",

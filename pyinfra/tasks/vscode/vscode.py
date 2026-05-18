@@ -6,6 +6,7 @@ installs every extension listed in extensions.txt via `code --install-extension`
 
 from pathlib import Path
 
+from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import server
 
@@ -14,8 +15,7 @@ from pyinfra import host
 HERE = Path(__file__).parent
 EXT_FILE = HERE / "extensions.txt"
 
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"{_BREW_PATH}:/usr/bin:/bin"}
+_ENV = make_env()
 
 if host.get_fact(Kernel) == "Darwin":
     _extensions = [line.strip() for line in EXT_FILE.read_text().splitlines() if line.strip()]

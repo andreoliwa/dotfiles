@@ -6,10 +6,13 @@ for packages already installed.
 
 from pathlib import Path
 
+from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import files, server
 
 from pyinfra import host
+
+_ENV = make_env()
 
 HERE = Path(__file__).parent
 COMMON = HERE / "Brewfile.common"
@@ -21,12 +24,6 @@ if not COMMON.exists() or not VARIANT_FILE.exists():
     _missing = [str(p) for p in (COMMON, VARIANT_FILE) if not p.exists()]
     _msg = f"Brewfile(s) not found: {_missing}. Check brew_variant on Server."
     raise SystemExit(_msg)
-
-# brew lives in /opt/homebrew on Apple Silicon, /usr/local on Intel Macs,
-# /home/linuxbrew/.linuxbrew on Linux. We set PATH explicitly on each op so
-# this task does not depend on shell startup having run already.
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"{_BREW_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"}
 
 
 def _brew_bin() -> str:

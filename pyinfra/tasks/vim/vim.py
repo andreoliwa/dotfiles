@@ -1,9 +1,9 @@
 """vim: install vim-plug plugin manager. Vim itself comes from Brewfile (macvim)."""
 
+from constants import make_env
 from pyinfra.operations import server
 
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"{_BREW_PATH}:/usr/bin:/bin"}
+_ENV = make_env()
 
 server.shell(
     name="Ensure ~/.vim/autoload dir",

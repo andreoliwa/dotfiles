@@ -5,12 +5,12 @@ company/personal package list based on host.data.brew_variant (defaults to
 company).
 """
 
+from constants import make_env
 from pyinfra.operations import server
 
 from pyinfra import host
 
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"$HOME/.local/share/mise/shims:{_BREW_PATH}:/usr/bin:/bin"}
+_ENV = make_env("$HOME/.local/share/mise/shims")
 
 _COMMON: list[str] = ["prettier"]
 _PERSONAL: list[str] = []

@@ -10,13 +10,13 @@ Brewfile installs bash + bash-completion@2. This task wires the rest:
 .bashrc itself is deployed via chezmoi (dotfiles/chezmoi/dot_bashrc).
 """
 
+from constants import make_env
 from pyinfra.facts.server import Kernel
 from pyinfra.operations import git, server
 
 from pyinfra import host
 
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"{_BREW_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"}
+_ENV = make_env()
 
 if host.get_fact(Kernel) == "Darwin":
     _bash = "/opt/homebrew/bin/bash"

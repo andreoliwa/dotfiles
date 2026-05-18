@@ -6,11 +6,10 @@ Prerequisites:
 - ~/.config/garden/garden.yaml deployed via chezmoi (private overlay).
 """
 
+from constants import make_env
 from pyinfra.operations import server
 
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_PATH = f"$HOME/.cargo/bin:{_BREW_PATH}:/usr/bin:/bin"
-_ENV = {"PATH": _PATH}
+_ENV = make_env("$HOME/.cargo/bin")
 
 server.shell(
     name="rustup default stable",

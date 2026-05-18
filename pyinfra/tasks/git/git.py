@@ -4,10 +4,10 @@ gh comes from Brewfile. Identity, signing key, and gpgsign flags are
 configured per-profile in chezmoi (private gitconfig overlay).
 """
 
+from constants import make_env
 from pyinfra.operations import server
 
-_BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
-_ENV = {"PATH": f"{_BREW_PATH}:/usr/bin:/bin"}
+_ENV = make_env()
 
 server.shell(
     name="git config: gpg.format openpgp",

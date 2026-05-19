@@ -8,8 +8,9 @@
 #   1. Xcode Command Line Tools (macOS only)
 #   2. Homebrew (macOS or Linux)
 #   3. uv
-#   4. ~/dotfiles repo (clone if missing)
-#   5. dotf + pyinfra (uv tool install)
+#   4. chezmoi (required by `dotf provision`)
+#   5. ~/dotfiles repo (clone if missing)
+#   6. dotf + pyinfra (uv tool install)
 
 set -e
 
@@ -55,6 +56,15 @@ if command -v uv >/dev/null 2>&1; then
     echo "    already installed at $(command -v uv)."
 else
     brew install uv
+fi
+
+# chezmoi is invoked by `dotf provision` before pyinfra runs, so it must be
+# present before pyinfra would otherwise install it.
+step "chezmoi"
+if command -v chezmoi >/dev/null 2>&1; then
+    echo "    already installed at $(command -v chezmoi)."
+else
+    brew install chezmoi
 fi
 
 step "Dotfiles repo at $DOTFILES_DIR"

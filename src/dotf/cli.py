@@ -19,7 +19,12 @@ from dotf.ops import (
     resolve_server,
 )
 
-app = typer.Typer(help="Dotfiles provisioning wrapper.", no_args_is_help=True, rich_markup_mode=None)
+app = typer.Typer(
+    help="Dotfiles provisioning wrapper.",
+    no_args_is_help=True,
+    rich_markup_mode=None,
+    pretty_exceptions_enable=False,
+)
 
 
 @app.callback()

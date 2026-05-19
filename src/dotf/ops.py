@@ -3,11 +3,14 @@
 Chezmoi apply — local vs remote split
 --------------------------------------
 Local apply (macbook/@local):
-  _chezmoi_apply_source() in this file — diff via delta, interactive prompt, then apply.
+  _chezmoi_apply_source() in this file — `chezmoi diff` (built-in pager), interactive
+  prompt, then apply. No delta dependency.
 
 Remote apply (other servers from the private inventory.py):
   1. _chezmoi_remote_diff() in this file SSHes into the host, runs `chezmoi diff` there,
-     pipes the output through local delta, and prompts for confirmation.
+     pipes the output through local delta (falls back to raw stdout if delta is missing),
+     and prompts for confirmation. Delta renders the SSH'd diff nicely on the local Mac;
+     the remote host does not need delta installed.
   2. Only if confirmed: apply_pyinfra() runs pyinfra, which includes
      pyinfra/tasks/chezmoi/chezmoi.py — that task archives the local chezmoi source,
      uploads it, and runs `chezmoi apply` unconditionally on the remote.
@@ -18,6 +21,7 @@ already obtained confirmation before pyinfra was invoked.
 """
 
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -190,8 +194,9 @@ def _chezmoi_apply_source(source: Path, *, yes: bool = False) -> None:
         print(f"No changes from {repo_name}.")
         return
 
-    # Re-run with delta as pager so it owns the TTY and supports keyboard navigation
-    subprocess.run(["chezmoi", "diff", "--pager", "delta", *source_args], check=False)  # noqa: S603 S607
+    # Built-in `chezmoi diff` only; delta is a remote-diff renderer, not a
+    # local dependency. Avoids breaking fresh installs that haven't run pyinfra yet.
+    subprocess.run(["chezmoi", "diff", *source_args], check=False)  # noqa: S603 S607
 
     if not yes:
         answer = input(f"Apply changes from {repo_name}? [y/N] ").strip()
@@ -333,8 +338,14 @@ def _chezmoi_remote_diff(server: str, private_repo: Path | None, *, yes: bool = 
         print(f"No changes from {repo_label}.")
         return True
 
-    delta = subprocess.Popen(["delta"], stdin=subprocess.PIPE)  # noqa: S607
-    delta.communicate(probe.stdout.encode())
+    # Pipe diff through delta when available; otherwise print raw (chezmoi diff
+    # already includes ANSI colors).
+    if shutil.which("delta"):
+        delta = subprocess.Popen(["delta"], stdin=subprocess.PIPE)  # noqa: S607
+        delta.communicate(probe.stdout.encode())
+    else:
+        sys.stdout.write(probe.stdout)
+        sys.stdout.flush()
 
     if not yes:
         answer = input(f"Apply changes from {repo_label} to {server}? [y/N] ").strip()

@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
-# install.sh - bootstrap a fresh machine: Xcode CLT, Homebrew, uv, dotfiles repo, dotf.
+# bootstrap.sh - bootstrap a fresh machine: Xcode CLT, Homebrew, uv, dotfiles repo, dotf.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/andreoliwa/dotfiles/master/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/andreoliwa/dotfiles/master/bootstrap.sh | sh
 #
 # Steps:
 #   1. Xcode Command Line Tools (macOS only)

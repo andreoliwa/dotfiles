@@ -10,7 +10,7 @@ Provisioned by [pyinfra](https://pyinfra.com) for installs/setup and
 Requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Then:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/andreoliwa/dotfiles/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/andreoliwa/dotfiles/master/bootstrap.sh | sh
 ```
 
 The bootstrap script:
@@ -54,7 +54,7 @@ dotfiles/
 │   └── tasks/      # one dir per tool; *.py = pyinfra operations; *.sh = shell.d fragments
 ├── src/dotf/       # Typer-based dotf CLI
 ├── bin/            # PATH scripts shipped with the repo (added to PATH by shell/10-path.sh)
-├── install.sh      # bootstrap entry point (curl-pipe-safe)
+├── bootstrap.sh    # bootstrap entry point (curl-pipe-safe)
 ```
 
 ## Shell fragments (`~/.config/shell.d/`)

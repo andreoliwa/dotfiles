@@ -10,8 +10,6 @@ tap "mike-engel/jwt-cli"  # https://github.com/mike-engel/jwt-cli
 
 # Brews
 brew "7zip"  # https://7-zip.org
-brew "bash"
-brew "bash-completion2"  # https://github.com/scop/bash-completion
 brew "blueutil"  # https://github.com/toy/blueutil
 brew "colordiff"  # https://www.colordiff.org/
 brew "coreutils"  # https://www.gnu.org/software/coreutils

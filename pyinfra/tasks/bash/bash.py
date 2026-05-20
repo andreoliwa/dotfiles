@@ -1,17 +1,20 @@
-"""Bash: login shell setup + completion dir + bash-git-prompt clone.
+"""Bash: install brew bash + completions, login shell setup, bash-git-prompt clone.
 
-Brewfile installs bash + bash-completion@2. This task wires the rest:
+Self-contained so it can run before the main `brew bundle` task. Lets us chsh
+to brew bash early in the provision, so any new terminal opened mid-provision
+gets bash + the deployed ~/.config/shell.d/ fragments.
 
-1. Add /opt/homebrew/bin/bash to /etc/shells (sudo).
-2. chsh -s /opt/homebrew/bin/bash.
-3. mkdir -p ~/.local/share/bash-completion/completions (BASH_COMPLETION_USER_DIR).
-4. Clone https://github.com/magicmonty/bash-git-prompt to ~/.bash-git-prompt.
+1. brew install bash + bash-completion@2 (macOS).
+2. Add /opt/homebrew/bin/bash to /etc/shells (sudo).
+3. chsh -s /opt/homebrew/bin/bash.
+4. mkdir -p ~/.local/share/bash-completion/completions (BASH_COMPLETION_USER_DIR).
+5. Clone https://github.com/magicmonty/bash-git-prompt to ~/.bash-git-prompt.
 
 .bashrc itself is deployed via chezmoi (dotfiles/chezmoi/dot_bashrc).
 """
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import git
+from pyinfra.operations import brew, git
 from shared import home_path, make_env, shell
 
 from pyinfra import host
@@ -20,6 +23,15 @@ _ENV = make_env()
 
 if host.get_fact(Kernel) == "Darwin":
     _bash = "/opt/homebrew/bin/bash"
+
+    # Install bash + completions here (not via Brewfile.common) so this task is
+    # self-contained and can run before the main `brew bundle` step.
+    # https://github.com/scop/bash-completion
+    brew.packages(
+        name="Install bash + bash-completion@2",
+        packages=["bash", "bash-completion@2"],
+        latest=False,
+    )
 
     shell(
         name="Register Homebrew bash in /etc/shells",

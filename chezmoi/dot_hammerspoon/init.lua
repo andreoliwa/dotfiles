@@ -41,7 +41,7 @@ local autoHideApps = {
     "Code",
     "Logseq",
     "Telegram",
-    "WhatsApp",
+    "‎WhatsApp", -- U+200E LEFT-TO-RIGHT MARK prefix embedded in app bundle name by Meta; invisible but breaks string comparison
     -- keep-sorted end
 }
 
@@ -500,10 +500,10 @@ local function repositionApp(appName)
     apply_window_layout()
 end
 
--- Utility: safely hide an app with retry logic
-local function safeHideApp(appName, maxRetries)
-    maxRetries = maxRetries or 3
-
+-- Utility: hide an app once. No async retries: by the time a retry fires the
+-- user may have focused the app we're trying to hide, which would yank the
+-- window out from under them (e.g. Logseq hiding itself while typing).
+local function safeHideApp(appName)
     local app = hs.application.find(appName)
 
     if not app then
@@ -523,28 +523,19 @@ local function safeHideApp(appName, maxRetries)
         debug_print("App has no windows, skipping hide: " .. appName)
         return true
     end
-
-    local function attemptHide(retryCount)
-        local success = app:hide()
-        debug_print("Hiding app: " .. appName .. " -> " .. tostring(success) .. " (attempt " .. retryCount .. ")")
-
-        if success then
-            return true
-        elseif retryCount < maxRetries then
-            -- Retry after a short delay
-            hs.timer.doAfter(0.1, function()
-                attemptHide(retryCount + 1)
-            end)
-        else
-            debug_print("Failed to hide app after " .. maxRetries .. " attempts: " .. appName)
-            return false
-        end
-    end
-
-    return attemptHide(1)
+    local success = app:hide()
+    debug_print("Hiding app: " .. appName .. " -> " .. tostring(success))
+    return success
 end
 
--- Function to handle auto-hiding apps when focus changes
+-- Debounce token: every handleAutoHide call bumps this. The deferred body
+-- only runs if its captured token still matches. Stops appWatcher+windowFocused
+-- from racing two passes against each other.
+local autoHideToken = 0
+
+-- Function to handle auto-hiding apps when focus changes.
+-- Semantics (matches the autoHideApps comment at the top of this file):
+-- hide every app in autoHideApps EXCEPT the one that just gained focus.
 local function handleAutoHide(focusedAppName)
     benchmark_start("handleAutoHide")
 
@@ -555,12 +546,24 @@ local function handleAutoHide(focusedAppName)
 
     debug_print("App focused: " .. focusedAppName)
 
-    -- Add a small delay to ensure focus change is complete
-    hs.timer.doAfter(0.05, function()
+    autoHideToken = autoHideToken + 1
+    local myToken = autoHideToken
+
+    hs.timer.doAfter(0.3, function()
+        if myToken ~= autoHideToken then
+            debug_print("Superseded by newer focus event, skipping")
+            return
+        end
+        local frontmost = hs.application.frontmostApplication()
+        local currentFocus = frontmost and frontmost:name() or nil
+        if currentFocus ~= focusedAppName then
+            debug_print("Focus changed before hide ran (was " .. focusedAppName ..
+                ", now " .. tostring(currentFocus) .. "), skipping")
+            return
+        end
         benchmark_start("auto_hide_loop")
-        -- Hide all apps in autoHideApps list except the one just focused
         for _, appToHide in ipairs(autoHideApps) do
-            if appToHide ~= focusedAppName then
+            if appToHide ~= currentFocus then
                 safeHideApp(appToHide)
             end
         end
@@ -592,20 +595,28 @@ local function unifiedWindowHandler(window, appName, event)
         end
 
     elseif event == "windowFocused" then
-        if at_the_office then
-            -- Also trigger auto-hide from window focus for redundancy
+        -- Only trigger if this window's app is actually frontmost right now.
+        -- hs.window.filter.new(true) fires windowFocused for background windows
+        -- on other screens (e.g. iTerm2 on wide monitor getting a spurious focus
+        -- event when WhatsApp unhides on laptop screen). Checking frontmost here
+        -- (before deferring) filters those out.
+        local frontmost = hs.application.frontmostApplication()
+        if frontmost and frontmost:name() == appName then
             handleAutoHide(appName)
+        else
+            debug_print("windowFocused ignored: " .. appName .. " not frontmost")
         end
     end
 
     benchmark_end("unifiedWindowHandler")
 end
 
--- Create a shared filter for window behaviors (repositioning stubborn apps)
-local sharedFilter = hs.window.filter.new()
+-- true = track all apps, needed because Electron apps (VSCode, Logseq) don't
+-- reliably fire hs.application.watcher.activated events.
+local sharedFilter = hs.window.filter.new(true)
 sharedFilter:subscribe({
     hs.window.filter.windowCreated,
-    hs.window.filter.windowFocused
+    hs.window.filter.windowFocused,
 }, unifiedWindowHandler)
 
 -- Create an application watcher for reliable app focus detection

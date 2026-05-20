@@ -112,18 +112,37 @@ def _parse_remove_entries(path: Path) -> list[tuple[str, str]]:
     return entries
 
 
-if REMOVE.exists():
-    _brew = _brew_bin()
-    for kind, name in _parse_remove_entries(REMOVE):
+def _uninstall_entries(entries: list[tuple[str, str]], source_label: str) -> None:
+    """Schedule uninstall ops for each (kind, name); idempotent."""
+    brew_bin = _brew_bin()
+    for kind, name in entries:
         flag = "--cask" if kind == "cask" else "--formula"
         shell(
-            name=f"Uninstall {kind} {name} if installed",
+            name=f"[{source_label}] uninstall {kind} {name} if installed",
             commands=[
-                f"if {_brew} list {flag} {name} >/dev/null 2>&1; then "
-                f"  sudo -A -v && {_brew} uninstall --zap {flag} {name}; "
+                f"if {brew_bin} list {flag} {name} >/dev/null 2>&1; then "
+                f"  sudo -A -v && {brew_bin} uninstall --zap {flag} {name}; "
                 f"else "
                 f"  echo '  {name}: not installed, skipping'; "
                 f"fi",
             ],
             _env={**sudo_env()},
         )
+
+
+# Always-remove list (Brewfile.remove).
+if REMOVE.exists():
+    _uninstall_entries(_parse_remove_entries(REMOVE), source_label="Brewfile.remove")
+
+# Cross-variant cleanup: a corp Mac (variant=company) should uninstall anything
+# from Brewfile.personal that may have been installed by a previous provision,
+# and vice versa. Skips entries that are also in Brewfile.common (defensive,
+# though common + variant lists should never overlap in practice).
+_OTHER_VARIANT = "personal" if _VARIANT == "company" else "company"
+_OTHER_VARIANT_FILE = HERE / f"Brewfile.{_OTHER_VARIANT}"
+if _OTHER_VARIANT_FILE.exists():
+    _common_names = {name for _, name in _parse_remove_entries(COMMON)}
+    _other_entries = [
+        (kind, name) for kind, name in _parse_remove_entries(_OTHER_VARIANT_FILE) if name not in _common_names
+    ]
+    _uninstall_entries(_other_entries, source_label=f"Brewfile.{_OTHER_VARIANT}")

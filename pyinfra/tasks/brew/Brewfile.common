@@ -99,7 +99,6 @@ cask "tor-browser"  # https://www.torproject.org/
 cask "visual-studio-code"
 cask "vlc"
 cask "xquartz"  # https://www.xquartz.org/
-cask "zoom"
 
 # Kubernetes
 brew "kubectl"

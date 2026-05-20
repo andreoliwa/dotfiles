@@ -1,10 +1,11 @@
-"""Hammerspoon: clone Lunette Spoon and symlink into ~/.hammerspoon/Spoons.
+"""Hammerspoon: install cask, clone Lunette Spoon, symlink into ~/.hammerspoon/Spoons.
 
-Hammerspoon cask + init.lua come from Brewfile + chezmoi respectively.
+Self-contained: installs hammerspoon cask directly so this task can run before
+`brew bundle`. init.lua is deployed via chezmoi (private overlay).
 """
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import git
+from pyinfra.operations import brew, git
 from shared import home_path, make_env, shell
 
 from pyinfra import host
@@ -12,6 +13,11 @@ from pyinfra import host
 _ENV = make_env()
 
 if host.get_fact(Kernel) == "Darwin":
+    brew.casks(
+        name="Install Hammerspoon",
+        casks=["hammerspoon"],
+        latest=True,
+    )
     shell(
         name="Ensure ~/.hammerspoon/Spoons",
         commands=["mkdir -p $HOME/.hammerspoon/Spoons"],

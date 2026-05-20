@@ -5,7 +5,7 @@ from shared import home_path, make_env, shell
 _ENV = make_env(home_path("go/bin"))
 
 _BINARIES = [
-    "github.com/ianlewis/todos@latest",
+    "github.com/ianlewis/todos/cmd/todos@latest",
 ]
 
 for _bin in _BINARIES:

@@ -1,12 +1,17 @@
 """Deploy tmux: packages, TPM, and Oh My Tmux cleanup.
 
+Self-contained: only depends on brew CLI (always present after bootstrap.sh)
+and git. Can run early in the DAG, before `brew bundle`.
+
 ~/.tmux.conf is managed by chezmoi (chezmoi/dot_tmux.conf).
+tmuxp is installed via the `uv` task (uv_packages in inventory), not here,
+to keep this task free of any pipx/uv dependency.
 """
 
 from pathlib import Path
 
 from pyinfra.facts.server import Home
-from pyinfra.operations import brew, files, git, pipx
+from pyinfra.operations import brew, files, git
 
 from pyinfra import host
 
@@ -17,21 +22,8 @@ OH_MY_TMUX_DIR = HOME / ".tmux"
 # -- packages ------------------------------------------------------------------
 
 brew.packages(
-    name="Install tmux",
-    packages=["tmux"],
-    latest=True,
-)
-
-
-brew.packages(
-    name="Install extract_url (needed by tmux-urlview)",
-    packages=["extract_url"],
-    latest=True,
-)
-
-pipx.packages(
-    name="Install tmuxp via pipx",
-    packages=["tmuxp"],
+    name="Install tmux + extract_url (needed by tmux-urlview)",
+    packages=["tmux", "extract_url"],
     latest=True,
 )
 

@@ -1,8 +1,7 @@
 """Mac App Store packages.
 
-`mas` itself comes from Brewfile.common. Lists live in mas_common.toml plus
-a variant file (mas_company.toml by default, mas_personal.toml when
-Server.brew_variant == "personal").
+`mas` itself comes from Brewfile.common. Package lists live in meta.toml
+under [packages.common] and [packages.<variant>] (company or personal).
 """
 
 import tomllib
@@ -17,15 +16,12 @@ HERE = Path(__file__).parent
 _ENV = make_env()
 _SUDO_ENV = sudo_env()
 
-
-def _load(name: str) -> dict:
-    return tomllib.loads((HERE / name).read_text())
-
-
 if host.get_fact(Kernel) == "Darwin":
     _variant = host.data.get("brew_variant", "company")
-    _common = _load("mas_common.toml")
-    _variant_data = _load(f"mas_{_variant}.toml")
+    _meta = tomllib.loads((HERE / "meta.toml").read_text())
+    _pkgs = _meta.get("packages", {})
+    _common = _pkgs.get("common", {})
+    _variant_data = _pkgs.get(_variant, {})
 
     _install_ids = [*_common.get("install", []), *_variant_data.get("install", [])]
     _remove_ids = [*_common.get("remove", []), *_variant_data.get("remove", [])]

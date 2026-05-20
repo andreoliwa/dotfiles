@@ -3,8 +3,26 @@
 import ast
 import json
 import os
+import tomllib
 from dataclasses import dataclass, field
+from enum import IntEnum
 from pathlib import Path
+
+
+class Tier(IntEnum):
+    """Execution priority within the task DAG. Lower numbers run earlier.
+
+    Hard `REQUIRES` declared in a task always wins over tier - tier only
+    orders sibling tasks that are ready to run at the same point in the DAG.
+    """
+
+    SYSTEM = 0  # core bones: chezmoi, ssh, shell
+    FUNDAMENTAL = 1  # daily drivers needed immediately: bash, git, tmux, fzf, ...
+    INFRA = 2  # package managers: mise, uv, atuin, pipx, brew bundle
+    TOOLCHAIN = 3  # language runtimes: rust, go, python
+    APPS = 4  # things built on toolchains: garden, eza
+    FINAL = 5  # OS polish + Mac App Store: macos, mas, claude, hosts
+
 
 # Root of the dotfiles repo — derived from this file's location.
 # Cannot import DOTFILES_PATH from src/dotf/ops.py: pyinfra tasks run under the
@@ -192,3 +210,79 @@ def read_module_docstring(py_file: Path) -> str:
         return ast.get_docstring(tree) or ""
     except (SyntaxError, OSError):
         return ""
+
+
+@dataclass
+class TaskMeta:
+    """DAG metadata for a task: dependencies and execution tier."""
+
+    requires: set[str] = field(default_factory=set)
+    tier: Tier = Tier.FINAL
+
+
+def read_meta_toml(py_file: Path) -> TaskMeta | None:
+    """Read meta.toml from the same directory as *py_file*.
+
+    Returns None if meta.toml is absent (caller decides whether that is an error).
+    Malformed TOML or unknown tier name raises ValueError.
+    """
+    meta_path = py_file.parent / "meta.toml"
+    if not meta_path.exists():
+        return None
+    try:
+        data = tomllib.loads(meta_path.read_text())
+    except tomllib.TOMLDecodeError as exc:
+        msg = f"{meta_path}: invalid TOML: {exc}"
+        raise ValueError(msg) from exc
+    requires = set(data.get("requires", []))
+    if not all(isinstance(r, str) for r in requires):
+        msg = f"{meta_path}: requires must be a list of strings"
+        raise ValueError(msg)
+    tier_name = data.get("tier", "FINAL")
+    try:
+        tier = Tier[tier_name]
+    except KeyError:
+        valid = ", ".join(t.name for t in Tier)
+        msg = f"{meta_path}: unknown tier {tier_name!r} (valid: {valid})"
+        raise ValueError(msg) from None
+    return TaskMeta(requires=requires, tier=tier)
+
+
+def compute_task_order(
+    tools: list[str],
+    all_tasks: dict[str, Path],
+) -> tuple[list[tuple[str, Tier]], list[str]]:
+    """Compute DAG-respecting, tier-ordered execution sequence for *tools*.
+
+    Returns (order, phantom_tools):
+      - order: list of (tool_name, tier) in execution order.
+      - phantom_tools: tools requested in inventory that have no task on disk.
+
+    A task's `REQUIRES` may reference tools NOT in *tools* (e.g. fzf requires
+    brew but brew is not in this server's list). Such cross-server deps are
+    ignored - we only sort within the requested set.
+    """
+    from graphlib import TopologicalSorter
+
+    phantom = sorted(t for t in tools if t not in all_tasks)
+    valid = sorted(t for t in tools if t in all_tasks)
+
+    deps: dict[str, set[str]] = {}
+    tiers: dict[str, Tier] = {}
+    for name in valid:
+        meta = read_meta_toml(all_tasks[name]) or TaskMeta()
+        # Only keep deps that are part of this server's tool set; ignore
+        # cross-server dependencies (e.g. a task that requires brew on a
+        # server that doesn't run brew).
+        deps[name] = meta.requires & set(valid)
+        tiers[name] = meta.tier
+
+    ts = TopologicalSorter(deps)
+    ts.prepare()
+    order: list[tuple[str, Tier]] = []
+    while ts.is_active():
+        ready = sorted(ts.get_ready(), key=lambda n: (tiers[n], n))
+        for n in ready:
+            order.append((n, tiers[n]))
+            ts.done(n)
+    return order, phantom

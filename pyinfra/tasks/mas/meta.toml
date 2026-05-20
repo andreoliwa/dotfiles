@@ -1,5 +1,7 @@
-# Mac App Store packages shared by every variant.
-# Each entry: app id  # name url
+requires = ["brew"]
+tier = "FINAL"
+
+[packages.common]
 install = [
     1352778147, # Bitwarden https://itunes.apple.com/us/app/id1352778147
     409203825,  # Numbers https://itunes.apple.com/us/app/id409203825
@@ -11,3 +13,11 @@ remove = [
     526298438,  # Lightshot Screenshot
     585829637,  # Todoist
 ]
+
+[packages.company]
+install = []
+remove = []
+
+[packages.personal]
+install = []
+remove = []

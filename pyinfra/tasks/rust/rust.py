@@ -1,6 +1,7 @@
 """Rust: bootstrap stable + nightly toolchains and install cargo utilities.
 
-rustup-init comes from Brewfile (brew formula `rustup`). This task:
+Installs rustup directly via `brew install rustup` so this task is
+self-contained and can run before `brew bundle`. Steps:
   1. Sets up the stable toolchain (puts cargo into ~/.cargo/bin).
   2. Adds the nightly toolchain.
   3. Installs the cargo binaries listed below.
@@ -8,9 +9,16 @@ rustup-init comes from Brewfile (brew formula `rustup`). This task:
 Must run BEFORE any other task that uses cargo (garden, etc.).
 """
 
+from pyinfra.operations import brew
 from shared import home_path, make_env, shell
 
 _ENV = make_env(home_path(".cargo/bin"))
+
+brew.packages(
+    name="Install rustup",
+    packages=["rustup"],
+    latest=True,
+)
 
 _CARGO_BINARIES = [
     "cargo-update",

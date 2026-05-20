@@ -25,6 +25,10 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from lib import Server
 
 # Cannot import DOTFILES_PATH from pyinfra/lib.py: pyinfra tasks run in a separate
 # process under the pyinfra CLI, which has no knowledge of the dotf package.
@@ -138,7 +142,9 @@ def resolve_tools(tokens: list[str], private_repo: Path | None) -> list[str]:
 _BLUE = "\033[94m"
 _ENV_DOTF_REPO = "DOTF_REPO"
 _GREEN = "\033[92m"
+_RED = "\033[31m"
 _RESET = "\033[0m"
+_WARN = "\033[33m"
 _YELLOW = "\033[93m"
 # keep-sorted end
 
@@ -235,6 +241,69 @@ def apply_chezmoi(private_repo: Path | None, *, yes: bool = False) -> None:
             _chezmoi_apply_source(private_chezmoi, yes=yes)
 
 
+def _discover_all_tasks(private_repo: Path | None) -> dict[str, Path]:
+    """Discover all task .py files across dotfiles + private overlay.
+
+    Used by both `list_provision` and `_compute_ordered_tools` so they see the
+    same task universe.
+    """
+    import sys
+
+    _pyinfra_lib = DOTFILES_PATH / "pyinfra"
+    if str(_pyinfra_lib) not in sys.path:
+        sys.path.insert(0, str(_pyinfra_lib))
+    from lib import TasksDir, discover_tasks
+
+    private_pyinfra = _private_pyinfra(private_repo)
+    dotfiles_tasks = DOTFILES_PATH / "pyinfra" / "tasks"
+    extra_env = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
+    extra_dirs = [TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in extra_env.split(":") if p]
+    if private_pyinfra:
+        extra_dirs.append(TasksDir(absolute_path=private_pyinfra / "tasks", label=""))
+    return discover_tasks(dotfiles_tasks, extra_dirs)
+
+
+def _print_server_order(s: "Server", all_tasks: dict, phantom_total: list, claimed: set) -> None:
+    from collections import defaultdict
+
+    from lib import Tier, compute_task_order
+
+    print()
+    print(f"Computed execution order for {s.name}:")
+    order, phantom = compute_task_order(s.tools, all_tasks)
+    phantom_total.extend((s.name, ph) for ph in phantom)
+    claimed.update(name for name, _ in order)
+    by_tier: dict[Tier, list[str]] = defaultdict(list)
+    for name, tier in order:
+        by_tier[tier].append(name)
+    for tier in Tier:
+        names = by_tier.get(tier, [])
+        if names:
+            print(f"  {tier.name:<12} {', '.join(names)}")
+
+
+def _print_validation(all_tasks: dict, claimed: set, phantom_total: list) -> bool:
+    from lib import read_meta_toml
+
+    orphans = sorted(set(all_tasks) - claimed)
+    missing_meta = sorted(name for name, path in all_tasks.items() if read_meta_toml(path) is None)
+    print()
+    print("Validation:")
+    had_issues = False
+    for tool_name in orphans:
+        print(f"  {_WARN}WARN{_RESET}: task `{tool_name}` is not used by any server (orphan)")
+        had_issues = True
+    for tool_name in missing_meta:
+        print(f"  {_RED}ERROR{_RESET}: task `{tool_name}` has no meta.toml (add requires + tier)")
+        had_issues = True
+    for server_name, tool in phantom_total:
+        print(f"  {_RED}ERROR{_RESET}: server `{server_name}` lists `{tool}` but no task module exists (phantom)")
+        had_issues = True
+    if not had_issues:
+        print("  OK")
+    return bool(phantom_total or missing_meta)
+
+
 def list_provision(private_repo: Path | None) -> None:
     """Print configured servers and available tools, then exit."""
     import sys
@@ -242,33 +311,38 @@ def list_provision(private_repo: Path | None) -> None:
     _pyinfra_lib = DOTFILES_PATH / "pyinfra"
     if str(_pyinfra_lib) not in sys.path:
         sys.path.insert(0, str(_pyinfra_lib))
-    from lib import TasksDir, discover_tasks, read_module_docstring
+    from lib import read_module_docstring
+
+    all_tasks = _discover_all_tasks(private_repo)
+    servers = _load_servers(private_repo)
 
     # -- Servers ---------------------------------------------------------------
-    servers = _load_servers(private_repo)
     print("Servers:")
     if servers:
         for s in servers:
-            tools_str = ", ".join(s.tools)
-            print(f"  {s.name:<12}{s.host:<20}{tools_str}")
+            aliases = f" ({', '.join(s.aliases)})" if s.aliases else ""
+            label = f"{s.name}{aliases}"
+            print(f"  {label:<35}{s.host:<20}{len(s.tools)} tools")
     else:
         print("  (no private repo configured — set DOTF_REPO or pass -r)")
 
-    # -- Tools -----------------------------------------------------------------
-    print()
-    print("Tools:")
-    private_pyinfra = _private_pyinfra(private_repo)
-    dotfiles_tasks = DOTFILES_PATH / "pyinfra" / "tasks"
-    extra_env = os.environ.get("DOTF_EXTRA_TASKS_DIRS", "")
-    extra_dirs = [TasksDir(absolute_path=Path(p), label=Path(p).parent.parent.name) for p in extra_env.split(":") if p]
-    if private_pyinfra:
-        extra_dirs.append(TasksDir(absolute_path=private_pyinfra / "tasks", label=""))
+    # -- Computed execution order per server -----------------------------------
+    phantom_total: list[tuple[str, str]] = []
+    claimed: set[str] = set()
+    for s in servers:
+        _print_server_order(s, all_tasks, phantom_total, claimed)
 
-    all_tasks = discover_tasks(dotfiles_tasks, extra_dirs)
-    for tool_name, tool_path in sorted(all_tasks.items()):
-        doc = read_module_docstring(tool_path)
+    # -- All tools reference ---------------------------------------------------
+    print()
+    print("All tools (one-line docs):")
+    for tool_name in sorted(all_tasks):
+        doc = read_module_docstring(all_tasks[tool_name])
         first_line = doc.split("\n")[0] if doc else ""
         print(f"  {tool_name:<14}{first_line}")
+
+    # -- Validation ------------------------------------------------------------
+    if _print_validation(all_tasks, claimed, phantom_total):
+        raise SystemExit(1)
 
 
 def _resolve_ssh_target(server: str, private_repo: Path | None) -> tuple[str, str] | None:

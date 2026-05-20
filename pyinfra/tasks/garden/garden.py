@@ -2,19 +2,14 @@
 
 Prerequisites:
 
-- rustup (from Brewfile) -> stable toolchain -> cargo on PATH.
+- The `rust` task must have run first - it bootstraps the stable toolchain
+  and puts `cargo` in ~/.cargo/bin.
 - ~/.config/garden/garden.yaml deployed via chezmoi (private overlay).
 """
 
 from shared import home_path, make_env, shell
 
 _ENV = make_env(home_path(".cargo/bin"))
-
-shell(
-    name="rustup default stable",
-    commands=["rustup default stable >/dev/null 2>&1 || rustup-init -y --no-modify-path --default-toolchain stable"],
-    _env=_ENV,
-)
 
 shell(
     name="cargo install garden-tools",

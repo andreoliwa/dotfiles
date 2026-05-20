@@ -26,13 +26,18 @@ _CARGO_GIT_REPOS = [
 
 shell(
     name="rustup install stable",
-    # `rustup default stable` only writes a pointer in the rustup config; it
-    # does NOT download the toolchain. `rustup toolchain install` is the step
-    # that actually downloads stable into ~/.rustup/toolchains/ and places
-    # cargo + rustc in ~/.cargo/bin/. Then set stable as default.
+    # Three steps because the brew rustup formula (>= 1.28) does NOT create
+    # the cargo/rustc proxy symlinks in ~/.cargo/bin/ automatically:
+    #   1. `rustup toolchain install` downloads stable into ~/.rustup/toolchains/.
+    #   2. `rustup default stable` sets it as the active toolchain.
+    #   3. `rustup-init -y --no-modify-path --default-toolchain none` is the
+    #      only step that populates ~/.cargo/bin/ with `cargo`, `rustc`, etc.
+    #      (proxies that dispatch to the active toolchain). Without it,
+    #      `cargo` is not on PATH and later `cargo install` steps fail.
     commands=[
         "rustup toolchain install stable --no-self-update",
         "rustup default stable",
+        "/opt/homebrew/opt/rustup/bin/rustup-init -y --no-modify-path --default-toolchain none",
     ],
     _env=_ENV,
 )

@@ -1,0 +1,11 @@
+# Brewfile.remove - casks and brews to uninstall if installed.
+#
+# Processed by pyinfra/tasks/brew/brew.py after `brew bundle`. Each entry is
+# attempted with `brew uninstall --zap`; missing packages are ignored.
+# `--zap` also removes leftover app data for casks (preferences, caches, etc.)
+#
+# Syntax mirrors a regular Brewfile (so editors highlight it), but only the
+# names are read - cask vs brew is detected via `brew list --cask` lookup.
+
+cask "logitech-g-hub"
+cask "logitech-options"

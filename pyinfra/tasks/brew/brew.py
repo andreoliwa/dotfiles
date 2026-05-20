@@ -16,6 +16,7 @@ _ENV = make_env()
 
 HERE = Path(__file__).parent
 COMMON = HERE / "Brewfile.common"
+REMOVE = HERE / "Brewfile.remove"
 ASKPASS_SRC = HERE / "askpass.sh"
 # Server picks the variant via host.data["brew_variant"] -> Brewfile.<variant>.
 # Default is "company" (work laptop); personal machines opt in explicitly.
@@ -89,3 +90,40 @@ shell(
         "HOMEBREW_BUNDLE_NO_LOCK": "1",
     },
 )
+
+
+# Process Brewfile.remove: uninstall casks/brews listed there if currently
+# installed. Idempotent - missing packages produce no error. `--zap` also
+# wipes leftover cask data (preferences, caches).
+def _parse_remove_entries(path: Path) -> list[tuple[str, str]]:
+    """Parse a Brewfile.remove file into [(kind, name), ...].
+
+    kind is "cask" or "brew"; lines starting with `#` and blank lines are skipped.
+    """
+    import re
+
+    entries: list[tuple[str, str]] = []
+    pattern = re.compile(r'^\s*(cask|brew)\s+"([^"]+)"')
+    for raw in path.read_text().splitlines():
+        line = raw.split("#", 1)[0]
+        match = pattern.match(line)
+        if match:
+            entries.append((match.group(1), match.group(2)))
+    return entries
+
+
+if REMOVE.exists():
+    _brew = _brew_bin()
+    for kind, name in _parse_remove_entries(REMOVE):
+        flag = "--cask" if kind == "cask" else "--formula"
+        shell(
+            name=f"Uninstall {kind} {name} if installed",
+            commands=[
+                f"if {_brew} list {flag} {name} >/dev/null 2>&1; then "
+                f"  sudo -A -v && {_brew} uninstall --zap {flag} {name}; "
+                f"else "
+                f"  echo '  {name}: not installed, skipping'; "
+                f"fi",
+            ],
+            _env={**sudo_env()},
+        )

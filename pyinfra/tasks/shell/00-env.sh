@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # Common environment variables (all machines)
 
+# Locale - bash and many CLIs warn "setlocale: cannot change locale" when these
+# are unset (corp Macs sometimes ship without inheriting them from Terminal).
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
 # Terminal editor
 export EDITOR='vim'
 

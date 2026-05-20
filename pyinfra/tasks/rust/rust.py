@@ -25,11 +25,15 @@ _CARGO_GIT_REPOS = [
 ]
 
 shell(
-    name="rustup default stable",
-    # Bootstrap stable toolchain so cargo lands in ~/.cargo/bin. If stable is
-    # already the default this is a fast no-op; otherwise it initialises the
-    # toolchain via rustup-init (installed by brew).
-    commands=["rustup default stable >/dev/null 2>&1 || rustup-init -y --no-modify-path --default-toolchain stable"],
+    name="rustup install stable",
+    # `rustup default stable` only writes a pointer in the rustup config; it
+    # does NOT download the toolchain. `rustup toolchain install` is the step
+    # that actually downloads stable into ~/.rustup/toolchains/ and places
+    # cargo + rustc in ~/.cargo/bin/. Then set stable as default.
+    commands=[
+        "rustup toolchain install stable --no-self-update",
+        "rustup default stable",
+    ],
     _env=_ENV,
 )
 

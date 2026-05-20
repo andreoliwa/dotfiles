@@ -83,7 +83,6 @@ cask "grandperspective"  # https://grandperspectiv.sourceforge.io/
 cask "iterm2"  # https://iterm2.com/
 cask "jetbrains-toolbox"  # https://www.jetbrains.com/toolbox-app/
 cask "keepingyouawake"  # maintained caffeinate wrapper
-cask "kindle"  # https://www.amazon.com/gp/digital/fiona/kcp-landing-page
 cask "kindle-previewer"  # https://www.amazon.com/Kindle-Previewer/b?ie=UTF8&node=21381691011
 cask "logitech-g-hub"  # http://logitechg.com/support/g305
 cask "logitech-options"  # MX Keys for Mac external keyboard

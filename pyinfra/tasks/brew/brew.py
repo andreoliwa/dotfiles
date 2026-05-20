@@ -120,11 +120,16 @@ def _uninstall_entries(entries: list[tuple[str, str]], source_label: str) -> Non
         # `--zap` only applies to casks (wipes leftover app data); for brews
         # it's mutually exclusive with `--formula` so omit it there.
         zap = "--zap " if kind == "cask" else ""
+        # `--force` lets brew uninstall the cask metadata even when the
+        # `/Applications/<App>.app` source is missing (already moved/deleted
+        # by the user). Without it, `brew uninstall --cask <name>` aborts with
+        # "It seems the App source '...app' is not there."
+        force = "--force " if kind == "cask" else ""
         shell(
             name=f"[{source_label}] uninstall {kind} {name} if installed",
             commands=[
                 f"if {brew_bin} list {flag} {name} >/dev/null 2>&1; then "
-                f"  sudo -A -v && {brew_bin} uninstall {zap}{flag} {name}; "
+                f"  sudo -A -v && {brew_bin} uninstall {force}{zap}{flag} {name}; "
                 f"else "
                 f"  echo '  {name}: not installed, skipping'; "
                 f"fi",

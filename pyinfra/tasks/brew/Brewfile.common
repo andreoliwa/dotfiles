@@ -65,7 +65,6 @@ brew "rustup"
 # Casks
 cask "android-file-transfer"  # https://www.android.com/filetransfer/
 cask "appcleaner"
-cask "apppolice"  # https://github.com/AppPolice/AppPolice
 cask "calibre"  # https://calibre-ebook.com/
 cask "ccleaner"  # https://www.ccleaner.com/ccleaner-mac
 cask "cyberduck"  # https://cyberduck.io/

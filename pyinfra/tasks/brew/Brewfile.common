@@ -92,7 +92,7 @@ cask "rescuetime"  # https://www.rescuetime.com/
 cask "send-to-kindle"  # https://www.amazon.com/gp/sendtokindle/mac
 cask "signal"
 cask "spotify"
-cask "syncthing"  # https://syncthing.net/
+cask "syncthing-app"  # https://syncthing.net/ (renamed from "syncthing")
 cask "telegram"
 cask "the-unarchiver"
 cask "tor-browser"  # https://www.torproject.org/

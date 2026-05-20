@@ -11,7 +11,8 @@ brew "awscli"  # https://aws.amazon.com/cli/ Newer versions 2.*
 brew "gradle-completion"  # https://github.com/gradle/gradle-completion
 brew "mike-engel/jwt-cli/jwt-cli"  # https://github.com/mike-engel/jwt-cli
 brew "protobuf"  # https://github.com/protocolbuffers/protobuf
-brew "vault"  # Hashicorp https://www.vaultproject.io/
+tap "hashicorp/tap"  # https://github.com/hashicorp/homebrew-tap (vault left homebrew-core after BSL license change)
+brew "hashicorp/tap/vault"  # Hashicorp https://www.vaultproject.io/
 
 # Casks
 cask "aws-vault"  # https://github.com/99designs/aws-vault#installing

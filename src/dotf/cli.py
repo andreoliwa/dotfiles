@@ -60,21 +60,38 @@ def _provision_impl(
         _print_green(f"Server: {resolved_server}")
 
     if start_from:
-        from dotf.ops import _load_servers
+        from dotf.ops import _discover_all_tasks, _load_servers
 
         servers = _load_servers(repo)
         # Match by name first; fall back to host (handles default "@local").
         server_obj = next((s for s in servers if s.name == resolved_server), None)
         if server_obj is None:
             server_obj = next((s for s in servers if s.host == resolved_server), None)
-        order = list(server_obj.tools) if server_obj else (tools_list or [])
+        raw_tools = list(server_obj.tools) if server_obj else (tools_list or [])
+
+        # Use DAG-computed execution order (not raw inventory list, which is
+        # alphabetical). Otherwise --start-from slices at the wrong position.
+        import sys
+        from pathlib import Path as _Path
+
+        from dotf.ops import DOTFILES_PATH as _DOTFILES_PATH
+
+        _pyinfra_lib = _DOTFILES_PATH / "pyinfra"
+        if str(_pyinfra_lib) not in sys.path:
+            sys.path.insert(0, str(_pyinfra_lib))
+        from lib import compute_task_order  # noqa: PLC0415
+
+        all_tasks = _discover_all_tasks(repo)
+        ordered, _ = compute_task_order(raw_tools, all_tasks)
+        order = [name for name, _tier in ordered]
+
         if start_from not in order:
             typer.echo(f"--start-from '{start_from}' not in server '{resolved_server}' tools: {order}", err=True)
             raise typer.Exit(1)
         idx = order.index(start_from)
         sliced = order[idx:]
         tools_list = [t for t in tools_list if t in sliced] if tools_list else sliced
-        _print_green(f"Starting from: {start_from}")
+        _print_green(f"Starting from: {start_from} (order: {', '.join(sliced)})")
 
     if tools_list:
         _print_green(f"Tools:  {', '.join(tools_list)}")

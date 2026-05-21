@@ -91,6 +91,7 @@ cask "rescuetime"  # https://www.rescuetime.com/
 cask "send-to-kindle"  # https://www.amazon.com/gp/sendtokindle/mac
 cask "signal"
 cask "spotify"
+cask "superwhisper"  # https://superwhisper.com/ - offline AI dictation (Wispr Flow replacement)
 cask "syncthing-app"  # https://syncthing.net/ (renamed from "syncthing")
 cask "telegram"
 cask "the-unarchiver"

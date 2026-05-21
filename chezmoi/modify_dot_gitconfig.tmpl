@@ -109,6 +109,9 @@ followTags = true
 {{- else if eq .chezmoi.os "linux" }}
     program = gpg2
 {{- end }}
+    # Explicit gpg.format: openpgp is the default, but pinning it avoids ambiguity
+    # if a future global git config sets format = ssh or x509.
+    format = openpgp
 
 [rerere]
 enabled = true

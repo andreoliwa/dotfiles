@@ -69,6 +69,7 @@ cask "cyberduck"  # https://cyberduck.io/
 cask "deepl"  # https://www.deepl.com/translator
 cask "dropbox"  # https://www.dropbox.com/
 cask "dupeguru"  # https://dupeguru.voltaicideas.net/
+cask "espanso"  # https://espanso.org/ cross-platform text expander
 cask "finicky"  # https://github.com/johnste/finicky
 cask "flameshot"  # https://github.com/flameshot-org/flameshot#installation
 cask "font-cousine"

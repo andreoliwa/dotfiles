@@ -1,8 +1,8 @@
-"""Chrome / Brave extensions: open each chromewebstore URL for manual install.
+"""Chrome / Brave extensions: print each chromewebstore URL for manual install.
 
 These are the Chrome extensions used on Brave. They can't be installed via
-CLI, so the task opens each URL in the default browser (Finicky routes the
-default to Chrome) so the user clicks "Add to Chrome" manually.
+CLI, so the task prints each URL to stdout. The user copies and visits them
+manually to click "Add to Chrome".
 
 Set host.data.brew_variant to switch the personal/company list. Default is
 "company".
@@ -71,8 +71,8 @@ if host.get_fact(Kernel) == "Darwin":
 
     for _url in _urls:
         shell(
-            name=f"open {_url}",
-            commands=[f"open '{_url}'"],
+            name=f"chrome extension: {_url}",
+            commands=[f"echo '  {_url}'"],
             _env=_ENV,
             _ignore_errors=True,
         )

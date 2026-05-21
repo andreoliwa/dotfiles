@@ -23,20 +23,23 @@ if host.get_fact(Kernel) == "Darwin":
     _common = _pkgs.get("common", {})
     _variant_data = _pkgs.get(_variant, {})
 
+    _names = _meta.get("names", {})
     _install_ids = [*_common.get("install", []), *_variant_data.get("install", [])]
     _remove_ids = [*_common.get("remove", []), *_variant_data.get("remove", [])]
 
     for _pkg in _install_ids:
+        _label = _names.get(str(_pkg), str(_pkg))
         shell(
-            name=f"mas install {_pkg}",
+            name=f"mas install {_label}",
             commands=[f"mas install {_pkg}"],
             _env=_ENV,
             _ignore_errors=True,
         )
 
     for _pkg in _remove_ids:
+        _label = _names.get(str(_pkg), str(_pkg))
         shell(
-            name=f"mas uninstall {_pkg}",
+            name=f"mas uninstall {_label}",
             commands=[f"sudo -A mas uninstall {_pkg}"],
             _env=_SUDO_ENV,
             _ignore_errors=True,

@@ -26,3 +26,11 @@ defaults write com.apple.finder ShowPathbar -bool true
 
 echo "  - Don't use native full-screen (separate Space) for MacVim"
 defaults write org.vim.MacVim MMNativeFullScreen 0
+
+echo "  - use F1-F12 as standard function keys (Fn for media keys)"
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+
+# Mission Control ctrl-arrow hotkeys (free up ctrl-left/right/up/down for tmux): writing
+# AppleSymbolicHotKeys via defaults does not propagate to System Settings on macOS Tahoe (26.x);
+# WindowServer keeps using stale bindings until you uncheck them manually in
+# System Settings -> Keyboard -> Keyboard Shortcuts -> Mission Control.

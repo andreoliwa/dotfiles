@@ -34,12 +34,6 @@ alias gmu='gcm; gu'
 
 alias ghc='gh pr checkout'
 
-# Shortcut to commit files with a message
-function co {
-    all_args="$*"
-    git commit -m "${all_args}"
-}
-
 # https://github.com/garden-rs/garden
 alias ga='garden'
 alias gi='garden ide'

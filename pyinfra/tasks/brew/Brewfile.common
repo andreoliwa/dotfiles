@@ -97,6 +97,7 @@ cask "superwhisper"  # https://superwhisper.com/ - offline AI dictation (Wispr F
 cask "syncthing-app"  # https://syncthing.net/ (renamed from "syncthing")
 cask "telegram"
 cask "the-unarchiver"
+cask "threema@beta"  # https://threema.ch/ end-to-end encrypted messaging
 cask "tor-browser"  # https://www.torproject.org/
 cask "visual-studio-code"
 cask "vlc"

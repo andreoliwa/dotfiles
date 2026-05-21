@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # keep-sorted start
 alias c='claude'
+alias co='claude --model opus[1m]'
 alias cr='claude --resume'
+alias cs='claude --model sonnet'
+alias cs1='claude --model sonnet[1m]'
 alias cw='claude --worktree'
 # keep-sorted end

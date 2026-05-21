@@ -252,37 +252,69 @@ def compute_task_order(
     tools: list[str],
     all_tasks: dict[str, Path],
 ) -> tuple[list[tuple[str, Tier]], list[str]]:
-    """Compute DAG-respecting, tier-ordered execution sequence for *tools*.
+    """Compute tier-first, DAG-respecting execution sequence for *tools*.
 
     Returns (order, phantom_tools):
       - order: list of (tool_name, tier) in execution order.
       - phantom_tools: tools requested in inventory that have no task on disk.
 
-    A task's `REQUIRES` may reference tools NOT in *tools* (e.g. fzf requires
-    brew but brew is not in this server's list). Such cross-server deps are
-    ignored - we only sort within the requested set.
+    Tier is the primary sort key: all SYSTEM tasks finish before any FUNDAMENTAL
+    starts, all FUNDAMENTAL before any INFRA, etc. Within a tier, `requires`
+    determines order via topological sort.
+
+    A `requires` may reference a task NOT in *tools* (cross-server deps such as
+    a task that needs brew on a server that doesn't run brew) - those are
+    silently ignored.
+
+    Cross-tier `requires` (task in tier X requires task in tier Y > X) is a
+    misconfiguration: the dependency cannot satisfy the tier barrier. Raises
+    SystemExit with the offending pair. Fix by either lowering the required
+    task's tier or raising the requirer's tier.
     """
     from graphlib import TopologicalSorter
 
     phantom = sorted(t for t in tools if t not in all_tasks)
     valid = sorted(t for t in tools if t in all_tasks)
+    valid_set = set(valid)
 
     deps: dict[str, set[str]] = {}
     tiers: dict[str, Tier] = {}
     for name in valid:
         meta = read_meta_toml(all_tasks[name]) or TaskMeta()
-        # Only keep deps that are part of this server's tool set; ignore
-        # cross-server dependencies (e.g. a task that requires brew on a
-        # server that doesn't run brew).
-        deps[name] = meta.requires & set(valid)
+        deps[name] = meta.requires & valid_set
         tiers[name] = meta.tier
 
-    ts = TopologicalSorter(deps)
-    ts.prepare()
+    # Cross-tier conflict detection: a task in tier X cannot require a task in
+    # a later tier - the tier barrier would force the requirer to run first.
+    conflicts = [
+        f"  {name} ({tiers[name].name}) requires {r} ({tiers[r].name})"
+        for name in valid
+        for r in deps[name]
+        if tiers[r] > tiers[name]
+    ]
+    if conflicts:
+        _msg = (
+            "Tier conflicts (a task cannot require something in a later tier):\n"
+            + "\n".join(conflicts)
+            + "\nFix by adjusting the `tier` in the offending task's meta.toml,"
+            " or removing the cross-tier `requires`."
+        )
+        raise SystemExit(_msg)
+
+    # Process tier-by-tier. Within each tier, topo-sort using only intra-tier
+    # deps; inter-tier deps are already satisfied by the tier barrier.
     order: list[tuple[str, Tier]] = []
-    while ts.is_active():
-        ready = sorted(ts.get_ready(), key=lambda n: (tiers[n], n))
-        for n in ready:
-            order.append((n, tiers[n]))
-            ts.done(n)
+    for tier in Tier:
+        in_tier = [n for n in valid if tiers[n] == tier]
+        if not in_tier:
+            continue
+        in_tier_set = set(in_tier)
+        intra_deps = {n: deps[n] & in_tier_set for n in in_tier}
+        ts = TopologicalSorter(intra_deps)
+        ts.prepare()
+        while ts.is_active():
+            ready = sorted(ts.get_ready())
+            for n in ready:
+                order.append((n, tier))
+                ts.done(n)
     return order, phantom

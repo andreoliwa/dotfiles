@@ -1,2 +1,2 @@
-requires = ["conjuring"]
-tier = "FUNDAMENTAL"
+requires = ["pipx"]
+tier = "INFRA"

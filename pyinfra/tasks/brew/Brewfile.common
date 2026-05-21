@@ -59,7 +59,6 @@ brew "wmctrl"  # https://sites.google.com/site/tstyblo/wmctrl
 brew "yq"  # https://github.com/mikefarah/yq
 brew "mas"
 brew "gh"  # GitHub CLI https://github.com/cli/cli
-brew "fzf"
 brew "rustup"
 
 # Casks

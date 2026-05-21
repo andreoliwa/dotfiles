@@ -63,6 +63,7 @@ brew "rustup"
 # Casks
 cask "android-file-transfer"  # https://www.android.com/filetransfer/
 cask "appcleaner"
+cask "bitwarden"  # https://bitwarden.com/
 cask "calibre"  # https://calibre-ebook.com/
 cask "ccleaner"  # https://www.ccleaner.com/ccleaner-mac
 cask "cyberduck"  # https://cyberduck.io/
@@ -70,6 +71,7 @@ cask "deepl"  # https://www.deepl.com/translator
 cask "dropbox"  # https://www.dropbox.com/
 cask "dupeguru"  # https://dupeguru.voltaicideas.net/
 cask "espanso"  # https://espanso.org/ cross-platform text expander
+cask "fastmail"  # https://www.fastmail.com/
 cask "finicky"  # https://github.com/johnste/finicky
 cask "flameshot"  # https://github.com/flameshot-org/flameshot#installation
 cask "font-cousine"

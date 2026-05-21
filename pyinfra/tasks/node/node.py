@@ -11,6 +11,12 @@ from pyinfra import host
 
 _ENV = make_env(home_path(".local/share/mise/shims"))
 
+shell(
+    name="mise install node",
+    commands=["mise install node"],
+    _env=_ENV,
+)
+
 _COMMON: list[str] = ["prettier"]
 _PERSONAL: list[str] = []
 _COMPANY: list[str] = []

@@ -1,2 +1,2 @@
-requires = ["brew"]
+requires = []
 tier = "FUNDAMENTAL"

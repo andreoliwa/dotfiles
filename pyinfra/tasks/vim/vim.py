@@ -1,8 +1,19 @@
-"""vim: install vim-plug plugin manager. Vim itself comes from Brewfile (macvim)."""
+"""vim: install macvim via brew on macOS, then install vim-plug plugin manager."""
 
+from pyinfra.facts.server import Kernel
+from pyinfra.operations import brew
 from shared import make_env, shell
 
+from pyinfra import host
+
 _ENV = make_env()
+
+if host.get_fact(Kernel) == "Darwin":
+    brew.packages(
+        name="Install macvim",
+        packages=["macvim"],
+        latest=True,
+    )
 
 shell(
     name="Ensure ~/.vim/autoload dir",

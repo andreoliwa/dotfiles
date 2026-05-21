@@ -36,7 +36,6 @@ brew "jmespath/jmespath/jp"  # https://github.com/jmespath/jp
 brew "jq"  # https://github.com/stedolan/jq
 brew "jrnl"  # https://jrnl.sh/
 brew "libsodium"  # can't be removed from personal_laptop, required by ffmpeg and zeromq
-brew "macvim"  # https://github.com/macvim-dev/macvim GUI vim, also overrides system vim
 brew "moreutils"  # https://joeyh.name/code/moreutils/ with the sponge command
 brew "nmap"
 brew "pidof"  # http://www.nightproductions.net/cli.htm

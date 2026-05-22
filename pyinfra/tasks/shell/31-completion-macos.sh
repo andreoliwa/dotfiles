@@ -17,3 +17,9 @@ else
         [[ -r "$COMPLETION" ]] && source "$COMPLETION"
     done
 fi
+
+# Apple ships git-completion.bash with Xcode CLT but doesn't install it into
+# bash-completion@2's search path, so the lazy-load stub can't find it.
+# shellcheck source=/dev/null
+[[ -r /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ]] \
+    && source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash

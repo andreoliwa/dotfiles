@@ -11,10 +11,10 @@ alias ide='garden ide -vv'
 # Pull one or more trees; defaults to all trees when called with no arguments
 gap() {
     if [[ $# -eq 0 ]]; then
-        garden exec '*' git pull
+        garden git '*' pull
     else
         for tree in "$@"; do
-            garden exec "$tree" git pull
+            garden git "$tree" pull
         done
     fi
 }

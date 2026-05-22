@@ -42,6 +42,7 @@ brew "pidof"  # http://www.nightproductions.net/cli.htm
 brew "pinentry-mac"
 brew "pipgrip"  # needed by brew update-python-resources
 brew "pocketbase"  # https://pocketbase.io/
+brew "prek"  # https://github.com/j178/prek - fast pre-commit hook runner
 brew "procs"  # https://lib.rs/crates/procs
 brew "remake"  # https://bashdb.sourceforge.io/remake
 brew "rg"  # https://github.com/BurntSushi/ripgrep Install with Brew to get shell completion

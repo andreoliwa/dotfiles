@@ -263,6 +263,51 @@ def _discover_all_tasks(private_repo: Path | None) -> dict[str, Path]:
     return discover_tasks(dotfiles_tasks, extra_dirs)
 
 
+def _find_meta_mismatches(private_repo: Path | None) -> list[str]:
+    """Return error messages for overlay tasks whose meta.toml differs from the public one.
+
+    When a private task overrides a public one (same stem), their meta.toml must agree on
+    requires and tier - otherwise the private overlay silently changes DAG behaviour.
+    """
+    import sys
+
+    _pyinfra_lib = DOTFILES_PATH / "pyinfra"
+    if str(_pyinfra_lib) not in sys.path:
+        sys.path.insert(0, str(_pyinfra_lib))
+    from lib import read_meta_toml
+
+    private_pyinfra = _private_pyinfra(private_repo)
+    if not private_pyinfra:
+        return []
+
+    dotfiles_tasks = DOTFILES_PATH / "pyinfra" / "tasks"
+    private_tasks = private_pyinfra / "tasks"
+    errors = []
+
+    for private_py in sorted(private_tasks.glob("*/*.py")):
+        stem = private_py.stem
+        if stem == "__init__":
+            continue
+        # Find matching public file by stem (may live in a differently-named subdir)
+        public_matches = list(dotfiles_tasks.glob(f"*/{stem}.py"))
+        if not public_matches:
+            continue
+        public_py = public_matches[0]
+        pub_meta = read_meta_toml(public_py)
+        priv_meta = read_meta_toml(private_py)
+        if pub_meta is None or priv_meta is None:
+            continue
+        if pub_meta.tier != priv_meta.tier or pub_meta.requires != priv_meta.requires:
+            errors.append(
+                f"task `{stem}` meta.toml mismatch between public and private overlay:\n"
+                f"    public:  tier={pub_meta.tier.name}, requires={sorted(pub_meta.requires)}\n"
+                f"    private: tier={priv_meta.tier.name}, requires={sorted(priv_meta.requires)}\n"
+                f"    Fix: align meta.toml in {private_py.parent} with {public_py.parent}"
+            )
+
+    return errors
+
+
 def _print_server_order(s: "Server", all_tasks: dict, phantom_total: list, claimed: set) -> None:
     from collections import defaultdict
 
@@ -282,11 +327,12 @@ def _print_server_order(s: "Server", all_tasks: dict, phantom_total: list, claim
             print(f"  {tier.name:<12} {', '.join(names)}")
 
 
-def _print_validation(all_tasks: dict, claimed: set, phantom_total: list) -> bool:
+def _print_validation(all_tasks: dict, claimed: set, phantom_total: list, private_repo: Path | None) -> bool:
     from lib import read_meta_toml
 
     orphans = sorted(set(all_tasks) - claimed)
     missing_meta = sorted(name for name, path in all_tasks.items() if read_meta_toml(path) is None)
+    meta_mismatches = _find_meta_mismatches(private_repo)
     print()
     print("Validation:")
     had_issues = False
@@ -299,9 +345,12 @@ def _print_validation(all_tasks: dict, claimed: set, phantom_total: list) -> boo
     for server_name, tool in phantom_total:
         print(f"  {_RED}ERROR{_RESET}: server `{server_name}` lists `{tool}` but no task module exists (phantom)")
         had_issues = True
+    for msg in meta_mismatches:
+        print(f"  {_RED}ERROR{_RESET}: {msg}")
+        had_issues = True
     if not had_issues:
         print("  OK")
-    return bool(phantom_total or missing_meta)
+    return bool(phantom_total or missing_meta or meta_mismatches)
 
 
 def list_provision(private_repo: Path | None) -> None:
@@ -341,7 +390,7 @@ def list_provision(private_repo: Path | None) -> None:
         print(f"  {tool_name:<14}{first_line}")
 
     # -- Validation ------------------------------------------------------------
-    if _print_validation(all_tasks, claimed, phantom_total):
+    if _print_validation(all_tasks, claimed, phantom_total, private_repo):
         raise SystemExit(1)
 
 

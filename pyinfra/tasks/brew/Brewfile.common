@@ -103,6 +103,7 @@ cask "threema@beta"  # https://threema.ch/ end-to-end encrypted messaging
 cask "tor-browser"  # https://www.torproject.org/
 cask "visual-studio-code"
 cask "vlc"
+cask "whatsapp"  # https://www.whatsapp.com/
 cask "xquartz"  # https://www.xquartz.org/
 
 # Kubernetes

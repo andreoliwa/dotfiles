@@ -1,4 +1,4 @@
-"""Claude Code installs and add-ons.
+"""AI tools: Claude Code add-ons and general AI utilities.
 
 Convention for overlay-paired tasks: this module exports named functions and
 has NO module-level pyinfra ops. Importing it must be side-effect-free so an
@@ -49,7 +49,7 @@ def install_ccnotify() -> None:
       3. chmod a+x ~/.claude/ccnotify/ccnotify.py
       4. brew install terminal-notifier (separate step)
 
-    Hooks in settings.json are intentionally NOT wired here — the user already
+    Hooks in settings.json are intentionally NOT wired here - the user already
     edits ~/.claude/settings.json via chezmoi, and may have a customized version.
     See README "Configure Claude Hooks" for the JSON snippet to add manually.
     """
@@ -93,3 +93,20 @@ def install_caveman() -> None:
             f"claude plugin install {CAVEMAN_PLUGIN}",
         ],
     )
+
+
+def install_jeeves() -> None:
+    """Install jeeves - TUI for browsing and resuming AI agent sessions.
+
+    Supports Claude Code, Codex, and OpenCode. Run `jeeves` to browse sessions
+    or `jeeves <search term>` to filter. Press `r` to resume a session in the agent.
+
+    See: https://github.com/robinovitch61/jeeves
+    """
+    brew.packages(
+        name="Install jeeves",
+        packages=["robinovitch61/tap/jeeves"],
+        latest=True,
+    )
+
+

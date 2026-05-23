@@ -17,6 +17,17 @@ BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
 _SYSTEM_PATH = "/usr/bin:/bin:/usr/sbin:/sbin"
 
 
+def brew_bin() -> str:
+    """Return the absolute path to the brew binary for the target host."""
+    from pyinfra.facts.server import Kernel
+
+    return (
+        "/opt/homebrew/bin/brew"
+        if host.get_fact(Kernel) == "Darwin"
+        else "/home/linuxbrew/.linuxbrew/bin/brew"
+    )
+
+
 def make_env(*prepend_paths: str) -> dict[str, str]:
     """Return a `_env` dict with PATH = <prepend>:BREW_PATH:<system>.
 
@@ -57,6 +68,33 @@ def sudo_env(*prepend_paths: str) -> dict[str, str]:
 
 # Single log file all `shell()` ops append to; follow with `dotf tail`.
 PROVISION_LOG = ".cache/dotf/provision.log"
+
+
+def install_dmg(name: str, url: str, app: str, volume: str | None = None) -> object:
+    """Download a DMG, copy the .app to /Applications, then unmount and clean up.
+
+    Idempotent: skips if /Applications/<app>.app already exists.
+
+    Args:
+        name:   Human-readable op name (passed to shell()).
+        url:    Direct download URL for the .dmg file.
+        app:    App bundle name without .app suffix (e.g. "FreeFlow").
+        volume: Volume name the DMG mounts as. Defaults to `app`.
+    """
+    vol = volume or app
+    app_path = f"/Applications/{app}.app"
+    dmg_tmp = f"/tmp/{app}.dmg"
+    return shell(
+        name=name,
+        commands=(
+            f"if [ -d {app_path} ]; then echo '{app} already installed, skipping'; else"
+            f" curl -fsSL {url} -o {dmg_tmp}"
+            f" && hdiutil attach -nobrowse -quiet {dmg_tmp}"
+            f" && cp -R /Volumes/{vol}/{app}.app {app_path}"
+            f" && hdiutil detach -quiet /Volumes/{vol}"
+            f" && rm {dmg_tmp}; fi"
+        ),
+    )
 
 
 def shell(name: str, commands: str | list[str], **kwargs: object) -> object:

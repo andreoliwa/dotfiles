@@ -6,9 +6,8 @@ for packages already installed.
 
 from pathlib import Path
 
-from pyinfra.facts.server import Kernel
 from pyinfra.operations import files
-from shared import ASKPASS_PATH, home_path, make_env, shell, sudo_env
+from shared import ASKPASS_PATH, brew_bin as _brew_bin, home_path, make_env, shell, sudo_env
 
 from pyinfra import host
 
@@ -32,11 +31,6 @@ _REMOTE_VARIANT = home_path(".Brewfile.variant")
 _REMOTE_FINAL = home_path(".Brewfile")
 _REMOTE_ASKPASS = home_path(ASKPASS_PATH)
 
-
-def _brew_bin() -> str:
-    if host.get_fact(Kernel) == "Darwin":
-        return "/opt/homebrew/bin/brew"
-    return "/home/linuxbrew/.linuxbrew/bin/brew"
 
 
 shell(

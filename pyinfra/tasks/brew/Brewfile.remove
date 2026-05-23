@@ -9,4 +9,3 @@
 
 cask "logitech-g-hub"
 cask "logitech-options"
-cask "wispr-flow"  # company network blocks https://wisprflow.ai/ - replaced with superwhisper

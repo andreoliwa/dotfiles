@@ -1,7 +1,8 @@
-"""Homebrew bootstrap + `brew bundle` against Brewfile.common + Brewfile.<variant>.
+"""`brew bundle` against Brewfile.common + Brewfile.<variant>.
 
-Idempotent: skips brew install if already present, and `brew bundle` is a no-op
-for packages already installed.
+Installs all formulae, casks, and taps declared in the Brewfiles.
+Brew itself is installed by bootstrap.sh before pyinfra runs.
+Idempotent: `brew bundle` is a no-op for packages already installed.
 """
 
 from pathlib import Path
@@ -30,19 +31,6 @@ _REMOTE_COMMON = home_path(".Brewfile.common")
 _REMOTE_VARIANT = home_path(".Brewfile.variant")
 _REMOTE_FINAL = home_path(".Brewfile")
 _REMOTE_ASKPASS = home_path(ASKPASS_PATH)
-
-
-
-shell(
-    name="Install Homebrew if missing",
-    commands=[
-        "if ! command -v brew >/dev/null 2>&1; then "
-        'NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL '
-        'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; '
-        "fi",
-    ],
-    _env=_ENV,
-)
 
 files.put(
     name="Sync Brewfile.common to ~/.Brewfile.common",

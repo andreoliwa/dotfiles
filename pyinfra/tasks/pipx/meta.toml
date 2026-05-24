@@ -1,4 +1,4 @@
-requires = ["brew"]
+requires = []
 tier = "INFRA"
 
 # pipx packages managed by dotf.

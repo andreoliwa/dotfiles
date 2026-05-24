@@ -47,6 +47,7 @@ brew "procs"  # https://lib.rs/crates/procs
 brew "remake"  # https://bashdb.sourceforge.io/remake
 brew "rg"  # https://github.com/BurntSushi/ripgrep Install with Brew to get shell completion
 brew "shellcheck"  # https://github.com/koalaman/shellcheck#installing
+brew "shfmt"  # https://github.com/mvdan/sh shell formatter, used by prek
 brew "starship"  # https://github.com/starship/starship
 brew "swig"  # https://www.swig.org/ needed to build the Python cryptography package pykcs11 https://pypi.org/project/PyKCS11/
 brew "telnet"

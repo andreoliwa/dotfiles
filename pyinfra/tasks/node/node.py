@@ -17,6 +17,12 @@ shell(
     _env=_ENV,
 )
 
+shell(
+    name="mise install pnpm",
+    commands=["mise install pnpm"],
+    _env=_ENV,
+)
+
 _COMMON: list[str] = ["prettier"]
 _PERSONAL: list[str] = []
 _COMPANY: list[str] = []

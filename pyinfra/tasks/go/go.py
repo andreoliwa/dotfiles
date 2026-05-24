@@ -2,7 +2,14 @@
 
 from shared import home_path, make_env, shell
 
+_MISE_ENV = make_env(home_path(".local/share/mise/shims"))
 _ENV = make_env(home_path("go/bin"))
+
+shell(
+    name="mise install golangci-lint",
+    commands=["mise install golangci-lint"],
+    _env=_MISE_ENV,
+)
 
 _BINARIES = [
     "github.com/ianlewis/todos/cmd/todos@latest",

@@ -1,2 +1,2 @@
-requires = ["brew"]
+requires = ["brew", "mise"]
 tier = "TOOLCHAIN"

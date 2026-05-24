@@ -6,4 +6,5 @@ alias cr='claude --resume'
 alias cs='claude --model sonnet'
 alias cs1='claude --model sonnet[1m]'
 alias cw='claude --worktree'
+alias ap='invoke ai.plans'
 # keep-sorted end

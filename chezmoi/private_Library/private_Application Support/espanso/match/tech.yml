@@ -1,6 +1,6 @@
 # https://espanso.org/docs/matches/basics/
 matches:
-  - replace: Fritz!Box
+  - replace: FRITZ!Box
     trigger: fbx
     word: true
   - replace: GitHub Actions

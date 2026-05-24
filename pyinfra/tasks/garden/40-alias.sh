@@ -9,7 +9,7 @@ alias ide='garden ide -vv'
 # keep-sorted end
 
 # Pull one or more trees; defaults to all trees when called with no arguments
-gap() {
+gal() {
     if [[ $# -eq 0 ]]; then
         garden git '*' pull
     else

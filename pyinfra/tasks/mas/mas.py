@@ -1,13 +1,14 @@
 """Mac App Store packages.
 
-`mas` itself comes from Brewfile.common. Package lists live in meta.toml
-under [packages.common] and [packages.<variant>] (company or personal).
+Package lists live in meta.toml under [packages.common] and [packages.<variant>]
+(company or personal).
 """
 
 import tomllib
 from pathlib import Path
 
 from pyinfra.facts.server import Kernel
+from pyinfra.operations import brew
 from shared import make_env, shell, sudo_env
 
 from pyinfra import host
@@ -17,6 +18,11 @@ _ENV = make_env()
 _SUDO_ENV = sudo_env()
 
 if host.get_fact(Kernel) == "Darwin":
+    brew.packages(
+        name="Install mas",
+        packages=["mas"],
+        latest=True,
+    )
     _variant = host.data.get("brew_variant", "company")
     _meta = tomllib.loads((HERE / "meta.toml").read_text())
     _pkgs = _meta.get("packages", {})

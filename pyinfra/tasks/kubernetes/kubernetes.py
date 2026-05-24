@@ -1,6 +1,13 @@
-"""Kubernetes CLI: krew plugins. Binaries come from Brewfile."""
+"""Kubernetes CLI tools: install via brew, then krew plugins."""
 
+from pyinfra.operations import brew
 from shared import home_path, make_env, shell
+
+brew.packages(
+    name="Install kubernetes CLI tools",
+    packages=["kubectl", "kubernetes-cli", "kubectx", "k9s", "kubie", "krew", "bat"],
+    latest=True,
+)
 
 _ENV = make_env(home_path(".krew/bin"))
 

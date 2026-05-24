@@ -1,14 +1,13 @@
-"""Chrome / Brave extensions: print each chromewebstore URL for manual install.
+"""Chrome / Brave extensions: install browser cask then print extension URLs for manual install.
 
-These are the Chrome extensions used on Brave. They can't be installed via
-CLI, so the task prints each URL to stdout. The user copies and visits them
-manually to click "Add to Chrome".
+Extensions can't be installed via CLI, so the task prints each URL to stdout. The user copies
+and visits them manually to click "Add to Chrome".
 
-Set host.data.brew_variant to switch the personal/company list. Default is
-"company".
+Set host.data.brew_variant to switch the personal/company list. Default is "company".
 """
 
 from pyinfra.facts.server import Kernel
+from pyinfra.operations import brew
 from shared import make_env, shell
 
 from pyinfra import host
@@ -67,6 +66,11 @@ _REMOVE_URLS = [
 
 if host.get_fact(Kernel) == "Darwin":
     _variant = host.data.get("brew_variant", "company")
+    if _variant == "company":
+        brew.cask(
+            name="Install google-chrome",
+            src="google-chrome",
+        )
     _urls = _COMMON_URLS + (_PERSONAL_URLS if _variant == "personal" else _COMPANY_URLS)
 
     for _url in _urls:

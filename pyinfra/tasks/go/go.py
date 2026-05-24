@@ -1,6 +1,13 @@
-"""Go binaries installed via `go install`. go itself comes from Brewfile."""
+"""Go: install go via brew, then binaries via `go install` and golangci-lint via mise."""
 
+from pyinfra.operations import brew
 from shared import home_path, make_env, shell
+
+brew.packages(
+    name="Install go",
+    packages=["go"],
+    latest=True,
+)
 
 _MISE_ENV = make_env(home_path(".local/share/mise/shims"))
 _ENV = make_env(home_path("go/bin"))

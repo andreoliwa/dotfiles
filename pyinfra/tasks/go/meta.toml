@@ -1,2 +1,2 @@
-requires = ["brew_bundle", "mise"]
+requires = ["mise"]
 tier = "TOOLCHAIN"

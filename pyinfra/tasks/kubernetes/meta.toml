@@ -1,2 +1,2 @@
-requires = ["brew_bundle"]
+requires = []
 tier = "FINAL"

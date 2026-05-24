@@ -26,7 +26,6 @@ brew "fx"  # https://github.com/antonmedv/fx
 brew "git-branchless"  # https://github.com/arxanas/git-branchless
 brew "git-extras"  # https://github.com/tj/git-extras
 brew "gnu-tar"  # https://www.gnu.org/software/tar/
-brew "go"  # https://golang.org
 brew "gpg"
 brew "gromgit/fuse/sshfs-mac"  # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
 brew "homebrew/core/gh"  # GitHub CLI https://github.com/cli/cli
@@ -59,7 +58,6 @@ brew "wdiff"  # https://www.gnu.org/software/wdiff/
 brew "wget"
 brew "wmctrl"  # https://sites.google.com/site/tstyblo/wmctrl
 brew "yq"  # https://github.com/mikefarah/yq
-brew "mas"
 brew "gh"  # GitHub CLI https://github.com/cli/cli
 brew "rustup"
 
@@ -102,17 +100,8 @@ cask "telegram"
 cask "the-unarchiver"
 cask "threema@beta"  # https://threema.ch/ end-to-end encrypted messaging
 cask "tor-browser"  # https://www.torproject.org/
-cask "visual-studio-code"
 cask "vlc"
 cask "whatsapp"  # https://www.whatsapp.com/
 cask "xquartz"  # https://www.xquartz.org/
 
-# Kubernetes
-brew "kubectl"
-brew "kubernetes-cli"
-brew "kubectx"
-brew "k9s"
-brew "kubie"
-brew "krew"
-brew "bat"
 cask "hammerspoon"

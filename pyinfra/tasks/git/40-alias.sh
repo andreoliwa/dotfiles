@@ -5,7 +5,6 @@ alias gaa='git add --all'
 alias gb='git branch'
 alias gba='git branch --all --verbose'
 alias gch='git-checkout-issue'
-alias gcm='git checkout master || git checkout main'
 alias gclean="git delete-merged-branches; git delete-squashed-branches"
 alias gco='git checkout'
 alias gdm='git diff master'
@@ -30,3 +29,25 @@ alias gwl='git worktree list'
 alias gwip="git add -A && git ls-files --deleted -z |
 xargs git rm && git commit -m '__wip__'"
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
+
+# Worktree-aware: jump to the master (or main) worktree via gw.
+gcm() {
+    if gwq get master &>/dev/null; then
+        gw master
+    else
+        gw main
+    fi
+}
+
+# Fuzzy worktree switcher via gwq (brew install d-kuro/tap/gwq).
+# Requires: gwq completion bash sourced below (sets launch_shell=false so gwq cd
+# uses builtin cd instead of spawning a new shell).
+gw() {
+    gwq cd "$@"
+}
+
+# gwq shell integration: makes `gwq cd` change the current shell's directory.
+# Sourced last so it can override any gwq alias defined above.
+if command -v gwq &>/dev/null; then
+    source <(gwq completion bash)
+fi

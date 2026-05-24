@@ -16,6 +16,17 @@ brew.packages(
     latest=True,
 )
 
+brew.tap(
+    name="Tap d-kuro/tap (gwq)",
+    src="d-kuro/tap",
+)
+
+brew.packages(
+    name="Install gwq (worktree fuzzy switcher)",
+    packages=["d-kuro/tap/gwq"],
+    latest=True,
+)
+
 shell(
     name="git config: gpg.format openpgp",
     commands=["git config --global gpg.format openpgp"],

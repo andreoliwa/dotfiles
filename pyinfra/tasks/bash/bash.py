@@ -103,9 +103,3 @@ shell(
     _env=_ENV,
 )
 
-_GARDEN_COMPLETION = home_path(".local/share/bash-completion/completions/garden.bash-completion")
-shell(
-    name="Generate garden bash completion",
-    commands=[f"garden completion bash > {_GARDEN_COMPLETION}"],
-    _env=_ENV,
-)

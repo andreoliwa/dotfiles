@@ -9,12 +9,12 @@
 #   2. Homebrew (macOS or Linux)
 #   3. uv
 #   4. chezmoi (required by `dotf provision`)
-#   5. ~/dotfiles repo (clone if missing)
+#   5. ~/dev/me/dotfiles repo (clone if missing)
 #   6. dotf + pyinfra (uv tool install)
 
 set -e
 
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dev/me/dotfiles}"
 DOTFILES_REMOTE="${DOTFILES_REMOTE:-https://github.com/andreoliwa/dotfiles.git}"
 
 case "$(uname -s)" in

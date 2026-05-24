@@ -17,7 +17,7 @@ The bootstrap script:
 
 1. Installs Xcode Command Line Tools (macOS).
 2. Installs Homebrew and `uv`.
-3. Clones this repo to `~/dotfiles`.
+3. Clones this repo to `~/dev/me/dotfiles`.
 4. Installs `dotf` + `pyinfra` as a uv tool.
 
 Provision the machine with:

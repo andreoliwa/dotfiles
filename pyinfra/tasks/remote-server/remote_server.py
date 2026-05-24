@@ -73,7 +73,7 @@ if host.get_fact(Kernel) == "Linux":
     git.repo(
         name="Clone container-apps",
         src="https://github.com/andreoliwa/container-apps",
-        dest=home_path("container-apps"),
+        dest=home_path("dev/me/container-apps"),
         pull=True,
     )
 

@@ -1,5 +1,26 @@
 [cd]
+auto_cd_on_add = false
+
 # Required for `gwq cd` to call `builtin cd` in the current shell instead of spawning a subshell.
 # The shell integration function (sourced via `gwq completion bash` in 40-alias-git.sh) reads this
 # flag and wraps `gwq cd` with a shim that does `builtin cd` rather than launching a new process.
 launch_shell = false
+
+
+[finder]
+preview = true
+
+[naming]
+template = '{{.Host}}/{{.Owner}}/{{.Repository}}/{{.Branch}}'
+
+[naming.sanitize_chars]
+'/' = '-'
+':' = '-'
+
+[ui]
+icons = true
+tilde_home = true
+
+[worktree]
+auto_mkdir = true
+basedir = '~/worktrees'

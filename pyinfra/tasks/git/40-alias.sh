@@ -30,13 +30,23 @@ alias gwip="git add -A && git ls-files --deleted -z |
 xargs git rm && git commit -m '__wip__'"
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 
-# Worktree-aware: jump to the master (or main) worktree via gw.
+# Worktree-aware: jump to the master (or main) worktree.
+# Uses gwq when a linked worktree owns the branch; falls back to git checkout
+# for plain repos with no linked worktrees.
 gcm() {
+    local branch
     if gwq get master &>/dev/null; then
-        gw master
-    else
-        gw main
+        gw master; return
+    elif gwq get main &>/dev/null; then
+        gw main; return
     fi
+    # No worktree found - plain repo. Determine branch and checkout.
+    if git rev-parse --verify master &>/dev/null; then
+        branch=master
+    else
+        branch=main
+    fi
+    git checkout "$branch"
 }
 
 # Fuzzy worktree switcher via gwq (brew install d-kuro/tap/gwq).

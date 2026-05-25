@@ -33,7 +33,7 @@ directory.
 
 ## dotf CLI
 
-```
+```text
 dotf provision [TOOLS] [-s SERVER] [--start-from TOOL] [--list]  # chezmoi apply + pyinfra
 dotf list | dotf ls                                              # list servers + tools
 dotf chezmoi                                                     # chezmoi apply only
@@ -45,7 +45,7 @@ confirmations).
 
 ## Repo layout
 
-```
+```text
 dotfiles/
 ├── chezmoi/        # chezmoi source dir (public dotfiles, dot_* prefix convention)
 ├── pyinfra/

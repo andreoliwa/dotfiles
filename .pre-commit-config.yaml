@@ -73,3 +73,13 @@ repos:
       - id: prettier
         stages: [pre-commit]
         exclude: vault
+  # Markdown: rumdl-fmt auto-fixes first, then markdownlint catches what remains.
+  # rumdl is the better auto-formatter; markdownlint is the more thorough linter.
+  - repo: https://github.com/rvben/rumdl-pre-commit
+    rev: v0.2.0
+    hooks:
+      - id: rumdl-fmt
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.48.0
+    hooks:
+      - id: markdownlint

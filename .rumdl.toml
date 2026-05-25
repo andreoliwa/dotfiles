@@ -1,0 +1,13 @@
+[global]
+disable = [
+  "MD013", # Line length - docs and plans have long lines intentionally
+  "MD026", # Trailing punctuation in headings - allowed (e.g. "Success!" or comma-separated lists)
+  "MD036", # Emphasis as heading - bold labels in docs are intentional, not headings
+  "MD076", # Blank lines between list items - intentional in plan docs for readability
+]
+exclude = [".git", ".github", "build", "CHANGELOG.md", "dist", "LICENSE.md", "node_modules", "vendor"]
+respect-gitignore = true
+
+# Enforce fenced code blocks to match prettier's style
+[MD046]
+style = "fenced"

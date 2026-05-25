@@ -21,11 +21,7 @@ def brew_bin() -> str:
     """Return the absolute path to the brew binary for the target host."""
     from pyinfra.facts.server import Kernel
 
-    return (
-        "/opt/homebrew/bin/brew"
-        if host.get_fact(Kernel) == "Darwin"
-        else "/home/linuxbrew/.linuxbrew/bin/brew"
-    )
+    return "/opt/homebrew/bin/brew" if host.get_fact(Kernel) == "Darwin" else "/home/linuxbrew/.linuxbrew/bin/brew"
 
 
 def make_env(*prepend_paths: str) -> dict[str, str]:
@@ -80,10 +76,11 @@ def install_dmg(name: str, url: str, app: str, volume: str | None = None) -> obj
         url:    Direct download URL for the .dmg file.
         app:    App bundle name without .app suffix (e.g. "FreeFlow").
         volume: Volume name the DMG mounts as. Defaults to `app`.
+
     """
     vol = volume or app
     app_path = f"/Applications/{app}.app"
-    dmg_tmp = f"/tmp/{app}.dmg"
+    dmg_tmp = f"${{TMPDIR:-/tmp}}/{app}.dmg"
     return shell(
         name=name,
         commands=(

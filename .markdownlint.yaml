@@ -1,0 +1,8 @@
+# Line length - not enforced, docs and plans have long lines intentionally
+MD013: false
+# Trailing punctuation in headings - allowed (e.g. "Success!" or comma-separated lists)
+MD026: false
+# Emphasis used instead of heading - bold labels in docs are intentional, not headings
+MD036: false
+# First line heading - command files use YAML frontmatter as the title, not an H1
+MD041: false

@@ -8,7 +8,8 @@ Idempotent: `brew bundle` is a no-op for packages already installed.
 from pathlib import Path
 
 from pyinfra.operations import files
-from shared import ASKPASS_PATH, brew_bin as _brew_bin, home_path, make_env, shell, sudo_env
+from shared import ASKPASS_PATH, home_path, make_env, shell, sudo_env
+from shared import brew_bin as _brew_bin
 
 from pyinfra import host
 

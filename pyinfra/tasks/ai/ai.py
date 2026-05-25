@@ -108,5 +108,3 @@ def install_jeeves() -> None:
         packages=["robinovitch61/tap/jeeves"],
         latest=True,
     )
-
-

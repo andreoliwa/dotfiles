@@ -49,5 +49,6 @@ gw() {
 # gwq shell integration: makes `gwq cd` change the current shell's directory.
 # Sourced last so it can override any gwq alias defined above.
 if command -v gwq &>/dev/null; then
+    # shellcheck source=/dev/null
     source <(gwq completion bash)
 fi

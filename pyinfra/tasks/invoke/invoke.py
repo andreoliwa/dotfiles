@@ -21,8 +21,7 @@ _CONJURING_PATH = home_path("dev/me/conjuring")
 shell(
     name="pipx install invoke",
     commands=[
-        "pipx uninstall invoke 2>/dev/null || true; "
-        "pipx install --force --include-deps invoke",
+        "pipx uninstall invoke 2>/dev/null || true; pipx install --force --include-deps invoke",
     ],
     _env=_ENV,
 )

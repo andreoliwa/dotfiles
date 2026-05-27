@@ -14,7 +14,7 @@ from pathlib import Path
 
 from pyinfra.facts.server import Home
 from pyinfra.operations import brew, git
-from shared import shell
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
@@ -24,6 +24,9 @@ CCNOTIFY_INSTALL_DIR = ".claude/ccnotify"
 
 CAVEMAN_MARKETPLACE = "JuliusBrussee/caveman"
 CAVEMAN_PLUGIN = "caveman@caveman"
+
+OMEGA_MEMORY_PACKAGE = "omega-memory[server]"
+_OMEGA_ENV = make_env(home_path(".local/bin"))
 
 
 def _home() -> Path:
@@ -92,6 +95,53 @@ def install_caveman() -> None:
             f"claude plugin marketplace add {CAVEMAN_MARKETPLACE}",
             f"claude plugin install {CAVEMAN_PLUGIN}",
         ],
+    )
+
+
+def install_omega_memory() -> None:
+    """Install omega-memory: cross-model persistent memory via MCP, local-first.
+
+    Three steps per upstream llms-install.md (https://github.com/omega-memory/omega-memory):
+      1. uv tool install omega-memory[server]     - installs the CLI + MCP server
+      2. omega setup --client claude-code         - registers MCP, installs hooks, writes CLAUDE.md;
+                                                   may exit 1 if model download 404s (legacy URL)
+      3. omega setup --download-model             - downloads bge-small-en-v1.5 (the working model)
+
+    Step 2 uses _ignore_errors=True because omega exits 1 when the bundled model URL 404s, even
+    though MCP registration and hooks succeed. Step 3 then fetches the correct model separately.
+    Both setup steps are idempotent; re-running is safe.
+
+    MCP registration and hook wiring happen here, not via chezmoi, because omega writes directly
+    to ~/.claude/settings.json with client-detected paths.
+    """
+    shell(
+        name=f"uv tool install {OMEGA_MEMORY_PACKAGE}",
+        commands=[f"uv tool install --force '{OMEGA_MEMORY_PACKAGE}'"],
+        _env=_OMEGA_ENV,
+    )
+    # _ignore_errors: omega exits 1 when "already registered" on re-runs or when the
+    # bundled all-MiniLM-L6-v2 model URL 404s. MCP registration, hooks, and CLAUDE.md
+    # are written successfully regardless.
+    shell(
+        name="omega setup for Claude Code",
+        commands=["omega setup --client claude-code"],
+        _env=_OMEGA_ENV,
+        _ignore_errors=True,
+    )
+    # Download the working bge-small-en-v1.5 model only if not already complete.
+    # Both files required: partial downloads leave model.onnx but miss tokenizer.json.
+    # To force re-download: rm -rf ~/.cache/omega/models/bge-small-en-v1.5-onnx
+    shell(
+        name="omega download bge-small-en-v1.5 model",
+        commands=[
+            "model_dir=$HOME/.cache/omega/models/bge-small-en-v1.5-onnx"
+            ' && echo "omega model dir: $model_dir"'
+            ' && echo "  (to force re-download: rm -rf $model_dir)"'
+            ' && if [ ! -f "$model_dir/model.onnx" ] || [ ! -f "$model_dir/tokenizer.json" ];'
+            " then omega setup --download-model; fi"
+        ],
+        _env=_OMEGA_ENV,
+        _ignore_errors=True,
     )
 
 

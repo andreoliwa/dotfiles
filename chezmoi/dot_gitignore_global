@@ -147,3 +147,4 @@ data/kv-store
 .claude/worktrees/
 .planning/
 .worktrees/
+**/.claude/settings.local.json

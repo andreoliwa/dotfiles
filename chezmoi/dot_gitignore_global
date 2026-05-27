@@ -142,7 +142,8 @@ fabric.properties
 # Augment Code AI
 data/kv-store
 
-# Claude Code
+# AI / Claude Code
 .claude/*.local.*
 .claude/worktrees/
+.planning/
 .worktrees/

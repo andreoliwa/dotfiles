@@ -8,6 +8,7 @@
 # names are read - cask vs brew is detected via `brew list --cask` lookup.
 
 # keep-sorted start
+brew "terminal-notifier"  # dead since 2017, NSUserNotificationCenter removed in macOS 14; replaced by alerter via ai.py
 cask "logitech-g-hub"
 cask "logitech-options"
 cask "rescuetime"  # https://www.rescuetime.com/

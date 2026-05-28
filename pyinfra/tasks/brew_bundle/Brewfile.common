@@ -51,7 +51,6 @@ brew "shfmt"  # https://github.com/mvdan/sh shell formatter, used by prek
 brew "starship"  # https://github.com/starship/starship
 brew "swig"  # https://www.swig.org/ needed to build the Python cryptography package pykcs11 https://pypi.org/project/PyKCS11/
 brew "telnet"
-brew "terminal-notifier"
 brew "tldr"
 brew "topgrade"  # https://github.com/r-darwish/topgrade
 brew "watch"

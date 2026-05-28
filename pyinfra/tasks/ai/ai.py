@@ -74,10 +74,16 @@ def install_ccnotify() -> None:
 
 
 def install_terminal_notifier() -> None:
-    """Install terminal-notifier (CCNotify dependency, macOS only)."""
+    """Install alerter (CCNotify dependency, macOS only).
+
+    terminal-notifier v2.0.0 (last release 2017) uses NSUserNotificationCenter
+    which Apple removed in macOS 14. alerter (vjeantet/alerter) is the
+    upstream-recommended replacement using UNUserNotificationCenter.
+    See: https://github.com/julienXX/terminal-notifier (README redirects to alerter)
+    """
     brew.packages(
-        name="Install terminal-notifier",
-        packages=["terminal-notifier"],
+        name="Install alerter (terminal-notifier replacement for macOS 14+)",
+        packages=["vjeantet/tap/alerter"],
         latest=True,
     )
 

@@ -15,6 +15,7 @@ from pyinfra import host
 _ENV = make_env()
 
 _COMMON_URLS = [
+    # keep-sorted start
     "https://chromewebstore.google.com/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb",
     # Show CodeCov annotations in GitHub pull requests
     "https://chromewebstore.google.com/detail/codecov/gedikamndpbemklijjkncpnolildpbgo",
@@ -27,12 +28,13 @@ _COMMON_URLS = [
     "https://chromewebstore.google.com/detail/private-internet-access/jplnlifepflhkbkgonidnobkakhmpnmh",
     "https://chromewebstore.google.com/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd",
     "https://chromewebstore.google.com/detail/refined-github/hlepfoohegkhhmjieoechaddaejaokhf",
-    "https://chromewebstore.google.com/detail/rescuetime-for-chrome-and/bdakmnplckeopfghnlpocafcepegjeap/related",
     "https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo",
     "https://chromewebstore.google.com/detail/url-shortener-for-amazon/ipafcflbnpkfahilfblbenfabkoaaiid",
+    # keep-sorted end
 ]
 
 _PERSONAL_URLS = [
+    # keep-sorted start
     "https://chromewebstore.google.com/detail/bitly-short-links-and-qr/iabeihobmhlgpkcgjiloemdbofjbdcic",
     "https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi",
     # https://github.com/DIYgod/RSSHub-Radar
@@ -40,28 +42,35 @@ _PERSONAL_URLS = [
     "https://chromewebstore.google.com/detail/traktflix/ehlckfimahifadnbecobagimllmbdmde",
     "https://chromewebstore.google.com/detail/trim-imdb-ratings-on-netf/lpgajkhkagnpdjklmpgjeplmgffnhhjj",
     "https://chromewebstore.google.com/detail/web-scrobbler/hhinaapppaileiechjoiifaancjggfjm",
+    # keep-sorted end
 ]
 
 # Chrome needs specific extensions to (poorly) mimic Brave's privacy features.
 _COMPANY_URLS = [
+    # keep-sorted start
     "https://chromewebstore.google.com/detail/adblocker-ultimate/ohahllgiabjaoigichmmfljhkcfikeof",
     "https://chromewebstore.google.com/detail/auto-history-wipe/amndpakmdficmebaknminpdbgdccfkjn",
+    # keep-sorted end
 ]
 
 # Extensions to remove (no CLI to uninstall; manual cleanup reference list).
 _REMOVE_URLS = [
+    # keep-sorted start
     "https://chromewebstore.google.com/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen",
     # GraphQL
     "https://chromewebstore.google.com/detail/graphql-developer-tools/hflnkihcpgldmkepajmpooacmmhglpff",
     "https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd",
     "https://chromewebstore.google.com/detail/mate-translate-%E2%80%93-translat/ihmgiclibbndffejedjimfjmfoabpcke",
     "https://chromewebstore.google.com/detail/raindropio/ldgfbffkinooeloadekpmfoklnobpien",
+    # This RescueTime extension was blocked by the company
+    "https://chromewebstore.google.com/detail/rescuetime-for-chrome-and/bdakmnplckeopfghnlpocafcepegjeap/related",
     "https://chromewebstore.google.com/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg",
     "https://chromewebstore.google.com/detail/todoist-for-chrome/jldhpllghnbhlbpcmnajkpdmadaolakh",
     "https://chromewebstore.google.com/detail/todoist-for-gmail/clgenfnodoocmhnlnpknojdbjjnmecff",
     "https://chromewebstore.google.com/detail/toggl-button-productivity/oejgccbfbmkkpaidnkphaiaecficdnfn",
     # https://github.com/vuejs/vue-devtools
     "https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd",
+    # keep-sorted end
 ]
 
 if host.get_fact(Kernel) == "Darwin":

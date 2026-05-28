@@ -91,7 +91,6 @@ cask "logseq"  # https://github.com/logseq/logseq
 cask "microsoft-office"  # https://products.office.com/mac/microsoft-office-for-mac/
 cask "orbstack"  # https://github.com/orbstack/orbstack?tab=readme-ov-file
 cask "raycast"  # https://raycast.app/
-cask "rescuetime"  # https://www.rescuetime.com/
 cask "send-to-kindle"  # https://www.amazon.com/gp/sendtokindle/mac
 cask "signal"
 cask "spotify"

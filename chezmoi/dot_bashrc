@@ -29,3 +29,6 @@ if [[ -z "$SHELL_D_LOADED" ]]; then
     done
     export SHELL_D_LOADED=1
 fi
+
+# Bash's built-in mail check only fires in login shells; tmux panes are non-login, so check explicitly.
+[ -s /var/mail/$USER ] && echo "You have mail"

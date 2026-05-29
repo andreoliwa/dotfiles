@@ -1,4 +1,4 @@
-"""Bash: install brew bash + completions, login shell setup, bash-git-prompt clone.
+"""Bash: install brew bash + completions, login shell setup.
 
 Self-contained so it can run before the main `brew bundle` task. Lets us chsh
 to brew bash early in the provision, so any new terminal opened mid-provision
@@ -8,13 +8,12 @@ gets bash + the deployed ~/.config/shell.d/ fragments.
 2. Add /opt/homebrew/bin/bash to /etc/shells (sudo).
 3. chsh -s /opt/homebrew/bin/bash.
 4. mkdir -p ~/.local/share/bash-completion/completions (BASH_COMPLETION_USER_DIR).
-5. Clone https://github.com/magicmonty/bash-git-prompt to ~/.bash-git-prompt.
 
 .bashrc itself is deployed via chezmoi (dotfiles/chezmoi/dot_bashrc).
 """
 
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import brew, git
+from pyinfra.operations import brew
 from shared import home_path, make_env, shell
 
 from pyinfra import host
@@ -49,14 +48,6 @@ shell(
     name="Create BASH_COMPLETION_USER_DIR",
     commands=["mkdir -p $HOME/.local/share/bash-completion/completions"],
     _env=_ENV,
-)
-
-git.repo(
-    name="Clone bash-git-prompt",
-    src="https://github.com/magicmonty/bash-git-prompt.git",
-    dest=home_path(".bash-git-prompt"),
-    branch="master",
-    pull=False,
 )
 
 # complete_alias: bash completion for aliases.

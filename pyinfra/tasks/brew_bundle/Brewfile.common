@@ -37,6 +37,7 @@ brew "jq"  # https://github.com/stedolan/jq
 brew "jrnl"  # https://jrnl.sh/
 brew "libsodium"  # can't be removed from personal_laptop, required by ffmpeg and zeromq
 brew "moreutils"  # https://joeyh.name/code/moreutils/ with the sponge command
+brew "mtr"  # https://www.bitwizard.nl/mtr/ combined ping+traceroute
 brew "nmap"
 brew "pidof"  # http://www.nightproductions.net/cli.htm
 brew "pinentry-mac"

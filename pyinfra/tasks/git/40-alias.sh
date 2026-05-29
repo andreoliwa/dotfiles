@@ -12,7 +12,6 @@ alias gf="git flow"
 alias ghc='gh pr checkout'
 alias gl="git pull"
 alias glm='git log ...master'
-alias gmu='gcm; gu'
 alias gp="git push"
 alias gs='git status'
 alias gsta="git add -A && git stash push"
@@ -47,6 +46,17 @@ gcm() {
         branch=main
     fi
     git checkout "$branch"
+}
+
+# Switch to main/master and fast-forward to origin.
+gmu() {
+    local branch
+    if git rev-parse --verify main &>/dev/null; then
+        branch=main
+    else
+        branch=master
+    fi
+    gcm && git fetch origin "$branch" && git merge --ff-only "origin/$branch"
 }
 
 # Fuzzy worktree switcher via gwq (brew install d-kuro/tap/gwq).

@@ -1,2 +1,2 @@
-requires = []
-tier = "FUNDAMENTAL"
+requires = ["node"]
+tier = "APPS"

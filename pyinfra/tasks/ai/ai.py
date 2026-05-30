@@ -151,6 +151,28 @@ def install_omega_memory() -> None:
     )
 
 
+def install_logseq_mcp() -> None:
+    """Register mcp-logseq as a user-scoped Claude Code MCP server.
+
+    mcp-logseq (https://github.com/ergut/mcp-logseq) exposes Logseq's HTTP API
+    as an MCP server so Claude Code can read and write Logseq pages/blocks.
+
+    Prereqs: LOGSEQ_API_TOKEN and LOGSEQ_API_URL must be exported in the shell
+    before Claude Code launches - the --env flags pass the var names, expansion
+    happens at runtime.
+    """
+    shell(
+        name="Register mcp-logseq with Claude Code (user scope)",
+        commands=[
+            "claude mcp add mcp-logseq --scope user"
+            " --env LOGSEQ_API_TOKEN=$LOGSEQ_API_TOKEN"
+            " --env LOGSEQ_API_URL=$LOGSEQ_HOST_URL"
+            " -- uv run --with mcp-logseq mcp-logseq"
+        ],
+        _env=_OMEGA_ENV,
+    )
+
+
 def install_jeeves() -> None:
     """Install jeeves - TUI for browsing and resuming AI agent sessions.
 

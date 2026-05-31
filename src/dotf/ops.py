@@ -179,6 +179,79 @@ def _private_pyinfra(private_repo: Path | None) -> Path | None:
     return None
 
 
+_SETTINGS_TOP_LEVEL = [
+    "permissions",
+    "hooks",
+    "statusLine",
+    "enabledPlugins",
+    "extraKnownMarketplaces",
+    "alwaysThinkingEnabled",
+    "effortLevel",
+    "skipAutoPermissionPrompt",
+]
+_SETTINGS_PERMISSIONS = ["allow", "deny", "ask", "defaultMode", "additionalDirectories"]
+
+
+def _reorder_dict(data: dict, key_order: list[str]) -> dict:
+    """Return a new dict with keys from key_order first, then any remaining keys appended."""
+    result = {k: data[k] for k in key_order if k in data}
+    for k, v in data.items():
+        if k not in result:
+            result[k] = v
+    return result
+
+
+def _sort_json_file(path: Path) -> bool:
+    """Sort settings.json keys to canonical order. Returns True if the file was modified."""
+    import json
+
+    original = path.read_text()
+    data = json.loads(original)
+    data = _reorder_dict(data, _SETTINGS_TOP_LEVEL)
+    if "permissions" in data:
+        perms = _reorder_dict(data["permissions"], _SETTINGS_PERMISSIONS)
+        for list_key in ("allow", "deny"):
+            if list_key in perms:
+                perms[list_key] = sorted(perms[list_key])
+        data["permissions"] = perms
+    if "enabledPlugins" in data:
+        data["enabledPlugins"] = dict(sorted(data["enabledPlugins"].items()))
+    output = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    if output == original:
+        return False
+    path.write_text(output)
+    return True
+
+
+def standardize_target_files() -> None:
+    """Normalize deployed ~/.claude files before chezmoi apply.
+
+    Sorts settings.json keys to canonical order and prettier-formats CLAUDE.md.
+    Missing files and missing prettier are warned but non-fatal - chezmoi always continues.
+    """
+    claude_dir = Path.home() / ".claude"
+
+    settings = claude_dir / "settings.json"
+    if settings.exists():
+        _print_blue(f"-> normalizing {settings}")
+        _sort_json_file(settings)
+    else:
+        _print_yellow(f"warning: {settings} not found, skipping")
+
+    claude_md = claude_dir / "CLAUDE.md"
+    if not claude_md.exists():
+        _print_yellow(f"warning: {claude_md} not found, skipping")
+        return
+
+    prettier_bin = shutil.which("prettier")
+    if prettier_bin is None:
+        _print_yellow("warning: prettier not on PATH, skipping CLAUDE.md formatting")
+        return
+
+    _print_blue(f"-> normalizing {claude_md}")
+    subprocess.run([prettier_bin, "--write", str(claude_md)], check=False)  # noqa: S603
+
+
 def _chezmoi_repo_name(source: Path) -> str:
     """Return the repo name for a chezmoi source dir (parent of the 'chezmoi' component)."""
     for parent in source.parents:
@@ -229,6 +302,7 @@ def _chezmoi_apply_source(source: Path, *, yes: bool = False) -> None:
 
 def apply_chezmoi(private_repo: Path | None, *, yes: bool = False) -> None:
     """Apply chezmoi from the public source, then private source if available."""
+    standardize_target_files()
     _chezmoi_apply_source(DOTFILES_PATH / "chezmoi", yes=yes)
     # Resolve private repo: explicit arg > $DOTF_REPO env var
     if private_repo is None:

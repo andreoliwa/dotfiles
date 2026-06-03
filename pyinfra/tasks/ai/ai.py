@@ -164,7 +164,8 @@ def install_logseq_mcp() -> None:
     shell(
         name="Register mcp-logseq with Claude Code (user scope)",
         commands=[
-            "claude mcp add mcp-logseq --scope user"
+            "claude mcp get mcp-logseq >/dev/null 2>&1"
+            " || claude mcp add mcp-logseq --scope user"
             " --env LOGSEQ_API_TOKEN=$LOGSEQ_API_TOKEN"
             " --env LOGSEQ_API_URL=$LOGSEQ_HOST_URL"
             " -- uv run --with mcp-logseq mcp-logseq"

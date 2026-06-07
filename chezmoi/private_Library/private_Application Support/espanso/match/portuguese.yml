@@ -2,8 +2,6 @@
 # https://espanso.org/docs/matches/basics/
 matches:
   - replace: à
-    trigger: "`a"
-  - replace: à
     trigger: aa
     word: true
   - replace: ão

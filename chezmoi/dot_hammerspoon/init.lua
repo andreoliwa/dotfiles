@@ -332,7 +332,7 @@ config_app('Finder', 'inbox', nil, { { wide_screen, true, hs.layout.right50_bott
 config_app('Finicky', '', debug, { { laptop_screen, true, hs.layout.bottom50 } })
 config_app('Gnucash', '', nil, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 } })
 config_app('Google Chrome', '', hide_when_working, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
-config_app('Hammerspoon', 'Hammerspoon Console', debug, { { laptop_screen, true, hs.layout.bottom50 } })
+config_app('Hammerspoon', 'Hammerspoon Console', debug, { { laptop_screen, true, hs.layout.right50_bottom } })
 config_app('iTerm2', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
 config_app('Logseq', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left70 } })
 config_app('Mail', '', false, { { laptop_screen, true, hs.layout.bottom50 } })
@@ -342,7 +342,7 @@ config_app('RustRover', '', nil, { { wide_screen, true, hs.layout.right50 }, { h
 config_app('ScanSnap Home', hs.window.find('- Scan'), nil, { { laptop_screen, true, hs.layout.right70 } })
 config_app('ScanSnap Home', nil, nil, { { laptop_screen, true, hs.geometry.rect(0.42, 0.23, 0.5, 0.5) } })
 config_app('Signal', nil, hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left70 } })
-config_app('SimpleFloatingClock', nil, nil, { { laptop_screen, true, hs.layout.left50 } })
+config_app('SimpleFloatingClock', nil, nil, { { laptop_screen, true, hs.geometry.rect(0.00, 0.84, 0.17, 0.16) } })
 config_app('Slack', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
 config_app('Telegram', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 } })
 config_app('Terminal', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
@@ -481,6 +481,21 @@ local function isInList(value, list)
         end
     end
     return false
+end
+
+-- Utility: print normalized rect for any window, for use in config_app()
+function coord(appName)
+    local app = hs.application.find(appName)
+    if not app then print("App not found: " .. appName); return end
+    local win = app:mainWindow() or app:allWindows()[1]
+    if not win then print("No window for: " .. appName); return end
+    local f = win:frame()
+    local s = win:screen():frame()
+    local x = (f.x - s.x) / s.w
+    local y = (f.y - s.y) / s.h
+    local w = f.w / s.w
+    local h = f.h / s.h
+    print(string.format("hs.geometry.rect(%.2f, %.2f, %.2f, %.2f)", x, y, w, h))
 end
 
 -- Utility: manually trigger repositioning for a specific app (useful for testing)

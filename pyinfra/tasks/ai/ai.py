@@ -104,10 +104,20 @@ def install_caveman() -> None:
     )
 
 
-def install_omega_memory() -> None:
-    """Install omega-memory: cross-model persistent memory via MCP, local-first.
+def omega_memory(install: bool = True) -> None:
+    """Install or uninstall omega-memory: cross-model persistent memory via MCP, local-first.
 
-    Three steps per upstream llms-install.md (https://github.com/omega-memory/omega-memory):
+    omega-memory vs claude-mem (thedotmack/claude-mem):
+      - omega: Python/pip, fully local embeddings (ONNX, no cloud), 25 MCP tools, typed memory
+        (decision/lesson/error/summary), knowledge graph traversal, checkpoint/resume,
+        multi-LLM (Claude/Cursor/Windsurf/Cline). Works offline. No web UI.
+      - claude-mem: Node.js/npm, Chroma vector DB (external process), 4 MCP tools,
+        3-layer progressive disclosure (~10x token savings vs bulk fetch), web UI on :37777,
+        <private> tag for exclusions. Claude/Gemini/OpenCode focus.
+      Chosen omega for local-first operation and richer tooling; claude-mem if token
+      efficiency or a web UI is the priority.
+
+    Install (install=True) - three steps per upstream llms-install.md:
       1. uv tool install omega-memory[server]     - installs the CLI + MCP server
       2. omega setup --client claude-code         - registers MCP, installs hooks, writes CLAUDE.md;
                                                    may exit 1 if model download 404s (legacy URL)
@@ -119,7 +129,25 @@ def install_omega_memory() -> None:
 
     MCP registration and hook wiring happen here, not via chezmoi, because omega writes directly
     to ~/.claude/settings.json with client-detected paths.
+
+    Uninstall (install=False):
+      1. omega setup --uninstall  - removes hooks, MCP entry, and CLAUDE.md block
+      2. uv tool uninstall omega-memory
+      Does NOT delete ~/.omega (memories) or ~/.cache/omega (model) - data preserved.
     """
+    if not install:
+        shell(
+            name="omega setup --uninstall (hooks, MCP, CLAUDE.md block)",
+            commands=["omega setup --uninstall 2>/dev/null || true"],
+            _env=_OMEGA_ENV,
+        )
+        shell(
+            name="omega: uv tool uninstall omega-memory",
+            commands=["uv tool uninstall omega-memory 2>/dev/null || true"],
+            _env=_OMEGA_ENV,
+        )
+        return
+
     shell(
         name=f"uv tool install {OMEGA_MEMORY_PACKAGE}",
         commands=[f"uv tool install --force '{OMEGA_MEMORY_PACKAGE}'"],

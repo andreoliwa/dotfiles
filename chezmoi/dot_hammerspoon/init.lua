@@ -234,16 +234,19 @@ end
 -- Default layouts: http://www.hammerspoon.org/docs/hs.layout.html
 -- http://www.hammerspoon.org/docs/hs.geometry.html#rect
 -- x, y, width, height, all ranging from 0 to 1
+-- keep-sorted start
+hs.layout.bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
+hs.layout.center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
+hs.layout.center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
+hs.layout.left50_bottom = hs.geometry.rect(0, 0.5, 0.5, 0.5)
+hs.layout.middle_left40 = hs.geometry.rect(0.10, 0, 0.40, 1)
+hs.layout.right40 = hs.geometry.rect(0.60, 0, 0.40, 1)
+hs.layout.right50_bottom = hs.geometry.rect(0.5, 0.5, 0.5, 0.5)
+hs.layout.right50_top = hs.geometry.rect(0.5, 0, 0.5, 0.5)
 hs.layout.top30 = hs.geometry.rect(0, 0, 1, 0.30)
 hs.layout.top50 = hs.geometry.rect(0, 0, 1, 0.5)
 hs.layout.top70 = hs.geometry.rect(0, 0, 1, 0.7)
-hs.layout.bottom50 = hs.geometry.rect(0, 0.5, 1, 0.5)
-hs.layout.middle_left40 = hs.geometry.rect(0.10, 0, 0.40, 1)
-hs.layout.center_left = hs.geometry.rect(0.25, 0, 0.25, 1)
-hs.layout.center_right = hs.geometry.rect(0.5, 0, 0.25, 1)
-hs.layout.right40 = hs.geometry.rect(0.60, 0, 0.40, 1)
-hs.layout.right50_top = hs.geometry.rect(0.5, 0, 0.5, 0.5)
-hs.layout.right50_bottom = hs.geometry.rect(0.5, 0.5, 0.5, 0.5)
+-- keep-sorted end
 
 local window_layout = {}
 
@@ -329,14 +332,14 @@ config_app('Finder', '', nil, { { wide_screen, true, hs.layout.right50_top }, { 
 config_app('Finder', 'consume-into-paperless', nil, { { wide_screen, true, hs.layout.right50_bottom }, { horizontal_screen, true, hs.layout.right50_bottom } })
 config_app('Finder', 'import', nil, { { wide_screen, true, hs.layout.right50_bottom }, { horizontal_screen, true, hs.layout.right50_bottom } })
 config_app('Finder', 'inbox', nil, { { wide_screen, true, hs.layout.right50_bottom }, { horizontal_screen, true, hs.layout.right50_bottom } })
-config_app('Finicky', '', debug, { { laptop_screen, true, hs.layout.bottom50 } })
+config_app('Finicky', '', debug, { { laptop_screen, true, hs.layout.left50_bottom } })
 config_app('Gnucash', '', nil, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 } })
 config_app('Google Chrome', '', hide_when_working, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
-config_app('Hammerspoon', 'Hammerspoon Console', debug, { { laptop_screen, true, hs.layout.right50_bottom } })
+config_app('Hammerspoon', 'Hammerspoon Console', debug, { { laptop_screen, true, hs.layout.left50_bottom } })
 config_app('iTerm2', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
 config_app('Logseq', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left70 } })
-config_app('Mail', '', false, { { laptop_screen, true, hs.layout.bottom50 } })
-config_app('OrbStack', '', false, { { laptop_screen, true, hs.layout.bottom50 } })
+config_app('Mail', '', false, { { laptop_screen, true, hs.layout.right50_bottom } })
+config_app('OrbStack', '', false, { { laptop_screen, true, hs.layout.right50_bottom } })
 config_app('Preview', '', nil, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 }, { laptop_screen, true, hs.layout.maximized } })
 config_app('RustRover', '', nil, { { wide_screen, true, hs.layout.right50 }, { horizontal_screen, true, hs.layout.right70 } })
 config_app('ScanSnap Home', hs.window.find('- Scan'), nil, { { laptop_screen, true, hs.layout.right70 } })
@@ -346,6 +349,7 @@ config_app('SimpleFloatingClock', nil, nil, { { laptop_screen, true, hs.geometry
 config_app('Slack', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
 config_app('Telegram', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 } })
 config_app('Terminal', '', nil, { { wide_screen, true, hs.layout.left50 }, { horizontal_screen, true, hs.layout.left70 } })
+config_app('Threema Beta', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left50 } })
 config_app('VLC', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.maximized }, { horizontal_screen, not at_the_office, hs.layout.maximized } })
 config_app('WhatsApp', '', hide_when_working, { { wide_screen, not at_the_office, hs.layout.left50 }, { horizontal_screen, not at_the_office, hs.layout.left70 } })
 config_app('YouTube Music', nil, hide_when_working, { { laptop_screen, true, hs.layout.right70 } })

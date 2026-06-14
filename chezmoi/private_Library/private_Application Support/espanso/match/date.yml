@@ -1,0 +1,113 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+
+# NOTE: A single form-based match was attempted but abandoned due to two issues:
+# 1. Shorthand `form:` syntax does not expose fields to shell vars; verbose `type: form` required.
+# 2. BSD date rejects `-v0d` (offset=0 for "today"); workaround needed but not worth the complexity.
+# Using per-offset, per-format entries instead.
+
+matches:
+  - label: "Today ISO"
+    replace: "{{date}}"
+    trigger: ":dt"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%Y-%m-%d"
+  - label: "Today D/M/Y"
+    replace: "{{date}}"
+    trigger: ":dt"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d/%m/%Y"
+  - label: "Today D.M.Y"
+    replace: "{{date}}"
+    trigger: ":dt"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d.%m.%Y"
+  - label: "Tomorrow ISO"
+    replace: "{{date}}"
+    trigger: ":dt"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%Y-%m-%d"
+          offset: 86400
+  - label: "Tomorrow D/M/Y"
+    replace: "{{date}}"
+    trigger: ":dt"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d/%m/%Y"
+          offset: 86400
+  - label: "Tomorrow D.M.Y"
+    replace: "{{date}}"
+    trigger: ":dt"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d.%m.%Y"
+          offset: 86400
+  - label: "Yesterday ISO"
+    replace: "{{date}}"
+    trigger: ":dy"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%Y-%m-%d"
+          offset: -86400
+  - label: "Yesterday D/M/Y"
+    replace: "{{date}}"
+    trigger: ":dy"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d/%m/%Y"
+          offset: -86400
+  - label: "Yesterday D.M.Y"
+    replace: "{{date}}"
+    trigger: ":dy"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d.%m.%Y"
+          offset: -86400
+  - label: "Day before yesterday ISO"
+    replace: "{{date}}"
+    trigger: ":dy"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%Y-%m-%d"
+          offset: -172800
+  - label: "Day before yesterday D/M/Y"
+    replace: "{{date}}"
+    trigger: ":dy"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d/%m/%Y"
+          offset: -172800
+  - label: "Day before yesterday D.M.Y"
+    replace: "{{date}}"
+    trigger: ":dy"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d.%m.%Y"
+          offset: -172800

@@ -23,14 +23,6 @@ matches:
         type: shell
         params:
           cmd: "echo 'Hello from your shell'"
-  - label: "Today's date"
-    replace: "{{date}}"
-    trigger: ":today"
-    vars:
-      - name: date
-        type: date
-        params:
-          format: "%Y-%m-%d"
   - label: "UUID generator"
     replace: "{{uuid}}"
     trigger: ":uuid"

@@ -35,9 +35,9 @@ alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 gcm() {
     local branch
     if gwq get master &>/dev/null; then
-        gw master; return
+        sx gw master; return
     elif gwq get main &>/dev/null; then
-        gw main; return
+        sx gw main; return
     fi
     # No worktree found - plain repo. Determine branch and checkout.
     if git rev-parse --verify master &>/dev/null; then
@@ -45,7 +45,7 @@ gcm() {
     else
         branch=main
     fi
-    git checkout "$branch"
+    sx git checkout "$branch"
 }
 
 # Switch to main/master and fast-forward to origin.
@@ -56,7 +56,7 @@ gmu() {
     else
         branch=master
     fi
-    gcm && git fetch origin "$branch" && git merge --ff-only "origin/$branch"
+    gcm && sx git fetch origin "$branch" && sx git merge --ff-only "origin/$branch"
 }
 
 # Fuzzy worktree switcher via gwq (brew install d-kuro/tap/gwq).

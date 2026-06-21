@@ -23,6 +23,7 @@ brew "fd"  # https://github.com/sharkdp/fd
 brew "feh"  # https://feh.finalrewind.org/
 brew "ffmpeg"  # https://ffmpeg.org/ needed by openai-whisper
 brew "fx"  # https://github.com/antonmedv/fx
+brew "glow"  # https://github.com/charmbracelet/glow markdown renderer
 brew "git-branchless"  # https://github.com/arxanas/git-branchless
 brew "git-extras"  # https://github.com/tj/git-extras
 brew "gnu-tar"  # https://www.gnu.org/software/tar/
@@ -46,6 +47,7 @@ brew "pocketbase"  # https://pocketbase.io/
 brew "prek"  # https://github.com/j178/prek - fast pre-commit hook runner
 brew "procs"  # https://lib.rs/crates/procs
 brew "remake"  # https://bashdb.sourceforge.io/remake
+brew "rsync"  # GNU rsync with --iconv support (macOS ships openrsync which lacks it)
 brew "rg"  # https://github.com/BurntSushi/ripgrep Install with Brew to get shell completion
 brew "shellcheck"  # https://github.com/koalaman/shellcheck#installing
 brew "shfmt"  # https://github.com/mvdan/sh shell formatter, used by prek

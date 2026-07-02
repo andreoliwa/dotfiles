@@ -57,8 +57,12 @@ if not isinstance(host.connector, LocalConnector):
             # The source dir was already rsynced to /tmp/chezmoi-src by ops.py::_chezmoi_remote_diff
             # before pyinfra was invoked (diff + prompt happen there). Just apply it here.
             # chezmoi diff/apply require the dot_-prefixed source layout, not a rendered archive.
+            # --force: pyinfra runs with no TTY, so chezmoi's own "target changed since last
+            # write" confirmation prompt cannot render and the apply fails outright. The diff
+            # step above already gave the user a chance to review and abort, so skip the
+            # redundant (and here, impossible) second confirmation.
             _remote_src_dir = "/tmp/chezmoi-src"  # noqa: S108
             shell(
                 name="Apply chezmoi from source dir",
-                commands=[f"chezmoi apply --source={_remote_src_dir}"],
+                commands=[f"chezmoi apply --force --source={_remote_src_dir}"],
             )

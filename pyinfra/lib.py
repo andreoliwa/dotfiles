@@ -50,6 +50,24 @@ class Server:
     pipx_injects: dict[str, list[str]] = field(default_factory=dict)
     conjuring_mode: str = "personal"
     apt_packages: list[str] = field(default_factory=list)
+    # `dotf provision` for hetzner prompts for the ~/.ssh/id_rsa passphrase on every
+    # run despite agent auth working fine on its own. Root cause: dotfiles' Host *
+    # ssh config block (chezmoi/private_dot_ssh/private_config.d/private_00_base.conf.tmpl)
+    # sets `IdentityFile ~/.ssh/id_rsa` for every host (needed for UseKeychain on
+    # macOS). pyinfra's sshuserclient (connectors/sshuserclient/client.py,
+    # _attach_identity_with_certificate, added for issue #1569's OpenSSH-cert
+    # support) eagerly tries to load and decrypt every resolved IdentityFile while
+    # building the connect config - before paramiko's normal auth flow even runs -
+    # so it prompts regardless of allow_agent/look_for_keys or which hostname/alias
+    # pyinfra connects with. IdentityFile also accumulates across matching Host
+    # blocks rather than first-match-winning, so a per-host override can't remove
+    # the global entry either. Tried and reverted: ssh_look_for_keys field,
+    # ssh_hostname-via-alias override, clearing pkey/key_filename post-parse - none
+    # touch the eager-decrypt code path since it runs during SSH config parsing,
+    # not during the actual paramiko authenticate() call. Fixing it for real means
+    # setting ssh_key_password (decrypt succeeds silently) or patching around
+    # pyinfra's sshuserclient - not worth it for a once-per-run keystroke. Just
+    # type the passphrase when prompted.
 
     @property
     def ssh_allow_agent(self) -> bool:

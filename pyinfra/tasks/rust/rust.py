@@ -23,6 +23,7 @@ brew.packages(
 _CARGO_BINARIES = [
     "cargo-update",
     "cargo-workspaces",
+    "rustledger",
     "tailspin",
 ]
 

@@ -60,6 +60,34 @@ files.put(
     mode="700",
 )
 
+
+# brew.sh's tap-trust gate (added in 6.0.9) blocks formulae from third-party
+# taps until explicitly trusted. Trust every third-party formula our own
+# Brewfiles declare BEFORE `brew bundle` runs, else bundle just skips them
+# with a "not trusted" warning instead of installing.
+def _third_party_formulae(path: Path) -> set[str]:
+    """Collect `user/tap/formula`-style brew names referenced in a Brewfile."""
+    import re
+
+    pattern = re.compile(r'^\s*brew\s+"([^"/]+/[^"/]+/[^"]+)"')
+    formulae: set[str] = set()
+    for raw in path.read_text().splitlines():
+        line = raw.split("#", 1)[0]
+        if match := pattern.match(line):
+            name = match.group(1)
+            if not name.startswith("homebrew/"):  # official tap, no trust gate
+                formulae.add(name)
+    return formulae
+
+
+_ALL_THIRD_PARTY_FORMULAE = _third_party_formulae(COMMON) | _third_party_formulae(VARIANT_FILE)
+if _ALL_THIRD_PARTY_FORMULAE:
+    shell(
+        name="Trust third-party formulae declared in Brewfiles",
+        commands=[f"{_brew_bin()} trust --formula {formula}" for formula in sorted(_ALL_THIRD_PARTY_FORMULAE)],
+        _env=_ENV,
+    )
+
 # Some cask postflights (e.g. kindle-previewer: launchctl bootout) call sudo
 # from a non-TTY subprocess. SUDO_ASKPASS lets those `sudo -A` calls succeed
 # without hanging on a hidden prompt. Prime the timestamp first so brief

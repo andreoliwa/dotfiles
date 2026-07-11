@@ -21,6 +21,12 @@ brew.tap(
     src="d-kuro/tap",
 )
 
+shell(
+    name="Trust d-kuro/tap (gwq)",
+    commands=["brew trust --formula d-kuro/tap/gwq"],
+    _env=_ENV,
+)
+
 brew.packages(
     name="Install gwq (worktree fuzzy switcher)",
     packages=["d-kuro/tap/gwq"],

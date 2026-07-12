@@ -147,3 +147,6 @@ data/kv-store
 .claude/worktrees/
 .worktrees/
 **/.claude/settings.local.json
+# Codex
+.codex/*.local.*
+**/.codex/*.local.*

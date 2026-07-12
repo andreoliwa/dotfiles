@@ -1,4 +1,4 @@
-"""AI tools: Claude Code add-ons and general AI utilities.
+"""AI tools: coding-agent add-ons and general AI utilities.
 
 Convention for overlay-paired tasks: this module exports named functions and
 has NO module-level pyinfra ops. Importing it must be side-effect-free so an
@@ -88,20 +88,34 @@ def install_terminal_notifier() -> None:
     )
 
 
-def install_caveman() -> None:
-    """Install Caveman plugin per upstream README (https://github.com/juliusbrussee/caveman).
-
-    Two commands from the README "Manual install per agent" section:
-      1. claude plugin marketplace add JuliusBrussee/caveman
-      2. claude plugin install caveman@caveman
-    """
+def install_caveman_claude() -> None:
+    """Install Caveman plugin for Claude Code."""
     shell(
-        name="Install Caveman (marketplace + plugin)",
+        name="Install Caveman for Claude Code (marketplace + plugin)",
         commands=[
             f"claude plugin marketplace add {CAVEMAN_MARKETPLACE}",
             f"claude plugin install {CAVEMAN_PLUGIN}",
         ],
     )
+
+
+def install_caveman_codex() -> None:
+    """Install Caveman skill for Codex."""
+    shell(
+        name="Install Caveman for Codex",
+        commands=["npx --yes skills add JuliusBrussee/caveman -a codex"],
+    )
+
+
+def install_caveman() -> None:
+    """Install Caveman for supported coding agents.
+
+    Per upstream INSTALL.md:
+      - Claude Code: claude plugin marketplace add/install
+      - Codex CLI: npx skills add JuliusBrussee/caveman -a codex
+    """
+    install_caveman_claude()
+    install_caveman_codex()
 
 
 def omega_memory(install: bool = True) -> None:
@@ -179,16 +193,8 @@ def omega_memory(install: bool = True) -> None:
     )
 
 
-def install_logseq_mcp() -> None:
-    """Register mcp-logseq as a user-scoped Claude Code MCP server.
-
-    mcp-logseq (https://github.com/ergut/mcp-logseq) exposes Logseq's HTTP API
-    as an MCP server so Claude Code can read and write Logseq pages/blocks.
-
-    Prereqs: LOGSEQ_API_TOKEN and LOGSEQ_API_URL must be exported in the shell
-    before Claude Code launches - the --env flags pass the var names, expansion
-    happens at runtime.
-    """
+def install_logseq_mcp_claude() -> None:
+    """Register mcp-logseq as a user-scoped Claude Code MCP server."""
     shell(
         name="Register mcp-logseq with Claude Code (user scope)",
         commands=[
@@ -200,6 +206,35 @@ def install_logseq_mcp() -> None:
         ],
         _env=_OMEGA_ENV,
     )
+
+
+def install_logseq_mcp_codex() -> None:
+    """Register mcp-logseq as a Codex MCP server."""
+    shell(
+        name="Register mcp-logseq with Codex",
+        commands=[
+            "codex mcp get mcp-logseq >/dev/null 2>&1"
+            " || codex mcp add"
+            " --env LOGSEQ_API_TOKEN=$LOGSEQ_API_TOKEN"
+            " --env LOGSEQ_API_URL=$LOGSEQ_HOST_URL"
+            " mcp-logseq -- uv run --with mcp-logseq mcp-logseq"
+        ],
+        _env=_OMEGA_ENV,
+    )
+
+
+def install_logseq_mcp() -> None:
+    """Register mcp-logseq for supported coding agents.
+
+    mcp-logseq (https://github.com/ergut/mcp-logseq) exposes Logseq's HTTP API
+    as an MCP server so coding agents can read and write Logseq pages/blocks.
+
+    Prereqs: LOGSEQ_API_TOKEN and LOGSEQ_API_URL must be exported in the shell
+    before the agent launches - the --env flags pass the var names, expansion
+    happens at runtime.
+    """
+    install_logseq_mcp_claude()
+    install_logseq_mcp_codex()
 
 
 def install_jeeves() -> None:

@@ -224,12 +224,14 @@ def _sort_json_file(path: Path) -> bool:
 
 
 def standardize_target_files() -> None:
-    """Normalize deployed ~/.claude files before chezmoi apply.
+    """Normalize deployed coding-agent files before chezmoi apply.
 
-    Sorts settings.json keys to canonical order and prettier-formats CLAUDE.md.
-    Missing files and missing prettier are warned but non-fatal - chezmoi always continues.
+    Sorts Claude settings.json keys to canonical order and prettier-formats shared
+    Markdown instruction files. Missing files and missing prettier are warned but
+    non-fatal - chezmoi always continues.
     """
     claude_dir = Path.home() / ".claude"
+    codex_dir = Path.home() / ".codex"
 
     settings = claude_dir / "settings.json"
     if settings.exists():
@@ -238,18 +240,23 @@ def standardize_target_files() -> None:
     else:
         _print_yellow(f"warning: {settings} not found, skipping")
 
-    claude_md = claude_dir / "CLAUDE.md"
-    if not claude_md.exists():
-        _print_yellow(f"warning: {claude_md} not found, skipping")
+    markdown_files = [claude_dir / "CLAUDE.md", codex_dir / "AGENTS.md"]
+    existing_markdown_files = [path for path in markdown_files if path.exists()]
+    for path in markdown_files:
+        if not path.exists():
+            _print_yellow(f"warning: {path} not found, skipping")
+
+    if not existing_markdown_files:
         return
 
     prettier_bin = shutil.which("prettier")
     if prettier_bin is None:
-        _print_yellow("warning: prettier not on PATH, skipping CLAUDE.md formatting")
+        _print_yellow("warning: prettier not on PATH, skipping coding-agent Markdown formatting")
         return
 
-    _print_blue(f"-> normalizing {claude_md}")
-    subprocess.run([prettier_bin, "--write", str(claude_md)], check=False)  # noqa: S603
+    for path in existing_markdown_files:
+        _print_blue(f"-> normalizing {path}")
+        subprocess.run([prettier_bin, "--write", str(path)], check=False)  # noqa: S603
 
 
 def _chezmoi_repo_name(source: Path) -> str:

@@ -25,6 +25,10 @@ CCNOTIFY_INSTALL_DIR = ".claude/ccnotify"
 CAVEMAN_MARKETPLACE = "JuliusBrussee/caveman"
 CAVEMAN_PLUGIN = "caveman@caveman"
 
+# Public repository supplying the repository-preparation skills. Installing every
+# skill in this repository keeps the provisioned set aligned with its upstream.
+GIT_REPO_PREP_SKILLS_SOURCE = "2389-research/git-repo-prep"
+
 OMEGA_MEMORY_PACKAGE = "omega-memory[server]"
 _OMEGA_ENV = make_env(home_path(".local/bin"))
 
@@ -116,6 +120,18 @@ def install_caveman() -> None:
     """
     install_caveman_claude()
     install_caveman_codex()
+
+
+def install_git_repo_prep_skills() -> None:
+    """Install all git-repo-prep skills globally for Claude Code and Codex."""
+    shell(
+        name="Install git-repo-prep skills for Claude Code and Codex",
+        commands=[
+            "npx --yes skills add "
+            f"{GIT_REPO_PREP_SKILLS_SOURCE} "
+            "--skill '*' --agent claude-code --agent codex --global --yes",
+        ],
+    )
 
 
 def omega_memory(install: bool = True) -> None:

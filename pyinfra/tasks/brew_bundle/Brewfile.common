@@ -4,11 +4,14 @@
 cask "macfuse"  # https://osxfuse.github.io/ Read "The Best Free Third-Party Drivers: FUSE for macOS" on https://www.howtogeek.com/236055/how-to-write-to-ntfs-drives-on-a-mac/
 
 # Taps
+# keep-sorted start
 tap "gromgit/fuse"  # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
 tap "jmespath/jmespath"  # https://github.com/jmespath/jp
 tap "mike-engel/jwt-cli"  # https://github.com/mike-engel/jwt-cli
+# keep-sorted end
 
 # Brews
+# keep-sorted start
 brew "7zip"  # https://7-zip.org
 brew "blueutil"  # https://github.com/toy/blueutil
 brew "colordiff"  # https://www.colordiff.org/
@@ -23,15 +26,17 @@ brew "fd"  # https://github.com/sharkdp/fd
 brew "feh"  # https://feh.finalrewind.org/
 brew "ffmpeg"  # https://ffmpeg.org/ needed by openai-whisper
 brew "fx"  # https://github.com/antonmedv/fx
-brew "glow"  # https://github.com/charmbracelet/glow markdown renderer
+brew "gh"  # GitHub CLI https://github.com/cli/cli
 brew "git-branchless"  # https://github.com/arxanas/git-branchless
 brew "git-extras"  # https://github.com/tj/git-extras
+brew "glow"  # https://github.com/charmbracelet/glow markdown renderer
 brew "gnu-tar"  # https://www.gnu.org/software/tar/
-brew "grpcurl"  # https://github.com/fullstorydev/grpcurl
 brew "gpg"
 brew "gromgit/fuse/sshfs-mac"  # TODO fix: this formula requires macFUSE. Please run `brew install --cask macfuse` first
+brew "grpcurl"  # https://github.com/fullstorydev/grpcurl
 brew "homebrew/core/gh"  # GitHub CLI https://github.com/cli/cli
 brew "htop-osx"
+brew "imagemagick" # https://imagemagick.org/
 brew "ipcalc"
 brew "jmespath/jmespath/jp"  # https://github.com/jmespath/jp
 brew "jq"  # https://github.com/stedolan/jq
@@ -47,8 +52,9 @@ brew "pocketbase"  # https://pocketbase.io/
 brew "prek"  # https://github.com/j178/prek - fast pre-commit hook runner
 brew "procs"  # https://lib.rs/crates/procs
 brew "remake"  # https://bashdb.sourceforge.io/remake
-brew "rsync"  # GNU rsync with --iconv support (macOS ships openrsync which lacks it)
 brew "rg"  # https://github.com/BurntSushi/ripgrep Install with Brew to get shell completion
+brew "rsync"  # GNU rsync with --iconv support (macOS ships openrsync which lacks it)
+brew "rustup"
 brew "shellcheck"  # https://github.com/koalaman/shellcheck#installing
 brew "shfmt"  # https://github.com/mvdan/sh shell formatter, used by prek
 brew "starship"  # https://github.com/starship/starship
@@ -61,10 +67,10 @@ brew "wdiff"  # https://www.gnu.org/software/wdiff/
 brew "wget"
 brew "wmctrl"  # https://sites.google.com/site/tstyblo/wmctrl
 brew "yq"  # https://github.com/mikefarah/yq
-brew "gh"  # GitHub CLI https://github.com/cli/cli
-brew "rustup"
+# keep-sorted end
 
 # Casks
+# keep-sorted start
 cask "android-file-transfer"  # https://www.android.com/filetransfer/
 cask "appcleaner"
 cask "bitwarden"  # https://bitwarden.com/
@@ -85,6 +91,7 @@ cask "font-ubuntu"
 cask "fujitsu-scansnap-home"  # https://www.fujitsu.com/global/products/computing/peripheral/scanners/soho/sshome/
 cask "gnucash"  # https://gnucash.org/
 cask "grandperspective"  # https://grandperspectiv.sourceforge.io/
+cask "hammerspoon"
 cask "iterm2"  # https://iterm2.com/
 cask "jetbrains-toolbox"  # https://www.jetbrains.com/toolbox-app/
 cask "keepingyouawake"  # maintained caffeinate wrapper
@@ -106,5 +113,4 @@ cask "tor-browser"  # https://www.torproject.org/
 cask "vlc"
 cask "whatsapp"  # https://www.whatsapp.com/
 cask "xquartz"  # https://www.xquartz.org/
-
-cask "hammerspoon"
+# keep-sorted end

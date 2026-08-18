@@ -22,6 +22,7 @@ brew "curl"
 brew "diff-so-fancy"
 brew "duplicity"
 brew "dust"  # https://lib.rs/crates/du-dust
+brew "duti"  # Set a default handler for URL schemes, e.g. `duti -s com.logseq.logseq-og logseq all` for Logseq-OG.
 brew "fd"  # https://github.com/sharkdp/fd
 brew "feh"  # https://feh.finalrewind.org/
 brew "ffmpeg"  # https://ffmpeg.org/ needed by openai-whisper
@@ -94,9 +95,10 @@ cask "grandperspective"  # https://grandperspectiv.sourceforge.io/
 cask "hammerspoon"
 cask "iterm2"  # https://iterm2.com/
 cask "jetbrains-toolbox"  # https://www.jetbrains.com/toolbox-app/
-cask "keepingyouawake"  # maintained caffeinate wrapper
+cask "keepingyouawake"  # maintained caffeinate wrapper https://github.com/newmarcel/KeepingYouAwake
 cask "kindle-previewer"  # https://www.amazon.com/Kindle-Previewer/b?ie=UTF8&node=21381691011
-cask "logseq"  # https://github.com/logseq/logseq
+cask "logseq"  # https://github.com/logseq/logseq - database version
+cask "logseq-og"  # https://github.com/logseq/og - Markdown file version
 cask "microsoft-office"  # https://products.office.com/mac/microsoft-office-for-mac/
 cask "orbstack"  # https://github.com/orbstack/orbstack?tab=readme-ov-file
 cask "raycast"  # https://raycast.app/

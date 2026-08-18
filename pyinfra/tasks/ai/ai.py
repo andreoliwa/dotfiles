@@ -224,23 +224,8 @@ def install_logseq_mcp_claude() -> None:
     )
 
 
-def install_logseq_mcp_codex() -> None:
-    """Register mcp-logseq as a Codex MCP server."""
-    shell(
-        name="Register mcp-logseq with Codex",
-        commands=[
-            "codex mcp get mcp-logseq >/dev/null 2>&1"
-            " || codex mcp add"
-            " --env LOGSEQ_API_TOKEN=$LOGSEQ_API_TOKEN"
-            " --env LOGSEQ_API_URL=$LOGSEQ_HOST_URL"
-            " mcp-logseq -- uv run --with mcp-logseq mcp-logseq"
-        ],
-        _env=_OMEGA_ENV,
-    )
-
-
 def install_logseq_mcp() -> None:
-    """Register mcp-logseq for supported coding agents.
+    """Register mcp-logseq for Claude Code.
 
     mcp-logseq (https://github.com/ergut/mcp-logseq) exposes Logseq's HTTP API
     as an MCP server so coding agents can read and write Logseq pages/blocks.
@@ -250,7 +235,6 @@ def install_logseq_mcp() -> None:
     happens at runtime.
     """
     install_logseq_mcp_claude()
-    install_logseq_mcp_codex()
 
 
 def install_jeeves() -> None:

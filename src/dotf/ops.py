@@ -193,11 +193,11 @@ _SETTINGS_PERMISSIONS = ["allow", "deny", "ask", "defaultMode", "additionalDirec
 
 
 def _reorder_dict(data: dict, key_order: list[str]) -> dict:
-    """Return a new dict with keys from key_order first, then any remaining keys appended."""
+    """Return a new dict with canonical keys first and remaining keys alphabetically."""
     result = {k: data[k] for k in key_order if k in data}
-    for k, v in data.items():
+    for k in sorted(data):
         if k not in result:
-            result[k] = v
+            result[k] = data[k]
     return result
 
 
@@ -269,8 +269,18 @@ def _chezmoi_repo_name(source: Path) -> str:
     return source.name
 
 
+def _standardize_chezmoi_source(source: Path) -> None:
+    """Normalize settings JSON in a Chezmoi source before computing its diff."""
+    for name in ("settings.json", "private_settings.json"):
+        settings = source / "dot_claude" / name
+        if settings.exists():
+            _print_blue(f"-> normalizing {settings}")
+            _sort_json_file(settings)
+
+
 def _chezmoi_apply_source(source: Path, *, yes: bool = False) -> None:
     """Diff then apply a chezmoi source dir, offering merge-all on MM conflicts."""
+    _standardize_chezmoi_source(source)
     source_args = ["--source", str(source)]
     repo_name = f"{_chezmoi_repo_name(source)}/chezmoi"
 

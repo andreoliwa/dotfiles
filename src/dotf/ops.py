@@ -25,7 +25,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 if TYPE_CHECKING:
     from lib import Server
@@ -201,21 +201,34 @@ def _reorder_dict(data: dict, key_order: list[str]) -> dict:
     return result
 
 
+def _canonicalize_json(value: object, key_order: list[str] | None = None) -> object:
+    """Recursively sort JSON object keys while preserving configured key groups."""
+    if isinstance(value, dict):
+        ordered = _reorder_dict(value, key_order or [])
+        return {
+            key: _canonicalize_json(
+                child,
+                _SETTINGS_PERMISSIONS if key == "permissions" else None,
+            )
+            for key, child in ordered.items()
+        }
+    if isinstance(value, list):
+        return [_canonicalize_json(item) for item in value]
+    return value
+
+
 def _sort_json_file(path: Path) -> bool:
     """Sort settings.json keys to canonical order. Returns True if the file was modified."""
     import json
 
     original = path.read_text()
-    data = json.loads(original)
-    data = _reorder_dict(data, _SETTINGS_TOP_LEVEL)
+    data = cast("dict", _canonicalize_json(json.loads(original), _SETTINGS_TOP_LEVEL))
     if "permissions" in data:
-        perms = _reorder_dict(data["permissions"], _SETTINGS_PERMISSIONS)
+        perms = data["permissions"]
         for list_key in ("allow", "deny"):
             if list_key in perms:
                 perms[list_key] = sorted(perms[list_key])
         data["permissions"] = perms
-    if "enabledPlugins" in data:
-        data["enabledPlugins"] = dict(sorted(data["enabledPlugins"].items()))
     output = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
     if output == original:
         return False

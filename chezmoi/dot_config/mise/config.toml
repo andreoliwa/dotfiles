@@ -36,7 +36,8 @@ OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
 RIPGREP_CONFIG_PATH = "{{env.HOME}}/.ripgreprc"
 
 [hooks]
-enter = "invoke ai.plans"
+# Prefer pipx Invoke, which has Conjuring injected; Homebrew pyinfra dependency does not.
+enter = 'PATH="$HOME/.local/bin:$PATH" invoke ai.plans'
 
 [settings]
 # Needed to use "hooks" above

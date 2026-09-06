@@ -1,10 +1,10 @@
-"""SSH client: dirs, known_hosts, and openssl env fragment (macOS only)."""
+"""SSH client setup and Ubuntu OpenSSH server provisioning."""
 
 from pathlib import Path
 
 from lib import DOTFILES_PATH
-from pyinfra.facts.server import Home, Kernel
-from pyinfra.operations import files
+from pyinfra.facts.server import Home, Kernel, LinuxName
+from pyinfra.operations import apt, files, systemd
 from shared import shell
 
 from pyinfra import host
@@ -38,6 +38,20 @@ shell(
         f" && mv {known_hosts}.tmp {known_hosts}",
     ],
 )
+
+if host.get_fact(LinuxName) == "Ubuntu":
+    apt.packages(
+        name="Install OpenSSH server",
+        packages=["openssh-server"],
+        update=True,
+        _sudo=True,
+    )
+    systemd.service(
+        name="Enable and start SSH service",
+        service="ssh.service",
+        running=True,
+        enabled=True,
+    )
 
 if host.get_fact(Kernel) == "Darwin":
     openssl_env = str(DOTFILES_PATH / "pyinfra" / "tasks" / "openssl" / "01-env.sh")

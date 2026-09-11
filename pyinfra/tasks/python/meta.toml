@@ -1,2 +1,2 @@
 requires = ["mise"]
-tier = "TOOLCHAIN"
+tier = "INFRA"

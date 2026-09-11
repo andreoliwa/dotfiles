@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """Fast Python package and project manager.
 
 Installs uv, then runs `uv tool install --force` for each package in the
@@ -13,6 +15,7 @@ from shared import home_path, make_env, shell
 from pyinfra import host
 
 _ENV = make_env(home_path(".local/bin"))
+_TOOL_ENV = {**_ENV, "UV_PYTHON": "/usr/bin/python3"} if host.get_fact(Kernel) != "Darwin" else _ENV
 
 if host.get_fact(Kernel) == "Darwin":
     brew.packages(
@@ -37,5 +40,5 @@ for _pkg in _pkgs:
     shell(
         name=f"uv tool install {_pkg}",
         commands=[f"uv tool install --force {_extra} {_pkg}".strip()],
-        _env=_ENV,
+        _env=_TOOL_ENV,
     )

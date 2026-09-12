@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """Mac App Store packages.
 
 Package lists live in meta.toml under [packages.common] and [packages.<variant>]
@@ -44,6 +46,7 @@ if host.get_fact(Kernel) == "Darwin":
 
     for _pkg in _remove_ids:
         _label = _names.get(str(_pkg), str(_pkg))
+        # Exception: MAS prompts from its own child process, so it needs askpass.
         shell(
             name=f"mas uninstall {_label}",
             commands=[f"sudo -A mas uninstall {_pkg}"],

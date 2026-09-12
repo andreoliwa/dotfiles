@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """`brew bundle` against Brewfile.common + Brewfile.<variant>.
 
 Installs all formulae, casks, and taps declared in the Brewfiles.
@@ -88,8 +90,8 @@ if _ALL_THIRD_PARTY_FORMULAE:
         _env=_ENV,
     )
 
-# Some cask postflights (e.g. kindle-previewer: launchctl bootout) call sudo
-# from a non-TTY subprocess. SUDO_ASKPASS lets those `sudo -A` calls succeed
+# Exception: cask postflights (for example kindle-previewer) call sudo from a
+# non-TTY child process. SUDO_ASKPASS lets those `sudo -A` calls succeed
 # without hanging on a hidden prompt. Prime the timestamp first so brief
 # child sudo calls reuse it instead of triggering the askpass GUI each time.
 shell(
@@ -136,14 +138,17 @@ def _uninstall_entries(entries: list[tuple[str, str]], source_label: str) -> Non
         # by the user). Without it, `brew uninstall --cask <name>` aborts with
         # "It seems the App source '...app' is not there."
         force = "--force " if kind == "cask" else ""
+        # Exception: Homebrew cask removal can prompt from a child process.
         shell(
             name=f"[{source_label}] uninstall {kind} {name} if installed",
             commands=[
-                f"if {brew_bin} list {flag} {name} >/dev/null 2>&1; then "
-                f"  sudo -A -v && {brew_bin} uninstall {force}{zap}{flag} {name}; "
-                f"else "
-                f"  echo '  {name}: not installed, skipping'; "
-                f"fi",
+                (
+                    f"if {brew_bin} list {flag} {name} >/dev/null 2>&1; then "
+                    f"  sudo -A -v && {brew_bin} uninstall {force}{zap}{flag} {name}; "
+                    f"else "
+                    f"  echo '  {name}: not installed, skipping'; "
+                    f"fi"
+                ),
             ],
             _env={**sudo_env()},
         )

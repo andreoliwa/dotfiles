@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """Shared helpers for pyinfra task modules.
 
 Tasks import via the same sys.path injection that lib.py uses (deploy.py
@@ -106,14 +108,18 @@ def shell(name: str, commands: str | list[str], **kwargs: object) -> object:
       - Pipes combined stdout+stderr through tee --append to the log.
       - Wraps in bash to use pipefail so the tee still fails on command error.
     """
-    log = home_path(PROVISION_LOG)
     cmd_str = commands if isinstance(commands, str) else " && ".join(commands)
+    kwargs.setdefault("_shell_executable", "bash")
+    if kwargs.get("_sudo"):
+        # PyInfra owns the sudo prompt. Avoid writing the user log as root,
+        # which would block later unprivileged operations from appending to it.
+        return _server.shell(name=name, commands=[cmd_str], **kwargs)
 
+    log = home_path(PROVISION_LOG)
     wrapped = (
         f'mkdir -p "$(dirname {log})" && '
         f'{{ printf "\\n>>> %s\\n" {name!r} >> {log}; }} && '
         f"set -o pipefail; "
         f"({cmd_str}) 2>&1 | tee -a {log}"
     )
-    kwargs.setdefault("_shell_executable", "bash")
     return _server.shell(name=name, commands=[wrapped], **kwargs)

@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """SSH client setup and Ubuntu OpenSSH server provisioning."""
 
 from pathlib import Path
@@ -33,9 +35,11 @@ shell(
     # ssh-keyscan then dedup; avoids repeated entries on re-runs
     commands=[
         f"touch {known_hosts}",
-        f"ssh-keyscan -t rsa github.com bitbucket.org 2>/dev/null"
-        f" | sort -u - {known_hosts} > {known_hosts}.tmp"
-        f" && mv {known_hosts}.tmp {known_hosts}",
+        (
+            f"ssh-keyscan -t rsa github.com bitbucket.org 2>/dev/null"
+            f" | sort -u - {known_hosts} > {known_hosts}.tmp"
+            f" && mv {known_hosts}.tmp {known_hosts}"
+        ),
     ],
 )
 
@@ -51,6 +55,7 @@ if host.get_fact(LinuxName) == "Ubuntu":
         service="ssh.service",
         running=True,
         enabled=True,
+        _sudo=True,
     )
 
 if host.get_fact(Kernel) == "Darwin":
@@ -58,10 +63,14 @@ if host.get_fact(Kernel) == "Darwin":
     shell(
         name="Regenerate openssl env fragment from brew",
         commands=[
-            f"{{ echo '#!/usr/bin/env bash';"
-            f" brew info openssl | grep ' export ' | awk '{{$1=$1}};1'; }} > {openssl_env}",
-            f"grep -qF DYLD_LIBRARY_PATH {openssl_env}"
-            f" || echo 'export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$DYLD_LIBRARY_PATH'"
-            f" >> {openssl_env}",
+            (
+                f"{{ echo '#!/usr/bin/env bash';"
+                f" brew info openssl | grep ' export ' | awk '{{$1=$1}};1'; }} > {openssl_env}"
+            ),
+            (
+                f"grep -qF DYLD_LIBRARY_PATH {openssl_env}"
+                f" || echo 'export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$DYLD_LIBRARY_PATH'"
+                f" >> {openssl_env}"
+            ),
         ],
     )

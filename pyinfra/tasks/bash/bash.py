@@ -1,19 +1,23 @@
-"""Bash: install brew bash + completions, login shell setup.
+# Copyright 2026
 
-Self-contained so it can run before the main `brew bundle` task. Lets us chsh
-to brew bash early in the provision, so any new terminal opened mid-provision
-gets bash + the deployed ~/.config/shell.d/ fragments.
+"""Bash: install brew bash + completions, then configure shell completion.
 
-1. brew install bash + bash-completion@2 (macOS).
-2. Add /opt/homebrew/bin/bash to /etc/shells (sudo).
-3. chsh -s /opt/homebrew/bin/bash.
-4. mkdir -p ~/.local/share/bash-completion/completions (BASH_COMPLETION_USER_DIR).
+Self-contained so it can run before the main `brew bundle` task. On macOS this
+allows changing to Homebrew Bash early in provisioning, so new terminals use
+Bash and the deployed ~/.config/shell.d/ fragments. On Ubuntu it installs the
+system bash-completion package.
 
-.bashrc itself is deployed via chezmoi (dotfiles/chezmoi/dot_bashrc).
+macOS:
+1. Install bash + bash-completion@2.
+2. Register /opt/homebrew/bin/bash in /etc/shells and select it with chsh.
+3. Create BASH_COMPLETION_USER_DIR.
+
+.bashrc itself is deployed through chezmoi.
+Reference: https://github.com/scop/bash-completion
 """
 
-from pyinfra.facts.server import Kernel
-from pyinfra.operations import brew
+from pyinfra.facts.server import Kernel, LinuxName
+from pyinfra.operations import apt, brew
 from shared import home_path, make_env, shell
 
 from pyinfra import host
@@ -23,9 +27,8 @@ _ENV = make_env()
 if host.get_fact(Kernel) == "Darwin":
     _bash = "/opt/homebrew/bin/bash"
 
-    # Install bash + completions here (not via Brewfile.common) so this task is
-    # self-contained and can run before the main `brew bundle` step.
-    # https://github.com/scop/bash-completion
+    # Keep this task independent of brew_bundle so a newly provisioned Mac can
+    # use Bash and its completions before the rest of its Brewfile is applied.
     brew.packages(
         name="Install bash + bash-completion@2",
         packages=["bash", "bash-completion@2"],
@@ -34,14 +37,22 @@ if host.get_fact(Kernel) == "Darwin":
 
     shell(
         name="Register Homebrew bash in /etc/shells",
-        commands=[f"grep -qxF '{_bash}' /etc/shells || echo '{_bash}' | sudo tee -a /etc/shells >/dev/null"],
+        commands=[f"grep -qxF '{_bash}' /etc/shells || echo '{_bash}' >> /etc/shells"],
         _env=_ENV,
+        _sudo=True,
     )
 
     shell(
         name="chsh to Homebrew bash",
         commands=[f"[ \"$SHELL\" = '{_bash}' ] || chsh -s '{_bash}'"],
         _env=_ENV,
+    )
+elif host.get_fact(LinuxName) == "Ubuntu":
+    apt.packages(
+        name="Install bash-completion",
+        packages=["bash-completion"],
+        update=True,
+        _sudo=True,
     )
 
 shell(
@@ -79,13 +90,15 @@ _MARKER = "# === complete_alias: my aliases ==="
 shell(
     name="Download complete_alias completion script",
     commands=[
-        f"curl -fsSL -o {_COMPLETE_ALIAS} "
-        "https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias",
+        (
+            f"curl -fsSL -o {_COMPLETE_ALIAS} "
+            "https://raw.githubusercontent.com/cykerway/complete-alias/master/complete_alias"
+        ),
     ],
     _env=_ENV,
 )
 
-_block = "\\n".join(f"complete -F _complete_alias {a}" for a in _COMPLETE_ALIASES)
+_block = "\\n".join(f"complete -F _complete_alias {alias}" for alias in _COMPLETE_ALIASES)
 shell(
     name="Append my aliases to complete_alias completion",
     commands=[

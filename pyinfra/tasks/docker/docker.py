@@ -1,11 +1,13 @@
+# Copyright 2026
+
 """Docker: macOS bash completions + OSMC (Raspberry Pi) install.
 
 macOS: OrbStack is the user's preferred Docker runtime; Docker Desktop
 completions are linked only if Docker.app is installed. Both targets are
-optional - missing source files are silently skipped.
+optional, so missing source files are silently skipped.
 
-OSMC: installs Docker CE + docker-compose from Docker's official Debian
-repo, switches iptables to legacy, adds the osmc user to the docker group.
+OSMC: installs Docker CE + docker-compose from Docker's official Debian repo,
+switches iptables to legacy, and adds the osmc user to the docker group.
 Reference: https://docs.docker.com/engine/install/debian/
 """
 
@@ -21,18 +23,22 @@ if host.get_fact(Kernel) == "Darwin":
     shell(
         name="Link docker.bash-completion if Docker.app present",
         commands=[
-            "src=/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion; "
-            'dst="$(brew --prefix)/etc/bash_completion.d/docker.bash-completion"; '
-            '[ -f "$src" ] && ln -sfn "$src" "$dst" || true',
+            (
+                "src=/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion; "
+                'dst="$(brew --prefix)/etc/bash_completion.d/docker.bash-completion"; '
+                '[ -f "$src" ] && ln -sfn "$src" "$dst" || true'
+            ),
         ],
         _env=_ENV,
     )
     shell(
         name="Link docker-compose.bash-completion if Docker.app present",
         commands=[
-            "src=/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion; "
-            'dst="$(brew --prefix)/etc/bash_completion.d/docker-compose.bash-completion"; '
-            '[ -f "$src" ] && ln -sfn "$src" "$dst" || true',
+            (
+                "src=/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion; "
+                'dst="$(brew --prefix)/etc/bash_completion.d/docker-compose.bash-completion"; '
+                '[ -f "$src" ] && ln -sfn "$src" "$dst" || true'
+            ),
         ],
         _env=_ENV,
     )
@@ -61,24 +67,33 @@ if host.get_fact(LinuxName) == "OSMC":
     shell(
         name="Add Docker GPG key",
         commands=[
-            "curl -fsSL https://download.docker.com/linux/debian/gpg "
-            "| sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
+            (
+                "curl -fsSL https://download.docker.com/linux/debian/gpg "
+                "| gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
+            ),
         ],
+        _sudo=True,
     )
     shell(
         name="Add Docker apt repo",
         commands=[
-            'echo "deb [arch=armhf signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] '
-            'https://download.docker.com/linux/debian $(lsb_release -cs) stable" '
-            "| sudo tee /etc/apt/sources.list.d/docker.list >/dev/null",
+            (
+                'echo "deb [arch=armhf signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] '
+                'https://download.docker.com/linux/debian $(lsb_release -cs) stable" '
+                "> /etc/apt/sources.list.d/docker.list"
+            ),
         ],
+        _sudo=True,
     )
     shell(
         name="Revert iptables to legacy",
         commands=[
-            "sudo update-alternatives --set iptables /usr/sbin/iptables-legacy "
-            "&& sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy",
+            (
+                "update-alternatives --set iptables /usr/sbin/iptables-legacy "
+                "&& update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy"
+            ),
         ],
+        _sudo=True,
     )
     apt.packages(
         name="Install Docker Engine + docker-compose",
@@ -89,9 +104,11 @@ if host.get_fact(LinuxName) == "OSMC":
     )
     shell(
         name="Ensure docker group exists",
-        commands=["sudo groupadd -f docker"],
+        commands=["groupadd -f docker"],
+        _sudo=True,
     )
     shell(
         name="Add osmc user to docker group",
-        commands=["sudo usermod -aG docker osmc"],
+        commands=["usermod -aG docker osmc"],
+        _sudo=True,
     )

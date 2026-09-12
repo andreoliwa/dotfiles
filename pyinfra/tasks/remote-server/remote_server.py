@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """Remote-server bootstrap: apt packages + clones on Linux hosts (Hetzner, RPi/OSMC).
 
 Per-host apt packages come from Server.apt_packages in the private inventory.
@@ -81,8 +83,10 @@ if host.get_fact(Kernel) == "Linux":
     shell(
         name="Download bash-powerline.sh",
         commands=[
-            "curl -fsSL -o $HOME/.bash-powerline.sh "
-            "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh",
+            (
+                "curl -fsSL -o $HOME/.bash-powerline.sh "
+                "https://raw.githubusercontent.com/riobard/bash-powerline/master/bash-powerline.sh"
+            ),
         ],
     )
 
@@ -91,13 +95,15 @@ if host.get_fact(Kernel) == "Linux":
     # https://stackoverflow.com/questions/15330775/what-does-gdate-mean-in-this-shell-script
     shell(
         name="Symlink /bin/gdate to system date",
-        commands=["command -v gdate || sudo ln -s $(command -v date) /bin/gdate"],
+        commands=["command -v gdate || ln -s $(command -v date) /bin/gdate"],
+        _sudo=True,
     )
 
 if host.get_fact(LinuxName) == "OSMC":
     shell(
         name="Add osmc user to required groups",
-        commands=[f"sudo usermod -aG {','.join(_OSMC_GROUPS)} osmc"],
+        commands=[f"usermod -aG {','.join(_OSMC_GROUPS)} osmc"],
+        _sudo=True,
     )
 
     apt.packages(

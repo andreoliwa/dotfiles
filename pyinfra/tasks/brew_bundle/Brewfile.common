@@ -58,7 +58,6 @@ brew "rsync"  # GNU rsync with --iconv support (macOS ships openrsync which lack
 brew "rustup"
 brew "shellcheck"  # https://github.com/koalaman/shellcheck#installing
 brew "shfmt"  # https://github.com/mvdan/sh shell formatter, used by prek
-brew "starship"  # https://github.com/starship/starship
 brew "swig"  # https://www.swig.org/ needed to build the Python cryptography package pykcs11 https://pypi.org/project/PyKCS11/
 brew "telnet"
 brew "tldr"
@@ -106,7 +105,6 @@ cask "send-to-kindle"  # https://www.amazon.com/gp/sendtokindle/mac
 cask "signal"
 cask "spotify"
 cask "superwhisper"  # https://superwhisper.com/ - offline AI dictation (Wispr Flow replacement)
-cask "syncthing-app"  # https://syncthing.net/ (renamed from "syncthing")
 cask "telegram"
 cask "telegram-desktop@beta"  # workaround for TelegramSwift Liquid Glass window rendering bug on macOS Tahoe
 cask "the-unarchiver"

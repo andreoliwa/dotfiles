@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """dotf ops — subprocess and path operations, no CLI framework.
 
 Chezmoi apply — local vs remote split
@@ -24,6 +26,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import TYPE_CHECKING, cast
 
@@ -498,23 +501,66 @@ def list_provision(private_repo: Path | None) -> None:
         raise SystemExit(1)
 
 
-def _resolve_ssh_target(server: str, private_repo: Path | None) -> tuple[str, str] | None:
-    """Return (user@host, remote_chezmoi_src_dir) for a named inventory group, or None.
+def _server_config(server: str, private_repo: Path | None) -> "Server | None":
+    """Return the configured server by canonical name, if it exists."""
+    return next((item for item in _load_servers(private_repo) if item.name == server), None)
 
-    Looks up the server in DOTF_SERVERS (or inventory.py fallback) to get the SSH host and user.
-    remote_chezmoi_src_dir is the path on the remote where the source dir will be rsynced
-    (matches the path used in pyinfra/tasks/chezmoi/chezmoi.py).
-    Returns None for @local or if the server is not found.
-    """
+
+def _resolve_ssh_target(server: str, private_repo: Path | None) -> tuple[str, str] | None:
+    """Return (user@host, remote Chezmoi source dir) for a configured remote server."""
     if server == _LOCAL_HOST:
         return None
-    for s in _load_servers(private_repo):
-        if s.name == server:
-            if s.host == _LOCAL_HOST:
-                return None
-            target = f"{s.ssh_user}@{s.host}" if s.ssh_user else s.host
-            return target, "/tmp/chezmoi-src"  # noqa: S108
-    return None
+    config = _server_config(server, private_repo)
+    if config is None or config.host == _LOCAL_HOST:
+        return None
+    target = f"{config.ssh_user}@{config.host}" if config.ssh_user else config.host
+    return target, "/tmp/chezmoi-src"  # noqa: S108
+
+
+def _compose_chezmoi_source(private_repo: Path, server: "Server", destination: Path) -> list[str]:
+    """Overlay configured layers and the server directory into ``destination``.
+
+    Layers are applied in inventory order and the server source is applied last,
+    so a server-specific file explicitly overrides a shared file at the same
+    relative path. Missing optional server directories are allowed; a missing
+    configured layer is an error because it would silently omit shared config.
+    """
+    source_root = private_repo / "chezmoi"
+    source_names = [*server.chezmoi_layers, server.name]
+    applied: list[str] = []
+
+    for source_name in source_names:
+        source = source_root / source_name
+        if not source.is_dir():
+            if source_name in server.chezmoi_layers:
+                raise FileNotFoundError(source)
+            continue
+        shutil.copytree(source, destination, dirs_exist_ok=True)
+        applied.append(source_name)
+
+    return applied
+
+
+def _render_and_confirm_remote_diff(diff: str, repo_label: str, server: str, *, yes: bool) -> bool:
+    """Show a remote Chezmoi diff and return whether provisioning should continue."""
+    if not diff.strip():
+        print(f"No changes from {repo_label}.")
+        return True
+
+    if shutil.which("delta"):
+        delta = subprocess.Popen(["delta"], stdin=subprocess.PIPE)  # noqa: S607
+        delta.communicate(diff.encode())
+    else:
+        sys.stdout.write(diff)
+        sys.stdout.flush()
+
+    if yes:
+        return True
+    answer = input(f"Apply changes from {repo_label} to {server}? [y/N] ").strip()
+    if answer.lower() in {"y", "yes"}:
+        return True
+    print(f"Skipped {repo_label}.")
+    return False
 
 
 def _chezmoi_remote_diff(server: str, private_repo: Path | None, *, yes: bool = False) -> bool:
@@ -545,42 +591,33 @@ def _chezmoi_remote_diff(server: str, private_repo: Path | None, *, yes: bool = 
     if private_repo is None:
         return True
 
-    chezmoi_src = private_repo / "chezmoi" / server
-    if not chezmoi_src.is_dir():
-        print(f"No chezmoi source for {server} at {chezmoi_src}, skipping remote diff.")
+    config = _server_config(server, private_repo)
+    if config is None:
         return True
 
-    repo_label = f"{private_repo.name}/chezmoi/{server}"
+    with tempfile.TemporaryDirectory(prefix="dotf-chezmoi-") as temp_dir:
+        composed_source = Path(temp_dir)
+        applied_layers = _compose_chezmoi_source(private_repo, config, composed_source)
+        if not applied_layers:
+            print(f"No chezmoi source for {server}, skipping remote diff.")
+            return True
 
-    # Rsync the source directory (trailing slash = sync contents, not the dir itself)
-    run(["rsync", "-a", "--delete", f"{chezmoi_src}/", f"{ssh_target}:{remote_src_dir}/"])
+        repo_label = f"{private_repo.name}/chezmoi/{' + '.join(applied_layers)}"
+        _print_green(f"Composed Chezmoi layers: {' -> '.join(applied_layers)}")
 
-    probe = subprocess.run(  # noqa: S603
-        ["ssh", ssh_target, f"chezmoi diff --no-pager --source={remote_src_dir}"],  # noqa: S607
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    if not probe.stdout.strip():
-        print(f"No changes from {repo_label}.")
-        return True
+        # Rsync the source directory (trailing slash = sync contents, not the dir itself)
+        run(["rsync", "-a", "--delete", f"{composed_source}/", f"{ssh_target}:{remote_src_dir}/"])
 
-    # Pipe diff through delta when available; otherwise print raw (chezmoi diff
-    # already includes ANSI colors).
-    if shutil.which("delta"):
-        delta = subprocess.Popen(["delta"], stdin=subprocess.PIPE)  # noqa: S607
-        delta.communicate(probe.stdout.encode())
-    else:
-        sys.stdout.write(probe.stdout)
-        sys.stdout.flush()
-
-    if not yes:
-        answer = input(f"Apply changes from {repo_label} to {server}? [y/N] ").strip()
-        if answer.lower() not in {"y", "yes"}:
-            print(f"Skipped {repo_label}.")
-            return False
-    _print_yellow("Changes not applied yet — pyinfra will apply them via 'Apply chezmoi from source dir'.")
-    return True
+        probe = subprocess.run(  # noqa: S603
+            ["ssh", ssh_target, f"chezmoi diff --no-pager --source={remote_src_dir}"],  # noqa: S607
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        confirmed = _render_and_confirm_remote_diff(probe.stdout, repo_label, server, yes=yes)
+        if confirmed:
+            _print_yellow("Changes not applied yet — pyinfra will apply them via 'Apply chezmoi from source dir'.")
+        return confirmed
 
 
 def apply_pyinfra(

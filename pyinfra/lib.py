@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """Shared pyinfra utilities: task discovery, extra-tasks-dirs parsing, and server inventory."""
 
 import ast
@@ -42,7 +44,7 @@ class Server:
     tools: list[str]
     aliases: list[str] = field(default_factory=list)
     ssh_user: str = ""
-    mise_compile: bool = False
+    chezmoi_layers: list[str] = field(default_factory=list)
     brew_variant: str = "company"
     uv_packages: list[str] = field(default_factory=list)
     uv_extra_args: dict[str, list[str]] = field(default_factory=dict)
@@ -82,7 +84,7 @@ class Server:
             "tools": self.tools,
             "aliases": self.aliases,
             "ssh_user": self.ssh_user,
-            "mise_compile": self.mise_compile,
+            "chezmoi_layers": self.chezmoi_layers,
             "brew_variant": self.brew_variant,
             "uv_packages": self.uv_packages,
             "uv_extra_args": self.uv_extra_args,
@@ -106,7 +108,7 @@ class Server:
             tools=data["tools"],
             aliases=data.get("aliases", []),
             ssh_user=data.get("ssh_user", ""),
-            mise_compile=data.get("mise_compile", False),
+            chezmoi_layers=data.get("chezmoi_layers", []),
             brew_variant=data.get("brew_variant", "company"),
             uv_packages=data.get("uv_packages", []),
             uv_extra_args=data.get("uv_extra_args", {}),
@@ -142,8 +144,6 @@ class Server:
         if self.ssh_user:
             data["ssh_user"] = self.ssh_user
             data["ssh_allow_agent"] = True
-        if self.mise_compile:
-            data["mise_compile"] = self.mise_compile
         if self.brew_variant != "company":
             data["brew_variant"] = self.brew_variant
         # Pass package lists as JSON strings; tasks json.loads them.

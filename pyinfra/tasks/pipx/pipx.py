@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """Install pipx and manage pipx-installed packages from inventory.
 
 Reads ``host.data.pipx_packages`` (list[str]) and ``host.data.pipx_injects``

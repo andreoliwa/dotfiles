@@ -41,7 +41,7 @@ elif host.get_fact(LinuxName) == "Ubuntu":
         commands=[
             (
                 "curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc "
-                "| gpg --dearmor -o /etc/apt/keyrings/gierens.gpg"
+                "| gpg --batch --yes --dearmor -o /etc/apt/keyrings/gierens.gpg"
             ),
         ],
         _sudo=True,

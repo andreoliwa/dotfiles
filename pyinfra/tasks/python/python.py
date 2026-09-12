@@ -1,38 +1,49 @@
 # Copyright 2026
 
-"""Install mise-managed Python on macOS or the system alias on Ubuntu."""
+"""Install managed Python on macOS and Ubuntu, leaving OSMC unchanged."""
 
-from pyinfra.facts.server import Kernel, LinuxName
-from pyinfra.operations import apt
-from shared import shell
+from pathlib import Path
+
+from pyinfra.facts.server import Home, Kernel, LinuxName
+from pyinfra.operations import apt, files
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
-if host.get_fact(LinuxName) == "Ubuntu":
+_IS_DARWIN = host.get_fact(Kernel) == "Darwin"
+_IS_UBUNTU = host.get_fact(LinuxName) == "Ubuntu"
+_ENV = make_env(home_path(".local/bin"))
+
+# Pyenv is retired on the platforms that now use Mise. OSMC stays untouched,
+# because its Raspberry Pi provisioning has separate architecture constraints.
+# Historical note: OSMC formerly pre-cloned Pyenv to work around a 32-bit ARM
+# Mise/gix bytesize panic (https://github.com/jdx/mise/issues). Do not restore
+# that workaround: this task now deliberately leaves OSMC and Pyenv alone.
+if _IS_DARWIN or _IS_UBUNTU:
+    _HOME = Path(host.get_fact(Home))
+    files.directory(
+        name="Remove retired Pyenv installation",
+        path=str(_HOME / ".pyenv"),
+        present=False,
+    )
+    files.directory(
+        name="Remove retired Pyenv Mise cache",
+        path=str(_HOME / ".cache" / "mise" / "python" / "pyenv"),
+        present=False,
+    )
+
+if _IS_UBUNTU:
     apt.packages(
-        name="Install python -> python3 alias",
-        packages=["python-is-python3"],
+        name="Install system Python and virtual-environment support",
+        packages=["python-is-python3", "python3-venv"],
         update=True,
         _sudo=True,
     )
-elif host.get_fact(Kernel) == "Darwin":
-    if host.data.get("mise_compile"):
-        # Workaround: mise 2026.4.x crashes on 32-bit ARM (bytesize panic) when cloning
-        # pyenv via its internal gix library. Pre-seeding the cache bypasses this.
-        # Bug: https://github.com/jdx/mise/issues (search: bytesize arm)
-        shell(
-            name="Pre-clone pyenv into mise cache (ARM gix workaround)",
-            commands=[
-                "mkdir -p ~/.cache/mise/python",
-                (
-                    "[ -d ~/.cache/mise/python/pyenv/.git ] || "
-                    "git clone https://github.com/pyenv/pyenv.git ~/.cache/mise/python/pyenv"
-                ),
-            ],
-        )
 
-    _mise_cmd = "MISE_PYTHON_COMPILE=1 mise install python" if host.data.get("mise_compile") else "mise install python"
+if _IS_DARWIN or _IS_UBUNTU:
     shell(
         name="Install Python versions via mise",
-        commands=[_mise_cmd],
+        commands=["mise install python"],
+        # PyInfra shells are non-interactive, so shell-function activation is unavailable.
+        _env=_ENV,
     )

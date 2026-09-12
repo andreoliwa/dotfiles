@@ -40,7 +40,12 @@ step "Homebrew"
 if command -v brew >/dev/null 2>&1; then
     echo "    already installed at $(command -v brew)."
 else
-    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    if ! NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+        # The Linux installer can finish installing Brew but fail its final update
+        # when the bundled taps are shallow clones. Continue only when Brew exists.
+        [ "$OS" = linux ] && [ -x /home/linuxbrew/.linuxbrew/bin/brew ] || exit 1
+        echo "    installed, but the initial update was skipped for shallow taps."
+    fi
 fi
 
 # Make brew visible in this shell.
@@ -55,7 +60,7 @@ step "uv"
 if command -v uv >/dev/null 2>&1; then
     echo "    already installed at $(command -v uv)."
 else
-    brew install uv
+    HOMEBREW_NO_AUTO_UPDATE=1 brew install uv
 fi
 
 # chezmoi is invoked by `dotf provision` before pyinfra runs, so it must be
@@ -64,7 +69,7 @@ step "chezmoi"
 if command -v chezmoi >/dev/null 2>&1; then
     echo "    already installed at $(command -v chezmoi)."
 else
-    brew install chezmoi
+    HOMEBREW_NO_AUTO_UPDATE=1 brew install chezmoi
 fi
 
 step "Dotfiles repo at $DOTFILES_DIR"

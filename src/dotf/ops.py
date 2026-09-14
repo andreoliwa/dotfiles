@@ -8,7 +8,7 @@ Local apply (macbook/@local):
   _chezmoi_apply_source() in this file — `chezmoi diff` (built-in pager), interactive
   prompt, then apply. No delta dependency.
 
-Remote apply (other servers from the private inventory.py):
+Remote apply (other configured servers):
   1. _chezmoi_remote_diff() in this file SSHes into the host, runs `chezmoi diff` there,
      pipes the output through local delta (falls back to raw stdout if delta is missing),
      and prompts for confirmation. Delta renders the SSH'd diff nicely on the local Mac;
@@ -40,6 +40,7 @@ DOTFILES_PATH = Path(__file__).parent.parent.parent
 # Mirrors lib.LOCAL_HOST — duplicated here to avoid a sys.path import at module level.
 # Keep in sync with dotfiles/pyinfra/lib.py.
 _LOCAL_HOST = "@local"
+_MACOS_ONLY_CHEZMOI_SOURCES = ["dot_hammerspoon", "private_Library"]
 
 
 def _load_servers(private_repo: Path | None = None) -> "list":
@@ -525,9 +526,21 @@ def _compose_chezmoi_source(private_repo: Path, server: "Server", destination: P
     relative path. Missing optional server directories are allowed; a missing
     configured layer is an error because it would silently omit shared config.
     """
+    public_source = DOTFILES_PATH / "chezmoi"
     source_root = private_repo / "chezmoi"
     source_names = [*server.chezmoi_layers, server.name]
     applied: list[str] = []
+
+    # Remote Chezmoi must receive the same public source as local apply before
+    # private layers. Templates then render on the target, not on the macOS
+    # control host.
+    shutil.copytree(
+        public_source,
+        destination,
+        dirs_exist_ok=True,
+        ignore=shutil.ignore_patterns(*_MACOS_ONLY_CHEZMOI_SOURCES),
+    )
+    applied.append("public")
 
     for source_name in source_names:
         source = source_root / source_name

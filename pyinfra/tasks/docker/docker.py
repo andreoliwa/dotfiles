@@ -1,6 +1,6 @@
 # Copyright 2026
 
-"""Docker: macOS bash completions + OSMC (Raspberry Pi) install.
+"""Docker: macOS completions, Ubuntu packages, and OSMC (Raspberry Pi) install.
 
 macOS: OrbStack is the user's preferred Docker runtime; Docker Desktop
 completions are linked only if Docker.app is installed. Both targets are
@@ -11,9 +11,10 @@ switches iptables to legacy, and adds the osmc user to the docker group.
 Reference: https://docs.docker.com/engine/install/debian/
 """
 
+from pyinfra.facts.files import Directory
 from pyinfra.facts.server import Kernel, LinuxName
-from pyinfra.operations import apt
-from shared import make_env, shell
+from pyinfra.operations import apt, git
+from shared import home_path, make_env, shell
 
 from pyinfra import host
 
@@ -42,6 +43,34 @@ if host.get_fact(Kernel) == "Darwin":
         ],
         _env=_ENV,
     )
+
+# Ubuntu: install Docker packages from the distribution repository.
+_VESSEL_PATH = home_path("dev/me/vessel")
+
+if host.get_fact(LinuxName) == "Ubuntu":
+    apt.packages(
+        name="Install Docker Engine + docker-compose",
+        packages=["docker-compose", "docker.io"],
+        update=True,
+        _sudo=True,
+    )
+
+# Syncthing may provide this source tree without Git metadata. Preserve an
+# existing tree instead of replacing synchronized files.
+if not host.get_fact(Directory, path=_VESSEL_PATH):
+    git.repo(
+        name="Clone vessel",
+        src="https://github.com/andreoliwa/vessel",
+        dest=_VESSEL_PATH,
+        pull=False,
+    )
+
+# Install the local checkout as an editable tool on every Docker task platform.
+shell(
+    name="Install vessel as an editable uv tool",
+    commands=[f"uv tool install -e {_VESSEL_PATH}"],
+    _env=_ENV,
+)
 
 # OSMC (Raspberry Pi) Docker CE install.
 if host.get_fact(LinuxName) == "OSMC":

@@ -1,8 +1,8 @@
 # Copyright 2026
 
-"""Remote-server bootstrap: apt packages + clones on Linux hosts (Hetzner, RPi/OSMC).
+"""Remote-server bootstrap: apt packages and common Linux setup.
 
-Per-host apt packages come from Server.apt_packages in the private inventory.
+Host-specific apt packages come from host data.
 OSMC-specific bits (group memberships, video-subtitle pipx installs) run only
 when LinuxName == "OSMC".
 """
@@ -10,7 +10,7 @@ when LinuxName == "OSMC".
 import json
 
 from pyinfra.facts.server import Kernel, LinuxName
-from pyinfra.operations import apt, files, git
+from pyinfra.operations import apt, files
 from shared import home_path, make_env, shell
 
 from pyinfra import host
@@ -70,13 +70,6 @@ if host.get_fact(Kernel) == "Linux":
     files.directory(
         name="Ensure ~/OneDrive/Backup",
         path=home_path("OneDrive/Backup"),
-    )
-
-    git.repo(
-        name="Clone vessel",
-        src="https://github.com/andreoliwa/vessel",
-        dest=home_path("dev/me/vessel"),
-        pull=True,
     )
 
     # bash-powerline: https://github.com/riobard/bash-powerline (RPi + Hetzner only)

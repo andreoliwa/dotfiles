@@ -1,2 +1,2 @@
-requires = []
+requires = ["uv"]
 tier = "FINAL"

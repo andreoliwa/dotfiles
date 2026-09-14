@@ -8,22 +8,29 @@ Reads ``host.data.pipx_packages`` (list[str]) and ``host.data.pipx_injects``
 
 import json
 
-from pyinfra.facts.server import Kernel
-from pyinfra.operations import brew
+from pyinfra.facts.server import Kernel, LinuxName
+from pyinfra.operations import apt, brew
 from shared import home_path, make_env, shell
 
 from pyinfra import host
 
 _ENV = make_env(home_path(".local/bin"))
 
-# Homebrew Python is externally-managed (PEP 668), so `pip install --user pipx`
-# fails on macOS with externally-managed-environment. Use brew on macOS (the
-# path recommended by both pipx docs and the Homebrew error), pip --user on Linux.
+# macOS and Ubuntu mark their system Python environments as externally managed
+# (PEP 668). Use each platform's package manager there; retain the existing
+# pip fallback for other Linux platforms.
 if host.get_fact(Kernel) == "Darwin":
     brew.packages(
         name="Install pipx via brew",
         packages=["pipx"],
         latest=True,
+    )
+elif host.get_fact(LinuxName) == "Ubuntu":
+    apt.packages(
+        name="Install pipx via apt",
+        packages=["pipx"],
+        update=True,
+        _sudo=True,
     )
 else:
     shell(

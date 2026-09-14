@@ -3,7 +3,7 @@ tier = "INFRA"
 
 # pipx packages managed by dotf.
 # NOTE: reference only — actual installed packages come from
-# Server.pipx_packages / Server.pipx_injects in the private inventory.
+# Host data supplies the installed package and injection lists.
 
 [packages]
 common = [

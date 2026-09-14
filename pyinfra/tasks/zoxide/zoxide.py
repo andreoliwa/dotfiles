@@ -1,7 +1,9 @@
+# Copyright 2026
+
 """Smart cd replacement. Tracks frecency and jumps to directories with `z`."""
 
-from pyinfra.facts.server import Kernel
-from pyinfra.operations import brew
+from pyinfra.facts.server import Kernel, LinuxName
+from pyinfra.operations import apt, brew
 from shared import shell
 
 from pyinfra import host
@@ -11,6 +13,13 @@ if host.get_fact(Kernel) == "Darwin":
         name="Install zoxide",
         packages=["zoxide"],
         latest=True,
+    )
+elif host.get_fact(LinuxName) == "Ubuntu":
+    apt.packages(
+        name="Install zoxide",
+        packages=["zoxide"],
+        update=True,
+        _sudo=True,
     )
 else:
     shell(

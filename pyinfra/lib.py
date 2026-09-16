@@ -52,6 +52,7 @@ class Server:
     pipx_injects: dict[str, list[str]] = field(default_factory=dict)
     conjuring_mode: str = "personal"
     apt_packages: list[str] = field(default_factory=list)
+    docker_storage_driver: str = ""
     # `dotf provision` for hetzner prompts for the ~/.ssh/id_rsa passphrase on every
     # run despite agent auth working fine on its own. Root cause: dotfiles' Host *
     # ssh config block (chezmoi/private_dot_ssh/private_config.d/private_00_base.conf.tmpl)
@@ -92,6 +93,7 @@ class Server:
             "pipx_injects": self.pipx_injects,
             "conjuring_mode": self.conjuring_mode,
             "apt_packages": self.apt_packages,
+            "docker_storage_driver": self.docker_storage_driver,
         }
 
     @classmethod
@@ -116,6 +118,7 @@ class Server:
             pipx_injects=data.get("pipx_injects", {}),
             conjuring_mode=data.get("conjuring_mode", "personal"),
             apt_packages=data.get("apt_packages", []),
+            docker_storage_driver=data.get("docker_storage_driver", ""),
         )
 
     @classmethod
@@ -159,6 +162,8 @@ class Server:
             data["conjuring_mode"] = self.conjuring_mode
         if self.apt_packages:
             data["apt_packages"] = json.dumps(self.apt_packages)
+        if self.docker_storage_driver:
+            data["docker_storage_driver"] = self.docker_storage_driver
         return self.host, data
 
 

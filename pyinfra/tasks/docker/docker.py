@@ -13,12 +13,12 @@ Reference: https://docs.docker.com/engine/install/debian/
 
 from pyinfra.facts.files import Directory
 from pyinfra.facts.server import Kernel, LinuxName
-from pyinfra.operations import apt, git
+from pyinfra.operations import apt, git, systemd
 from shared import home_path, make_env, shell
 
 from pyinfra import host
 
-_ENV = make_env()
+_ENV = make_env(home_path(".local/bin"))
 
 if host.get_fact(Kernel) == "Darwin":
     shell(
@@ -45,15 +45,49 @@ if host.get_fact(Kernel) == "Darwin":
     )
 
 # Ubuntu: install Docker packages from the distribution repository.
+_DOCKER_STORAGE_DRIVER = host.data.get("docker_storage_driver", "")
 _VESSEL_PATH = home_path("dev/me/vessel")
 
 if host.get_fact(LinuxName) == "Ubuntu":
+    # Docker CE's containerd.io conflicts with Ubuntu's containerd, which
+    # docker.io requires. Remove CE packages first when a host previously used
+    # Docker's upstream repository; volumes and images remain on disk.
+    apt.packages(
+        name="Remove incompatible Docker CE packages",
+        packages=[
+            "containerd.io",
+            "docker-buildx-plugin",
+            "docker-ce",
+            "docker-ce-cli",
+            "docker-ce-rootless-extras",
+            "docker-compose-plugin",
+        ],
+        present=False,
+        _sudo=True,
+    )
     apt.packages(
         name="Install Docker Engine + docker-compose",
-        packages=["docker-compose", "docker.io"],
+        packages=["docker-compose", "docker-compose-v2", "docker.io"],
         update=True,
         _sudo=True,
     )
+    # Only hosts that opt in to a storage-driver migration may change this
+    # setting. Other Ubuntu hosts retain their existing Docker data unchanged.
+    if _DOCKER_STORAGE_DRIVER:
+        shell(
+            name=f"Configure Docker {_DOCKER_STORAGE_DRIVER} storage driver",
+            commands=[
+                (
+                    "python3 -c 'import json; from pathlib import Path; "
+                    'path = Path("/etc/docker/daemon.json"); '
+                    "config = json.loads(path.read_text()) if path.exists() else {}; "
+                    f'config["storage-driver"] = "{_DOCKER_STORAGE_DRIVER}"; '
+                    "path.parent.mkdir(parents=True, exist_ok=True); "
+                    'path.write_text(json.dumps(config, indent=2) + "\\n")\''
+                ),
+            ],
+            _sudo=True,
+        )
 
 # Syncthing may provide this source tree without Git metadata. Preserve an
 # existing tree instead of replacing synchronized files.
@@ -139,5 +173,17 @@ if host.get_fact(LinuxName) == "OSMC":
     shell(
         name="Add osmc user to docker group",
         commands=["usermod -aG docker osmc"],
+        _sudo=True,
+    )
+
+# Docker packages do not reliably start their service after an upgrade or a
+# package-source transition. Ensure every Linux Docker target has a daemon now
+# and after reboot.
+if host.get_fact(Kernel) == "Linux":
+    systemd.service(
+        name="Enable and start Docker service",
+        service="docker",
+        running=True,
+        enabled=True,
         _sudo=True,
     )

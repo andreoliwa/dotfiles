@@ -1,3 +1,5 @@
+# Copyright 2026
+
 """dotf CLI — Typer subcommand wiring."""
 
 from __future__ import annotations
@@ -43,6 +45,32 @@ def _yes() -> bool:
     return bool(os.environ.get("DOTF_YES"))
 
 
+def _completion_repo(ctx: typer.Context) -> Path | None:
+    """Return the private repository selected for this completion request."""
+    repo = ctx.params.get("repo")
+    return repo if isinstance(repo, Path) else None
+
+
+def _complete_servers(ctx: typer.Context, _param: typer.CallbackParam, incomplete: str) -> list[str]:
+    """Complete canonical server names from the current inventory."""
+    from dotf.ops import _load_servers
+
+    return [server.name for server in _load_servers(_completion_repo(ctx)) if server.name.startswith(incomplete)]
+
+
+def _complete_tools(ctx: typer.Context, _param: typer.CallbackParam, incomplete: str) -> list[str]:
+    """Complete comma-separated task names from the public and private task directories."""
+    from dotf.ops import _discover_all_tasks
+
+    prefix, separator, query = incomplete.rpartition(",")
+    completed_prefix = f"{prefix}{separator}"
+    return [
+        f"{completed_prefix}{name}"
+        for name in sorted(_discover_all_tasks(_completion_repo(ctx)))
+        if name.startswith(query)
+    ]
+
+
 def _apply_start_from(
     start_from: str,
     resolved_server: str,
@@ -83,11 +111,13 @@ def _apply_start_from(
 
 def _provision_impl(
     server: str,
-    tools: str | None,
+    tools: list[str] | None,
     start_from: str | None,
     repo: Path | None,
 ) -> None:
-    tools_list: list[str] | None = [t for t in (s.strip() for s in tools.split(",")) if t] if tools else None
+    tools_list = (
+        [part for tool in tools for part in (name.strip() for name in tool.split(",")) if part] if tools else None
+    )
     if tools_list:
         from dotf.ops import resolve_tools
 
@@ -120,11 +150,22 @@ def _provision_impl(
 @app.command("provision")
 def provision(
     tools: Annotated[
-        str | None,
-        typer.Argument(metavar="TOOL[,TOOL...]", help="Comma-separated tools to provision (default: all)."),
+        list[str] | None,
+        typer.Argument(
+            metavar="TOOL...",
+            help="Tools to provision, separated by spaces or commas (default: all).",
+            shell_complete=_complete_tools,
+        ),
     ] = None,
     server: Annotated[
-        str, typer.Option("-s", "--server", metavar="SERVER", help="Target server (default: @local).")
+        str,
+        typer.Option(
+            "-s",
+            "--server",
+            metavar="SERVER",
+            help="Target server (default: @local).",
+            shell_complete=_complete_servers,
+        ),
     ] = "@local",
     start_from: Annotated[
         str | None,
@@ -132,6 +173,7 @@ def provision(
             "--start-from",
             metavar="TOOL",
             help="Skip tools that come before this one in the server's inventory order.",
+            shell_complete=_complete_tools,
         ),
     ] = None,
     repo: Annotated[

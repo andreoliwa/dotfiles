@@ -89,20 +89,26 @@ if host.get_fact(LinuxName) == "Ubuntu":
             _sudo=True,
         )
 
-# Syncthing may provide this source tree without Git metadata. Preserve an
-# existing tree instead of replacing synchronized files.
-if not host.get_fact(Directory, path=_VESSEL_PATH):
-    git.repo(
-        name="Clone vessel",
-        src="https://github.com/andreoliwa/vessel",
-        dest=_VESSEL_PATH,
-        pull=False,
-    )
+# Vessel resolves Conjuring from its sibling checkout through ``tool.uv.sources``.
+# On Linux servers, refresh both clean Git checkouts so the editable tool cannot
+# retain a stale, rsync-synchronized dependency. Local development checkouts are
+# left alone to avoid overwriting uncommitted work.
+_CONJURING_PATH = home_path("dev/me/conjuring")
+_SOURCE_REPOS = (
+    ("conjuring", "https://github.com/andreoliwa/conjuring", _CONJURING_PATH),
+    ("vessel", "https://github.com/andreoliwa/vessel", _VESSEL_PATH),
+)
 
-# Install the local checkout as an editable tool on every Docker task platform.
+for _name, _src, _dest in _SOURCE_REPOS:
+    if not host.get_fact(Directory, path=_dest):
+        git.repo(name=f"Clone {_name}", src=_src, dest=_dest, pull=False)
+    elif host.get_fact(LinuxName) == "Ubuntu" and host.get_fact(Directory, path=f"{_dest}/.git"):
+        git.repo(name=f"Update {_name}", src=_src, dest=_dest, pull=True)
+
+# Force a rebuild so a changed editable source and its dependencies are used.
 shell(
     name="Install vessel as an editable uv tool",
-    commands=[f"uv tool install -e {_VESSEL_PATH}"],
+    commands=[f"uv tool install --force -e {_VESSEL_PATH}"],
     _env=_ENV,
 )
 

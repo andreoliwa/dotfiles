@@ -52,10 +52,15 @@ def _completion_repo(ctx: typer.Context) -> Path | None:
 
 
 def _complete_servers(ctx: typer.Context, _param: typer.CallbackParam, incomplete: str) -> list[str]:
-    """Complete canonical server names from the current inventory."""
+    """Complete server names and aliases from the current inventory."""
     from dotf.ops import _load_servers
 
-    return [server.name for server in _load_servers(_completion_repo(ctx)) if server.name.startswith(incomplete)]
+    return [
+        candidate
+        for server in _load_servers(_completion_repo(ctx))
+        for candidate in [server.name, *server.aliases]
+        if candidate.startswith(incomplete)
+    ]
 
 
 def _complete_tools(ctx: typer.Context, _param: typer.CallbackParam, incomplete: str) -> list[str]:

@@ -1,17 +1,12 @@
 # Copyright 2026
 
-"""Remote-server bootstrap: apt packages and common Linux setup.
-
-Host-specific apt packages come from host data.
-OSMC-specific bits (group memberships, video-subtitle pipx installs) run only
-when LinuxName == "OSMC".
-"""
+"""Install common Linux and OSMC-specific bootstrap dependencies."""
 
 import json
 
 from pyinfra.facts.server import Kernel, LinuxName
 from pyinfra.operations import apt, files
-from shared import home_path, make_env, shell
+from shared import home_path, shell
 
 from pyinfra import host
 
@@ -27,11 +22,12 @@ _BASE_APT_PACKAGES = [
     "wget",
 ]
 
-# OSMC: ffsubsync wraps several apt-installed dev libraries.
-_OSMC_VIDEO_APT_PACKAGES = [
+# FFsubsync needs these system libraries when it is installed on OSMC.
+_OSMC_BOOTSTRAP_APT_PACKAGES = [
     "build-essential",
     "ffmpeg",
     "gcc",
+    "git",
     "libffi-dev",
     "libssl-dev",
     "libxml2-dev",
@@ -44,17 +40,7 @@ _OSMC_VIDEO_APT_PACKAGES = [
     "python3-wheel",
 ]
 
-# https://github.com/Diaoul/subliminal
-# https://github.com/smacke/ffsubsync
-# https://github.com/andreoliwa/python-vidsub
-_OSMC_VIDEO_PIPX_PACKAGES = [
-    ("subliminal", "git+https://github.com/Diaoul/subliminal.git@develop", False),
-    ("ffsubsync", "ffsubsync", True),
-    ("vidsub", "git+https://github.com/andreoliwa/python-vidsub", True),
-]
-
-# Groups that the osmc user needs so the framebuffer/audio/disk devices work.
-# Avoids the "open /dev/fb0: Permission denied" sad-face boot loop.
+# OSMC needs these groups for framebuffer, audio, and disk device access.
 # https://discourse.osmc.tv/t/sad-face-loop-open-dev-fb0-permission-denied/87539
 _OSMC_GROUPS = ["osmc", "adm", "disk", "lp", "dialout", "cdrom", "audio", "video"]
 
@@ -100,17 +86,8 @@ if host.get_fact(LinuxName) == "OSMC":
     )
 
     apt.packages(
-        name="Install OSMC video-subtitle apt dependencies",
-        packages=_OSMC_VIDEO_APT_PACKAGES,
+        name="Install OSMC bootstrap packages",
+        packages=_OSMC_BOOTSTRAP_APT_PACKAGES,
         update=True,
         _sudo=True,
     )
-
-    _pipx_env = make_env(home_path(".local/bin"))
-    for _name, _spec, _system_site in _OSMC_VIDEO_PIPX_PACKAGES:
-        _flags = "--system-site-packages " if _system_site else ""
-        shell(
-            name=f"pipx install {_name}",
-            commands=[f"pipx install --force {_flags}{_spec}"],
-            _env=_pipx_env,
-        )

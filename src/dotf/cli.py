@@ -5,6 +5,9 @@
 from __future__ import annotations
 
 import os
+import shlex
+import subprocess
+from enum import StrEnum
 from pathlib import Path
 from typing import Annotated
 
@@ -15,6 +18,7 @@ from dotf.ops import (
     _print_green,
     _print_yellow,
     _private_pyinfra,
+    _resolve_ssh_target,
     apply_chezmoi,
     apply_pyinfra,
     list_provision,
@@ -114,6 +118,17 @@ def _apply_start_from(
     return result
 
 
+def _without_chezmoi(tools: list[str] | None, server: str, repo: Path | None) -> list[str]:
+    """Return the requested tools, excluding chezmoi even for a full provision."""
+    if tools is not None:
+        return [tool for tool in tools if tool != "chezmoi"]
+
+    from dotf.ops import _load_servers
+
+    config = next((item for item in _load_servers(repo) if item.name == server), None)
+    return [tool for tool in config.tools if tool != "chezmoi"] if config else []
+
+
 def _provision_impl(
     server: str,
     tools: list[str] | None,
@@ -146,9 +161,10 @@ def _provision_impl(
     elif chezmoi_in_tools:
         confirmed = _chezmoi_remote_diff(resolved_server, repo, yes=_yes())
         if not confirmed:
-            tools_list = [t for t in (tools_list or []) if t != "chezmoi"]
+            tools_list = _without_chezmoi(tools_list, resolved_server, repo)
 
-    _print_yellow("Tip: run `dotf tail` in another terminal to follow server.shell output.")
+    tip = "dotf watch" if resolved_server == "@local" else f"dotf watch --server {resolved_server}"
+    _print_yellow(f"Tip: run `{tip}` in another terminal to follow provisioning progress.")
     apply_pyinfra(private_pyinfra, resolved_server, tools_list, yes=_yes())
 
 
@@ -175,9 +191,10 @@ def provision(
     start_from: Annotated[
         str | None,
         typer.Option(
-            "--start-from",
+            "-f",
+            "--from",
             metavar="TOOL",
-            help="Skip tools that come before this one in the server's inventory order.",
+            help="Skip tools that come before this one in the server's execution order.",
             shell_complete=_complete_tools,
         ),
     ] = None,
@@ -210,16 +227,96 @@ def chezmoi(
     apply_chezmoi(repo, yes=_yes())
 
 
-@app.command()
-def tail() -> None:
-    """Follow the pyinfra provisioning log (~/.cache/dotf/provision.log)."""
-    import subprocess
+class ProgressView(StrEnum):
+    """Provisioning progress display modes."""
 
+    BOTH = "both"
+    LOGS = "logs"
+    ACTIVITY = "activity"
+
+
+def _progress_dashboard(view: ProgressView, interval: int) -> str:
+    """Return the shell loop for a refreshing progress dashboard."""
+    sections = ["while :; do", "  clear", '  printf "Provisioning progress - %s\n" "$(date)"']
+    if view != ProgressView.ACTIVITY:
+        sections.extend(
+            [
+                '  printf "\nLogs\n----\n"',
+                '  tail -n 25 "$HOME/.cache/dotf/provision.log" 2>/dev/null || true',
+            ],
+        )
+    if view != ProgressView.LOGS:
+        sections.extend(
+            [
+                '  printf "\nActivity\n--------\n"',
+                "  uptime",
+                "  free -h",
+                '  df -h "$HOME"',
+                "  top -b -n 1 -o %CPU | head -n 20",
+            ],
+        )
+    sections.extend([f"  sleep {interval}", "done"])
+    return "\n".join(sections)
+
+
+@app.command()
+def watch(
+    server: Annotated[
+        str,
+        typer.Option(
+            "-s",
+            "--server",
+            metavar="SERVER",
+            help="Target server (default: @local).",
+            shell_complete=_complete_servers,
+        ),
+    ] = "@local",
+    view: Annotated[
+        ProgressView,
+        typer.Option("--view", help="Display both logs and activity, only logs, or only activity."),
+    ] = ProgressView.BOTH,
+    interval: Annotated[
+        int,
+        typer.Option("-n", "--interval", min=1, help="Dashboard refresh interval in seconds."),
+    ] = 2,
+    repo: Annotated[
+        Path | None, typer.Option("-r", "--repo", metavar="PATH", help="Path to private repo root.")
+    ] = None,
+) -> None:
+    """Show provisioning logs and activity for a local or remote host."""
+    resolved_server = resolve_server(server, repo)
     log = Path.home() / ".cache" / "dotf" / "provision.log"
-    if not log.exists():
-        log.parent.mkdir(parents=True, exist_ok=True)
-        log.touch()
-    subprocess.run(["tail", "-f", "-n", "50", str(log)], check=False)  # noqa: S603, S607
+
+    if resolved_server == "@local":
+        if view == ProgressView.LOGS:
+            log.parent.mkdir(parents=True, exist_ok=True)
+            log.touch(exist_ok=True)
+            subprocess.run(["tail", "-f", "-n", "50", str(log)], check=False)  # noqa: S603, S607
+            return
+        subprocess.run(["bash", "-c", _progress_dashboard(view, interval)], check=False)  # noqa: S603, S607
+        return
+
+    target = _resolve_ssh_target(resolved_server, repo)
+    if target is None:
+        typer.echo(f"Unknown remote server: {server}", err=True)
+        raise typer.Exit(1)
+    ssh_target, _ = target
+    typer.echo(f"Connecting to {server}...")
+
+    if view == ProgressView.LOGS:
+        # ssh_target comes from the configured server, not user-provided shell input.
+        subprocess.run(  # noqa: S603
+            ["ssh", ssh_target, "tail -f -n 50 ~/.cache/dotf/provision.log"],  # noqa: S607
+            check=False,
+        )
+        return
+
+    # The dashboard clears and redraws the terminal, so the remote command needs a TTY.
+    dashboard = _progress_dashboard(view, interval)
+    subprocess.run(  # noqa: S603
+        ["ssh", "-tt", ssh_target, f"bash -lc {shlex.quote(dashboard)}"],  # noqa: S607
+        check=False,
+    )
 
 
 if __name__ == "__main__":

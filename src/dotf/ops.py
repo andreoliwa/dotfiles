@@ -36,6 +36,7 @@ if TYPE_CHECKING:
 # Cannot import DOTFILES_PATH from pyinfra/lib.py: pyinfra tasks run in a separate
 # process under the pyinfra CLI, which has no knowledge of the dotf package.
 DOTFILES_PATH = Path(__file__).parent.parent.parent
+_COMMAND_NOT_FOUND_EXIT_CODE = 127
 
 # Mirrors lib.LOCAL_HOST — duplicated here to avoid a sys.path import at module level.
 # Keep in sync with dotfiles/pyinfra/lib.py.
@@ -148,6 +149,7 @@ _ENV_DOTF_REPO = "DOTF_REPO"
 _GREEN = "\033[92m"
 _RED = "\033[31m"
 _RESET = "\033[0m"
+_TAR_REQUIRED_MESSAGE = "tar is required to upload the Chezmoi source"
 _WARN = "\033[33m"
 _YELLOW = "\033[93m"
 # keep-sorted end
@@ -576,13 +578,45 @@ def _render_and_confirm_remote_diff(diff: str, repo_label: str, server: str, *, 
     return False
 
 
+def _upload_chezmoi_source(composed_source: Path, ssh_target: str, remote_src_dir: str) -> None:
+    """Stream a composed Chezmoi source tree to a remote temporary directory."""
+    remote_extract = f"rm -rf {remote_src_dir} && mkdir -p {remote_src_dir} && tar -C {remote_src_dir} -xf -"
+    tar_path = shutil.which("tar")
+    if tar_path is None:
+        raise RuntimeError(_TAR_REQUIRED_MESSAGE)
+    archive = subprocess.Popen(  # noqa: S603
+        [
+            tar_path,
+            "--format",
+            "ustar",
+            "--no-mac-metadata",
+            "-C",
+            str(composed_source),
+            "-cf",
+            "-",
+            ".",
+        ],
+        stdout=subprocess.PIPE,
+    )
+    upload = subprocess.run(  # noqa: S603
+        ["ssh", ssh_target, remote_extract],  # noqa: S607
+        stdin=archive.stdout,
+        check=False,
+    )
+    if archive.stdout is not None:
+        archive.stdout.close()
+    if archive.wait() != 0 or upload.returncode != 0:
+        message = f"Failed to upload chezmoi source to {ssh_target}"
+        raise RuntimeError(message)
+
+
 def _chezmoi_remote_diff(server: str, private_repo: Path | None, *, yes: bool = False) -> bool:
-    """Rsync the chezmoi source dir to the remote, run chezmoi diff there, show via local delta, prompt.
+    """Upload the chezmoi source dir, run a remote diff when available, then prompt.
 
     Returns True if the user confirmed (or --yes was passed), False if skipped.
 
     Flow mirrors _chezmoi_apply_source for local hosts:
-      1. Rsync the raw chezmoi source dir (dot_-prefixed layout) to a temp dir on the remote.
+      1. Stream the raw chezmoi source dir (dot_-prefixed layout) to a temp dir on the remote.
          chezmoi diff/apply require the source directory, not a rendered archive — `chezmoi
          archive` produces the target state (rendered home files), not a source dir.
       2. SSH in: run `chezmoi diff --source=<remote_src_dir>`, pipe output through local delta.
@@ -618,8 +652,8 @@ def _chezmoi_remote_diff(server: str, private_repo: Path | None, *, yes: bool = 
         repo_label = f"{private_repo.name}/chezmoi/{' + '.join(applied_layers)}"
         _print_green(f"Composed Chezmoi layers: {' -> '.join(applied_layers)}")
 
-        # Rsync the source directory (trailing slash = sync contents, not the dir itself)
-        run(["rsync", "-a", "--delete", f"{composed_source}/", f"{ssh_target}:{remote_src_dir}/"])
+        # Fresh OSMC lacks rsync, and this runs before PyInfra installs packages.
+        _upload_chezmoi_source(composed_source, ssh_target, remote_src_dir)
 
         probe = subprocess.run(  # noqa: S603
             ["ssh", ssh_target, f"chezmoi diff --no-pager --source={remote_src_dir}"],  # noqa: S607
@@ -627,7 +661,11 @@ def _chezmoi_remote_diff(server: str, private_repo: Path | None, *, yes: bool = 
             capture_output=True,
             check=False,
         )
-        confirmed = _render_and_confirm_remote_diff(probe.stdout, repo_label, server, yes=yes)
+        if probe.returncode == _COMMAND_NOT_FOUND_EXIT_CODE:
+            print("Chezmoi is not installed on the remote host; PyInfra will install it before applying the source.")
+            confirmed = True
+        else:
+            confirmed = _render_and_confirm_remote_diff(probe.stdout, repo_label, server, yes=yes)
         if confirmed:
             _print_yellow("Changes not applied yet — pyinfra will apply them via 'Apply chezmoi from source dir'.")
         return confirmed
@@ -663,6 +701,10 @@ def apply_pyinfra(
     is_local = server == _LOCAL_HOST or any(
         s.name == server and s.host == _LOCAL_HOST for s in _load_servers(_repo_root)
     )
+    # Fresh OSMC exposes a restricted non-interactive PATH. A sudo login shell
+    # uses root's complete PATH, which PyInfra needs for system administration.
+    if not is_local:
+        extra.append("--use-sudo-login")
     pyinfra_bin = Path(sys.executable).parent / "pyinfra" if is_local else _ensure_system_pyinfra()
     # Run from $HOME so pyinfra's relative-path display does not contain `../`s.
     # inventory.py + deploy.py are passed as absolute paths.

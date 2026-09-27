@@ -16,7 +16,7 @@ import shlex
 from pyinfra.facts.files import Directory
 from pyinfra.facts.server import Kernel, LinuxName
 from pyinfra.operations import apt, git, systemd
-from shared import home_path, make_env, shell
+from shared import home_path, make_env, shell, system_python_label, uv_managed_python_label
 
 from pyinfra import host
 
@@ -77,7 +77,7 @@ if host.get_fact(LinuxName) == "Ubuntu":
     # setting. Other Ubuntu hosts retain their existing Docker data unchanged.
     if _DOCKER_STORAGE_DRIVER:
         shell(
-            name=f"Configure Docker {_DOCKER_STORAGE_DRIVER} storage driver",
+            name=(f"Configure Docker {_DOCKER_STORAGE_DRIVER} storage driver ({system_python_label()})"),
             commands=[
                 (
                     "python3 -c 'import json; from pathlib import Path; "
@@ -120,7 +120,10 @@ for _name, _src, _dest in _SOURCE_REPOS:
 
 # Force a rebuild so a changed editable source and its dependencies are used.
 shell(
-    name="Install vessel as an editable uv tool",
+    name=(
+        "Install vessel as an editable uv tool "
+        f"({uv_managed_python_label() if host.get_fact(LinuxName) == 'OSMC' else 'uv-selected Python'})"
+    ),
     commands=[f"uv tool install --force -e {_VESSEL_PATH}"],
     _env=_ENV,
 )

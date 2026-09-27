@@ -11,7 +11,15 @@ import shlex
 
 from pyinfra.facts.server import Kernel, LinuxName
 from pyinfra.operations import brew
-from shared import home_path, make_env, shell
+from shared import (
+    SYSTEM_PYTHON_EXECUTABLE,
+    UV_MANAGED_PYTHON_REQUEST,
+    home_path,
+    make_env,
+    shell,
+    system_python_label,
+    uv_managed_python_label,
+)
 
 from pyinfra import host
 
@@ -19,7 +27,10 @@ _IS_DARWIN = host.get_fact(Kernel) == "Darwin"
 _IS_OSMC = host.get_fact(LinuxName) == "OSMC"
 _ENV = make_env(home_path(".local/bin"))
 # Ubuntu uses its current system interpreter; OSMC must use uv's latest managed interpreter.
-_TOOL_ENV = {**_ENV, "UV_PYTHON": "/usr/bin/python3"} if not _IS_DARWIN and not _IS_OSMC else _ENV
+_TOOL_ENV = {**_ENV, "UV_PYTHON": SYSTEM_PYTHON_EXECUTABLE} if not _IS_DARWIN and not _IS_OSMC else _ENV
+_TOOL_PYTHON_LABEL = (
+    uv_managed_python_label() if _IS_OSMC else system_python_label() if not _IS_DARWIN else "uv-selected Python"
+)
 
 if host.get_fact(Kernel) == "Darwin":
     brew.packages(
@@ -35,10 +46,10 @@ else:
     )
 
 if _IS_OSMC:
-    # OSMC's system Python 3.9 is too old for Subliminal; use stable managed Python 3.14.
+    # OSMC's system Python is too old for Subliminal; use the configured managed interpreter.
     shell(
-        name="Install Python 3.14 on OSMC",
-        commands=["uv python install 3.14"],
+        name=f"Install {uv_managed_python_label()} on OSMC",
+        commands=[f"uv python install {UV_MANAGED_PYTHON_REQUEST}"],
         _env=_ENV,
     )
 
@@ -52,7 +63,7 @@ for _pkg in _pkgs:
     # Preserve version operators in extra requirements, such as "numpy<2.5", as one shell argument.
     _extra = shlex.join(_extras.get(_pkg, []))
     shell(
-        name=f"uv tool install {_pkg}",
+        name=f"uv tool install {_pkg} ({_TOOL_PYTHON_LABEL})",
         commands=[f"uv tool install --force {_extra} {shlex.quote(_pkg)}".strip()],
         _env=_TOOL_ENV,
     )

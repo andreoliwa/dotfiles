@@ -6,7 +6,9 @@ Tasks import via the same sys.path injection that lib.py uses (deploy.py
 inserts the pyinfra dir into sys.path before running tasks).
 """
 
-from pyinfra.facts.server import Home
+from functools import cache
+
+from pyinfra.facts.server import Command, Home
 from pyinfra.operations import server as _server
 
 from pyinfra import host
@@ -17,6 +19,40 @@ BREW_PATH = "/opt/homebrew/bin:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin"
 
 # Standard system bins. Kept separate so callers can decide ordering.
 _SYSTEM_PATH = "/usr/bin:/bin:/usr/sbin:/sbin"
+
+UV_MANAGED_PYTHON_REQUEST = "3.14"
+SYSTEM_PYTHON_EXECUTABLE = "/usr/bin/python3"
+
+
+def _command_output(command: str) -> str:
+    """Return stripped output from a target-host command fact."""
+    return str(host.get_fact(Command, command=command)).strip()
+
+
+@cache
+def system_python_version() -> str:
+    """Return the target host's ``python3`` version."""
+    return _command_output("python3 -c 'import sys; print(sys.version.split()[0])'")
+
+
+def system_python_label() -> str:
+    """Return a concise label for a system-Python operation."""
+    return f"system Python {system_python_version()}"
+
+
+def uv_managed_python_version() -> str:
+    """Return the managed Python version requested by provisioning."""
+    return UV_MANAGED_PYTHON_REQUEST
+
+
+def uv_managed_python_label() -> str:
+    """Return a concise label for a uv-managed-Python operation."""
+    return f"uv-managed Python {uv_managed_python_version()}"
+
+
+def uv_managed_python_shell_env(variable: str) -> str:
+    """Set ``variable`` to the configured uv-managed interpreter at shell runtime."""
+    return f'{variable}="$(uv python find --managed-python --resolve-links {UV_MANAGED_PYTHON_REQUEST})"'
 
 
 def brew_bin() -> str:

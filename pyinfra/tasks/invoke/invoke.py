@@ -12,25 +12,48 @@ Prerequisites:
 """
 
 from pyinfra.facts.files import Directory
-from pyinfra.facts.server import Kernel
+from pyinfra.facts.server import Kernel, LinuxName
 from pyinfra.operations import git
-from shared import home_path, make_env, shell
+from shared import (
+    SYSTEM_PYTHON_EXECUTABLE,
+    home_path,
+    make_env,
+    shell,
+    system_python_label,
+    uv_managed_python_label,
+    uv_managed_python_shell_env,
+)
 
 from pyinfra import host
 
 _ENV = make_env(home_path(".local/bin"))
-# Login shells can prepend an old pyenv shim before this task runs. Force pipx
-# to build its managed environment with the supported system Python on Linux.
-_PIPX_ENV = {**_ENV, "PIPX_DEFAULT_PYTHON": "/usr/bin/python3"} if host.get_fact(Kernel) != "Darwin" else _ENV
+_IS_OSMC = host.get_fact(LinuxName) == "OSMC"
+# Login shells can prepend an old pyenv shim before this task runs. OSMC's
+# system Python is too old for Invoke, so use the uv-managed interpreter there.
+if _IS_OSMC:
+    _PIPX_ENV = _ENV
+    _PIPX_PYTHON_ENV = uv_managed_python_shell_env("PIPX_DEFAULT_PYTHON")
+    _PIPX_PYTHON_LABEL = uv_managed_python_label()
+elif host.get_fact(Kernel) != "Darwin":
+    _PIPX_ENV = {**_ENV, "PIPX_DEFAULT_PYTHON": SYSTEM_PYTHON_EXECUTABLE}
+    _PIPX_PYTHON_ENV = ""
+    _PIPX_PYTHON_LABEL = system_python_label()
+else:
+    _PIPX_ENV = _ENV
+    _PIPX_PYTHON_ENV = ""
+    _PIPX_PYTHON_LABEL = "Homebrew Python"
 _CONJURING_PATH = home_path("dev/me/conjuring")
 
 # Uninstall first because `pipx install --force` does not clear the uv-managed
 # venv on re-runs (uv refuses to reuse a venv it did not create), causing the
 # install to fail with "A virtual environment already exists ... Use `--clear`".
 shell(
-    name="pipx install invoke",
+    name=f"pipx install invoke ({_PIPX_PYTHON_LABEL})",
     commands=[
-        "pipx uninstall invoke 2>/dev/null || true; pipx install --force --include-deps invoke",
+        (
+            f"{_PIPX_PYTHON_ENV} pipx uninstall invoke 2>/dev/null || true; "
+            f"{_PIPX_PYTHON_ENV} pipx install --force --include-deps invoke"
+        ),
     ],
     _env=_PIPX_ENV,
 )
@@ -46,8 +69,14 @@ if not host.get_fact(Directory, path=_CONJURING_PATH):
     )
 
 shell(
-    name="Inject conjuring (editable) into invoke venv",
-    commands=[f"pipx inject --force --include-apps -e invoke {_CONJURING_PATH}"],
+    name=f"Inject conjuring (editable) into invoke venv ({_PIPX_PYTHON_LABEL})",
+    commands=[f"{_PIPX_PYTHON_ENV} pipx inject --force --include-apps -e invoke {_CONJURING_PATH}"],
+    _env=_PIPX_ENV,
+)
+
+shell(
+    name=f"Initialize Invoke with Conjuring ({_PIPX_PYTHON_LABEL})",
+    commands=["conjuring init"],
     _env=_PIPX_ENV,
 )
 

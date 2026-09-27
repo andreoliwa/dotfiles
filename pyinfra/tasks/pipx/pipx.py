@@ -10,11 +10,12 @@ import json
 
 from pyinfra.facts.server import Kernel, LinuxName
 from pyinfra.operations import apt, brew
-from shared import home_path, make_env, shell
+from shared import SYSTEM_PYTHON_EXECUTABLE, home_path, make_env, shell, system_python_label
 
 from pyinfra import host
 
 _ENV = make_env(home_path(".local/bin"))
+_PIPX_PYTHON_LABEL = "Homebrew Python" if host.get_fact(Kernel) == "Darwin" else system_python_label()
 
 # macOS and Ubuntu mark their system Python environments as externally managed
 # (PEP 668). Use each platform's package manager there; retain the existing
@@ -34,13 +35,13 @@ elif host.get_fact(LinuxName) == "Ubuntu":
     )
 else:
     shell(
-        name="Install pipx via pip --user",
-        commands=["python3 -m pip install -U --user pipx"],
+        name=f"Install pipx via pip --user ({system_python_label()})",
+        commands=[f"{SYSTEM_PYTHON_EXECUTABLE} -m pip install -U --user pipx"],
         _env=_ENV,
     )
 
 shell(
-    name="Ensure pipx is on PATH",
+    name=f"Ensure pipx is on PATH ({_PIPX_PYTHON_LABEL})",
     commands=["pipx ensurepath"],
     _env=_ENV,
     _ignore_errors=True,
@@ -58,13 +59,13 @@ _injects: dict[str, list[str]] = _decode(host.data.get("pipx_injects", "{}"), {}
 
 for _pkg in _packages:
     shell(
-        name=f"pipx install {_pkg}",
+        name=f"pipx install {_pkg} ({_PIPX_PYTHON_LABEL})",
         commands=[f"pipx install --force --include-deps {_pkg}"],
         _env=_ENV,
     )
     for _inject in _injects.get(_pkg, []):
         shell(
-            name=f"pipx inject {_pkg} <- {_inject}",
+            name=f"pipx inject {_pkg} <- {_inject} ({_PIPX_PYTHON_LABEL})",
             commands=[f"pipx inject --force -e {_pkg} {_inject}"],
             _env=_ENV,
         )

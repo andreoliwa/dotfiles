@@ -67,6 +67,7 @@ elif host.get_fact(LinuxName) == "OSMC":
         update=True,
         _sudo=True,
     )
+    # Upstream ARM archives store the executable as ./eza, not eza.
     shell(
         name="Install eza ARM release in /usr/local/bin",
         commands=[
@@ -76,7 +77,7 @@ elif host.get_fact(LinuxName) == "OSMC":
                 'armv6l|armv7l) target="arm-unknown-linux-gnueabihf" ;; '
                 '*) echo "Unsupported eza architecture: $(uname -m)" >&2; exit 1 ;; esac; '
                 'curl -fsSL "https://github.com/eza-community/eza/releases/latest/download/eza_${target}.tar.gz" '
-                "| tar -xz -C /usr/local/bin eza"
+                "| tar -xz -C /usr/local/bin ./eza"
             ),
         ],
         _sudo=True,

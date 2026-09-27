@@ -20,7 +20,7 @@ from pathlib import Path
 from lib import Server
 from pyinfra.connectors.local import LocalConnector
 from pyinfra.facts.server import Kernel
-from pyinfra.operations import apt, brew, files
+from pyinfra.operations import brew, files, server
 from shared import shell
 
 from pyinfra import host
@@ -47,9 +47,13 @@ else:
             ),
         ],
     )
-    apt.deb(
+    # Fresh OSMC's PyInfra sudo environment can omit the system sbin directories.
+    # dpkg and package-maintainer scripts need the complete system PATH.
+    server.shell(
         name="Install chezmoi via deb",
-        src=_chezmoi_deb,
+        commands=[
+            f"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg -i {_chezmoi_deb}",
+        ],
         _sudo=True,
     )
     files.file(

@@ -11,6 +11,8 @@ switches iptables to legacy, and adds the osmc user to the docker group.
 Reference: https://docs.docker.com/engine/install/debian/
 """
 
+import shlex
+
 from pyinfra.facts.files import Directory
 from pyinfra.facts.server import Kernel, LinuxName
 from pyinfra.operations import apt, git, systemd
@@ -90,9 +92,8 @@ if host.get_fact(LinuxName) == "Ubuntu":
         )
 
 # Vessel resolves Conjuring from its sibling checkout through ``tool.uv.sources``.
-# On Linux servers, refresh both clean Git checkouts so the editable tool cannot
-# retain a stale, rsync-synchronized dependency. Local development checkouts are
-# left alone to avoid overwriting uncommitted work.
+# Linux servers must use the latest clean source checkouts. Local development
+# checkouts are left alone to avoid overwriting uncommitted work.
 _CONJURING_PATH = home_path("dev/me/conjuring")
 _SOURCE_REPOS = (
     ("conjuring", "https://github.com/andreoliwa/conjuring", _CONJURING_PATH),
@@ -102,8 +103,20 @@ _SOURCE_REPOS = (
 for _name, _src, _dest in _SOURCE_REPOS:
     if not host.get_fact(Directory, path=_dest):
         git.repo(name=f"Clone {_name}", src=_src, dest=_dest, pull=False)
-    elif host.get_fact(LinuxName) == "Ubuntu" and host.get_fact(Directory, path=f"{_dest}/.git"):
-        git.repo(name=f"Update {_name}", src=_src, dest=_dest, pull=True)
+    elif host.get_fact(Kernel) == "Linux":
+        _repo_path = shlex.quote(str(_dest))
+        shell(
+            name=f"Update clean {_name} checkout",
+            commands=[
+                (
+                    f"cd {_repo_path} && "
+                    'if [ -n "$(git status --porcelain)" ]; then '
+                    f'echo "{_name} checkout is dirty; update it manually before provisioning" >&2; exit 1; fi'
+                ),
+                f"cd {_repo_path} && git pull --ff-only",
+            ],
+            _env=_ENV,
+        )
 
 # Force a rebuild so a changed editable source and its dependencies are used.
 shell(
@@ -133,12 +146,14 @@ if host.get_fact(LinuxName) == "OSMC":
         latest=True,
         _sudo=True,
     )
+    # Re-provisioning replaces the existing keyring. --batch --yes prevents GnuPG
+    # from trying to ask for overwrite confirmation through PyInfra's absent TTY.
     shell(
         name="Add Docker GPG key",
         commands=[
             (
                 "curl -fsSL https://download.docker.com/linux/debian/gpg "
-                "| gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
+                "| gpg --batch --yes --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
             ),
         ],
         _sudo=True,

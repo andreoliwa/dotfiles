@@ -109,11 +109,12 @@ for _name, _src, _dest in _SOURCE_REPOS:
             name=f"Update clean {_name} checkout",
             commands=[
                 (
-                    f"cd {_repo_path} && "
-                    'if [ -n "$(git status --porcelain)" ]; then '
-                    f'echo "{_name} checkout is dirty; update it manually before provisioning" >&2; exit 1; fi'
+                    f"if git -C {_repo_path} rev-parse --is-inside-work-tree >/dev/null 2>&1; then "
+                    f'if [ -n "$(git -C {_repo_path} status --porcelain)" ]; then '
+                    f'echo "{_name} checkout is dirty; update it manually before provisioning" >&2; exit 1; fi; '
+                    f"git -C {_repo_path} pull --ff-only; "
+                    "fi"
                 ),
-                f"cd {_repo_path} && git pull --ff-only",
             ],
             _env=_ENV,
         )

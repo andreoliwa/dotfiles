@@ -1,5 +1,7 @@
 # https://espanso.org/docs/matches/basics/
 matches:
+  - replace: ADR
+    trigger: adr
   - replace: Beancount
     trigger: bct
     word: true

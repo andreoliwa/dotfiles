@@ -39,6 +39,8 @@ matches:
   - replace: ChatGPT
     trigger: cgp
     word: true
+  - replace: LLM
+    trigger: llm
   - propagate_case: true
     replace: Show me your plan before implementation, so I can approve it.
     trigger: smp

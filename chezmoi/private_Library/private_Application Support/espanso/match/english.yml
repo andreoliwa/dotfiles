@@ -128,6 +128,10 @@ matches:
     trigger: dfup
     word: true
   - propagate_case: true
+    replace: didn't
+    trigger: didnt
+    word: true
+  - propagate_case: true
     replace: data modeling
     trigger: dml
     word: true

@@ -74,6 +74,10 @@ matches:
     trigger: btw
     word: true
   - propagate_case: true
+    replace: can't
+    trigger: cant
+    word: true
+  - propagate_case: true
     replace: chargeback
     trigger: cbk
     word: true
@@ -128,8 +132,16 @@ matches:
     trigger: dml
     word: true
   - propagate_case: true
+    replace: doesn't
+    trigger: doesnt
+    word: true
+  - propagate_case: true
     replace: don't
     trigger: don'
+    word: true
+  - propagate_case: true
+    replace: don't
+    trigger: dont
     word: true
   - replace: Dramatiq
     trigger: dq
@@ -360,6 +372,10 @@ matches:
   - propagate_case: true
     replace: what do you think?
     trigger: wdyt
+    word: true
+  - propagate_case: true
+    replace: won't
+    trigger: wont
     word: true
   - propagate_case: true
     replace: what the fuck

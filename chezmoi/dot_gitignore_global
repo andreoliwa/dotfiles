@@ -150,3 +150,7 @@ data/kv-store
 # Codex
 .codex/*.local.*
 **/.codex/*.local.*
+
+
+# Codex file search overrides
+.ignore

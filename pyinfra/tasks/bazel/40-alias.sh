@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # keep-sorted start
-alias b='bazel'
 alias bb='bazel build'
 alias bc='bazel clean'
 alias bgr='bazel run //:graphs'

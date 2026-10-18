@@ -66,6 +66,7 @@ shell(
 _COMPLETE_ALIAS = home_path(".local/share/bash-completion/completions/complete_alias.bash-completion")
 _COMPLETE_ALIASES = (
     # keep-sorted start
+    "ap",  # invoke ai.plans
     "d",
     "dc",
     "dk",

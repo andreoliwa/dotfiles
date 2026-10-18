@@ -74,7 +74,6 @@ brew "yq"  # https://github.com/mikefarah/yq
 cask "android-file-transfer"  # https://www.android.com/filetransfer/
 cask "appcleaner"
 cask "bitwarden"  # https://bitwarden.com/
-cask "calibre"  # https://calibre-ebook.com/
 cask "ccleaner"  # https://www.ccleaner.com/ccleaner-mac
 cask "cyberduck"  # https://cyberduck.io/
 cask "deepl"  # https://www.deepl.com/translator

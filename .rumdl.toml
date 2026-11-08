@@ -3,10 +3,19 @@ disable = [
   "MD013", # Line length - docs and plans have long lines intentionally
   "MD026", # Trailing punctuation in headings - allowed (e.g. "Success!" or comma-separated lists)
   "MD036", # Emphasis as heading - bold labels in docs are intentional, not headings
+  "MD041", # First line heading - command files use YAML frontmatter as the title, not an H1
   "MD076", # Blank lines between list items - intentional in plan docs for readability
 ]
 exclude = [".git", ".github", "build", "CHANGELOG.md", "dist", "LICENSE.md", "node_modules", "vendor"]
 respect-gitignore = true
+
+# Preserve the previous linter's check for tabs inside code blocks.
+[MD010]
+code-blocks = true
+
+# Duplicate headings are checked across the whole document.
+[MD024]
+siblings-only = false
 
 # Enforce fenced code blocks to match prettier's style
 [MD046]

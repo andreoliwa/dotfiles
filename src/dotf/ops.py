@@ -23,6 +23,7 @@ already obtained confirmation before pyinfra was invoked.
 """
 
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -242,11 +243,43 @@ def _sort_json_file(path: Path) -> bool:
     return True
 
 
+def _format_agent_markdown(path: Path, formatter: str) -> None:
+    """Format personal prose without changing generator-owned Beads instructions."""
+    original = path.read_bytes().decode("utf-8")
+    blocks: dict[str, str] = {}
+
+    def protect(match: re.Match[str]) -> str:
+        token = f"<!-- dotf-preserved-beads-block-{len(blocks)} -->"
+        blocks[token] = match.group()
+        return token
+
+    pattern = r"^<!-- BEGIN BEADS CODEX SETUP:[^\n]*-->\r?\n.*?^<!-- END BEADS CODEX SETUP -->"
+    masked = re.sub(pattern, protect, original, flags=re.MULTILINE | re.DOTALL)
+    if any(token in original for token in blocks):
+        _print_yellow(f"warning: generated-block placeholder collision in {path}, skipping formatting")
+        return
+    result = subprocess.run(  # noqa: S603
+        [formatter, "--stdin-filepath", str(path)], input=masked, text=True, capture_output=True, check=False
+    )
+    if result.returncode:
+        _print_yellow(f"warning: Markdown formatting failed for {path}, leaving unchanged")
+        return
+    formatted = result.stdout
+    for token, block in blocks.items():
+        if formatted.count(token) != 1:
+            _print_yellow(f"warning: formatter changed a generated-block placeholder in {path}, leaving unchanged")
+            return
+        formatted = formatted.replace(token, block)
+    if formatted != original:
+        path.write_bytes(formatted.encode("utf-8"))
+
+
 def standardize_target_files() -> None:
     """Normalize deployed coding-agent files before chezmoi apply.
 
     Sorts Claude settings.json keys to canonical order and prettier-formats shared
-    Markdown instruction files. Missing files and missing prettier are warned but
+    Markdown instruction files, preserving generated Beads blocks byte-for-byte.
+    Missing files and missing prettier are warned but
     non-fatal - chezmoi always continues.
     """
     claude_dir = Path.home() / ".claude"
@@ -275,7 +308,7 @@ def standardize_target_files() -> None:
 
     for path in existing_markdown_files:
         _print_blue(f"-> normalizing {path}")
-        subprocess.run([prettier_bin, "--write", str(path)], check=False)  # noqa: S603
+        _format_agent_markdown(path, prettier_bin)
 
 
 def _chezmoi_repo_name(source: Path) -> str:

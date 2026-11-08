@@ -29,34 +29,35 @@ alias gwip="git add -A && git ls-files --deleted -z |
 xargs git rm && git commit -m '__wip__'"
 alias gunwip="git log -n 1 | grep -q -c '__wip__' && git reset HEAD~1"
 
-# Worktree-aware: jump to the master (or main) worktree.
-# Uses gwq when a linked worktree owns the branch; falls back to git checkout
-# for plain repos with no linked worktrees.
+# Worktree-aware: prefer master, then main. Navigation alone may leave HEAD detached,
+# so always switch to the selected branch before reporting success.
 gcm() {
     local branch
     if gwq get master &>/dev/null; then
-        sx gw master; return
+        branch=master
+        sx gw "$branch" || return $?
     elif gwq get main &>/dev/null; then
-        sx gw main; return
-    fi
-    # No worktree found - plain repo. Determine branch and checkout.
-    if git rev-parse --verify master &>/dev/null; then
+        branch=main
+        sx gw "$branch" || return $?
+    elif git show-ref --verify --quiet refs/heads/master; then
         branch=master
     else
         branch=main
     fi
-    sx git checkout "$branch"
+    sx git switch "$branch"
 }
 
 # Switch to main/master and fast-forward to origin.
 gmu() {
     local branch
-    if git rev-parse --verify main &>/dev/null; then
-        branch=main
-    else
-        branch=master
-    fi
-    gcm && sx git fetch origin "$branch" && sx git merge --ff-only "origin/$branch"
+    gcm || return $?
+    # Use the branch actually checked out by gcm, not a second selection rule.
+    branch=$(git symbolic-ref --quiet --short HEAD) || return $?
+    case "$branch" in
+        main|master) ;;
+        *) echo "gmu: expected main or master, got $branch" >&2; return 1 ;;
+    esac
+    sx git fetch origin "$branch" && sx git merge --ff-only "origin/$branch"
 }
 
 # Fuzzy worktree switcher via gwq (brew install d-kuro/tap/gwq).

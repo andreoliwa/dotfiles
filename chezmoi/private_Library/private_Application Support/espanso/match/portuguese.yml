@@ -46,10 +46,6 @@ matches:
     trigger: avancar
     word: true
   - propagate_case: true
-    replace: bom dia
-    trigger: bd
-    word: true
-  - propagate_case: true
     replace: belê
     trigger: beleh
     word: true

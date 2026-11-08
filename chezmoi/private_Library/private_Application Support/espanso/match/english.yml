@@ -93,6 +93,10 @@ matches:
     trigger: cmiiw
     word: true
   - propagate_case: true
+    replace: couldn't
+    trigger: couldnt
+    word: true
+  - propagate_case: true
     replace: code review
     trigger: crw
     word: true
@@ -319,6 +323,10 @@ matches:
     replace: support associate
     trigger: saa
     word: true
+  - propagate_case: true
+    replace: shouldn't
+    trigger: shouldnt
+    word: true
   - replace: "¯_(ツ)_/¯"
     trigger: shrug
     word: true
@@ -370,6 +378,10 @@ matches:
     trigger: viz
     word: true
   - propagate_case: true
+    replace: wasn't
+    trigger: wasnt
+    word: true
+  - propagate_case: true
     replace: what do you mean?
     trigger: wdym
     word: true
@@ -380,6 +392,10 @@ matches:
   - propagate_case: true
     replace: won't
     trigger: wont
+    word: true
+  - propagate_case: true
+    replace: wouldn't
+    trigger: wouldnt
     word: true
   - propagate_case: true
     replace: what the fuck

@@ -73,8 +73,9 @@ else
 fi
 
 step "Dotfiles repo at $DOTFILES_DIR"
-if [ -d "$DOTFILES_DIR/.git" ]; then
-    echo "    already cloned."
+# Existing sources may be a synced directory, an archive, or a Git worktree.
+if [ -d "$DOTFILES_DIR" ]; then
+    echo "    directory already exists; reusing it."
 else
     git clone "$DOTFILES_REMOTE" "$DOTFILES_DIR"
 fi

@@ -613,7 +613,11 @@ def _render_and_confirm_remote_diff(diff: str, repo_label: str, server: str, *, 
 
 def _upload_chezmoi_source(composed_source: Path, ssh_target: str, remote_src_dir: str) -> None:
     """Stream a composed Chezmoi source tree to a remote temporary directory."""
-    remote_extract = f"rm -rf {remote_src_dir} && mkdir -p {remote_src_dir} && tar -C {remote_src_dir} -xf -"
+    # Sources can contain credentials. Keep archive metadata from exposing them.
+    remote_extract = (
+        f"umask 077 && rm -rf {remote_src_dir} && mkdir -m 700 -p {remote_src_dir}"
+        f" && tar --no-same-owner --no-same-permissions -C {remote_src_dir} -xf -"
+    )
     tar_path = shutil.which("tar")
     if tar_path is None:
         raise RuntimeError(_TAR_REQUIRED_MESSAGE)

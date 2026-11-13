@@ -206,6 +206,46 @@ def provision(
     _provision_impl(server, tools, start_from, repo)
 
 
+@app.command("ssh-copy-id")
+def ssh_copy_id(
+    server: Annotated[
+        str,
+        typer.Option("-s", "--server", help="Destination server or alias.", shell_complete=_complete_servers),
+    ],
+    identity: Annotated[
+        Path | None,
+        typer.Option("-i", "--identity", help="Local private key path (default: ~/.ssh/id_rsa)."),
+    ] = None,
+    repo: Annotated[Path | None, typer.Option("-r", "--repo", help="Inventory repository path.")] = None,
+) -> None:
+    """Grant this computer SSH access to one inventory server."""
+    from dotf.ssh import copy_ssh_key
+
+    resolved = resolve_server(server, repo)
+    destination = _resolve_ssh_target(resolved, repo)
+    if destination is None:
+        message = "Choose a remote server from the inventory."
+        raise typer.BadParameter(message, param_hint="--server")
+    target, _source = destination
+    key = identity if identity is not None else Path.home() / ".ssh" / "id_rsa"
+    print(f"Granting this computer access to {server} ({target}) using {key}.")
+    try:
+        copy_ssh_key(target, key)
+    except subprocess.CalledProcessError as error:
+        if error.cmd[0] == "ssh":
+            typer.echo(
+                "SSH access check failed. If the key has a passphrase, load it with ssh-add and retry.",
+                err=True,
+            )
+        else:
+            typer.echo(f"{error.cmd[0]} failed. SSH enrollment stopped.", err=True)
+        raise typer.Exit(error.returncode) from error
+    except OSError as error:
+        typer.echo(str(error), err=True)
+        raise typer.Exit(1) from error
+    print(f"SSH key access verified for {target}.")
+
+
 @app.command("list")
 @app.command("ls")
 def list_cmd(

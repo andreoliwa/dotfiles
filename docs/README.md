@@ -37,11 +37,31 @@ directory.
 dotf provision [TOOLS] [-s SERVER] [--start-from TOOL] [--list]  # chezmoi apply + pyinfra
 dotf list | dotf ls                                              # list servers + tools
 dotf chezmoi                                                     # chezmoi apply only
+dotf ssh-copy-id -s SERVER [-i KEY]                               # grant this computer SSH access
 dotf tail                                                        # follow ~/.cache/dotf/provision.log
 ```
 
 Global flags: `--debug` / `-d` (pass `-v` to pyinfra), `--yes` / `-y` (skip
 confirmations).
+
+## SSH access
+
+Use this when a server does not yet accept your SSH key.
+Run it from the computer you want to connect from:
+
+```bash
+dotf ssh-copy-id -s SERVER
+```
+
+`SERVER` is an inventory name or alias. Enter its account password if asked.
+The command copies only your public key and checks that login works.
+It skips installed keys and leaves other servers unchanged.
+It does not copy private keys or generate new key pairs.
+
+It uses `~/.ssh/id_rsa`. Use `-i PATH` to select another existing private key.
+If your private key is missing, restore it through provisioning first.
+If it has a passphrase, load it into your SSH agent before running this command.
+For later logins, SSH must be configured to use that key.
 
 ## Repo layout
 

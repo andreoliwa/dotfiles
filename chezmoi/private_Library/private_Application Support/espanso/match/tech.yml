@@ -5,6 +5,9 @@ matches:
   - replace: Beancount
     trigger: bct
     word: true
+  - replace: Beads issue
+    trigger: bdi
+    word: true
   - replace: FRITZ!Box
     trigger: fbx
     word: true

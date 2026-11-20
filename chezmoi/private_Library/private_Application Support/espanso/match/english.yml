@@ -27,11 +27,19 @@ matches:
     trigger: afk
     word: true
   - propagate_case: true
+    replace: ain't
+    trigger: aint
+    word: true
+  - propagate_case: true
     replace: acknowledge
     trigger: ak
     word: true
   - replace: Approving to unblock.
     trigger: apr
+    word: true
+  - propagate_case: true
+    replace: aren't
+    trigger: arent
     word: true
   - propagate_case: true
     replace: as soon as possible
@@ -225,6 +233,10 @@ matches:
     replace: girlfriend
     trigger: gf
     word: true
+  - propagate_case: true
+    replace: haven't
+    trigger: havent
+    word: true
   - replace: I don't know
     trigger: idk
     word: true
@@ -246,6 +258,10 @@ matches:
   - propagate_case: true
     replace: in my opinion
     trigger: imo
+    word: true
+  - propagate_case: true
+    replace: isn't
+    trigger: isnt
     word: true
   - replace: Kind regards
     trigger: krg
